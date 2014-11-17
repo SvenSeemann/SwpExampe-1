@@ -1,8 +1,11 @@
 package catering;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Component
 public class Menu {
 
 	private Integer id;
@@ -20,10 +23,12 @@ public class Menu {
 	
 	Menu () {};
 	
+	@Bean
 	public String getDescription() {
 		return this.description;
 	}
 	
+	@Bean
 	public double getPrice() {
 		return this.price;
 	}
