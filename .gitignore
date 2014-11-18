@@ -15,6 +15,7 @@ hs_err_pid*
 
 # IDE project directories
 .idea/
+*.iml
 
 # Binary Output
 */target/
