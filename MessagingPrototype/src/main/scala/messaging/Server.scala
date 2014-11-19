@@ -1,5 +1,7 @@
 package messaging
 
+import java.util.Date
+
 import scala.collection.mutable
 import messaging.errors.NoSuchUserError
 
@@ -18,7 +20,11 @@ object Server {
   def deliver(message:Message) = {
     receivers.get(message.recipient) match {
       case None => throw new NoSuchUserError(message.recipient)
-      case Some(x) => x.store(message)
+      case Some(x) =>
+        message.received match {
+          case None => message.received = Option(new Date())
+        }
+        x.store(message)
     }
   }
 

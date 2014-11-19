@@ -8,12 +8,13 @@ import java.util.Date
  *
  * A String message that can be sent.
  */
-class Message(val message:String, val sender:String, val recipient:Int, val date:Date = new Date){
+class Message(val message:String, val sender:String, val recipient:Int, val sent:Date = new Date){
 
+  var received:Option[Date] = None
   var read = false
 
   override def toString = {
-    date.toString + ":" + message
+    sender + " [" + sent.toString + "]" + ":" + message
   }
 
   def readMessage = {

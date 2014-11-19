@@ -1,4 +1,4 @@
-import messaging.{Server, Message}
+import messaging.Server
 import org.scalatest.{Matchers, FlatSpec}
 
 /**
@@ -14,6 +14,7 @@ class TestSpec extends FlatSpec with Matchers{
     sender send (testmessage, receiver.id) should be (right = true)
     receiver.fetchMessages(0).message should be (testmessage)
     receiver.getInbox.fetchNew(0).message should be (testmessage)
+    print(receiver.getInbox.fetchNew(0))
     receiver.getInbox.fetchNew(0).readMessage should be (testmessage)
     receiver.getInbox.fetchNew.isEmpty should be (right = true)
   }
