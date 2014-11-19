@@ -1,5 +1,11 @@
 package messaging
 
+
+/**
+ * Created by justusadam on 18/11/14.
+ *
+ * Base Trait for a sender of messages
+ */
 trait Sender{
   def name:String
 

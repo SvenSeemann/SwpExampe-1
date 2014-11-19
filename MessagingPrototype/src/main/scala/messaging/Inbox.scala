@@ -3,6 +3,8 @@ package messaging
 
 /**
  * Created by justusadam on 19/11/14.
+ *
+ * Container for wrapping messages sent to a user
  */
 class Inbox {
   var messages:List[Message] = List[Message]()
