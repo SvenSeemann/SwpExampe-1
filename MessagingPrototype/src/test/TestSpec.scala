@@ -7,8 +7,8 @@ import org.scalatest.{Matchers, FlatSpec}
 class TestSpec extends FlatSpec with Matchers{
 
   "The sender" should "send a message to the Server" in {
-    val sender = new Caterer
-    val receiver = new Manager
+    val sender = new Caterer(2, "Caterer")
+    val receiver = new Manager("Manger")
     val testmessage = "Testmessage"
     Server.addReceiver(receiver)
     sender send (testmessage, receiver.id) should be (right = true)

@@ -5,6 +5,5 @@ import messaging.Sender
  *
  * Testclass or sender
  */
-class Caterer extends Person with Sender{
-  def name = "Caterer"
+class Caterer(id:Int, name:String) extends Employee(id, name) with Sender{
 }

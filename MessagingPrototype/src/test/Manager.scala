@@ -7,6 +7,5 @@
 import messaging.Receiver
 
 
-class Manager extends Person with Receiver{
-  override def id = {1}
+class Manager(name:String) extends Employee(1, name) with Receiver{
 }
