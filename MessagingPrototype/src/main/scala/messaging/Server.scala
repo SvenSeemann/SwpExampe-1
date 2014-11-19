@@ -12,8 +12,8 @@ object Server {
     receivers += ((receiver.id, new mutable.MutableList[Message]))
   }
 
-  def deliver(message:Message, recipient:Int) = {
-    receivers.get(recipient) match {
+  def deliver(message:Message) = {
+    receivers.get(message.recipient) match {
       case None => false
       case Some(x) => x += message
         true

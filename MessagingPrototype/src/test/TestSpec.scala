@@ -11,7 +11,7 @@ class TestSpec extends FlatSpec with Matchers{
     val receiver = new Manager
     val testmessage = "Testmessage"
     Server.addReceiver(receiver)
-    sender.send(testmessage, receiver.id) should be (right = true)
+    sender send (testmessage, receiver.id) should be (right = true)
     receiver.fetchMessages.get(0).message should be (testmessage)
     print(receiver.fetchMessages)
   }
