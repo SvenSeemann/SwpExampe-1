@@ -6,7 +6,7 @@ package messaging
 trait Receiver {
   def id:Int
 
-  def fetchMessages = {
+  def fetchMessages:List[Message] = {
     Server.fetch(id)
   }
 }
