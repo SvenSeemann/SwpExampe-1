@@ -13,6 +13,8 @@ class TestSpec extends FlatSpec with Matchers{
     Server.addReceiver(receiver)
     sender send (testmessage, receiver.id) should be (right = true)
     receiver.fetchMessages(0).message should be (testmessage)
-    print(receiver.fetchMessages)
+    receiver.getInbox.fetchNew(0).message should be (testmessage)
+    receiver.getInbox.fetchNew(0).readMessage should be (testmessage)
+    receiver.getInbox.fetchNew.isEmpty should be (right = true)
   }
 }

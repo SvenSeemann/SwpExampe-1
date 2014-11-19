@@ -7,6 +7,7 @@ package messaging
  * Container for wrapping messages sent to a user
  */
 class Inbox {
+
   var messages:List[Message] = List[Message]()
 
   def store(message:Message):Boolean = {
@@ -24,5 +25,9 @@ class Inbox {
 
   def hasNewMessages = {
     messages.nonEmpty
+  }
+
+  def fetchNew = {
+    messages.filter({x => !x.read})
   }
 }

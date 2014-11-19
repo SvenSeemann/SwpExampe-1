@@ -10,7 +10,15 @@ import java.util.Date
  */
 class Message(val message:String, val sender:String, val recipient:Int, val date:Date = new Date){
 
+  var read = false
+
   override def toString = {
     date.toString + ":" + message
+  }
+
+  def readMessage = {
+    read = true
+
+    message
   }
 }

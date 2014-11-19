@@ -9,6 +9,10 @@ trait Receiver {
   def id:Int
 
   def fetchMessages:List[Message] = {
+    getInbox.fetchAll
+  }
+
+  def getInbox:Inbox = {
     Server.fetch(id)
   }
 }

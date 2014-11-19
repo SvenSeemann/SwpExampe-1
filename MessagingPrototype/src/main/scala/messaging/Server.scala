@@ -22,17 +22,10 @@ object Server {
     }
   }
 
-  def fetch(user:Int):List[Message] = {
+  def fetch(user:Int):Inbox = {
     receivers.get(user) match {
       case None => throw new NoSuchUserError(user)
-      case Some(x) => x.fetchAll
-    }
-  }
-
-  def hasNewMessages(user:Int):Boolean = {
-    receivers.get(user) match {
-      case None => false
-      case Some(x) => x.hasNewMessages
+      case Some(x) => x
     }
   }
 }
