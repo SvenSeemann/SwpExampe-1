@@ -58,7 +58,7 @@ public class CateringPrototype {
 	} 
     
     
-   //@Autowired Order order;
+   Order order;
    
     
     

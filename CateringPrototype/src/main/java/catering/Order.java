@@ -8,7 +8,7 @@ import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Component;
 
 
-//@Component
+@Component
 public class Order {
 	
 	List<Menu> menus;

@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class OrderController {
 	
+	@Autowired				//constructor is not a valid setter method or instance variable
 	private Order order;
 	private Menu menu1;
 	
 	//OrderController() {}
 	
-	//@Autowired
 	public OrderController() {
 		order = new Order();
 		Assert.notNull(order, "Order must not be null!");
