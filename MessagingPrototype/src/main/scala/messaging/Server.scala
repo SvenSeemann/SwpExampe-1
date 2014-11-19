@@ -1,6 +1,7 @@
 package messaging
 
 import scala.collection.mutable
+import messaging.errors.NoSuchUserError
 
 /**
  * Created by justusadam on 18/11/14.
@@ -22,7 +23,7 @@ object Server {
 
   def fetch(user:Int):List[Message] = {
     receivers.get(user) match {
-      case None => List[Message]() // TODO return something better
+      case None => throw new NoSuchUserError(user)
       case Some(x) => x.fetchAll
     }
   }
