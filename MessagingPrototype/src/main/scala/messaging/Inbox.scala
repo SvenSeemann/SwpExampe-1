@@ -13,10 +13,16 @@ class Inbox {
     messages = messages :+ message
     true
   }
+
   def fetchAll:List[Message] = {
     messages.toList
   }
+
   def delete(message:Message):Unit = {
     messages = messages.filter({a => a != message})
+  }
+
+  def hasNewMessages = {
+    messages.nonEmpty
   }
 }

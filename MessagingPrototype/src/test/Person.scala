@@ -3,6 +3,6 @@
  *
  * Test base class for a Person
  */
-class Person {
+class Person extends Object{
 
 }

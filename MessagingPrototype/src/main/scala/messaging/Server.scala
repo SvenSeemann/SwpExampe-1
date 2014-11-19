@@ -5,6 +5,8 @@ import messaging.errors.NoSuchUserError
 
 /**
  * Created by justusadam on 18/11/14.
+ *
+ * Server Object that distributes the messages
  */
 object Server {
   private val receivers:mutable.Map[Int, Inbox] = new mutable.HashMap[Int, Inbox]
@@ -15,9 +17,8 @@ object Server {
 
   def deliver(message:Message) = {
     receivers.get(message.recipient) match {
-      case None => false
+      case None => throw new NoSuchUserError(message.recipient)
       case Some(x) => x.store(message)
-        true
     }
   }
 
@@ -25,6 +26,13 @@ object Server {
     receivers.get(user) match {
       case None => throw new NoSuchUserError(user)
       case Some(x) => x.fetchAll
+    }
+  }
+
+  def hasNewMessages(user:Int):Boolean = {
+    receivers.get(user) match {
+      case None => false
+      case Some(x) => x.hasNewMessages
     }
   }
 }
