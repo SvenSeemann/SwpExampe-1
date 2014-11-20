@@ -1,10 +1,20 @@
 package fviv.controller;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import fviv.model.EmployeeRepository;
 
 @Controller
 class ManagerFunctionsController{
+	private final EmployeeRepository employeeRepository;
+	
+	@Autowired
+	public ManagerFunctionsController(EmployeeRepository employeeRepository){
+		this.employeeRepository = employeeRepository;
+	}
 	
 	@RequestMapping("/")
 	public String index(){
@@ -12,7 +22,9 @@ class ManagerFunctionsController{
 	}
 	
 	@RequestMapping("/checkEmployees")
-	public String checkEmployees(){
+	public String checkEmployees(ModelMap modelMap){
+		modelMap.addAttribute("employeelist", employeeRepository.findAll());
+		
 		return "checkEmployees";
 	}
 	
