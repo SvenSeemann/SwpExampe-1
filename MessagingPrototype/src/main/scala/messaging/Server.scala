@@ -2,6 +2,8 @@ package messaging
 
 import java.util.Date
 
+import people.People
+
 import scala.collection.mutable
 import messaging.errors.NoSuchUserError
 
@@ -11,7 +13,10 @@ import messaging.errors.NoSuchUserError
  * Server Object that distributes the messages
  */
 object Server {
-  private val receivers:mutable.Map[Int, Inbox] = new mutable.HashMap[Int, Inbox]
+  private val receivers:mutable.Map[Int, Inbox] = mutable.Map[Int, Inbox](People.people.values.filter {
+    case p: Receiver => true
+    case _ => false
+  }.map(e => (e.id, new Inbox)).toSeq: _*)
 
   def addReceiver(receiver:Receiver) = {
     receivers.contains(receiver.id) match {
