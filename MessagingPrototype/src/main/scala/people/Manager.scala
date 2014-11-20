@@ -6,8 +6,8 @@ package people
  * Testclass for Receiver
  */
 
-import messaging.Receiver
+import messaging.{Sender, Receiver}
 
 
-class Manager(name:String) extends Employee(1, name) with Receiver{
+class Manager(name:String) extends Employee(1, name) with Receiver with Sender{
 }
