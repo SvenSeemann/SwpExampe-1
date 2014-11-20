@@ -5,7 +5,7 @@ package people
   */
 object People {
   private val _people:Map[Int, Employee] = Map(
-    1 -> new Manager("manager"),
+    1 -> new Manager("Manager"),
     2 -> new Caterer(2, "Caterer"),
     3 -> new Employee(3, "Some guy")
   )
@@ -13,4 +13,4 @@ object People {
   def people = _people
 
   def get(key:Int) = people.get(key)
- }
+}

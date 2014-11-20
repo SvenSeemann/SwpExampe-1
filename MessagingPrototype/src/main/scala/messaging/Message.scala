@@ -22,7 +22,7 @@ class Message(val message:String, val sender:String, val recipient:Int, val sent
   }
 
   override def toString = {
-    sender + " [" + sent.toString + "]" + ":" + message
+    sender + " [" + sent.toString + "]" + ": " + message
   }
 
   def readMessage = {

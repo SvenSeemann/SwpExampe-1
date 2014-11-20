@@ -1,6 +1,6 @@
 package messaging.controller
 
-import messaging.{Message, Receiver, Sender}
+import messaging.{MessageForm, Message, Receiver, Sender}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -26,17 +26,18 @@ class TestController {
 
   @RequestMapping(Array("/messaging/choose/{id}"))
   def page(@PathVariable("id") id:Int, model:Model) = {
+    def messageAggregate(x:Receiver) = {
+      x.fetchMessages.foldLeft(""){(x, m:Message) => x + "\n" + m.toString}
+    }
+
     People.people.get(id) match {
       case None => "error"
       case Some(x) =>
         model.addAttribute("name", x.name)
-        model.addAttribute("messaging", x match {
-          case x:Sender =>
-            model.addAttribute("sender", id)
-            "sendForm"
-          case x:Receiver => x.fetchMessages.foldLeft(""){(x, m:Message) => x + "\n" + m.toString}
-          case _ => "does nothing"
-        })
+        model.addAttribute("messaging", new MessageForm(classOf[Receiver] isAssignableFrom x.getClass, classOf[Sender] isAssignableFrom x.getClass, x match {
+          case x:Receiver => messageAggregate(x)
+          case _ => ""
+        }))
         "choose"
     }
   }

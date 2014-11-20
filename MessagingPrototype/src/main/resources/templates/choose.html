@@ -3,20 +3,21 @@
 <head lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta charset="UTF-8" />
-    <title>People</title>
+    <title th:text="${name}">People</title>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
 </head>
 <body>
     <div>
-        <h2 th:text="${name}">Name</h2>
-        <form th:if="${messaging} == sendForm" method="post" action="/messaging/send">
+        <a href="/messaging/choose">Back</a>
+        <h1 th:text="${name}">Name</h1>
+        <form th:if="${messaging.sends}" method="post" action="/messaging/send">
             <label for="message">Test</label><textarea name="message" id="message" ></textarea>
             <label for="recipient">Recipient</label><input type="number" name="recipient" id="recipient" />
             <input type="hidden" name="sender" th:value="${id}" />
             <input type="submit" value="submit" />
         </form>
 
-        <p th:if="${messaging} != sendForm" th:text="${messaging}">Sorry</p>
+        <p th:if="${messaging.receives}" th:text="${messaging.message}">Sorry, you cannot receive Messages</p>
     </div>
 </body>
 </html>
