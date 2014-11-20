@@ -31,7 +31,7 @@ class TestController {
       case Some(x) =>
         model.addAttribute("name", x.name)
         model.addAttribute("messaging", x match {
-          case x:Sender => "Sends"
+          case x:Sender => "sendForm"
           case x:Receiver => x.fetchMessages.foldLeft(""){(x, m:Message) => x + "<br />" + m.toString}
           case _ => "does nothing"
         })
