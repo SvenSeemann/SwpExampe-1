@@ -36,7 +36,7 @@ public class CateringPrototype {
 	static class CateringPrototypeWebConfiguration extends SalespointWebConfiguration {
 
 		/**
-		 * We configure {@code /login} to be directly routed to the {@code login} template without any controller
+		 * We configure {@code /login} to be directly routed to the {@code login} template without any messaging.controller
 		 * interaction.
 		 * 
 		 * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry)

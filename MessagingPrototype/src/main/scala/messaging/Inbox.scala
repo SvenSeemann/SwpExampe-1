@@ -1,5 +1,7 @@
 package messaging
 
+import scala.collection.mutable
+
 
 /**
  * Created by justusadam on 19/11/14.

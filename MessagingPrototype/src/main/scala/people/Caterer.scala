@@ -1,3 +1,5 @@
+package people
+
 import messaging.Sender
 
 /**

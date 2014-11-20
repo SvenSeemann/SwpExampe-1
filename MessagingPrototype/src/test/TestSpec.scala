@@ -1,5 +1,6 @@
 import messaging.Server
 import org.scalatest.{Matchers, FlatSpec}
+import people.{Manager, Caterer}
 
 /**
  * Created by justusadam on 18/11/14.
@@ -7,7 +8,7 @@ import org.scalatest.{Matchers, FlatSpec}
 class TestSpec extends FlatSpec with Matchers{
 
   "The sender" should "send a message to the Server" in {
-    val sender = new Caterer(2, "Caterer")
+    val sender = new Caterer(2, "people.Caterer")
     val receiver = new Manager("Manger")
     val testmessage = "Testmessage"
     Server.addReceiver(receiver)

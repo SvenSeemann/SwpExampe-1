@@ -479,7 +479,7 @@
 			<memberEnd xmi:idref='_18_0_2_a9e02be_1413969533526_754292_4505'/>
 			<memberEnd xmi:idref='_18_0_2_a9e02be_1413969533526_127409_4506'/>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_a9e02be_1413969569167_513113_4522' name='Person'>
+		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_a9e02be_1413969569167_513113_4522' name='people.Person'>
 			<xmi:Extension extender='MagicDraw UML 18.0'>
 				<modelExtension>
 					<ownedDiagram xmi:type='uml:Diagram' xmi:id='_18_0_2_17eb0442_1414941634800_122000_8881' name='PeopleSubtree' visibility='public' ownerOfDiagram='_18_0_2_a9e02be_1413969569167_513113_4522'>
@@ -1030,7 +1030,7 @@
 			<memberEnd xmi:idref='_18_0_2_17eb0442_1414931100007_900231_6508'/>
 			<ownedEnd xmi:type='uml:Property' xmi:id='_18_0_2_17eb0442_1414931100007_900231_6508' visibility='private' type='_18_0_2_17eb0442_1414931089588_133818_6471' association='_18_0_2_17eb0442_1414931100006_563221_6506'/>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414931129836_485830_6532' name='Manager'>
+		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414931129836_485830_6532' name='people.Manager'>
 			<generalization xmi:type='uml:Generalization' xmi:id='_18_0_2_17eb0442_1414932503496_469100_7044' general='_18_0_2_a9e02be_1413971103188_528834_4749'/>
 			<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_17eb0442_1414931139298_103427_6568' name='festival' visibility='private' type='_18_0_2_17eb0442_1414931089588_133818_6471' association='_18_0_2_17eb0442_1414931139298_71945_6566'>
 				<xmi:Extension extender='MagicDraw UML 18.0'>
@@ -1109,7 +1109,7 @@
 				<ownedParameter xmi:type='uml:Parameter' xmi:id='_18_0_2_17eb0442_1414942409834_816384_10394' name='order' visibility='public' type='_18_0_2_17eb0442_1414943357754_721385_10602'/>
 			</ownedOperation>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414932312194_477583_6950' name='Employee'>
+		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414932312194_477583_6950' name='people.Employee'>
 			<generalization xmi:type='uml:Generalization' xmi:id='_18_0_2_17eb0442_1414932465079_19320_7018' general='_18_0_2_a9e02be_1413969569167_513113_4522'/>
 			<interfaceRealization xmi:type='uml:InterfaceRealization' xmi:id='_18_0_2_17eb0442_1414926451970_726841_5417' contract='_18_0_2_17eb0442_1414926381100_886639_5350'>
 				<client xmi:idref='_18_0_2_17eb0442_1414932312194_477583_6950'/>
@@ -1373,7 +1373,7 @@
 		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414942573451_92392_10419' name='Ticket'/>
 		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414942601387_645839_10427' name='Customer'/>
 		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414942781380_709725_10483' name='Section'/>
-		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414942887533_805870_10497' name='Workplace&lt;T extends Employee&gt;'>
+		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414942887533_805870_10497' name='Workplace&lt;T extends people.Employee&gt;'>
 			<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_17eb0442_1414943171555_537719_10567' name='staff' visibility='private' type='_18_0_2_17eb0442_1414943219562_222736_10575'/>
 		</packagedElement>
 		<packagedElement xmi:type='uml:Class' xmi:id='_18_0_2_17eb0442_1414943053722_83018_10558' name='T'/>

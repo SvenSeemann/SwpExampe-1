@@ -66,7 +66,7 @@
 								</diagramRepresentation>
 							</xmi:Extension>
 						</ownedDiagram>
-						<ownedDiagram xmi:type='uml:Diagram' xmi:id='_18_0_2_a9e02be_1414570976605_61849_4214' name='Sequenzdiagramm - Manager' visibility='public' context='_18_0_2_a9e02be_1414568865887_236258_3991' ownerOfDiagram='_18_0_2_a9e02be_1414568865887_236258_3991'>
+						<ownedDiagram xmi:type='uml:Diagram' xmi:id='_18_0_2_a9e02be_1414570976605_61849_4214' name='Sequenzdiagramm - people.Manager' visibility='public' context='_18_0_2_a9e02be_1414568865887_236258_3991' ownerOfDiagram='_18_0_2_a9e02be_1414568865887_236258_3991'>
 							<xmi:Extension extender='MagicDraw UML 18.0'>
 								<diagramRepresentation>
 									<diagram:DiagramRepresentationObject ID='_18_0_2_a9e02be_1414570976611_184858_4234' diagramStyleID='_18_0_2_a9e02be_1414934534237_84818_4165' initialFrameSizeSet='true' requiredFeature=';UML_Standard_Profile.mdzip^UML_FEATURE' type='Sequence Diagram' umlType='Sequence Diagram' xmi:id='_yTTn4F9EEeST9pjOUSidkw' xmi:version='2.0' xmlns:binary='http://www.nomagic.com/ns/cameo/client/binary/1.0' xmlns:diagram='http://www.nomagic.com/ns/magicdraw/core/diagram/1.0' xmlns:xmi='http://www.omg.org/XMI' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
@@ -224,17 +224,17 @@
 						</ownedDiagram>
 					</modelExtension>
 				</xmi:Extension>
-				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414569514210_94063_4026' name='Caterer' visibility='private'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414569514210_94063_4026' name='people.Caterer' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414569596437_911315_4039' name='FVIV - proTerminal' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414569664785_159811_4052' name='FVIV - Lager' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414570214202_949121_4129' name='Terminal' visibility='private'/>
-				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414571000902_159775_4247' name='Manager' visibility='private'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414571000902_159775_4247' name='people.Manager' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414571012053_796321_4260' name='FVIV - proTerminal' visibility='private'/>
-				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414571034152_706360_4273' name='Employee' visibility='private'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414571034152_706360_4273' name='people.Employee' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414571093836_762933_4286' name='costReport' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572190351_699233_4429' name='Sales employee' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572368596_248285_4442' name='Guest' visibility='private'/>
-				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572391124_42806_4455' name='Employee' visibility='private'/>
+				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572391124_42806_4455' name='people.Employee' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572634528_392047_4546' name='Guest' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572641094_145279_4559' name='FVIV - freeTerminal' visibility='private'/>
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414572969660_223538_4648' name='Promoter' visibility='private'/>

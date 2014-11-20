@@ -1,3 +1,5 @@
+package people
+
 /**
  * Created by justusadam on 19/11/14.
  */

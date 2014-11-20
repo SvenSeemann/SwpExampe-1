@@ -34,9 +34,8 @@
         </repository>
 
         <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
+            <id>org.scala-tools</id>
+            <url>http://mvnrepository.com/artifact/org.scala-tools/</url>
         </repository>
 
     </repositories>

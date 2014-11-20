@@ -172,7 +172,7 @@
 			<ownedEnd xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414229728527_373928_4134' visibility='private' type='_18_0_2_a9e02be_1414229692066_924415_4082' association='_18_0_2_a9e02be_1414229728527_608998_4133'/>
 			<ownedEnd xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414229728528_689687_4135' visibility='private' type='_18_0_2_a9e02be_1414229533219_782583_4023' association='_18_0_2_a9e02be_1414229728527_608998_4133'/>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Actor' xmi:id='_18_0_2_a9e02be_1414229748474_558163_4152' name='Caterer'/>
+		<packagedElement xmi:type='uml:Actor' xmi:id='_18_0_2_a9e02be_1414229748474_558163_4152' name='people.Caterer'/>
 		<packagedElement xmi:type='uml:Model' xmi:id='_18_0_2_a9e02be_1414229767676_805300_4175' name='FVIV - Catering'>
 			<packagedElement xmi:type='uml:UseCase' xmi:id='_18_0_2_a9e02be_1414230114383_231372_4193' name='Login (Terminal)'/>
 			<packagedElement xmi:type='uml:UseCase' xmi:id='_18_0_2_a9e02be_1414230128371_773852_4207' name='Getränk wählen'/>
@@ -245,7 +245,7 @@
 			<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414230844328_261460_4545' visibility='private' type='_18_0_2_a9e02be_1414230138946_255349_4221' association='_18_0_2_a9e02be_1414230844328_791594_4543'/>
 			<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414230862340_321902_4567' visibility='private' type='_18_0_2_a9e02be_1414230128371_773852_4207' association='_18_0_2_a9e02be_1414230862340_283921_4565'/>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Model' xmi:id='_18_0_2_a9e02be_1414230895033_161848_4608' name='FVIV - Manager'>
+		<packagedElement xmi:type='uml:Model' xmi:id='_18_0_2_a9e02be_1414230895033_161848_4608' name='FVIV - people.Manager'>
 			<xmi:Extension extender='MagicDraw UML 18.0'>
 				<modelExtension>
 					<ownedDiagram xmi:type='uml:Diagram' xmi:id='_18_0_2_a9e02be_1414231195722_143587_4784' name='Festivalmanager Use-Case Diagramm 2' visibility='public' ownerOfDiagram='_18_0_2_a9e02be_1414230895033_161848_4608'>
@@ -452,7 +452,7 @@
 				<ownedAttribute xmi:type='uml:Property' xmi:id='_18_0_2_a9e02be_1414231638660_894849_5240' visibility='private' type='_18_0_2_a9e02be_1414231360467_383544_4960' association='_18_0_2_a9e02be_1414231638660_326255_5238'/>
 			</packagedElement>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Actor' xmi:id='_18_0_2_a9e02be_1414230911188_715112_4622' name='Manager'/>
+		<packagedElement xmi:type='uml:Actor' xmi:id='_18_0_2_a9e02be_1414230911188_715112_4622' name='people.Manager'/>
 		<packagedElement xmi:type='uml:Association' xmi:id='_18_0_2_a9e02be_1414231125747_307861_4702'>
 			<memberEnd xmi:idref='_18_0_2_a9e02be_1414231125747_967795_4703'/>
 			<memberEnd xmi:idref='_18_0_2_a9e02be_1414231125747_849474_4704'/>
