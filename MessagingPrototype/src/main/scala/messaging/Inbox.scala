@@ -1,35 +1,16 @@
 package messaging
 
-import scala.collection.mutable
-
-
 /**
- * Created by justusadam on 19/11/14.
- *
- * Container for wrapping messages sent to a user
+ * Created by justusadam on 21/11/14.
  */
-class Inbox {
+trait Inbox {
+  def store(message:Message):Boolean
 
-  var messages:List[Message] = List[Message]()
+  def fetchAll:List[Message]
 
-  def store(message:Message):Boolean = {
-    messages = messages :+ message
-    true
-  }
+  def delete(message:Message):Unit
 
-  def fetchAll:List[Message] = {
-    messages.toList
-  }
+  def hasNewMessages:Boolean
 
-  def delete(message:Message):Unit = {
-    messages = messages.filter({a => a != message})
-  }
-
-  def hasNewMessages = {
-    messages.nonEmpty
-  }
-
-  def fetchNew = {
-    messages.filter({x => !x.read})
-  }
+  def fetchNew:List[Message]
 }

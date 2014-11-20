@@ -19,12 +19,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 @Configuration
 @EnableAutoConfiguration
 @Import({ SalespointWebConfiguration.class })
-@EntityScan(basePackageClasses = {Salespoint.class, messaging.TestJavaApp.class})
-@EnableJpaRepositories(basePackageClasses = {Salespoint.class, messaging.TestJavaApp.class})
+@EntityScan(basePackageClasses = {Salespoint.class, TestApp.class})
+@EnableJpaRepositories(basePackageClasses = {Salespoint.class, TestApp.class})
 @ComponentScan
-public class TestJavaApp {
+public class TestApp {
     public static void main(String[] args) {
-        SpringApplication.run(TestJavaApp.class, args);
+        SpringApplication.run(TestApp.class, args);
     }
 
     @Configuration

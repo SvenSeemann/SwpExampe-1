@@ -6,16 +6,19 @@ import javax.persistence.{GeneratedValue, Id, Entity}
  * Created by justusadam on 19/11/14.
  */
 @Entity
-protected class Employee(@Id
-                         @GeneratedValue
-                         private var _id:Int,
-                         private val _name:String)
-  extends Person{
+protected class Employee extends Person{
 
-  @Deprecated
-  def this() = {
-    this(_,_)
+  @Id
+  @GeneratedValue
+  private var _id:Int = _
+  private var _name:String = _
+
+  def this(id:Int, name:String) = {
+    this()
+    _id = id
+    _name = name
   }
+
 
   def name = _name
   def id = _id
