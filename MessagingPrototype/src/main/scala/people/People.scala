@@ -6,8 +6,11 @@ package people
 object People {
    private val _people:Map[Int, Employee] = Map(
      1 -> new Manager("manager"),
-     2 -> new Caterer(2, "Caterer")
+     2 -> new Caterer(2, "Caterer"),
+     3 -> new Employee(3, "Some guy")
    )
 
    def people = _people
+
+
  }

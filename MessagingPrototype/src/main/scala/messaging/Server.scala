@@ -35,7 +35,7 @@ object Server {
 
   def fetch(user:Int):Inbox = {
     receivers.get(user) match {
-      case None => throw new NoSuchUserError(user)
+      case None => new Inbox
       case Some(x) => x
     }
   }

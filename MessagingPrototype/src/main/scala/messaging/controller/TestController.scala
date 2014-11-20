@@ -1,5 +1,6 @@
 package messaging.controller
 
+import messaging.{Message, Receiver, Sender}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -29,6 +30,11 @@ class TestController {
       case None => "error"
       case Some(x) =>
         model.addAttribute("name", x.name)
+        model.addAttribute("messaging", x match {
+          case x:Sender => "Sends"
+          case x:Receiver => x.fetchMessages.foldLeft(""){(x, m:Message) => x + "<br />" + m.toString}
+          case _ => "does nothing"
+        })
         "choose"
     }
   }
