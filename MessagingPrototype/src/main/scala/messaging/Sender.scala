@@ -9,7 +9,7 @@ package messaging
 trait Sender{
   def name:String
 
-  def send(message:String, recipient:Int) = {
+  def send(message:String, recipient:Int):Boolean = {
     Server.deliver(new Message(message, name, recipient))
   }
 }

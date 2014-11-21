@@ -12,7 +12,7 @@ trait Receiver {
     getInbox.fetchAll
   }
 
-  def getInbox:ListInbox = {
+  def getInbox:Inbox = {
     Server.fetch(id)
   }
 }

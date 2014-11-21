@@ -6,18 +6,21 @@ package messaging
  * Server Object that distributes the messages
  */
 abstract class Server {
-  def deliver(message:Message)
+  def deliver(message:Message):Boolean
 
   def addReceiver(receiver:Receiver)
 
-  def fetch(user:Int):ListInbox
+  def fetch(user:Int):Inbox
 }
 
 
 object Server extends Server{
   private val proxy = new MapServer
 
-  override def deliver(message: Message): Unit = proxy.deliver(message)
+  override def deliver(message: Message) = {
+    proxy.deliver(message)
+    true
+  }
 
   override def fetch(user: Int): Inbox = proxy.fetch(user)
 

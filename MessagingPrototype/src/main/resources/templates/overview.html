@@ -8,6 +8,7 @@
 </head>
 <body>
     <div>
+        <h1>Overview</h1>
         <a th:each="person : ${people}" th:href="@{'/messaging/choose/' + ${person.id}}" href="/choose">
             <h4 th:text="${person.name}">Placeholder</h4>
         </a>
