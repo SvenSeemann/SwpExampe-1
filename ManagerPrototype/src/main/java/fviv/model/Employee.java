@@ -12,7 +12,7 @@ public class Employee extends Person{
 	@GeneratedValue
 	private long id;
 
-	public Employee(String lastname, String firstname, String email, String phone, UserAccount userAccount){
+	public Employee(String lastname, String firstname, String email, String phone){
 		super(lastname, firstname, email, phone);
 	}
 	
