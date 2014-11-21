@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+        <title>Caterin Test</title>
+        <style>
+            body {
+                background-color: #383839;
+                font-family: 'Oxygen', sans-serif;
+            }
+            #webseite {
+                width: 1000px;
+                height: auto;
+                margin: auto;
+            }
+            #header {
+                width: 1000px;
+                height: 80px;
+                clear: both;
+            }
+            #header_text {
+                color: #fff;
+                font-size: 50px;
+                position: relative;
+                margin-top: 30px;
+            }
+            #loggedAs {
+                float: right;
+                height: 80px;
+                width: auto;
+                color: #fff;
+            }
+            #loggedAs p {
+                text-align: right;
+                margin: 0;
+            }
+            #loggedAs span {
+                margin-top: 0;
+                font-size: 50px;
+            }
+            #menu {
+                width: 150px;
+                height: 300px;
+                float: right;
+            }
+            #menu p {
+                margin: 0;
+            }
+            .menuPointNormal {
+                width: 150px;
+                height: 20px;
+                margin-bottom: 5px;
+                border: #0C3 medium solid;
+                color: #FFF;
+                text-align: center;
+                cursor: pointer;
+            }
+            .menuPointBold {
+                width: 150px;
+                height: 50px;
+                margin-bottom: 5px;
+                padding-top: 30px;
+                border: #0C3 medium solid;
+                color: #FFF;
+                text-align: center;
+                cursor: pointer;
+            }
+            #content {
+                width: 840px;
+                height: auto;
+                float: left;
+                border-top: #0C3 thick dashed;
+            }
+            #request{
+                width:400px;
+                height:200px;
+                border: #0C3 medium solid;
+                position:absolute;
+                top:20%;
+                left:35%;
+                color:#fff;
+                display:none;
+                cursor: pointer;
+            }
+            #frame{
+                width:835px;
+                height:800px;
+                border: #0C3 medium solid;
+                margin-top:10px;
+            }
+        </style>
+        <script>
+            function newArea() {
+                document.getElementById('request').style.display = "block";
+            }
+            function build() {
+                document.getElementById('request').style.display = "none";
+                var width = document.size.width.value;
+                var height = document.size.height.value;
+                
+                var area = document.createElement("div");
+                area.id = "area";
+                var content = document.getElementById("content");
+                content.appendChild(area);
+                //area.style.width = width;
+                //area.style.height = height;
+                //area.style.border = "#fff medium solid;";
+            }
+        </script>
+    </head>
+
+    <body>
+        <div id="webseite">
+            <div id="header"><span id="header_text">GELÄNDEPLANER</span></div>
+            <div id="content"> 
+                <div id="request">
+                    <h3>Grö&szlig;e eingeben</h3>
+                    <form name="size">
+                        <table>
+                            <tr>
+                                <td>Weite:</td>
+                                <td><input type="text" name="width" size="30"> m</td>
+                            </tr>
+                            <tr>
+                                <td>Höhe: </td>
+                                <td><input type="text" name="height" size="30"> m</td>
+                            </tr>
+                            <tr><td colspan="2"> <button value="ready" onclick="build();">fertig</button></td></tr>
+                        </table>
+                    </form></div>
+                <div id="frame">
+
+
+                </div>
+            </div>
+            <div id="menu">
+                <div class="menuPointNormal"  onclick="newArea();">
+                    <p>Neues Gelände</p>
+                </div>
+                <div class="menuPointNormal">
+                    <p>Bühnen</p>
+                </div>
+                <div class="menuPointNormal">
+                    <p>Catering</p>
+                </div>
+                <div class="menuPointNormal">
+                    <p>Toiletten</p>
+                </div>
+                <div class="menuPointNormal">
+                    <p>Zeltplatz</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
