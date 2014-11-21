@@ -20,7 +20,7 @@ class ListInbox extends Inbox{
   }
 
   def delete(message:Message):Unit = {
-    messages = messages.filter({a => a != message})
+    messages = messages filter {a => a != message}
   }
 
   def hasNewMessages = {
@@ -28,6 +28,6 @@ class ListInbox extends Inbox{
   }
 
   def fetchNew = {
-    messages.filter({x => !x.read})
+    messages filter {x => !x.read}
   }
 }

@@ -17,7 +17,7 @@ class MapServer extends Server{
   }.map(e => (e.id, new ListInbox)).toSeq: _*)
 
   def addReceiver(receiver:Receiver) = {
-    receivers.contains(receiver.id) match {
+    receivers contains receiver.id match {
       case false => receivers += ((receiver.id, new ListInbox))
       case true => Unit
     }
@@ -25,7 +25,7 @@ class MapServer extends Server{
   }
 
   def deliver(message:Message) = {
-    receivers.get(message.recipient) match {
+    receivers get message.recipient  match {
       case None => throw new NoSuchUserError(message.recipient)
       case Some(x) =>
         message.dateReceived match {
@@ -37,7 +37,7 @@ class MapServer extends Server{
   }
 
   def fetch(user:Int):Inbox = {
-    receivers.get(user) match {
+    receivers get user match {
       case None => new ListInbox
       case Some(x) => x
     }

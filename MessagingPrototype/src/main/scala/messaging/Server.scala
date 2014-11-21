@@ -18,11 +18,11 @@ object Server extends Server{
   private val proxy = new MapServer
 
   override def deliver(message: Message) = {
-    proxy.deliver(message)
+    proxy deliver message
     true
   }
 
   override def fetch(user: Int): Inbox = proxy.fetch(user)
 
-  override def addReceiver(receiver: Receiver): Unit = proxy.addReceiver(receiver)
+  override def addReceiver(receiver: Receiver): Unit = proxy addReceiver receiver
 }
