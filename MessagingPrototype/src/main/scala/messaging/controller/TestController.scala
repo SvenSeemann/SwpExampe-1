@@ -45,7 +45,7 @@ class TestController {
             case _ => false
           }
           ))
-          case _ => Unit
+          case _ =>
         }
         "choose"
     }

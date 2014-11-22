@@ -25,13 +25,15 @@
             background-color: #2e7cdc;
             padding: 10px 15px;
             margin: 10px;
-            transition: background-color 300ms ease 0ms;
+            position: relative;
+            left: 0;
             width: 200px;
-
+            transition: background-color 300ms ease 0ms, left 200ms ease 0ms;
         }
         .person:hover {
             background-color: #2956a5;
             transition: background-color 300ms ease 0ms;
+            left: 50px;
         }
         .person:visited {
             color: floralwhite;
@@ -64,6 +66,7 @@
         input[type=submit] {
             float: right;
         }
+
 
     </style>
 </head>
