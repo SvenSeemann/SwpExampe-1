@@ -2,27 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title>FVIV Finances</title>
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+<title>FVIV Finanzen:</title>
 </head>
 <body>
-	<a href="manager.html">Home</a>
-	<h1>FVIV Finances:</h1>
+	<form action="manager.html">
+		<input type="submit" value="proTerminal"></input>
+	</form>
+	<h1>FVIV Finanzen:</h1>
 	<table border="1">
 			<tr>
-				<th>Type</th>
-				<td>Amount</td>
+				<th>Ausgabenart</th>
+				<td>Menge</td>
 			</tr>
 			<tr th:each=" salary : ${salary}">
-			 	<th>Salary/hour</th>
+			 	<th>Gehälter/Stunde</th>
 			 	<td th:text="${salary.amount}"></td>
 			</tr>
 			<tr>
-				<td>Salary Total:</td>
+				<td>Gehälter Total:</td>
 				<td th:text="${salaryTotal}"></td>
 			</tr>
 			<tr></tr>
 			<tr th:each=" catering : ${catering}">
-				<th>Catering/day</th>
+				<th>Catering/Tag</th>
 				<td th:text="${catering.amount}"></td>
 			</tr>
 			<tr>
@@ -31,11 +34,11 @@
 			</tr>
 			<tr></tr>
 			<tr th:each=" rent : ${rent}">
-				<th>Rent/day</th>
+				<th>Miete/Tag</th>
 				<td th:text="${rent.amount}"></td>
 			</tr>
 			<tr>
-				<td>Rent Total:</td>
+				<td>Miete Total:</td>
 				<td th:text="${rentTotal}"></td>
 			</tr>			
 	</table>
