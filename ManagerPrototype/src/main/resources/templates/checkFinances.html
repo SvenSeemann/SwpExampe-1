@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>FVIV Finances</title>
+</head>
+<body>
+	<a href="manager.html">Home</a>
+	<h1>FVIV Finances:</h1>
+	<table border="1">
+			<tr>
+				<th>Type</th>
+				<td>Amount</td>
+			</tr>
+			<tr th:each=" salary : ${salary}">
+			 	<th>Salary/hour</th>
+			 	<td th:text="${salary.amount}"></td>
+			</tr>
+			<tr>
+				<td>Salary Total:</td>
+				<td th:text="${salaryTotal}"></td>
+			</tr>
+			<tr></tr>
+			<tr th:each=" catering : ${catering}">
+				<th>Catering/day</th>
+				<td th:text="${catering.amount}"></td>
+			</tr>
+			<tr>
+				<td>Catering Total:</td>
+				<td th:text="${cateringTotal}"></td>
+			</tr>
+			<tr></tr>
+			<tr th:each=" rent : ${rent}">
+				<th>Rent/day</th>
+				<td th:text="${rent.amount}"></td>
+			</tr>
+			<tr>
+				<td>Rent Total:</td>
+				<td th:text="${rentTotal}"></td>
+			</tr>			
+	</table>
+</body>
+</html>

@@ -4,10 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 @Entity
-public class Employee{
+public class Manager{
 	private String lastname, firstname, email, phone;
 	
 	@Id
@@ -15,10 +13,9 @@ public class Employee{
 	private long id;
 	
 	@Deprecated
-	protected Employee(){}
+	protected Manager(){}
 	
-	@Autowired
-	public Employee(String lastname, String firstname, String email, String phone){
+	public Manager(String lastname, String firstname, String email, String phone){
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.email = email;

@@ -2,15 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<title>Employees</title>
+<title>FVIV Employees</title>
 </head>
 <body>
-<h1>Auflistung der Mitarbeiter:</h1>
-<table>
-	<tr th:each=" employee : ${employeelist}">
-		<td th:text="${employee.id}">1</td>
-		<td th:text="${employee.lastname}">Gates</td>
-	</tr>
+	<a href="manager.html">Home</a>
+	<h1>FVIV Employees:</h1>
+	<table border="1">
+		<thead>	
+			<tr>
+				<th>ID</th>
+				<th>Lastname</th>
+				<th>Firstname</th>
+				<th>Email</th>
+				<th>Phone number</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each=" employee : ${employeelist}">
+			 	<td th:text="${employee.id}"></td>
+				<td th:text="${employee.lastname}"></td>
+				<td th:text="${employee.firstname}"></td>
+				<td th:text="${employee.email}"></td>
+				<td th:text="${employee.phone}"></td>
+			</tr>
+		</tbody>
 </table>
 </body>
 </html>
