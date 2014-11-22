@@ -5,27 +5,27 @@
 <title>FVIV Employees</title>
 </head>
 <body>
-<a href="manager.html">Home</a>
-<h1>FVIV Employees:</h1>
-<table border="1">
-	<thead>	
-		<tr>
-			<th>ID</th>
-			<th>Lastname</th>
-			<th>Firstname</th>
-			<th>Email</th>
-			<th>Phone number</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr th:each=" employee : ${employeelist}">
-		 	<td th:text="${employee.id}"></td>
-			<td th:text="${employee.lastname}"></td>
-			<td th:text="${employee.firstname}"></td>
-			<td th:text="${employee.email}"></td>
-			<td th:text="${employee.phone}"></td>
-		</tr>
-	</tbody>
+	<a href="manager.html">Home</a>
+	<h1>FVIV Employees:</h1>
+	<table border="1">
+		<thead>	
+			<tr>
+				<th>ID</th>
+				<th>Lastname</th>
+				<th>Firstname</th>
+				<th>Email</th>
+				<th>Phone number</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each=" employee : ${employeelist}">
+			 	<td th:text="${employee.id}"></td>
+				<td th:text="${employee.lastname}"></td>
+				<td th:text="${employee.firstname}"></td>
+				<td th:text="${employee.email}"></td>
+				<td th:text="${employee.phone}"></td>
+			</tr>
+		</tbody>
 </table>
 </body>
 </html>
