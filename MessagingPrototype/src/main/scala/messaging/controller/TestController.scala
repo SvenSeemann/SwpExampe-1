@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.{RequestMethod, RequestParam, PathVariable, RequestMapping}
-import people.People
+import people.{Office, People, Employee, Caterer}
 
 import scala.collection.JavaConversions
 
@@ -33,11 +33,20 @@ class TestController {
     People.people.get(id) match {
       case None => "error"
       case Some(x) =>
-        model.addAttribute("name", x.name)
-        model.addAttribute("messaging", new MessageForm(classOf[Receiver] isAssignableFrom x.getClass, classOf[Sender] isAssignableFrom x.getClass, x match {
-          case x:Receiver => messageAggregate(x)
+        model addAttribute("name", x.name)
+        model addAttribute("messaging", new MessageForm(classOf[Receiver] isAssignableFrom x.getClass, classOf[Sender] isAssignableFrom x.getClass, x match {
+          case m:Receiver => messageAggregate(m)
           case _ => List[String]()
         }))
+        x match {
+          case m: Sender => model.addAttribute("receivers", JavaConversions.asJavaIterable(
+          People.people.values filter {
+            case s:Receiver => true
+            case _ => false
+          }
+          ))
+          case _ => Unit
+        }
         "choose"
     }
   }
@@ -49,5 +58,16 @@ class TestController {
         "redirect:/messaging/choose"
       case _ => "redirect:/error"
     }
+  }
+
+  @RequestMapping(value = Array("/messaging/add"), method = Array(RequestMethod.POST))
+  def add(@RequestParam kind:String, @RequestParam name:String): String = {
+    People.add(kind match {
+        case "caterer" => new Caterer(People.new_id, name)
+        case "office" => new Office(People.new_id, name)
+        case "employee" => new Employee(People.new_id, name)
+        case _ => throw new IllegalArgumentException
+    })
+    "redirect:/messaging/choose"
   }
 }

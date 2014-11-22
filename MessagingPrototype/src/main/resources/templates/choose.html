@@ -8,18 +8,21 @@
     <style type="text/css">
         body {
             font-family: Helvetica, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
         }
         #main {
             width: 960px;
             margin-left: auto;
             margin-right: auto;
+            min-height: 100%
         }
         label {
             display: block;
         }
         .messaging-form {
             background-color: #2e7cdc;
-            color: white;
+            color: floralwhite;
         }
         .messages-received {
             background-color: rgba(255, 104, 30, 0.53);
@@ -32,26 +35,77 @@
         .messages-received h4, .messaging-form h4 {
             margin-top: 0;
         }
-
+        .clear {
+            clear: both;
+        }
+        #recipients {
+            color: floralwhite;
+            background-color: #00CC33;
+            float: left;
+            padding: 30px;
+            margin: 20px;
+            font-size: 12pt;
+        }
+        .recipient {
+            margin: 20px;
+        }
+        #recipients h4 {
+            margin-top: 0;
+        }
+        .back {
+            float: left;
+            display: block;
+            padding: 12px 17px;
+            color: floralwhite;
+            background-color: #f9731c;
+        }
+        .back:hover {
+            background-color: #ab5616;
+        }
+        h1 {
+            color: #2956a5;
+        }
+        a {
+            text-decoration: none;
+            transition: background-color 300ms ease 0ms;
+        }
+        a:visited {
+            color: blue;
+        }
+        a:hover {
+            transition: background-color 300ms ease 0ms;
+        }
     </style>
 </head>
 <body>
     <div id="main">
-        <a href="/messaging/choose">Back</a>
+        <a href="/messaging/choose" class="back">Back</a>
+        <div class="clear"></div>
         <h1 th:text="${name}">Name</h1>
         <form th:if="${messaging.sends}" method="post" action="/messaging/send">
             <div class="messaging-form messaging">
                 <h4>Send new Message</h4>
-                <label for="message">Your Message</label><textarea name="message" id="message" ></textarea>
                 <label for="recipient">Recipient</label><input type="number" name="recipient" id="recipient" />
+                <label for="message">Your Message</label><textarea name="message" id="message" ></textarea>
                 <input type="hidden" name="sender" th:value="${id}" />
                 <input type="submit" value="submit" />
             </div>
         </form>
 
+        <div th:if="${messaging.sends}" id="recipients">
+            <h4>Recipients</h4>
+            <table>
+            <tr th:each="receiver : ${receivers}" class="recipient">
+                <td class="recipient-name" th:text="${receiver.name}"></td>
+                <td class="recipient-id" th:text="${receiver.id}"></td>
+            </tr>
+            </table>
+        </div>
+
         <div th:if="${messaging.receives}" class="messages-received messaging"><h4>My Messages</h4>
             <div class="message" th:each="message : ${messaging.message}"><p th:text="${message}">error</p></div>
         </div>
+        <div class="clear"></div>
     </div>
 </body>
 </html>

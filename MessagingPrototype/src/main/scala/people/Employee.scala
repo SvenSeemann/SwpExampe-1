@@ -6,7 +6,7 @@ import javax.persistence.{GeneratedValue, Id, Entity}
  * Created by justusadam on 19/11/14.
  */
 @Entity
-protected class Employee extends Person{
+class Employee extends Person{
 
   @Id
   @GeneratedValue

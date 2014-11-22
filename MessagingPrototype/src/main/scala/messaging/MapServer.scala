@@ -19,18 +19,23 @@ class MapServer extends Server{
   def addReceiver(receiver:Receiver) = {
     receivers contains receiver.id match {
       case false => receivers += ((receiver.id, new ListInbox))
-      case true => Unit
+      case true =>
     }
 
   }
 
   def deliver(message:Message) = {
     receivers get message.recipient  match {
-      case None => throw new NoSuchUserError(message.recipient)
+      case None => People.get(message.recipient) match {
+        case Some(p:Receiver) =>
+          addReceiver(p)
+          deliver(message)
+        case None => throw new NoSuchUserError
+      }
       case Some(x) =>
         message.dateReceived match {
           case None => message.dateReceived = Option(new Date())
-          case Some(_) => Unit
+          case Some(_) =>
         }
         x.store(message)
     }

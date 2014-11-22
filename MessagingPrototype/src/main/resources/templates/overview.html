@@ -8,18 +8,20 @@
     <style type="text/css">
         body {
             font-family: Helvetica, Arial, sans-serif;
-
+            padding: 0;
+            margin: 0;
         }
         #main {
             width: 960px;
-
             margin-left: auto;
             margin-right: auto;
         }
-        .person {
+        .person, .new-people {
             text-decoration: none;
             color: floralwhite;
             display: block;
+        }
+        .person {
             background-color: #2e7cdc;
             padding: 10px 15px;
             margin: 10px;
@@ -38,10 +40,29 @@
             list-style-type: none;
             margin: 0;
             padding: 0;
+            float: left;
         }
         h1 {
             margin-left: auto;
             margin-right: auto;
+        }
+        .new-people {
+            float: right;
+            padding: 30px;
+            margin: 20px;
+            background-color: #c7260d;
+        }
+        .clear {
+            clear: both;
+        }
+        .new-people h3 {
+            margin-top: 0;
+        }
+        label, input {
+            margin: 15px 10px;
+        }
+        input[type=submit] {
+            float: right;
         }
 
     </style>
@@ -54,6 +75,22 @@
                 <a class="person" th:href="@{'/messaging/choose/' + ${person.id}}" th:text="${person.name}"></a>
             </li>
         </ul>
+        <div class="new-people">
+            <h3>Add some more People</h3>
+            <form action="/messaging/add" method="post">
+                <label for="name">Name it:</label>
+                <input type="text" name="name" id="name" />
+                <div class="clear"></div>
+                <label for="kind">And select a Type:</label>
+                <select name="kind" id="kind">
+                    <option value="caterer">Caterer</option>
+                    <option value="office">Office</option>
+                    <option value="employee">Employee</option>
+                </select>
+                <div class="clear"></div>
+                <input type="submit" value="submit" />
+            </form>
+        </div>
     </div>
 </body>
 </html>
