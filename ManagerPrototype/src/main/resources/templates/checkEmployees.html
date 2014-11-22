@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Employees</title>
 </head>
 <body>
 <h1>Auflistung der Mitarbeiter:</h1>
-
+<table>
+	<tr th:each=" employee : ${employeelist}">
+		<td th:text="${employee.id}">1</td>
+		<td th:text="${employee.lastname}">Gates</td>
+	</tr>
+</table>
 </body>
 </html>

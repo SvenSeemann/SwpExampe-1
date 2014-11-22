@@ -9,6 +9,7 @@ import fviv.model.EmployeeRepository;
 
 @Controller
 class ManagerFunctionsController{
+	@Autowired
 	private final EmployeeRepository employeeRepository;
 	
 	@Autowired
@@ -24,7 +25,6 @@ class ManagerFunctionsController{
 	@RequestMapping("/checkEmployees")
 	public String checkEmployees(ModelMap modelMap){
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
-		
 		return "checkEmployees";
 	}
 	
