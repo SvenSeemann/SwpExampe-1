@@ -7,7 +7,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.{RequestMethod, RequestParam, PathVariable, RequestMapping}
 import people.People
 
-import scala.collection.JavaConverters
+import scala.collection.JavaConversions
 
 /**
  * Created by justusadam on 19/11/14.
@@ -19,7 +19,7 @@ class TestController {
 
   @RequestMapping(Array("/messaging/choose"))
   def page(model:Model) = {
-    model.addAttribute("people", JavaConverters.asJavaIterableConverter(People.people.values).asJava)
+    model.addAttribute("people", JavaConversions.asJavaIterable(People.people.values))
     "overview"
   }
 

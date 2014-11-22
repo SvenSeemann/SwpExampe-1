@@ -4,14 +4,56 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta charset="UTF-8" />
     <title>People</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+
+        }
+        #main {
+            width: 960px;
+
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .person {
+            text-decoration: none;
+            color: floralwhite;
+            display: block;
+            background-color: #2e7cdc;
+            padding: 10px 15px;
+            margin: 10px;
+            transition: background-color 300ms ease 0ms;
+            width: 200px;
+
+        }
+        .person:hover {
+            background-color: #2956a5;
+            transition: background-color 300ms ease 0ms;
+        }
+        .person:visited {
+            color: floralwhite;
+        }
+        .people {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
 </head>
 <body>
-    <div>
+    <div id="main">
         <h1>Overview</h1>
-        <a th:each="person : ${people}" th:href="@{'/messaging/choose/' + ${person.id}}" href="/choose">
-            <h4 th:text="${person.name}">Placeholder</h4>
-        </a>
+        <ul class="people">
+            <li th:each="person : ${people}">
+                <a class="person" th:href="@{'/messaging/choose/' + ${person.id}}" th:text="${person.name}"></a>
+            </li>
+        </ul>
     </div>
 </body>
 </html>
