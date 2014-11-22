@@ -14,6 +14,7 @@ public class FVIVDataInitializer implements DataInitializer{
 	@Autowired
 	public FVIVDataInitializer(EmployeeRepository employeeRepository){
 		this.employeeRepository = employeeRepository;
+		initialize();
 	}
 	
 	public void initialize(){
@@ -25,6 +26,5 @@ public class FVIVDataInitializer implements DataInitializer{
 		Employee employee2 = new Employee("Merkel", "Angela", "Angie@Bundestag.de", "0123456789");
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
-		System.out.println("Employees: "+employeeRepository.findAll());
 	}
 }

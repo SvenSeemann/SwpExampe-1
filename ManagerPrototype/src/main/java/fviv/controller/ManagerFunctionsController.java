@@ -17,7 +17,7 @@ class ManagerFunctionsController{
 		this.employeeRepository = employeeRepository;
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping({"/","/manager"})
 	public String index(){
 		return "manager";
 	}
