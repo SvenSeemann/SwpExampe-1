@@ -27,7 +27,7 @@ class TestController {
   @RequestMapping(Array("/messaging/choose/{id}"))
   def page(@PathVariable("id") id:Int, model:Model) = {
     def messageAggregate(x:Receiver) = {
-      x.fetchMessages.foldLeft(""){(x, m:Message) => x + "\n" + m.toString}
+      x.fetchMessages map {m:Message => m.toString}
     }
 
     People.people.get(id) match {
@@ -36,7 +36,7 @@ class TestController {
         model.addAttribute("name", x.name)
         model.addAttribute("messaging", new MessageForm(classOf[Receiver] isAssignableFrom x.getClass, classOf[Sender] isAssignableFrom x.getClass, x match {
           case x:Receiver => messageAggregate(x)
-          case _ => ""
+          case _ => List[String]()
         }))
         "choose"
     }

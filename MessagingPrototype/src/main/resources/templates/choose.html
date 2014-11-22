@@ -5,19 +5,36 @@
     <meta charset="UTF-8" />
     <title th:text="${name}">People</title>
     <link rel="stylesheet" type="text/css" th:href="@{/resources/css/style.css}" />
+    <style type="text/css">
+        label {
+            display: block;
+        }
+        .messaging-form {
+            background-color: #2e7cdc;
+            color: white;
+            padding: 30px;
+            margin: 20px;
+            float: left;
+        }
+
+    </style>
 </head>
 <body>
     <div>
         <a href="/messaging/choose">Back</a>
         <h1 th:text="${name}">Name</h1>
         <form th:if="${messaging.sends}" method="post" action="/messaging/send">
-            <label for="message">Test</label><textarea name="message" id="message" ></textarea>
-            <label for="recipient">Recipient</label><input type="number" name="recipient" id="recipient" />
-            <input type="hidden" name="sender" th:value="${id}" />
-            <input type="submit" value="submit" />
+            <div class="messaging-form messaging">
+                <label for="message">Your Message</label><textarea name="message" id="message" ></textarea>
+                <label for="recipient">Recipient</label><input type="number" name="recipient" id="recipient" />
+                <input type="hidden" name="sender" th:value="${id}" />
+                <input type="submit" value="submit" />
+            </div>
         </form>
 
-        <p th:if="${messaging.receives}" th:text="${messaging.message}">Sorry, you cannot receive Messages</p>
+        <div th:if="${messaging.receives}"><h3>My Messages</h3>
+            <div class="message" th:each="message : ${messaging.message}"><p th:text="${message}">error</p></div>
+        </div>
     </div>
 </body>
 </html>

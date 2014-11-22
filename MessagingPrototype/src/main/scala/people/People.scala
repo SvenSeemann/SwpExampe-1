@@ -8,7 +8,7 @@ object People {
     1 -> new Manager("Manager"),
     2 -> new Caterer(2, "Caterer"),
     3 -> new Employee(3, "Some guy"),
-    4 -> new Buero(4, "The Buero")
+    4 -> new Office(4, "The Office")
   )
 
   def people = _people
