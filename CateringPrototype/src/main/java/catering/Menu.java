@@ -1,14 +1,14 @@
 package catering;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
 public class Menu {
 
-	private Integer id;
+	private int id;
 	private String description;
 	private double price;
 	
@@ -23,14 +23,20 @@ public class Menu {
 	
 	Menu () {};
 	
-	@Bean
+	public Integer getId() {
+		return this.id;
+	}
+	
 	public String getDescription() {
 		return this.description;
 	}
 	
-	@Bean
 	public double getPrice() {
 		return this.price;
+	}
+	
+	public String toString() {
+		return " | " + this.description + " | " + this.price;
 	}
 	
 }

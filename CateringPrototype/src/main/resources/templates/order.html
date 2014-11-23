@@ -136,33 +136,40 @@ body {
   <div id="header"><span id="header_text">HEADLINE</span><!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
     <div id="loggedAs">
       <p>angemeldet als:</p>
-      <span>CATERER XXXXXXX</span></div>
+      <span>CATERER XXXXXX</span></div>
     <!-- Hier kommt dann die ID des Caterers hin--> 
   </div>
   <div id="content">
     <div id="orderList">
+     <!-- <table>
+      	<tr th:each="order : ${orders}" th:include="order :: orderTemplate"
+      		th:with="menuId = ${order.getMenu().getId()},
+      				 menuDesc = ${order.getMenu().getDescription()},
+      				 menuPrice = ${order.getMenu().getPrice()}" />
+      	</table> -->
       <p>Speisen</p>
-      <ul>
-      	<li>Speise 1</li>
-      	
-      </ul>
+      <h2 th:text=" ${output0}" ></h2>
+      <h2 th:text=" ${output1}" ></h2>
+      <h2 th:text=" ${output2}" ></h2>
+      <h2 th:text=" ${output3}" ></h2>
+      <h2 th:text=" ${output4}" ></h2>
+      <h2 th:text=" ${output5}" ></h2>
+      <h2 th:text=" ${output6}" ></h2>
+      <h2 th:text=" ${output7}" ></h2>
       <p>Getränke</p>
-       <ul>
-      	<li>Getränk 1</li>
-      </ul>
       <div id="storno">STORNO</div>
     </div>
     
     <div id="chooseBox">
       <div id="category">
-        <div id="field"><a href="menu1">Menu 1</a></div>
-        <div id="field">moeeep</div>
-        <div id="field">moeeep</div>
-        <div id="field">moeeep</div>
-        <div id="field">moeeep</div>
-        <div id="field">moeeep</div>
-        <div id="field">moeeep</div>
-        <div id="field">moeeep</div>
+        <div id="field"><a href="menu1">Pommes Frites </a> 2.50 EUR</div>
+        <div id="field"><a href="menu2">Pommes Spezial </a> 3.50 EUR</div>
+        <div id="field"><a href="menu3">Bratwurst </a> 2.00 EUR</div>
+        <div id="field"><a href="menu4">Currywurst </a> 3.00 EUR</div>
+        <div id="field"><a href="menu5">Currywurst Pommes </a> 4.50 EUR</div>
+        <div id="field"><a href="menu6">Stück Pizza </a> 2.50 EUR</div>
+        <div id="field"><a href="menu7">Vanilleeis </a> 1.00 EUR</div>
+        <div id="field"><a href="menu8">Schokoeis </a> 1.00 EUR</div>
       </div>
     </div>
   </div>
