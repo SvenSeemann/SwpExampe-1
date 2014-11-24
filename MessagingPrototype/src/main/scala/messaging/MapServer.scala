@@ -1,7 +1,5 @@
 package messaging
 
-import java.util.Date
-
 import messaging.errors.NoSuchUserError
 import people.People
 
@@ -33,10 +31,6 @@ class MapServer extends Server{
         case None => throw new NoSuchUserError
       }
       case Some(x) =>
-        message.dateReceived match {
-          case None => message.dateReceived = Option(new Date())
-          case Some(_) =>
-        }
         x.store(message)
     }
   }

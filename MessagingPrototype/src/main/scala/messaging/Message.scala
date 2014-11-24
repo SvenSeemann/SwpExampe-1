@@ -1,6 +1,7 @@
 package messaging
 
-import java.util.Date
+import java.sql.Date
+import javax.persistence.{OneToOne, Id, GeneratedValue, Entity}
 
 
 /**
@@ -9,16 +10,18 @@ import java.util.Date
  * A String message that can be sent.
  * Generally the "sent" date should not be set manually
  */
-class Message(val message:String, val sender:String, val recipient:Int, val sent:Date = new Date){
-
-  var dateReceived:Option[Date] = None
+@Entity
+class Message(val message:String, val sender:String, val recipient:Int, @OneToOne val sent:Date = new Date(new java.util.Date().getTime)){
+  @OneToOne
+  var dateReceived:Date = _
   var read = false
-  
+
+  @GeneratedValue
+  @Id
+  var id:Int = _
+
   def received:Boolean = {
-    dateReceived match {
-      case None => false
-      case Some(_) => true
-    }
+    read
   }
 
   override def toString = {
