@@ -36,7 +36,7 @@ public class TestApp {
 
             http.csrf().disable();
 
-            http.authorizeRequests().antMatchers("/**").permitAll().and().formLogin().loginProcessingUrl("/login").and()
+            http.authorizeRequests().antMatchers("/**", "/resources/**").permitAll().and().formLogin().loginProcessingUrl("/login").and()
                     .logout().logoutUrl("/logout").logoutSuccessUrl("/");
         }
     }

@@ -19,7 +19,7 @@ class TestController {
 
   @RequestMapping(Array("/messaging/choose"))
   def page(model:Model) = {
-    model.addAttribute("people", JavaConversions.asJavaIterable(People.people.values))
+    model addAttribute ("people", JavaConversions.asJavaIterable(People.people.values))
     "overview"
   }
 
@@ -39,9 +39,9 @@ class TestController {
           case _ => List[String]()
         }))
         x match {
-          case m: Sender => model.addAttribute("receivers", JavaConversions.asJavaIterable(
+          case m: Sender => model addAttribute("receivers", JavaConversions asJavaIterable(
           People.people.values filter {
-            case s:Receiver => true
+            case s: Receiver => true
             case _ => false
           }
           ))
@@ -54,7 +54,7 @@ class TestController {
   def send(@RequestParam recipient:Int, @RequestParam message:String, @RequestParam sender:Int, model:Model) = {
     People.get(sender) match {
       case Some(x:Sender) =>
-        x.send(message, recipient)
+        x send (message, recipient)
         "redirect:/messaging/choose"
       case _ => "redirect:/error"
     }
@@ -62,7 +62,7 @@ class TestController {
 
   @RequestMapping(value = Array("/messaging/add"), method = Array(RequestMethod.POST))
   def add(@RequestParam kind:String, @RequestParam name:String): String = {
-    People.add(kind match {
+    People add (kind match {
         case "caterer" => new Caterer(People.new_id, name)
         case "office" => new Office(People.new_id, name)
         case "employee" => new Employee(People.new_id, name)
