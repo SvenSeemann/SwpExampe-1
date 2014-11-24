@@ -13,9 +13,17 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# IDE project directories
+# IDE project directories and files
 .idea/
 *.iml
+.classpath
+.project
+.settings/
+.metadata/
 
 # Binary Output
-*/target/
+target/
+
+# large, non diffable files
+*.pdf
+*.png
