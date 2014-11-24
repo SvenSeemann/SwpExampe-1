@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" type="text/css" href="../style.css" />
+<title>Catering Test</title>
+
+</head>
+
+<body>
+	<div id="webseite">
+		<div id="header">
+			<span id="header_text">GELÄNDEPLANER</span>
+		</div>
+		<div id="content">
+			<div id="request">
+				<h3>Grö&szlig;e eingeben</h3>
+				<form action="/newArea" method="post">
+					<table>
+						<tr>
+							<td>Weite:</td>
+							<td><input type="number" name="width" size="30" /> m</td>
+						</tr>
+						<tr>
+							<td>Höhe:</td>
+							<td><input type="number" name="height" size="30" /> m</td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="submit" value="submit" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div id="frame"></div>
+		</div>
+		<div id="menu">
+			<div class="menuPointNormal" onclick="newArea();">
+				<p>Neues Gelände</p>
+			</div>
+			<div class="menuPointNormal">
+				<p>Bühnen</p>
+			</div>
+			<div class="menuPointNormal">
+				<p>Catering</p>
+			</div>
+			<div class="menuPointNormal">
+				<p>Toiletten</p>
+			</div>
+			<div class="menuPointNormal">
+				<p>Zeltplatz</p>
+			</div>
+		</div>
+	</div>
+	<script>
+            function newArea() {
+                document.getElementById('request').style.display = "block";
+            }
+            function build() {
+                document.getElementById('request').style.display = "none";
+                var width = document.size.width.value;
+                var height = document.size.height.value;
+                
+                var area = document.createElement("div");
+                area.id = "area";
+                var content = document.getElementById("content");
+                content.appendChild(area);
+                //area.style.width = width;
+                //area.style.height = height;
+                //area.style.border = "#fff medium solid;";
+            }
+        </script>
+</body>
+</html>
