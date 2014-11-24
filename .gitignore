@@ -20,6 +20,7 @@ hs_err_pid*
 .project
 .settings/
 .metadata/
+.springBeans
 
 # Binary Output
 target/
@@ -27,3 +28,4 @@ target/
 # large, non diffable files
 *.pdf
 *.png
+*.jpg
