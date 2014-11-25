@@ -90,26 +90,7 @@
                 margin-top:10px;
             }
         </style>
-        <script>
-            function newArea() {
-                document.getElementById('request').style.display = "block";
-            }
-            function build() {
-                document.getElementById('request').style.display = "none";
-                var width = document.size.width.value;
-                var height = document.size.height.value;
-                
-                var area = document.createElement("div");
-                area.id = "area";
-                var content = document.getElementById("content");
-                content.appendChild(area);
-                //area.style.width = width;
-                //area.style.height = height;
-                //area.style.border = "#fff medium solid;";
-            }
-        </script>
     </head>
-
     <body>
         <div id="webseite">
             <div id="header"><span id="header_text">GELÄNDEPLANER</span></div>
@@ -152,5 +133,23 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            function newArea() {
+                document.getElementById('request').style.display = "block";
+            }
+            function build() {
+                document.getElementById('request').style.display = "none";
+                var width = document.size.width.value;
+                var height = document.size.height.value;
+
+                var area = document.createElement("div");
+                //area.id = "area";
+                var content = document.getElementById("content");
+                content.appendChild(area);
+                //area.style.width = width;
+                //area.style.height = height;
+                //area.style.border = "#fff medium solid;";
+            }
+        </script>
     </body>
 </html>
