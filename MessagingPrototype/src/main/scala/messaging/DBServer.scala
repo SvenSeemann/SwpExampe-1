@@ -1,7 +1,10 @@
 package messaging
 
+import messaging.errors.NoSuchUserError
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
+
+import scala.collection.JavaConversions
 
 
 /**
@@ -9,11 +12,12 @@ import org.springframework.context.annotation.Bean
  */
 @Bean
 @Autowired
-abstract class DBServer(val repo:PostOffice) extends Server{
+class DBServer(val postOffice:PostOffice) extends Server{
 
-  override def deliver(message: Message) = true
+  override def deliver(message: Message) = {
+    postOffice.save(message)
+    true
+  }
 
-  override def fetch(user: Int): Inbox
-
-  override def addReceiver(receiver: Receiver): Unit = {}
+  override def fetch(user: Int): Inbox = new ListInbox(JavaConversions.iterableAsScalaIterable(postOffice.findByRecipient(user)))
 }

@@ -6,9 +6,11 @@ package messaging
  *
  * Container for wrapping messages sent to a user
  */
-class ListInbox extends Inbox{
+class ListInbox(var messages:List[Message] = List[Message]()) extends Inbox{
 
-  var messages:List[Message] = List[Message]()
+  def this(messages:Iterable[Message]) = {
+    this(messages.toList)
+  }
 
   def store(message:Message):Boolean = {
     messages = messages :+ message

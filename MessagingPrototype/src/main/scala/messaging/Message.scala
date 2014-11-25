@@ -1,7 +1,8 @@
 package messaging
 
-import java.sql.Date
-import javax.persistence.{OneToOne, Id, GeneratedValue, Entity}
+import java.time.LocalDateTime
+import javax.persistence.{Id, GeneratedValue, Entity}
+import org.hibernate.annotations.Type
 
 
 /**
@@ -11,9 +12,12 @@ import javax.persistence.{OneToOne, Id, GeneratedValue, Entity}
  * Generally the "sent" date should not be set manually
  */
 @Entity
-class Message(val message:String, val sender:String, val recipient:Int, @OneToOne val sent:Date = new Date(new java.util.Date().getTime)){
-  @OneToOne
-  var dateReceived:Date = _
+class Message(val message:String, val sender:String, val recipient:Int,
+              @Type(`type`="org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+              var sent:LocalDateTime = LocalDateTime.now()){
+
+  @Type(`type`="org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+  var dateReceived:LocalDateTime = _
   var read = false
 
   @GeneratedValue
@@ -23,6 +27,8 @@ class Message(val message:String, val sender:String, val recipient:Int, @OneToOn
   def received:Boolean = {
     read
   }
+
+  def getRecipient = recipient
 
   override def toString = {
     sender + " [" + sent.toString + "]" + ": " + message

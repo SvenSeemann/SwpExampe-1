@@ -1,5 +1,7 @@
 package messaging
 
+import org.springframework.beans.factory.annotation.Autowired
+
 /**
  * Created by justusadam on 18/11/14.
  *
@@ -8,14 +10,20 @@ package messaging
 abstract class Server {
   def deliver(message:Message):Boolean
 
-  def addReceiver(receiver:Receiver)
-
   def fetch(user:Int):Inbox
 }
 
 
 object Server extends Server{
-  private val proxy = new MapServer
+
+  private var _proxy:Server = _
+
+  def proxy = _proxy
+
+  @Autowired
+  def proxy_=(server:Server) = {
+    _proxy = server
+  }
 
   override def deliver(message: Message) = {
     proxy deliver message
@@ -23,6 +31,4 @@ object Server extends Server{
   }
 
   override def fetch(user: Int): Inbox = proxy.fetch(user)
-
-  override def addReceiver(receiver: Receiver): Unit = proxy addReceiver receiver
 }
