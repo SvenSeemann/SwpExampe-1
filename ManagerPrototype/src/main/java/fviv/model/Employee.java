@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Entity
 public class Employee{
 	private String lastname, firstname, email, phone;
-	
+		
 	@Id
 	@GeneratedValue
 	private long id;

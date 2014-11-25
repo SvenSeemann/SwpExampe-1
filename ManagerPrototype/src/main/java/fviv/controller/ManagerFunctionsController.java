@@ -11,7 +11,6 @@ import fviv.model.ExpenseRepository;
 
 @Controller
 class ManagerFunctionsController{
-	@Autowired
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	
@@ -34,7 +33,7 @@ class ManagerFunctionsController{
 	
 	@RequestMapping("/checkFinances")
 	public String checkFinances(ModelMap modelMap){
-		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0;
+		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0, deposit = 0;
 		modelMap.addAttribute("salary", expenseRepository.findByExpenseType("salary"));
 		modelMap.addAttribute("catering", expenseRepository.findByExpenseType("catering"));
 		modelMap.addAttribute("rent", expenseRepository.findByExpenseType("rent"));
@@ -51,14 +50,19 @@ class ManagerFunctionsController{
 			rentTotal += exp.getAmount();
 		}
 		
+		for(Expense exp : expenseRepository.findByExpenseType("deposit")){
+			deposit += exp.getAmount();
+		}
+		
+		modelMap.addAttribute("deposit", deposit);
 		modelMap.addAttribute("salaryTotal", salaryTotal);
 		modelMap.addAttribute("cateringTotal", cateringTotal);
 		modelMap.addAttribute("rentTotal", rentTotal);
 		return "checkFinances";
 	}
 	
-	@RequestMapping("/newLogin")
-	public String newLogin(){
-		return "newLogin";
+	@RequestMapping("/accountAdministration")
+	public String newLogin(ModelMap modelMap){
+		return "accountAdministration";
 	}
 }
