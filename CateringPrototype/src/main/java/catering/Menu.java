@@ -1,29 +1,34 @@
 package catering;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestParam;
 
-public class Menu {
+@Entity
+public abstract class Menu {
 
-	private int id;
-	private String description;
-	private double price;
+	@Id
+	@GeneratedValue
+	private long id;
+	protected String description;
+	protected float price;
 	
-	public Menu(Integer id, String description, double price) {
-		
-		Assert.notNull(id, "Order must not be null!");
-		this.id = id;
+	@Autowired
+	public Menu(String description, float price) {
 		this.description = description;
 		this.price = price;
-		
 	}
 	
-	Menu () {};
+	@Deprecated
+	public Menu () {};
 	
-	public Integer getId() {
+	public long getId() {
 		return this.id;
 	}
 	
@@ -33,10 +38,6 @@ public class Menu {
 	
 	public double getPrice() {
 		return this.price;
-	}
-	
-	public String toString() {
-		return " | " + this.description + " | " + this.price;
 	}
 	
 }

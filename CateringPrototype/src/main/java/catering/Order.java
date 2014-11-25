@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Entity;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Component;
 
@@ -12,69 +15,42 @@ import org.springframework.stereotype.Component;
 @Component
 public class Order {
 	
-	private List<Menu> menus;
-	private int[] ct = new int[8];
-	private String[] output = new String[8];
+	private float total;
+	@Autowired
+	private final OrderedMealsRepository orderedMealsRepository;
+	private final OrderedDrinksRepository orderedDrinksRepository;
 	
-	public Order() {
-		menus = new ArrayList<>();
-		for (int i = 0; i <= 7; i++) {
-			output[i] = "";
-		}
+	public Order(OrderedMealsRepository orderedMealsRepository, OrderedDrinksRepository orderedDrinksRepository) {
+		this.orderedMealsRepository = orderedMealsRepository;
+		this.orderedDrinksRepository = orderedDrinksRepository;
 	}
 	
-	Menu addMenu(Menu m) {
-		menus.add(m);
-		count(m);
-		return m;
+	public void addMealToRepository(Meal meal) {
+		orderedMealsRepository.save(meal);
 	}
 	
-	public boolean hasNoMenus() {
-		return menus.isEmpty();
+	public void addDrinkToRepository(Drink drink) {
+		orderedDrinksRepository.save(drink);
 	}
 	
-	public Menu getMenu() {
-		Iterator<Menu> iterator = menus.iterator();
-		if (iterator.hasNext()) {
-			return iterator.next();
-		} else {
-			return null;
-		}
+	public OrderedMealsRepository getOrderedMeals() {
+		return this.orderedMealsRepository;
 	}
 	
-	public String getOutput(int i) {
-		return output[i];
+	public OrderedDrinksRepository getOrderedDrinks() {
+		return this.orderedDrinksRepository;
 	}
 	
-	/*public String toString() {
-		//Iterator<Menu> iterator = menus.iterator();
-		
-		if (menus.isEmpty()) {
-			return "There were no menus ordered.";
-		} else {
-			
-			output[0] = ct[0] + "x " + ;
-			
-			
-			
-			
-			
-			//return menus.get(0).toString();
-			/*while (iterator.hasNext()) {
-				//count(iterator.next());
-				output = output + iterator.next().toString();
-			}*/
-			/*return output;
-		}
-	}*/
+	public void cancel() {
+		//TODO
+	}
+	
+	public float getTotal() {
+		return this.total;
+	}
 	
 	private void count (Menu m) {
-		for (int i = 0; i <= 7; i++) {
-			if (m.getId() == i) {
-				this.ct[i] += 1;
-				output[i] = this.ct[i] + "x " + m.getDescription() + " " + m.getPrice();
-			}
-		}
+		//TODO
 	}
 	
 }
