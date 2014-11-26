@@ -33,12 +33,14 @@ public class FVIVDataInitializer implements DataInitializer{
 		Employee employee2 = new Employee("Merkel", "Angela", "Angie@Bundestag.de", "0123456789");
 		Employee employee3 = new Employee("Wurst", "Hans", "HansWurst@FVIV.de", "0351/777888");
 		Employee employee4 = new Employee("White", "Walter", "Walter@Kochkurse.de", "0351/666555");
+		Employee employee5 = new Employee("Müller", "Thomas", "Thomas.Müller@Weltmeister.de", "20304050");
 		
 		//Save to repository
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
 		employeeRepository.save(employee3);
 		employeeRepository.save(employee4);
+		employeeRepository.save(employee5);
 	}
 	
 	private void initializeExpenses(ExpenseRepository expenseRepository){

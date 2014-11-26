@@ -1,13 +1,19 @@
 package fviv.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
+import fviv.model.Registration;
 
 @Controller
 class ManagerFunctionsController{
@@ -28,7 +34,21 @@ class ManagerFunctionsController{
 	@RequestMapping("/checkEmployees")
 	public String checkEmployees(ModelMap modelMap){
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
+		modelMap.addAttribute("registration", new Registration());
 		return "checkEmployees";
+	}	
+	
+	@RequestMapping("/newEmployee")
+	public String newEmployee(@ModelAttribute(value="registration") @Valid Registration registration, BindingResult results){
+		//Return to checkEmployees if new employee data are invalid or incomplete
+		if(results.hasErrors())return "redirect:/checkEmployees";
+		
+		//Create new employee
+		Employee employee = new Employee(registration.getLastname(), registration.getFirstname(),
+											registration.getEmail(), registration.getPhone());
+		employeeRepository.save(employee);
+		
+		return "redirect:/checkEmployees";
 	}
 	
 	@RequestMapping("/checkFinances")
