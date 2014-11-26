@@ -71,6 +71,8 @@ public class CateringDataInitializer implements DataInitializer {
 		
 		drinksRepository.save(Arrays.asList(drink1, drink2, drink3, drink4, drink5));
 		
+		System.out.println(mealsRepository.findAll());
+		
 		for (Meal meal : mealsRepository.findAll()) {
 			InventoryItem inventoryItem = new InventoryItem(meal, Units.of(50));			//löst NullPointerException aus!
 			inventory.save(inventoryItem);

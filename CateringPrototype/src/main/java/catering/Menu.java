@@ -13,21 +13,16 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Entity
-public abstract class Menu extends Product {
-
-	
-	protected String description;
+public class Menu extends Product { //abstract
 	
 	@SuppressWarnings("deprecation")
-	public Menu(String description, Money price) {
-		this.description = description;
+	public Menu(String name, Money price) {
+		
 	}
 	
 	@Deprecated
 	public Menu () {};
 	
-	public String getDescription() {
-		return this.description;
-	}
+	
 	
 }

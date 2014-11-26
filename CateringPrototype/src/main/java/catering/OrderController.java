@@ -7,11 +7,17 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.joda.money.Money;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
+import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.order.Cart;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderLine;
+import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -36,16 +42,18 @@ public class OrderController {
 	private final Inventory<InventoryItem> inventory;
 	private final DrinksRepository drinksRepository;
 	private final MealsRepository mealsRepository;
+	private UserAccount account;
 	
 	@Autowired
 	public OrderController(MealsRepository MealsRepository, DrinksRepository DrinksRepository,
-						   Inventory<InventoryItem> inventory, HttpSession session) {
+						   Inventory<InventoryItem> inventory, OrderManager<Order> orderManager) {
 
 		this.mealsRepository = MealsRepository;
 		this.drinksRepository = DrinksRepository;
 		this.inventory = inventory;
 		
-		Cart cart = getCart(session);
+		
+		
 		
 		//order = new Order(mealsRepository, drinksRepository);
 	}
@@ -59,7 +67,6 @@ public class OrderController {
 	
 	@ModelAttribute("cart")
 	private Cart getCart(HttpSession session) {
-
 		Cart cart = (Cart) session.getAttribute("cart");
 
 		if (cart == null) {
@@ -74,6 +81,9 @@ public class OrderController {
 	
 	@RequestMapping({"/", "/index", "/order"})				
 	public String index(ModelMap modelMap) {
+		
+		
+		
 		//modelMap.addAttribute("mealsRepository", order.getOrderedMeals().findAll());
 		//modelMap.addAttribute("drinksRepository", order.getOrderedDrinks().findAll());
 		modelMap.addAttribute("mealsRepository", this.mealsRepository.findAll());
@@ -100,7 +110,16 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/menu/{mid}")
-	public String menu(@PathVariable("mid") int mid, Model model) {
+	public String menu(@PathVariable("mid") ProductIdentifier mealId, Model model, HttpSession session) {
+		
+		Order order = new Order(account, Cash.CASH);
+		Quantity quantity = Units.of(1);
+		OrderLine orderLine = new OrderLine(mealsRepository.findByProductIdentifier(mealId), quantity);
+
+		Cart cart = getCart(session);
+		cart.add(orderLine);
+		
+		System.out.println(orderLine.getProductName());
 		
 		//Optional<InventoryItem> result = inventory.findByProductProductIdentifier(menu.getIdentifier());
 		//Quantity quantity = item.map(InventoryItem::getQuantity).orElse(Units.ZERO);

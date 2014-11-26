@@ -141,6 +141,21 @@ body {
   </div>
   <div id="content">
   <div id="orderList">
+  
+  <div th:unless="${cart.empty}">
+  	<table>
+  		<tr th:each="orderline : ${cart}">
+  			<td th:text="${orderline.productName}">Currywurst</td>
+  			<td th:text="$orderline.price">3.00 EUR</td>
+  		</tr>
+  	</table>
+  </div>
+  
+  
+  
+  
+  
+  
   <p>Speisen</p>
     
     <!-- <div th:each="meal : ${meals}">

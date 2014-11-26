@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class Order {
+public class OrderShit {
 	
 	private float total;
 	private final MealsRepository mealsRepository;
 	private final DrinksRepository drinksRepository;
 	
 	@Autowired
-	public Order(MealsRepository mealsRepository, DrinksRepository drinksRepository) {
+	public OrderShit(MealsRepository mealsRepository, DrinksRepository drinksRepository) {
 		this.mealsRepository = mealsRepository;
 		this.drinksRepository = drinksRepository;
 	}

@@ -5,17 +5,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.joda.money.Money;
+import org.salespointframework.catalog.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings("deprecation")
 @Entity
-public class Drink extends Menu {
-	
-	//protected String description;
+public class Drink extends Product {
 	
 	@Autowired
-	public Drink(String description, Money price) {
-		//this.description = description;
+	public Drink(String name, Money price) {
 	}
 	
 	@Deprecated
