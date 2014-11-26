@@ -13,6 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import catering.model.Drink;
+import catering.model.DrinksRepository;
+import catering.model.Meal;
+import catering.model.MealsRepository;
+
 @Component
 public class CateringDataInitializer implements DataInitializer {
 

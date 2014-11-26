@@ -1,4 +1,4 @@
-package catering;
+package catering.controller;
 //import static org.joda.money.CurrencyUnit.EUR;
 
 import java.math.BigDecimal;
@@ -33,6 +33,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import catering.model.DrinksRepository;
+import catering.model.MealsRepository;
+
 @Controller
 public class OrderController {
 	
@@ -42,6 +45,7 @@ public class OrderController {
 	private final Inventory<InventoryItem> inventory;
 	private final DrinksRepository drinksRepository;
 	private final MealsRepository mealsRepository;
+	private final OrderManager<Order> orderManager;
 	private UserAccount account;
 	
 	@Autowired
@@ -51,11 +55,7 @@ public class OrderController {
 		this.mealsRepository = MealsRepository;
 		this.drinksRepository = DrinksRepository;
 		this.inventory = inventory;
-		
-		
-		
-		
-		//order = new Order(mealsRepository, drinksRepository);
+		this.orderManager = orderManager;
 	}
 	
 	// --- --- --- --- --- --- ModelAttributes --- --- --- --- --- --- \\
@@ -68,12 +68,10 @@ public class OrderController {
 	@ModelAttribute("cart")
 	private Cart getCart(HttpSession session) {
 		Cart cart = (Cart) session.getAttribute("cart");
-
 		if (cart == null) {
 			cart = new Cart();
 			session.setAttribute("cart", cart);
 		}
-
 		return cart;
 	}
 	
@@ -81,25 +79,21 @@ public class OrderController {
 	
 	@RequestMapping({"/", "/index", "/order"})				
 	public String index(ModelMap modelMap) {
-		
-		
-		
-		//modelMap.addAttribute("mealsRepository", order.getOrderedMeals().findAll());
-		//modelMap.addAttribute("drinksRepository", order.getOrderedDrinks().findAll());
 		modelMap.addAttribute("mealsRepository", this.mealsRepository.findAll());
 		modelMap.addAttribute("drinksRepository", this.drinksRepository.findAll());
 		return "/order";
 	}
 	
-	/*@RequestMapping("/cancel")
-	public String cancel() {
-		order.cancel();
-		return "redirect:/";
-	}*/
-	
 	@RequestMapping("/drinks")
 	public String drinks() {
 		mode = "drinks";
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/cancel")
+	public String cancel(HttpSession session) {
+		Cart cart = getCart(session);
+		cart.clear();
 		return "redirect:/";
 	}
 	
@@ -120,117 +114,22 @@ public class OrderController {
 		cart.add(orderLine);
 		
 		System.out.println(orderLine.getProductName());
-		
-		//Optional<InventoryItem> result = inventory.findByProductProductIdentifier(menu.getIdentifier());
-		//Quantity quantity = item.map(InventoryItem::getQuantity).orElse(Units.ZERO);
-		//inventory.count();
-		/*if (result.isPresent()) {
-			InventoryItem item = result.get();
-			
-			if (item.getQuantity().getAmount().floatValue() <= 0f) {
-				return "error";
-			} else {
-				Quantity reduce = new Quantity(1, item.getQuantity().getMetric(), item.getQuantity().getRoundingStrategy());
-				item.getQuantity().subtract(reduce);
-				inventory.save(item);
-			}
-		} else {
-			return "error";
-		} */
-		//model.addAttribute("menu", menu);
-		//model.addAttribute("quantity", quantity);
 		return "redirect:/";
 	}
 	
-	/*@RequestMapping("/menu1")
-	public String menu1() {
-		Meal meal = new Meal("Pommes Frites", 2.50f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
+	@RequestMapping("confirm")
+	public String confirm(Model model, HttpSession session) {
+
+				Order order = new Order(account, Cash.CASH);
+				Cart cart = getCart(session);
+				cart.toOrder(order);
+
+				orderManager.payOrder(order);
+				orderManager.completeOrder(order);
+				orderManager.add(order);
+
+				cart.clear();
+
+				return "redirect:/";
 	}
-	
-	@RequestMapping("/menu2")
-	public String menu2() {
-		Meal meal = new Meal("Pommes Spezial", 3.50f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu3")
-	public String menu3() {
-		Meal meal = new Meal("Bratwurst", 2.00f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu4")
-	public String menu4() {
-		Meal meal = new Meal("Currywurst", 3.00f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu5")
-	public String menu5() {
-		Meal meal = new Meal("Currywurst Pommes", 4.50f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu6")
-	public String menu6() {
-		Meal meal = new Meal("Stück Pizza", 2.50f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu7")
-	public String menu7() {
-		Meal meal = new Meal("Vanilleeis", 1.00f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu8")
-	public String menu8() {
-		Meal meal = new Meal("Schokoeis", 1.00f);
-		order.addMealToRepository(meal);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu9")
-	public String menu9() {
-		Drink drink = new Drink("Pils", 2.50f);
-		order.addDrinkToRepository(drink);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu10")
-	public String menu10() {
-		Drink drink = new Drink("Alt", 3.00f);
-		order.addDrinkToRepository(drink);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu11")
-	public String menu11() {
-		Drink drink = new Drink("Alkoholfrei", 3.00f);
-		order.addDrinkToRepository(drink);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu12")
-	public String menu12() {
-		Drink drink = new Drink("Softdrink", 2.20f);
-		order.addDrinkToRepository(drink);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/menu13")
-	public String menu13() {
-		Drink drink = new Drink("Wein", 4.70f);
-		order.addDrinkToRepository(drink);
-		return "redirect:/";
-	}*/
-	
 }
