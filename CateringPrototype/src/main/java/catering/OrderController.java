@@ -4,11 +4,14 @@ package catering;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.joda.money.Money;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
+import org.salespointframework.order.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -36,22 +39,35 @@ public class OrderController {
 	
 	@Autowired
 	public OrderController(MealsRepository MealsRepository, DrinksRepository DrinksRepository,
-						   Inventory<InventoryItem> inventory) {
+						   Inventory<InventoryItem> inventory, HttpSession session) {
 
-		this.mealsRepository = MealsRepository;		// kann vllt weg
+		this.mealsRepository = MealsRepository;
 		this.drinksRepository = DrinksRepository;
 		this.inventory = inventory;
+		
+		Cart cart = getCart(session);
+		
 		//order = new Order(mealsRepository, drinksRepository);
 	}
-	
-	//@Deprecated
-	//protected OrderController() {}
 	
 	// --- --- --- --- --- --- ModelAttributes --- --- --- --- --- --- \\
 	
 	@ModelAttribute("ordermode")
 	public String ordermode() {
 		return mode;
+	}
+	
+	@ModelAttribute("cart")
+	private Cart getCart(HttpSession session) {
+
+		Cart cart = (Cart) session.getAttribute("cart");
+
+		if (cart == null) {
+			cart = new Cart();
+			session.setAttribute("cart", cart);
+		}
+
+		return cart;
 	}
 	
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
