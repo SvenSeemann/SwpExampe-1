@@ -16,32 +16,34 @@ import org.springframework.stereotype.Component;
 public class Order {
 	
 	private float total;
-	@Autowired
-	private final OrderedMealsRepository orderedMealsRepository;
-	private final OrderedDrinksRepository orderedDrinksRepository;
+	private final MealsRepository mealsRepository;
+	private final DrinksRepository drinksRepository;
 	
-	public Order(OrderedMealsRepository orderedMealsRepository, OrderedDrinksRepository orderedDrinksRepository) {
-		this.orderedMealsRepository = orderedMealsRepository;
-		this.orderedDrinksRepository = orderedDrinksRepository;
+	@Autowired
+	public Order(MealsRepository mealsRepository, DrinksRepository drinksRepository) {
+		this.mealsRepository = mealsRepository;
+		this.drinksRepository = drinksRepository;
 	}
 	
 	public void addMealToRepository(Meal meal) {
-		orderedMealsRepository.save(meal);
+		mealsRepository.save(meal);
 	}
 	
 	public void addDrinkToRepository(Drink drink) {
-		orderedDrinksRepository.save(drink);
+		drinksRepository.save(drink);
 	}
 	
-	public OrderedMealsRepository getOrderedMeals() {
-		return this.orderedMealsRepository;
+	public MealsRepository getOrderedMeals() {
+		return this.mealsRepository;
 	}
 	
-	public OrderedDrinksRepository getOrderedDrinks() {
-		return this.orderedDrinksRepository;
+	public DrinksRepository getOrderedDrinks() {
+		return this.drinksRepository;
 	}
 	
 	public void cancel() {
+		this.mealsRepository.deleteAll();
+		this.drinksRepository.deleteAll();
 		//TODO
 	}
 	

@@ -1,7 +1,14 @@
 package catering;
+//import static org.joda.money.CurrencyUnit.EUR;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.joda.money.Money;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Quantity;
+import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -20,20 +27,21 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class OrderController {
 	
-	@Autowired				//constructor is not a valid setter method or instance variable
-	private Order order;
+					//constructor is not a valid setter method or instance variable
+	//private Order order;
 	private String mode = "";
-	//private final OrderedDrinksRepository orderedDrinksRepository;
-	//private final OrderedMealsRepository orderedMealsRepository;
+	private final Inventory<InventoryItem> inventory;
+	private final DrinksRepository drinksRepository;
+	private final MealsRepository mealsRepository;
 	
 	@Autowired
-	public OrderController(OrderedMealsRepository orderedMealsRepository, OrderedDrinksRepository orderedDrinksRepository) {
-		
-		
-		Assert.notNull(order, "Order must not be null!");
-		//this.orderedMealsRepository = orderedMealsRepository;		// kann vllt weg
-		//this.orderedDrinksRepository = orderedDrinksRepository;
-		order = new Order(orderedMealsRepository, orderedDrinksRepository);
+	public OrderController(MealsRepository MealsRepository, DrinksRepository DrinksRepository,
+						   Inventory<InventoryItem> inventory) {
+
+		this.mealsRepository = MealsRepository;		// kann vllt weg
+		this.drinksRepository = DrinksRepository;
+		this.inventory = inventory;
+		//order = new Order(mealsRepository, drinksRepository);
 	}
 	
 	//@Deprecated
@@ -48,18 +56,20 @@ public class OrderController {
 	
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
 	
-	@RequestMapping("/")				
+	@RequestMapping({"/", "/index", "/order"})				
 	public String index(ModelMap modelMap) {
-		modelMap.addAttribute("meals", order.getOrderedMeals().findAll());
-		modelMap.addAttribute("drinks", order.getOrderedDrinks().findAll());
+		//modelMap.addAttribute("mealsRepository", order.getOrderedMeals().findAll());
+		//modelMap.addAttribute("drinksRepository", order.getOrderedDrinks().findAll());
+		modelMap.addAttribute("mealsRepository", this.mealsRepository.findAll());
+		modelMap.addAttribute("drinksRepository", this.drinksRepository.findAll());
 		return "/order";
 	}
 	
-	@RequestMapping("/cancel")
+	/*@RequestMapping("/cancel")
 	public String cancel() {
 		order.cancel();
 		return "redirect:/";
-	}
+	}*/
 	
 	@RequestMapping("/drinks")
 	public String drinks() {
@@ -73,7 +83,31 @@ public class OrderController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/menu1")
+	@RequestMapping("/menu/{mid}")
+	public String menu(@PathVariable("mid") int mid, Model model) {
+		
+		//Optional<InventoryItem> result = inventory.findByProductProductIdentifier(menu.getIdentifier());
+		//Quantity quantity = item.map(InventoryItem::getQuantity).orElse(Units.ZERO);
+		//inventory.count();
+		/*if (result.isPresent()) {
+			InventoryItem item = result.get();
+			
+			if (item.getQuantity().getAmount().floatValue() <= 0f) {
+				return "error";
+			} else {
+				Quantity reduce = new Quantity(1, item.getQuantity().getMetric(), item.getQuantity().getRoundingStrategy());
+				item.getQuantity().subtract(reduce);
+				inventory.save(item);
+			}
+		} else {
+			return "error";
+		} */
+		//model.addAttribute("menu", menu);
+		//model.addAttribute("quantity", quantity);
+		return "redirect:/";
+	}
+	
+	/*@RequestMapping("/menu1")
 	public String menu1() {
 		Meal meal = new Meal("Pommes Frites", 2.50f);
 		order.addMealToRepository(meal);
@@ -162,6 +196,6 @@ public class OrderController {
 		Drink drink = new Drink("Wein", 4.70f);
 		order.addDrinkToRepository(drink);
 		return "redirect:/";
-	}
+	}*/
 	
 }
