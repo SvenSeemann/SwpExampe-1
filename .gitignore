@@ -6,7 +6,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -25,7 +24,4 @@ hs_err_pid*
 # Binary Output
 target/
 
-# large, non diffable files
-*.pdf
-*.png
-*.jpg
+
