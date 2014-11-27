@@ -13,22 +13,22 @@ abstract class Server {
   def fetch(user:Int):Inbox
 }
 
-
-object Server extends Server{
-
-  private var _proxy:Server = _
-
-  def proxy = _proxy
-
-  @Autowired
-  def proxy_=(server:Server) = {
-    _proxy = server
-  }
-
-  override def deliver(message: Message) = {
-    proxy deliver message
-    true
-  }
-
-  override def fetch(user: Int): Inbox = proxy.fetch(user)
-}
+//
+//object Server extends Server{
+//
+//  private var _proxy:Server = new MapServer
+//
+//  def proxy = _proxy
+//
+//  @Autowired
+//  def proxy_=(server:Server) = {
+//    _proxy = server
+//  }
+//
+//  override def deliver(message: Message) = {
+//    proxy deliver message
+//    true
+//  }
+//
+//  override def fetch(user: Int): Inbox = proxy.fetch(user)
+//}

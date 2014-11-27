@@ -1,73 +1,108 @@
 package messaging.controller
 
-import messaging.{MessageForm, Message, Receiver, Sender}
+import messaging._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.{RequestMethod, RequestParam, PathVariable, RequestMapping}
-import people.{Office, People, Employee, Caterer}
 
-import scala.collection.JavaConversions
+import scala.collection.{mutable, JavaConversions}
 
 /**
  * Created by justusadam on 19/11/14.
  */
 
 @Controller
-@Autowired
-class TestController {
+class TestController() {
+
+  var postOffice:PostOffice = _
+  var people:People = _
+
+  @Autowired
+  def this(postOffice:PostOffice, people:People) {
+    this()
+    this.postOffice = postOffice
+    this.people = people
+  }
 
   @RequestMapping(Array("/messaging/choose"))
   def page(model:Model) = {
-    model addAttribute ("people", JavaConversions.asJavaIterable(People.people.values))
+    model addAttribute ("people", people.findAll())
     "overview"
   }
 
 
   @RequestMapping(Array("/messaging/choose/{id}"))
   def page(@PathVariable("id") id:Int, model:Model) = {
-    def messageAggregate(x:Receiver) = {
-      x.fetchMessages map {m:Message => m.toString}
+    def messageAggregate(x:Employee) = {
+      JavaConversions.iterableAsScalaIterable(postOffice.findByRecipient(x.getId)).map(m => m.toString)
     }
 
-    People.people.get(id) match {
-      case None => "error"
-      case Some(x) =>
-        model addAttribute("name", x.name)
-        model addAttribute("messaging", new MessageForm(classOf[Receiver] isAssignableFrom x.getClass, classOf[Sender] isAssignableFrom x.getClass, x match {
-          case m:Receiver => messageAggregate(m)
-          case _ => List[String]()
-        }))
-        x match {
-          case m: Sender => model addAttribute("receivers", JavaConversions asJavaIterable(
-          People.people.values filter {
-            case s: Receiver => true
-            case _ => false
+    val operson = people.findOne(id)
+    if (!operson.isPresent) {
+      "error"
+    } else {
+      val x = operson.get()
+      model addAttribute("name", x.getName)
+      x match {
+        case x:Employee =>
+          model addAttribute("messaging", new MessageForm(x.canReceive, x.canSend, x.canReceive match {
+            case true => messageAggregate(x)
+            case false => List[String]()
+          }))
+        x.canSend match {
+          case false =>
+          case true =>
+              var l = new mutable.MutableList[Employee]
+              for (person <- JavaConversions.iterableAsScalaIterable(people.findAll())) {
+                person match {
+                  case s:Employee => s.canReceive match {
+                    case true => l += person
+                    case false =>
+                  }
+                  case _ =>
+                }
+              }
+              model addAttribute("receivers", JavaConversions asJavaIterable l)
           }
-          ))
-          case _ =>
-        }
-        "choose"
+        case _ =>
+      }
+
+      "choose"
     }
   }
   @RequestMapping(value=Array("/messaging/send"), method = Array(RequestMethod.GET, RequestMethod.POST))
   def send(@RequestParam recipient:Int, @RequestParam message:String, @RequestParam sender:Int, model:Model) = {
-    People.get(sender) match {
-      case Some(x:Sender) =>
-        x send (message, recipient)
-        "redirect:/messaging/choose"
-      case _ => "redirect:/error"
+    val operson = people.findOne(sender)
+    if (!operson.isPresent) "redirect:/error"
+    else {
+      operson.get() match {
+        case x:Employee => x.canSend match{
+          case true =>
+            val orec = people.findOne(recipient)
+            orec.isPresent match {
+              case true =>
+                postOffice.save(new Message(message, x.getId, orec.get.getId))
+                "redirect:/messaging/choose"
+              case false => "redirect:/error"
+            }
+          case false => "redirect:/error"
+
+        }
+        case _ => "redirect:/error"
+      }
     }
   }
 
   @RequestMapping(value = Array("/messaging/add"), method = Array(RequestMethod.POST))
   def add(@RequestParam kind:String, @RequestParam name:String): String = {
-    People add (kind match {
-        case "caterer" => new Caterer(People.new_id, name)
-        case "office" => new Office(People.new_id, name)
-        case "employee" => new Employee(People.new_id, name)
+    val person = kind match {
+        case "caterer" => new Employee(name, true, false)
+        case "office" => new Employee(name, false, true)
+        case "employee" => new Employee(name)
         case _ => throw new IllegalArgumentException
-    })
+    }
+    people.save(person)
     "redirect:/messaging/choose"
   }
 }

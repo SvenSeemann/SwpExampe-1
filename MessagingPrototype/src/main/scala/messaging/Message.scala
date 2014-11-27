@@ -1,7 +1,7 @@
 package messaging
 
 import java.time.LocalDateTime
-import javax.persistence.{Id, GeneratedValue, Entity}
+import javax.persistence._
 import org.hibernate.annotations.Type
 
 
@@ -12,9 +12,14 @@ import org.hibernate.annotations.Type
  * Generally the "sent" date should not be set manually
  */
 @Entity
-class Message(val message:String, val sender:String, val recipient:Int,
-              @Type(`type`="org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-              var sent:LocalDateTime = LocalDateTime.now()){
+class Message{
+
+  private var message:String = _
+  private var sender:Integer = _
+  private var recipient:Integer = _
+
+  @Type(`type`="org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+  var sent:LocalDateTime = LocalDateTime.now()
 
   @Type(`type`="org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
   var dateReceived:LocalDateTime = _
@@ -24,11 +29,30 @@ class Message(val message:String, val sender:String, val recipient:Int,
   @Id
   var id:Int = _
 
+  def this(message:String, sender:Integer, recipient:Integer) {
+    this()
+    this.sender = sender
+    this.recipient = recipient
+    this.message = message
+  }
+
+  def getMessage = message
+
+  def setMessage(message:String) = this.message = message
+
+  def getSender = sender
+
+  def setSender(sender:Integer) = this.sender = sender
+
+  def getRecipient = recipient
+
+  def setRecipient(recipient:Integer) = this.recipient = recipient
+
+  def getDateReceived = dateReceived
+
   def received:Boolean = {
     read
   }
-
-  def getRecipient = recipient
 
   override def toString = {
     sender + " [" + sent.toString + "]" + ": " + message
