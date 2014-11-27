@@ -48,9 +48,6 @@ public class CateringPrototype {
 
 		return characterEncodingFilter;
 	} 
-
-   
-   //Order order;
    
     @Configuration
 	@EnableGlobalMethodSecurity(prePostEnabled = true)

@@ -141,64 +141,27 @@ body {
   </div>
   <div id="content">
   <div id="orderList">
-  <p>Speisen</p>
-    
-    <div th:each="meal : ${meals}">
-      <h2 th:text="${meal.description}" ></h2>
-	</div>
-	
-	<p>Getränke</p>
-    <div th:each="drink : ${drinks}">
-      <h2 th:text="${drink.description}" ></h2>
-    </div>
-    
-          <!-- <h2 th:text=" ${output12}" ></h2> -->
-    <p>Gesamt:</p>
-      <h2 th:text="${total}"></h2>
-      
-      <div id="storno"><a href="cancel">STORNO</a></div>
-      
-      
-      	<!-- <div th:each="menu : ${menus}">
-      		<h2 th:text="${menu.description}"></h2>
-      	</div> -->
-    
-    </div>
+  
+  <div th:unless="${cart.empty}">
+  	<table>
+  		<tr th:each="orderline : ${cart}">
+  			<td th:text="${orderline.productName}">Currywurst</td>
+  			<td th:text="$orderline.price">3.00 EUR</td>
+  		</tr>
+  	</table>
+  	</div>
+  	<div id="storno"><a href="cancel">STORNO</a></div>
+  </div>
     
     <div  id="chooseBox" th:switch="${ordermode}">	<!--  man kann auch aus der messages.properties machen #{shit} -->
-    	<div id="category" th:case="meals">
-        	<div id="field"><a href="menu1">Pommes Frites </a> 2.50 EUR</div>
-        	<div id="field"><a href="menu2">Pommes Spezial </a> 3.50 EUR</div>
-        	<div id="field"><a href="menu3">Bratwurst </a> 2.00 EUR</div>
-        	<div id="field"><a href="menu4">Currywurst </a> 3.00 EUR</div>
-        	<div id="field"><a href="menu5">Currywurst Pommes </a> 4.50 EUR</div>
-        	<div id="field"><a href="menu6">Stück Pizza </a> 2.50 EUR</div>
-        	<div id="field"><a href="menu7">Vanilleeis </a> 1.00 EUR</div>
-        	<div id="field"><a href="menu8">Schokoeis </a> 1.00 EUR</div>
+    	<div id="category" th:case="meals" th:each="meal : ${mealsRepository}">
+        	<div id="field"><a href="@{'/menu/' + ${meal.identifier}}"></a><p th:text="${meal.description}"></p><p th:text="${meal.price}"></p>Pommes Frites 2.50 EUR</div>
       	</div>
-     	<div id="category" th:case="drinks">
-        	<div id="field"><a href="menu9">Pils </a> 2.50 EUR</div>
-        	<div id="field"><a href="menu10">Alt </a> 3.50 EUR</div>
-        	<div id="field"><a href="menu11">Alkoholfrei </a> 2.00 EUR</div>
-        	<div id="field"><a href="menu12">Softdrink </a> 3.00 EUR</div>
-        	<div id="field"><a href="menu13">Wein </a> 4.50 EUR</div>
+     	<div id="category" th:case="drinks" th:each="drink : ${drinksRepository">
+        	<div id="field"><a href="@{'/menu/' + ${drink.identifier}}"></a><p th:text="${drink.description}"></p><p th:text="${drink.price}"></p>Pils 2.50 EUR</div>
       	</div>		
  	 	<h2 th:case="*">Neuer Kunde</h2>
 	</div>
-    
-    
-    <!--<div id="chooseBox">
-      <div id="category">
-        <div id="field"><a href="menu1">Pommes Frites </a> 2.50 EUR</div>
-        <div id="field"><a href="menu2">Pommes Spezial </a> 3.50 EUR</div>
-        <div id="field"><a href="menu3">Bratwurst </a> 2.00 EUR</div>
-        <div id="field"><a href="menu4">Currywurst </a> 3.00 EUR</div>
-        <div id="field"><a href="menu5">Currywurst Pommes </a> 4.50 EUR</div>
-        <div id="field"><a href="menu6">Stück Pizza </a> 2.50 EUR</div>
-        <div id="field"><a href="menu7">Vanilleeis </a> 1.00 EUR</div>
-        <div id="field"><a href="menu8">Schokoeis </a> 1.00 EUR</div>
-      </div> -->
-    <!--  </div> -->
   </div>
   <div id="menu">
     <div id="menuPointNormal">
@@ -208,10 +171,10 @@ body {
       <p>CHAT</p>
     </div>
     <div id="menuPointBold">
-      <p><a href="meals">SPEISEN</a></p>
+      <p><a href="/meals">SPEISEN</a></p>
     </div>
     <div id="menuPointBold">
-      <p><a href="drinks">GETRÄNKE</a></p>
+      <p><a href="/drinks">GETRÄNKE</a></p>
     </div>
   </div>
 </div>

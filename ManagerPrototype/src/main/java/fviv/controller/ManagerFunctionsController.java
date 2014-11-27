@@ -1,17 +1,22 @@
 package fviv.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
+import fviv.model.Registration;
 
 @Controller
 class ManagerFunctionsController{
-	@Autowired
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	
@@ -29,12 +34,26 @@ class ManagerFunctionsController{
 	@RequestMapping("/checkEmployees")
 	public String checkEmployees(ModelMap modelMap){
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
+		modelMap.addAttribute("registration", new Registration());
 		return "checkEmployees";
+	}	
+	
+	@RequestMapping("/newEmployee")
+	public String newEmployee(@ModelAttribute(value="registration") @Valid Registration registration, BindingResult results){
+		//Return to checkEmployees if new employee data are invalid or incomplete
+		if(results.hasErrors())return "redirect:/checkEmployees";
+		
+		//Create new employee
+		Employee employee = new Employee(registration.getLastname(), registration.getFirstname(),
+											registration.getEmail(), registration.getPhone());
+		employeeRepository.save(employee);
+		
+		return "redirect:/checkEmployees";
 	}
 	
 	@RequestMapping("/checkFinances")
 	public String checkFinances(ModelMap modelMap){
-		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0;
+		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0, deposit = 0;
 		modelMap.addAttribute("salary", expenseRepository.findByExpenseType("salary"));
 		modelMap.addAttribute("catering", expenseRepository.findByExpenseType("catering"));
 		modelMap.addAttribute("rent", expenseRepository.findByExpenseType("rent"));
@@ -51,14 +70,19 @@ class ManagerFunctionsController{
 			rentTotal += exp.getAmount();
 		}
 		
+		for(Expense exp : expenseRepository.findByExpenseType("deposit")){
+			deposit += exp.getAmount();
+		}
+		
+		modelMap.addAttribute("deposit", deposit);
 		modelMap.addAttribute("salaryTotal", salaryTotal);
 		modelMap.addAttribute("cateringTotal", cateringTotal);
 		modelMap.addAttribute("rentTotal", rentTotal);
 		return "checkFinances";
 	}
 	
-	@RequestMapping("/newLogin")
-	public String newLogin(){
-		return "newLogin";
+	@RequestMapping("/accountAdministration")
+	public String newLogin(ModelMap modelMap){
+		return "accountAdministration";
 	}
 }

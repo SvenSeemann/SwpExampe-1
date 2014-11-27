@@ -22,7 +22,7 @@ public class Expense {
 	public Expense(String expenseType, float amount){
 		this.expenseType = expenseType;
 		this.amount = amount;
-		if(expenseType != "salary" && expenseType != "rent" && expenseType != "catering"){
+		if(expenseType != "salary" && expenseType != "rent" && expenseType != "catering" && expenseType != "deposit"){
 			throw new IllegalArgumentException("only salary, rent or catering allowed");
 		}
 	}

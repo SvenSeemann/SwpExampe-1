@@ -5,8 +5,8 @@
 <link href='http://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css' />
 <link rel="stylesheet" type="text/css" href="../style.css" />
+<script type="text/javascript" src="../main.js" ></script>
 <title>Catering Test</title>
-
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 		<div id="content">
 			<div id="request">
 				<h3>Grö&szlig;e eingeben</h3>
-				<form action="/newArea" method="post">
+				<form action="/newArea" method="post" name="size" >
 					<table>
 						<tr>
 							<td>Weite:</td>
@@ -25,15 +25,18 @@
 						</tr>
 						<tr>
 							<td>Höhe:</td>
-							<td><input type="number" name="height" size="30" /> m</td>
+							<td><input type="number"  name="height" size="30" /> m</td>
 						</tr>
 						<tr>
-							<td colspan="2"><input type="submit" value="submit" /></td>
+							<td colspan="2"><input type="submit" value="submit" onClick="build();" /></td>
 						</tr>
 					</table>
 				</form>
 			</div>
-			<div id="frame"></div>
+			
+			<div id="frame">
+			<div id="area"></div>
+			</div>
 		</div>
 		<div id="menu">
 			<div class="menuPointNormal" onclick="newArea();">
@@ -53,23 +56,6 @@
 			</div>
 		</div>
 	</div>
-	<script>
-            function newArea() {
-                document.getElementById('request').style.display = "block";
-            }
-            function build() {
-                document.getElementById('request').style.display = "none";
-                var width = document.size.width.value;
-                var height = document.size.height.value;
-                
-                var area = document.createElement("div");
-                area.id = "area";
-                var content = document.getElementById("content");
-                content.appendChild(area);
-                //area.style.width = width;
-                //area.style.height = height;
-                //area.style.border = "#fff medium solid;";
-            }
-        </script>
+	
 </body>
 </html>

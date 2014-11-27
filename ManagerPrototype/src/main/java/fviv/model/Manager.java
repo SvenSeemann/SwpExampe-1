@@ -7,7 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class Manager{
 	private String lastname, firstname, email, phone;
-	
+		
 	@Id
 	@GeneratedValue
 	private long id;
