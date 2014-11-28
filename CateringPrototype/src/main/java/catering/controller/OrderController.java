@@ -126,7 +126,7 @@ public class OrderController {
 
 				Order order = new Order(account, Cash.CASH);
 				Basket basket = getBasket(session);
-				//basket.toOrder(order);
+				basket.commit(order);
 
 				orderManager.payOrder(order);
 				orderManager.completeOrder(order);
