@@ -14,6 +14,7 @@ import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.order.Basket;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderLine;
@@ -35,6 +36,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import catering.model.DrinksRepository;
 import catering.model.MealsRepository;
+
+//changed SalesPoint class "cart" to SalesPoint class "basket"
+
 
 @Controller
 public class OrderController {
@@ -65,14 +69,14 @@ public class OrderController {
 		return mode;
 	}
 	
-	@ModelAttribute("cart")
-	private Cart getCart(HttpSession session) {
-		Cart cart = (Cart) session.getAttribute("cart");
-		if (cart == null) {
-			cart = new Cart();
-			session.setAttribute("cart", cart);
+	@ModelAttribute("basket")
+	private Basket getBasket(HttpSession session) {
+		Basket basket = (Basket) session.getAttribute("basket");
+		if (basket == null) {
+			basket = new Basket();
+			session.setAttribute("cart", basket);
 		}
-		return cart;
+		return basket;
 	}
 	
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
@@ -92,8 +96,8 @@ public class OrderController {
 	
 	@RequestMapping("/cancel")
 	public String cancel(HttpSession session) {
-		Cart cart = getCart(session);
-		cart.clear();
+		Basket basket = getBasket(session);
+		basket.clear();
 		return "redirect:/";
 	}
 	
@@ -110,8 +114,8 @@ public class OrderController {
 		Quantity quantity = Units.of(1);
 		OrderLine orderLine = new OrderLine(mealsRepository.findByProductIdentifier(mealId), quantity);
 
-		Cart cart = getCart(session);
-		cart.add(orderLine);
+		Basket basket = getBasket(session);
+		basket.add(orderLine);
 		
 		System.out.println(orderLine.getProductName());
 		return "redirect:/";
@@ -121,14 +125,14 @@ public class OrderController {
 	public String confirm(Model model, HttpSession session) {
 
 				Order order = new Order(account, Cash.CASH);
-				Cart cart = getCart(session);
-				cart.toOrder(order);
+				Basket basket = getBasket(session);
+				//basket.toOrder(order);
 
 				orderManager.payOrder(order);
 				orderManager.completeOrder(order);
 				orderManager.add(order);
 
-				cart.clear();
+				basket.clear();
 
 				return "redirect:/";
 	}
