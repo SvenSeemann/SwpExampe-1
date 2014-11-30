@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html>
+<head lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <title>People</title>
+    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
+</head>
+<body>
+    <div id="main">
+        <h1>Overview</h1>
+        <ul class="people">
+            <li th:each="person : ${people}">
+                <a class="person" th:href="@{'/messaging/choose/' + ${person.id}}" th:text="${person.name}"></a>
+            </li>
+        </ul>
+        <div class="new-people">
+            <h3>Add some more People</h3>
+            <form action="/messaging/add" method="post">
+                <label for="name">Name it:</label>
+                <input type="text" name="name" id="name" />
+                <div class="clear"></div>
+                <label for="kind">And select a Type:</label>
+                <select name="kind" id="kind">
+                    <option value="caterer">Caterer</option>
+                    <option value="office">Office</option>
+                    <option value="employee">Employee</option>
+                </select>
+                <div class="clear"></div>
+                <input type="submit" value="submit" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>
