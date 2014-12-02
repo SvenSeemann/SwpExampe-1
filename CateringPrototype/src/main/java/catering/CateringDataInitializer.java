@@ -9,6 +9,9 @@ import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Units;
+import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -17,6 +20,7 @@ import catering.model.Drink;
 import catering.model.DrinksRepository;
 import catering.model.Meal;
 import catering.model.MealsRepository;
+import catering.model.StaffRepository;
 
 @Component
 public class CateringDataInitializer implements DataInitializer {
@@ -24,13 +28,17 @@ public class CateringDataInitializer implements DataInitializer {
 	private final Inventory<InventoryItem> inventory;
 	private final MealsRepository mealsRepository;
 	private final DrinksRepository drinksRepository;
-	
+	private final UserAccountManager userAccountManager;
+	private final StaffRepository staffRepository;
 	
 	
 	@Autowired
 	public CateringDataInitializer (MealsRepository mealsRepository,
 									DrinksRepository drinksRepository,
-									Inventory<InventoryItem> inventory) {
+									Inventory<InventoryItem> inventory,
+									UserAccountManager userAccountManager,
+									StaffRepository staffRepository) {
+		
 		
 		Assert.notNull(inventory, "Inventory must not be null!");
 		Assert.notNull(mealsRepository, "MealsRepository must not be null!");
@@ -40,12 +48,16 @@ public class CateringDataInitializer implements DataInitializer {
 		this.mealsRepository = mealsRepository;
 		this.drinksRepository = drinksRepository;
 		this.inventory = inventory;
+		this.userAccountManager = userAccountManager;
+		this.staffRepository = staffRepository;
 		//initialize();
 	}
+
 	
 	@Override
 	public void initialize() {
 		initializeMenus(mealsRepository, drinksRepository, inventory);
+		initializeUsers(userAccountManager, staffRepository);
 	}
 	
 	private void initializeMenus(MealsRepository mealsRepository,
@@ -60,6 +72,7 @@ public class CateringDataInitializer implements DataInitializer {
 		Meal meal6 = new Meal("Stück Pizza", Money.of(EUR, 2.50));
 		Meal meal7 = new Meal("Vanilleeis", Money.of(EUR, 1.00));
 		Meal meal8 = new Meal("Schokoeis", Money.of(EUR, 1.00));
+		Meal meal9 = new Meal("A", Money.of(EUR, 0.00));
 		
 		// --- Getränke --- \\
 		
@@ -70,9 +83,9 @@ public class CateringDataInitializer implements DataInitializer {
 		Drink drink5 = new Drink("Wein", Money.of(EUR, 4.00));
 		
 		mealsRepository.save(Arrays.asList(meal1, meal2, meal3, meal4, meal5, meal6,
-				meal7, meal8));
+				meal7, meal8, meal9));
 		
-		mealsRepository.save(meal1);
+		//mealsRepository.save(meal1);
 		
 		drinksRepository.save(Arrays.asList(drink1, drink2, drink3, drink4, drink5));
 		
@@ -89,4 +102,13 @@ public class CateringDataInitializer implements DataInitializer {
 		}
 	}
 
+	private void initializeUsers(UserAccountManager userAccountManager, StaffRepository staffRepository){
+	
+		final Role catererRole = new Role("ROLE_CATERER");
+		
+		UserAccount caterer_1 = userAccountManager.create("tussi", "pommes", catererRole);
+		userAccountManager.save(caterer_1);
+		
+		staffRepository.save(caterer_1); //vllt ist das mal gut!
+	}
 }
