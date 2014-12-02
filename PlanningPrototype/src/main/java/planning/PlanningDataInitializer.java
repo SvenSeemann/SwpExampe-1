@@ -17,9 +17,14 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
+@Component
 public class PlanningDataInitializer implements DataInitializer {
-
+	private final PlanningRepository planningRepository;
+	
+	@Autowired 
+	public PlanningDataInitializer(PlanningRepository planningRepository){
+	this.planningRepository = planningRepository;
+}	
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub

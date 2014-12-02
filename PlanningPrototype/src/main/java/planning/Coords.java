@@ -1,26 +1,44 @@
 package planning;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
-// Klasse schreiben PlanningDataInitializer, Adaequat zu VideoShopdataInitializer
+
+@Entity
 public class Coords {
-	@Id
+	
+	public enum Type {
+		TOILET, AREA, STAGE, CATERING, CAMPING
+	}
+	
+	
+	@javax.persistence.Id
 	@GeneratedValue
 	private long id;
 	private int width;
 	private int height;
 	private int yPos;
 	private int xPos;
-
-	public Coords(int width, int height, int xPos, int yPos) {
+	private Type type;
+	private String name;
+	public Coords(){
+		
+	}
+	@Autowired 
+	public Coords(String name, int width, int height, int xPos, int yPos, Type type) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.type = type;
+		this.name = name;
 	}
-
+	public long getId(){
+		return id;
+	}
 	public int getWidth() {
 		return width;
 	}
@@ -51,5 +69,13 @@ public class Coords {
 
 	public void setxPos(int xPos) {
 		this.xPos = xPos;
+	}
+	
+	public Type getType() {
+		return this.type;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 }

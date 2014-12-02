@@ -1,8 +1,12 @@
 package planning;
+
+import planning.Coords.Type;
+
 import org.springframework.data.repository.CrudRepository;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PlanningRepository extends CrudRepository<Coords, Long>{
-	Coords findById(long id);
+public interface PlanningRepository extends CrudRepository<Coords, String> {
+
+	Coords findByName(String name);
 }
