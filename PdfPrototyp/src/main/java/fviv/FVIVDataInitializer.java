@@ -8,25 +8,47 @@ import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
+import fviv.model.Ticket;
+import fviv.model.TicketRepository;
 
 // Creates dummy data for test purposes
 @Component
 public class FVIVDataInitializer implements DataInitializer{
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
+	private final TicketRepository ticketRepository;
 	
 	@Autowired
-	public FVIVDataInitializer(EmployeeRepository employeeRepository, ExpenseRepository expenseRepository){
+	public FVIVDataInitializer(EmployeeRepository employeeRepository, ExpenseRepository expenseRepository, TicketRepository ticketRepository){
 		this.employeeRepository = employeeRepository;
 		this.expenseRepository = expenseRepository;
+		this.ticketRepository = ticketRepository;
 		initialize();
 	}
 	
 	public void initialize(){
 		initializeEmployees(employeeRepository);
 		initializeExpenses(expenseRepository);
+		initializeTickets(ticketRepository);
 	}
 	
+	
+	private void initializeTickets(TicketRepository ticketRepository) {
+		//Create Tickets
+				Ticket ticket1 = new Ticket("Tageskarte", "Wunderland", "AVICII");
+				Ticket ticket2 = new Ticket("Wochenkarte", "Wunderland", "AVICII");
+				Ticket ticket3 = new Ticket("CAAAAAAAAMPINGKARTE", "Wunderland", "AVICII");
+				Ticket ticket4 = new Ticket("Tageskarte", "Wunderland", "AVICII");
+				Ticket ticket5 = new Ticket("Tageskarte", "Wunderland", "AVICII");
+				
+				//Save to repository
+				ticketRepository.save(ticket1);
+				ticketRepository.save(ticket2);
+				ticketRepository.save(ticket3);
+				ticketRepository.save(ticket4);
+				ticketRepository.save(ticket5);
+	}
+
 	private void initializeEmployees(EmployeeRepository employeeRepository){		
 		//Create employees
 		Employee employee1 = new Employee("Gates", "Bill", "BillGates@Microsoft.com", "0190CallBill");

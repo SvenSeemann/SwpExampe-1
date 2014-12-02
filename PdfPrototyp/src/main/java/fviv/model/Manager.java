@@ -4,12 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import java.awt.image.BufferedImage;
 import java.io.*;
 
-import org.krysalis.barcode4j.impl.code39.Code39Bean;
-import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
-import org.krysalis.barcode4j.tools.UnitConv;
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeException;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
+
+
+
 
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
@@ -18,46 +21,46 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
 
-
 @Entity
-public class Manager{
+public class Manager {
 	private String lastname, firstname, email, phone;
-		
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Deprecated
-	protected Manager(){}
-	
-	public Manager(String lastname, String firstname, String email, String phone){
+	protected Manager() {
+	}
+
+	public Manager(String lastname, String firstname, String email, String phone) {
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.email = email;
 		this.phone = phone;
 	}
-	
-	public long getId(){
+
+	public long getId() {
 		return id;
 	}
-	
-	public String getLastname(){
+
+	public String getLastname() {
 		return lastname;
 	}
-	
-	public String getFirstname(){
+
+	public String getFirstname() {
 		return firstname;
 	}
-	
-	public String getEmail(){
+
+	public String getEmail() {
 		return email;
 	}
-	
-	public String getPhone(){
+
+	public String getPhone() {
 		return phone;
 	}
-	public static void pdfvorlagebearbeiten(){
 
+	public static void pdfvorlagebearbeiten() {
+	
 		try {
 			// (1) Einlesen der PDF-Vorlage
 			PdfReader reader = new PdfReader("test_file.pdf");
@@ -70,12 +73,13 @@ public class Manager{
 			AcroFields acroFields = stamper.getAcroFields();
 
 			// (4) Felder bearbeiten
+			acroFields.setField("ticketart", "Tagesticket");
 			acroFields.setField("eventname", "Wonderworld");
 			acroFields.setField("number1", "001");
 			acroFields.setField("number2", "001");
-			acroFields.setField("actors", "Deine Mama");
+			acroFields.setField("actors", "Actors");
 			acroFields.setField("adressofvenue",
-					"The StreetAdress , youtown, 666666Dreden ");
+					"The StreetAdress \n youtown \n 666666Dreden ");
 			acroFields.setField("date", "66-66-6666");
 			acroFields.setField("price", "15.00€");
 			acroFields.setField("eventnamesmall", "Wunderland");
@@ -93,43 +97,33 @@ public class Manager{
 		}
 
 	}
-	public static void barcodegen() throws IOException{
 
-		//Create the barcode bean
-		Code39Bean bean = new Code39Bean();
-
-		final int dpi = 150;
-
-		//Configure the barcode generator
-		bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); //makes the narrow bar 
-		                                                 //width exactly one pixel
-		bean.setWideFactor(3);
-		bean.doQuietZone(false);
-
-		//Open output file
-		File outputFile = new File("out.png");
-		OutputStream out = new FileOutputStream(outputFile);
+	public static void barcodegen() throws IOException, BarcodeException {
+		// get a Barcode from the BarcodeFactory
+		Barcode barcode = BarcodeFactory.createCode128B("string here"); // hier
+																		// der
+																		// code
+																		// später
+																		// rein
 		try {
-		    //Set up the canvas provider for monochrome PNG output 
-		    BitmapCanvasProvider canvas = new BitmapCanvasProvider(
-		            out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
+			File f = new File("out.png");
 
-		    //Generate the barcode
-		    bean.generateBarcode(canvas, "text here");//barcode here
-
-		    //Signal end of generation
-		    canvas.finish();
-		} finally {
-		    out.close();
+			// Let the barcode image handler do the hard work
+			BarcodeImageHandler.savePNG(barcode, f);
+		} catch (Exception e) {
+			// Error handling here
 		}
 	}
 
 	public static void addbarcode() {
+		 int id = 0;
+			String name;
+			name= "ticket" + id;
 		try {
 			PdfReader pdfReader = new PdfReader("change.pdf");
-
+			
 			PdfStamper pdfStamper = new PdfStamper(pdfReader,
-					new FileOutputStream("src/main/webapp/changedd.pdf"));
+					new FileOutputStream("src/main/webapp/"+name+".pdf"));
 
 			Image image = Image.getInstance("out.png");
 

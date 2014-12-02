@@ -1,6 +1,9 @@
 package fviv;
 
 import java.io.IOException;
+
+import net.sourceforge.barbecue.BarcodeException;
+
 import org.salespointframework.Salespoint;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.orm.jpa.EntityScan;
@@ -19,7 +22,7 @@ import fviv.model.Manager;
 @EntityScan(basePackageClasses = { Salespoint.class, Application.class })
 @ComponentScan
 public class Application {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, BarcodeException{
 		SpringApplication.run(Application.class, args);
 Manager.pdfvorlagebearbeiten();
 Manager.barcodegen();
