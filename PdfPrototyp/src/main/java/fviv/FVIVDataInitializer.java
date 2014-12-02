@@ -36,10 +36,10 @@ public class FVIVDataInitializer implements DataInitializer{
 	private void initializeTickets(TicketRepository ticketRepository) {
 		//Create Tickets
 				Ticket ticket1 = new Ticket("Tageskarte", "Wunderland", "AVICII");
-				Ticket ticket2 = new Ticket("Wochenkarte", "Wunderland", "AVICII");
+				Ticket ticket2 = new Ticket("Wochenkarte", "Wunderland", "klaus");
 				Ticket ticket3 = new Ticket("CAAAAAAAAMPINGKARTE", "Wunderland", "AVICII");
 				Ticket ticket4 = new Ticket("Tageskarte", "Wunderland", "AVICII");
-				Ticket ticket5 = new Ticket("Tageskarte", "Wunderland", "AVICII");
+				Ticket ticket5 = new Ticket("Tageskarte", "Wunderland", "marie");
 				
 				//Save to repository
 				ticketRepository.save(ticket1);

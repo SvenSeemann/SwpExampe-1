@@ -18,9 +18,9 @@ public class Ticket{
 	
 	@Autowired
 	public Ticket(String ticketart, String festivalname, String actors){
-	this.setTicketart(ticketart);
-	this.setFestivalname("Wunderland");
-	this.setActors("AVICII & UND MEHR");
+	this.actors=actors;
+	this.ticketart=ticketart;
+	this.festivalname=festivalname;
 	}
 
 	public String getTicketart() {
@@ -47,11 +47,11 @@ public class Ticket{
 		this.actors = actors;
 	}
 	
-	public void setTicketid(long id){
+	public void setid(long id){
 		this.id = id;
 	}
 	
-	public long getTicketid(){
+	public long setid(){
 		return id;
 	}
 	
