@@ -1,9 +1,6 @@
 package fviv;
 
 import java.io.IOException;
-
-import net.sourceforge.barbecue.BarcodeException;
-
 import org.salespointframework.Salespoint;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.orm.jpa.EntityScan;
