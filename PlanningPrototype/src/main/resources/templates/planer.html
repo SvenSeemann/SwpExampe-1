@@ -56,7 +56,10 @@
 
 			<div id="frame">
 				<div id="area" th:style="${sizeArea}">
-					<div id="toilet" th:each="TOILET : ${PlanningRepository}" th:style="${sizeToilet}">WC</div>
+					<div th:each="coords : ${planningRepository.findByType(TOILET)}">
+						<div id="toilet"
+							th:style="width: coords.width; height:coords.height; left: coords.xPos; top: coords.yPos;">WC</div>
+					</div>
 					<div id="stage" th:style="${sizeStage}">STAGE</div>
 					<div id="camping" th:style="${sizeCamping}">CAMPING</div>
 					<div id="catering" th:style="${sizeCatering}">CATERING</div>
@@ -64,7 +67,7 @@
 			</div>
 		</div>
 		<div id="menu">
-			<div class="menuPointNormal" onclick="newArea();">
+			<div class="menuPointNormal" onclick="newArea()	;">
 				<p>Neues Gelände</p>
 			</div>
 			<div class="menuPointNormal" onClick="newObject(1)">

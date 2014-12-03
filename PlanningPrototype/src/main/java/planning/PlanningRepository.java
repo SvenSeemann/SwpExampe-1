@@ -9,4 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface PlanningRepository extends CrudRepository<Coords, String> {
 
 	Coords findByName(String name);
+	Coords findByType(Type type);
 }

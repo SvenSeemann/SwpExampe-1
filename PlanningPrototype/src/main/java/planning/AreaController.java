@@ -40,10 +40,9 @@ public class AreaController {
 	public String sizeStage() {
 		Coords stage = planningRepository.findByName("Stage");
 		if (planningRepository.findAll().iterator().hasNext()) {
-			return "width:" + stage.getWidth() + "px;" 
-					+ "height:"+ stage.getHeight() + "px;" 
-					+ "left:" + stage.getxPos()+ "px;" 
-					+ "top:" + stage.getyPos() + "px;";
+			return "width:" + stage.getWidth() + "px;" + "height:"
+					+ stage.getHeight() + "px;" + "left:" + stage.getxPos()
+					+ "px;" + "top:" + stage.getyPos() + "px;";
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
@@ -51,11 +50,11 @@ public class AreaController {
 
 	@ModelAttribute("sizeCamping")
 	public String sizeCamping() {
-		Coords camp = planningRepository.findByName("Camping");
+		Coords campi = planningRepository.findByName("Camping");
 		if (planningRepository.findAll().iterator().hasNext()) {
-			return "width:" + camp.getWidth() + "px;" + "height:"
-					+ camp.getHeight() + "px;" + "left:" + camp.getxPos()
-					+ "px;" + "top:" + camp.getyPos() + "px;";
+			return "width:" + campi.getWidth() + "px;" + "height:"
+					+ campi.getHeight() + "px;" + "left:" + campi.getxPos()
+					+ "px;" + "top:" + campi.getyPos() + "px;";
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
@@ -78,8 +77,8 @@ public class AreaController {
 		Coords wc = planningRepository.findByName("Toilet");
 		if (planningRepository.findAll().iterator().hasNext()) {
 			return "width:" + wc.getWidth() + "px;" + "height:"
-					+ wc.getHeight() + "px;" + "left:" + wc.getxPos()
-					+ "px;" + "top:" + wc.getyPos() + "px;";
+					+ wc.getHeight() + "px;" + "left:" + wc.getxPos() + "px;"
+					+ "top:" + wc.getyPos() + "px;";
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
