@@ -1,10 +1,14 @@
 package planning;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import planning.Coords.Type;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AreaController {
 	private PlanningRepository planningRepository;
 
+	private String htmlHelper(int width, int height, int left, int top){
+		return "width:" + width + "px;" + "height:"
+				+ height + "px;" + "left:" + left
+				+ "px;" + "top:" + top + "px;";
+	}
+	
 	@Autowired
 	public AreaController(PlanningRepository planningRepository) {
 		this.planningRepository = planningRepository;
@@ -21,7 +31,13 @@ public class AreaController {
 
 	@RequestMapping("/")
 	public String getHtml(Model modelMap) {
+		List<String> toiletStrings = new LinkedList<String>();
+		for(Coords toilet : planningRepository.findByType(Type.TOILET)){
+			toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
+		}
 		modelMap.addAttribute("getCoords", planningRepository);
+		modelMap.addAttribute("toilets", toiletStrings );
+		
 		return "planer";
 	}
 
@@ -39,10 +55,9 @@ public class AreaController {
 	@ModelAttribute("sizeStage")
 	public String sizeStage() {
 		Coords stage = planningRepository.findByName("Stage");
-		if (planningRepository.findAll().iterator().hasNext()) {
-			return "width:" + stage.getWidth() + "px;" + "height:"
-					+ stage.getHeight() + "px;" + "left:" + stage.getxPos()
-					+ "px;" + "top:" + stage.getyPos() + "px;";
+		System.out.println("Stage: "+stage);
+		if (stage != null) {
+			return htmlHelper(stage.getWidth(), stage.getHeight(), stage.getxPos(), stage.getyPos());
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
@@ -51,10 +66,8 @@ public class AreaController {
 	@ModelAttribute("sizeCamping")
 	public String sizeCamping() {
 		Coords campi = planningRepository.findByName("Camping");
-		if (planningRepository.findAll().iterator().hasNext()) {
-			return "width:" + campi.getWidth() + "px;" + "height:"
-					+ campi.getHeight() + "px;" + "left:" + campi.getxPos()
-					+ "px;" + "top:" + campi.getyPos() + "px;";
+		if (campi != null) {
+			return htmlHelper( campi.getWidth(), campi.getHeight(), campi.getxPos(), campi.getyPos());
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
@@ -63,22 +76,18 @@ public class AreaController {
 	@ModelAttribute("sizeCatering")
 	public String sizeCatering() {
 		Coords cate = planningRepository.findByName("Catering");
-		if (planningRepository.findAll().iterator().hasNext()) {
-			return "width:" + cate.getWidth() + "px;" + "height:"
-					+ cate.getHeight() + "px;" + "left:" + cate.getxPos()
-					+ "px;" + "top:" + cate.getyPos() + "px;";
+		if (cate != null) {
+			return htmlHelper(cate.getWidth(), cate.getHeight(), cate.getxPos(), cate.getyPos());
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
 	}
 
 	@ModelAttribute("sizeToilet")
-	public String sizeToilet() {
+	public String sizeToilet(ModelMap modelMap) {
 		Coords wc = planningRepository.findByName("Toilet");
-		if (planningRepository.findAll().iterator().hasNext()) {
-			return "width:" + wc.getWidth() + "px;" + "height:"
-					+ wc.getHeight() + "px;" + "left:" + wc.getxPos() + "px;"
-					+ "top:" + wc.getyPos() + "px;";
+		if (wc != null) {
+			return htmlHelper(wc.getWidth(), wc.getHeight(), wc.getxPos(), wc.getyPos());
 		} else {
 			return "width: 0px;" + "height: 0px;" + "left: 0px;" + "top: 0px";
 		}
@@ -117,7 +126,7 @@ public class AreaController {
 	public String neueBuehne(@RequestParam("left") int left,
 			@RequestParam("top") int top) {
 		if (planningRepository.findByName("Areal") != null) {
-			planningRepository.save(new Coords("Buehne", 300, 150, left, top,
+			planningRepository.save(new Coords("Stage", 300, 150, left, top,
 					Type.STAGE));
 		}
 		Coords stage = planningRepository.findByName("Stage");

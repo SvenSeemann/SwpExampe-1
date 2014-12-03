@@ -120,18 +120,32 @@ body {
 #stage{
 	width: 0px;
 	height: 0px;
-	background-color:#cd000;
+	background-color:#cd0;
 	overflow:hidden;
+	position:relative;
+	z-index:5;
 }
 #camping{
 	width: 0px;
 	height: 0px;
 	background-color:#3cc;
 	overflow:hidden;
+	position:relative;
+	z-index:10;
 }
 #catering{
 	width:0px;
 	height:0px;
 	background-color:#e8bd23;
 	overflow:hidden;
+	position:relative;
+	z-index:15;
+}
+#toilet{
+	width:0px;
+	height:0px;
+	background-color:#0c3;
+	overflow:hidden;
+	position:relative;
+	z-index:20;
 }

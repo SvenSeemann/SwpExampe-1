@@ -56,9 +56,9 @@
 
 			<div id="frame">
 				<div id="area" th:style="${sizeArea}">
-					<div th:each="coords : ${planningRepository.findByType(TOILET)}">
+					<div th:each="kloStyle : ${toilets}">
 						<div id="toilet"
-							th:style="width: coords.width; height:coords.height; left: coords.xPos; top: coords.yPos;">WC</div>
+							th:style="${kloStyle}">WC</div>
 					</div>
 					<div id="stage" th:style="${sizeStage}">STAGE</div>
 					<div id="camping" th:style="${sizeCamping}">CAMPING</div>
