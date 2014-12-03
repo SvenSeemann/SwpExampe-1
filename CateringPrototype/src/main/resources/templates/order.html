@@ -143,8 +143,8 @@ body {
   <div id="orderList">
 
   
-  
-  	<div id="storno"><a href="cancel">STORNO</a></div>
+  	<div id="storno"><a th:href="cancel">CONFIRM</a></div>
+  	<div id="storno"><a th:href="cancel">STORNO</a></div>
   	
   </div>
     
@@ -175,10 +175,12 @@ body {
 	
 	<div th:unless="${cart.empty}">
   	<table>
+  		<tbody th:remove="all-but-first">
   		<tr th:each="orderline : ${cart}">
   			<td th:text="${orderline.productName}">Currywurst</td>
   			<td th:text="$orderline.price">3.00 EUR</td>
   		</tr>
+  		</tbody>
   	</table>
   	</div>
   

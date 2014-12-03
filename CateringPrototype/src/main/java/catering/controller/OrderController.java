@@ -86,6 +86,7 @@ public class OrderController {
 		return cart;
 	}
 	
+	
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
 	
 	@RequestMapping({"/", "/index", "/order"})				
@@ -114,10 +115,11 @@ public class OrderController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/meal")
-	public String addMeal(@PathVariable("mid") Meal meal, Model model, @ModelAttribute Cart cart, HttpSession session, @LoggedIn UserAccount userAccount) {
+	@RequestMapping("/menu/{mid}")
+	public String addMeal(@PathVariable("mid") Meal meal, @ModelAttribute Cart cart, HttpSession session, @LoggedIn UserAccount userAccount) {
 		
 		cart.addOrUpdateItem(meal, Units.of(1));
+		
 		
 		/*Order order = new Order(userAccount, Cash.CASH);
 		Quantity quantity = Units.of(1);
@@ -149,6 +151,6 @@ public class OrderController {
 						cart.clear();
 
 						return "redirect:/";
-					}).orElse("redirect:/cart");
+					}).orElse("redirect:/order");
 	}
 }

@@ -72,7 +72,6 @@ public class CateringDataInitializer implements DataInitializer {
 		Meal meal6 = new Meal("Stück Pizza", Money.of(EUR, 2.50));
 		Meal meal7 = new Meal("Vanilleeis", Money.of(EUR, 1.00));
 		Meal meal8 = new Meal("Schokoeis", Money.of(EUR, 1.00));
-		Meal meal9 = new Meal("A", Money.of(EUR, 0.00));
 		
 		// --- Getränke --- \\
 		
@@ -83,7 +82,7 @@ public class CateringDataInitializer implements DataInitializer {
 		Drink drink5 = new Drink("Wein", Money.of(EUR, 4.00));
 		
 		mealsRepository.save(Arrays.asList(meal1, meal2, meal3, meal4, meal5, meal6,
-				meal7, meal8, meal9));
+				meal7, meal8));
 		
 		//mealsRepository.save(meal1);
 		
