@@ -178,7 +178,7 @@ body {
   		<tbody th:remove="all-but-first">
   		<tr th:each="orderline : ${cart}">
   			<td th:text="${orderline.productName}">Currywurst</td>
-  			<td th:text="$orderline.price">3.00 EUR</td>
+  			<td th:text="${orderline.price}">3.00 EUR</td>
   		</tr>
   		</tbody>
   	</table>
