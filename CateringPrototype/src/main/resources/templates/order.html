@@ -143,8 +143,8 @@ body {
   <div id="orderList">
 
   
-  	<div id="storno"><a th:href="cancel">CONFIRM</a></div>
-  	<div id="storno"><a th:href="cancel">STORNO</a></div>
+  	<div class="storno"><a th:href="cancel">CONFIRM</a></div>
+  	<div class="storno"><a th:href="cancel">STORNO</a></div>
   	
   </div>
     
@@ -154,7 +154,7 @@ body {
     	
     	<div th:case="meals">
 	    	<a th:each="meal : ${mealsRepository}" th:href="@{'/menu/' + ${meal.identifier}}">
-	    		<div id="field">
+	    		<div class="field">
 	    			<p th:text="${meal.name}"></p>
 	    			<p th:text="${meal.price}"></p>
 	    		</div>
