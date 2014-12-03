@@ -72,10 +72,10 @@ public class Coords {
 	}
 	
 	public Type getType() {
-		return this.type;
+		return type;
 	}
 	
 	public String getName() {
-		return this.name;
+		return name;
 	}
 }
