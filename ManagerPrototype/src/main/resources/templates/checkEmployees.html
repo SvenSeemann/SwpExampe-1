@@ -41,6 +41,12 @@
 			</tr>
 		</tbody>
 	</table>
+	<p>Mitarbeiter entfernen:</p>
+	<form th:action="@{/deleteEmployee}" method="post" th:object="${deleteEmployee}">
+		<label for="deleteEmployeeText">ID eingeben:</label>
+		<input type="text" id="deleteEmployeeText" th:field="*{id}"></input>
+		<input type="submit" value="Löschen"></input>
+	</form>
 	<p>Neuen Mitarbeiter hinzufügen:</p>
 	<!-- Communicates with controller @RequestMapping("/newEmployee") -->
 	<form th:action="@{/newEmployee}" method="post" th:object="${registration}">

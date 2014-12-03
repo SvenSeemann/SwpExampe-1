@@ -33,8 +33,10 @@ class ManagerFunctionsController{
 	
 	@RequestMapping("/checkEmployees")
 	public String checkEmployees(ModelMap modelMap){
+	
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
 		modelMap.addAttribute("registration", new Registration());
+		modelMap.addAttribute("deleteEmployee", new Employee("","","",""));
 		return "checkEmployees";
 	}	
 	
@@ -47,6 +49,18 @@ class ManagerFunctionsController{
 		Employee employee = new Employee(registration.getLastname(), registration.getFirstname(),
 											registration.getEmail(), registration.getPhone());
 		employeeRepository.save(employee);
+		
+		return "redirect:/checkEmployees";
+	}
+	
+	@RequestMapping("/deleteEmployee")
+	public String deleteEmployee(@ModelAttribute(value="deleteEmployee") @Valid Employee employee, BindingResult results){
+		if(results.hasErrors() || employeeRepository.findById(employee.getId()) == null){
+			return "redirect:/checkEmployees";
+		}
+		
+		Employee deleteThisEmployee = employeeRepository.findById(employee.getId());
+		employeeRepository.delete(deleteThisEmployee);
 		
 		return "redirect:/checkEmployees";
 	}
