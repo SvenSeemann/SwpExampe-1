@@ -4,7 +4,119 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta charset="UTF-8" />
     <title>People</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css" />
+    <style type="text/css">
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+        #main {
+            width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .person, .new-people {
+            text-decoration: none;
+            color: floralwhite;
+            display: block;
+        }
+        .person {
+            background-color: #2e7cdc;
+            padding: 10px 15px;
+            margin: 10px;
+            position: relative;
+            left: 0;
+            width: 200px;
+            transition: background-color 300ms ease 0ms, left 200ms ease 0ms;
+        }
+        .person:hover {
+            background-color: #2956a5;
+            transition: background-color 300ms ease 0ms;
+            left: 50px;
+        }
+        .person:visited {
+            color: floralwhite;
+        }
+        .people {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            float: left;
+        }
+        .new-people {
+            float: right;
+            padding: 30px;
+            margin: 20px;
+            background-color: #c7260d;
+        }
+        .new-people h3 {
+            margin-top: 0;
+        }
+        .new-people label, .new-people input {
+            margin: 15px 10px;
+        }
+        input[type=submit] {
+            float: right;
+        }
+        .messaging-form label {
+            display: block;
+        }
+        .messaging-form {
+            background-color: #2e7cdc;
+            color: floralwhite;
+        }
+        .messages-received {
+            background-color: rgba(255, 104, 30, 0.53);
+        }
+        .messages-received, .messaging-form {
+            padding: 30px;
+            margin: 20px;
+            float: left;
+        }
+        .messages-received h4, .messaging-form h4 {
+            margin-top: 0;
+        }
+        .clear {
+            clear: both;
+        }
+        #recipients {
+            color: floralwhite;
+            background-color: #00CC33;
+            float: left;
+            padding: 30px;
+            margin: 20px;
+            font-size: 12pt;
+        }
+        .recipient {
+            margin: 20px;
+        }
+        #recipients h4 {
+            margin-top: 0;
+        }
+        .back {
+            float: left;
+            display: block;
+            padding: 12px 17px;
+            color: floralwhite;
+            background-color: #f9731c;
+        }
+        .back:hover {
+            background-color: #ab5616;
+        }
+        h1 {
+            color: #2956a5;
+        }
+        a {
+            text-decoration: none;
+            transition: background-color 300ms ease 0ms;
+        }
+        a:visited {
+            color: blue;
+        }
+        a:hover {
+            transition: background-color 300ms ease 0ms;
+        }
+    </style>
 </head>
 <body>
     <div id="main">
