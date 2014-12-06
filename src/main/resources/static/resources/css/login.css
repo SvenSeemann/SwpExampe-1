@@ -1,0 +1,42 @@
+body {
+	background-color: #383839;
+	font-family: 'Oxygen', sans-serif;
+}
+		.loginContent{
+			width:30%;
+			height: auto;
+			margin:auto;
+			margin-top:20%;
+		}
+		#headline{
+			font-size:40px;
+			margin-bottom:0;
+		}
+			
+		table{
+			border-top:#0c3 dashed medium;
+		}
+		#username{
+		margin-top:10px; 
+			font-size:20px;
+		}
+		#password{
+			font-size:20px;
+		}
+		#login{
+		width:35px;
+		height:35px;
+		background-color:#0c3;
+		color:#383839;
+		border:#0c3 medium solid;
+		border-radius:100px;
+		font-size:20px;
+		padding:0;
+		float:right;
+		cursor: pointer;
+		transition-duration:0.3s;
+		transition-properties:all;
+		}
+		#login:hover{
+			opacity:0.7;
+     		transform: perspective(500px) rotateY(180deg);

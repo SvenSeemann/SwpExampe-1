@@ -5,23 +5,40 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 		<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
 		<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
-		<title th:text="#{home.title}">Catering</title>
+		<title th:text="#{catering.title}">Catering</title>
 	</head>
 
 <body>
 <div id="webseite">
   <div id="header"><span id="header_text">HEADLINE</span><!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
     <div id="loggedAs">
-      <p>angemeldet als:</p>
+      <p sec:authorize="isAuthenticated()" th:text="${'Hallo ' + #authentication?.name}">Caterer</p>
       <span>CATERER XXXXXX</span></div>
     <!-- Hier kommt dann die ID des Caterers hin--> 
   </div>
   <div id="content">
   <div id="orderList">
+  
+  <div th:unless="${cart.empty}">
+  	<table>
+  		<tr th:each="orderline : ${cart}">
+  			<td th:text="${orderline.productName}">Currywurst</td>
+  			<td th:text="${orderline.price}">3.00 EUR</td>
+  			<td th:text="${orderline.quantity}">1</td>
+  		</tr>
+	</table>
+	
+	<table>
+		<tr>
+  			<td th:text="#{catering.total} + ': ' + ${cart.price}">
+  			</td>
+	  	</tr>
+  	</table>
+  	</div>
 
   
-  	<div class="storno"><a th:href="cancel">CONFIRM</a></div>
-  	<div class="storno"><a th:href="cancel">STORNO</a></div>
+  	<div class="storno"><a th:href="cancel" th:text="#{catering.confirm}">CONFIRM</a></div>
+  	<div class="storno"><a th:href="cancel" th:text="#{catering.cancel}">CANCEL</a></div>
   	
   </div>
     
@@ -30,7 +47,7 @@
     
     	
     	<div th:case="meals">
-	    	<a th:each="meal : ${mealsRepository}" th:href="@{'/menu/' + ${meal.identifier}}">
+	    	<a th:each="meal : ${meals}" th:href="@{'/menu/' + ${meal.identifier}}">
 	    		<div class="field">
 	    			<p th:text="${meal.name}"></p>
 	    			<p th:text="${meal.price}"></p>
@@ -39,27 +56,18 @@
     	</div>
     	
     	<div th:case="drinks">
-    	<a th:each="drink : ${drinksRepository}" th:href="@{'/menu/' + ${drink.identifier}}">
-    		<div id="field">
+    	<a th:each="drink : ${drinks}" th:href="@{'/menu/' + ${drink.identifier}}">
+    		<div class="field">
     			<p th:text="${drink.name}"></p>
     			<p th:text="${drink.price}"></p>
     		</div>
     	</a>	
     	</div>	
- 	 	<h2 th:case="*">Neuer Kunde</h2>
+ 	 	<h2 th:case="*" th:text="#{catering.welcome}">New Customer</h2>
  	 </div>
 	</div>
 	
-	<div th:unless="${cart.empty}">
-  	<table>
-  		<tbody th:remove="all-but-first">
-  		<tr th:each="orderline : ${cart}">
-  			<td th:text="${orderline.productName}">Currywurst</td>
-  			<td th:text="${orderline.price}">3.00 EUR</td>
-  		</tr>
-  		</tbody>
-  	</table>
-  	</div>
+	
   
   <div id="menu">
     <div id="menuPointNormal">
@@ -69,10 +77,10 @@
       <p>CHAT</p>
     </div>
     <div id="menuPointBold">
-      <p><a href="/meals">SPEISEN</a></p>
+      <p><a href="/meals" th:text="#{catering.meals}">MEALS</a></p>
     </div>
     <div id="menuPointBold">
-      <p><a href="/drinks">GETRÄNKE</a></p>
+      <p><a href="/drinks" th:text="#{catering.drinks}">DRINKS</a></p>
     </div>
   </div>
 </div>

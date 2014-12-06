@@ -9,16 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings("deprecation")
 @Entity
-public class Meal extends Product {
+public class Menu extends Product {
+	public static enum Type {
+		MEAL, DRINK;
+	}
+	
+	private Type type;
 	
 	@Autowired
-	public Meal(String name, Money price) {
+	public Menu(String name, Money price, Type type) {
 		
 		super(name, price, Units.METRIC);
+		this.type = type;
 		
 	}
 	
 	@Deprecated
-	public Meal () {};
+	public Menu () {};
 
 }

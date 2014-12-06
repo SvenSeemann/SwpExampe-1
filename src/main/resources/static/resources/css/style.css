@@ -5,12 +5,7 @@
 	padding: 0;
 }
 
-body {
-	margin: 0 auto;
-	width: 940px;
-	font: 13px/22px Helvetica, Arial, sans-serif;
-	background: #f0f0f0; 
-}
+
 
 /* Nav */
 
@@ -233,11 +228,12 @@ article.comment {
 
 table {
 	border:1px solid #B3C2C7;
-	font-size:1em;
+	font-size:0.8em;
 	border-spacing:0;
 	text-align:center;
 	margin-left:auto; 
 	margin-right:auto;
+	
 }
 
 
@@ -251,12 +247,14 @@ table thead {
 
 table th {
 	border:1px solid #B3C2C7;
-	padding: 0.3em 1.5em ;
+	padding: 0.3em 0.5em ;
 }
 
 table td {
 	border:1px solid #B3C2C7;
-	padding: 0.3em 1.5em ;
+	padding: 0.3em 0.5em ;
+	color: black;
+	font-size: 12px;
 }
 
 table tbody tr:nth-child(odd) {
@@ -368,6 +366,7 @@ body {
 	text-align:center;
 	cursor:pointer;
 }
+
 #chooseBox {
 	width: 560px;
 	height: 500px;

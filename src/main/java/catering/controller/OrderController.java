@@ -14,6 +14,7 @@ import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.salespointframework.order.Cart;
 //import org.salespointframework.order.Basket;
@@ -37,9 +38,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import catering.model.Drink;
 import catering.model.DrinksRepository;
-import catering.model.Meal;
-import catering.model.MealsRepository;
+import catering.model.Menu;
+import catering.model.Menu.Type;
+import catering.model.MenusRepository;
 
 
 
@@ -53,19 +56,20 @@ public class OrderController {
 	//private Order order;
 	private String mode = "";
 	private final Inventory<InventoryItem> inventory;
-	private final DrinksRepository drinksRepository;
-	private final MealsRepository mealsRepository;
+	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
+	private final UserAccountManager userAccountManager;
 	private Order order;
 	
 	@Autowired
-	public OrderController(MealsRepository MealsRepository, DrinksRepository DrinksRepository,
-						   Inventory<InventoryItem> inventory, OrderManager<Order> orderManager) {
+	public OrderController(MenusRepository menusRepository, Inventory<InventoryItem> inventory,
+																OrderManager<Order> orderManager,
+																UserAccountManager userAccountManager) {
 
-		this.mealsRepository = MealsRepository;
-		this.drinksRepository = DrinksRepository;
+		this.menusRepository = menusRepository;
 		this.inventory = inventory;
 		this.orderManager = orderManager;
+		this.userAccountManager = userAccountManager;
 		
 	}
 	
@@ -91,8 +95,8 @@ public class OrderController {
 	
 	@RequestMapping({"/", "/index", "/order"})				
 	public String index(ModelMap modelMap) {
-		modelMap.addAttribute("mealsRepository", this.mealsRepository.findAll());
-		modelMap.addAttribute("drinksRepository", this.drinksRepository.findAll());
+		modelMap.addAttribute("meals", this.menusRepository.findByType(Type.MEAL)); //TODO replace "...Repository" in html
+		modelMap.addAttribute("drinks", this.menusRepository.findByType(Type.DRINK));
 		return "/order";
 	}
 	
@@ -116,24 +120,20 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/menu/{mid}")
-	public String addMeal(@PathVariable("mid") Meal meal, @ModelAttribute Cart cart, HttpSession session, @LoggedIn UserAccount userAccount) {
+	public String addMeal(@PathVariable("mid") Menu menu, @ModelAttribute Cart cart, HttpSession session, @LoggedIn UserAccount userAccount) {
 		
-		cart.addOrUpdateItem(meal, Units.of(1));
+		cart.addOrUpdateItem(menu, Units.of(1));
 		
-		
-		/*Order order = new Order(userAccount, Cash.CASH);
-		Quantity quantity = Units.of(1);
-		OrderLine orderLine = new OrderLine(mealsRepository.findByProductIdentifier(mealId), quantity);
-		
-		
-		Cart cart = getCart(session);
-		order.add(orderLine);
-		cart.addItemsTo(order);
-		
-		
-		//System.out.println(orderLine.getProductName()); */
 		return "redirect:/";
 	}
+	
+	/*@RequestMapping("/drink/{did}")
+	public String addDrink(@PathVariable("did") Drink drink, @ModelAttribute Cart cart, HttpSession session, @LoggedIn UserAccount userAccount) {
+		
+		cart.addOrUpdateItem(drink, Units.of(1));
+		
+		return "redirect:/";
+	}*/
 	
 	@RequestMapping("confirm")
 	public String confirm(@ModelAttribute Cart cart, @LoggedIn Optional<UserAccount> userAccount) {

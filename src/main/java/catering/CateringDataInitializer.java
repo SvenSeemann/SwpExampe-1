@@ -16,87 +16,76 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import catering.model.Drink;
-import catering.model.DrinksRepository;
-import catering.model.Meal;
-import catering.model.MealsRepository;
+import catering.model.Menu;
+import catering.model.MenusRepository;
+import catering.model.Menu;
 import catering.model.StaffRepository;
+import catering.model.Menu.Type;
 
 @Component
 public class CateringDataInitializer implements DataInitializer {
 
 	private final Inventory<InventoryItem> inventory;
-	private final MealsRepository mealsRepository;
-	private final DrinksRepository drinksRepository;
+	private final MenusRepository menusRepository;
 	private final UserAccountManager userAccountManager;
 	private final StaffRepository staffRepository;
 	
 	
 	@Autowired
-	public CateringDataInitializer (MealsRepository mealsRepository,
-									DrinksRepository drinksRepository,
+	public CateringDataInitializer (MenusRepository menusRepository,
 									Inventory<InventoryItem> inventory,
 									UserAccountManager userAccountManager,
 									StaffRepository staffRepository) {
 		
 		
 		Assert.notNull(inventory, "Inventory must not be null!");
-		Assert.notNull(mealsRepository, "MealsRepository must not be null!");
-		Assert.notNull(drinksRepository, "DrinksRepository must not be null!");
+		Assert.notNull(menusRepository, "MenusRepository must not be null!");		
 		
-		
-		this.mealsRepository = mealsRepository;
-		this.drinksRepository = drinksRepository;
+		this.menusRepository = menusRepository;
 		this.inventory = inventory;
 		this.userAccountManager = userAccountManager;
 		this.staffRepository = staffRepository;
-		//initialize();
 	}
 
 	
 	@Override
 	public void initialize() {
-		initializeMenus(mealsRepository, drinksRepository, inventory);
+		initializeMenus(menusRepository, inventory);
 		initializeUsers(userAccountManager, staffRepository);
 	}
 	
-	private void initializeMenus(MealsRepository mealsRepository,
-								 DrinksRepository drinksRepository,
+	private void initializeMenus(MenusRepository menusRepository,
 								 Inventory<InventoryItem> inventory) {
 		
-		Meal meal1 = new Meal("Pommes Frites", Money.of(EUR, 2.50));
-		Meal meal2 = new Meal("Pommes Spezial", Money.of(EUR, 3.50));
-		Meal meal3 = new Meal("Bratwurst", Money.of(EUR, 2.00));
-		Meal meal4 = new Meal("Currywurst", Money.of(EUR, 3.00));
-		Meal meal5 = new Meal("Currywurst Pommes", Money.of(EUR, 4.50));
-		Meal meal6 = new Meal("Stück Pizza", Money.of(EUR, 2.50));
-		Meal meal7 = new Meal("Vanilleeis", Money.of(EUR, 1.00));
-		Meal meal8 = new Meal("Schokoeis", Money.of(EUR, 1.00));
+		Menu Meal1 = new Menu("Pommes Frites", Money.of(EUR, 2.50), Type.MEAL);
+		Menu Meal2 = new Menu("Pommes Spezial", Money.of(EUR, 3.50), Type.MEAL);
+		Menu Meal3 = new Menu("Bratwurst", Money.of(EUR, 2.00), Type.MEAL);
+		Menu Meal4 = new Menu("Currywurst", Money.of(EUR, 3.00), Type.MEAL);
+		Menu Meal5 = new Menu("Currywurst mit Pommes", Money.of(EUR, 4.50), Type.MEAL);
+		Menu Meal6 = new Menu("Stück Pizza", Money.of(EUR, 2.50), Type.MEAL);
+		Menu Meal7 = new Menu("Vanilleeis", Money.of(EUR, 1.00), Type.MEAL);
+		Menu Meal8 = new Menu("Schokoeis", Money.of(EUR, 1.00), Type.MEAL);
 		
 		// --- Getränke --- \\
 		
-		Drink drink1 = new Drink("Pils", Money.of(EUR, 2.50));
-		Drink drink2 = new Drink("Alt", Money.of(EUR, 3.00));
-		Drink drink3 = new Drink("Alkoholfrei", Money.of(EUR, 3.00));
-		Drink drink4 = new Drink("Softdrink", Money.of(EUR, 2.20));
-		Drink drink5 = new Drink("Wein", Money.of(EUR, 4.00));
+		Menu Drink1 = new Menu("Pils", Money.of(EUR, 2.50), Type.DRINK);
+		Menu Drink2 = new Menu("Alt", Money.of(EUR, 3.00), Type.DRINK);
+		Menu Drink3 = new Menu("Alkoholfrei", Money.of(EUR, 3.00), Type.DRINK);
+		Menu Drink4 = new Menu("Softdrink", Money.of(EUR, 2.20), Type.DRINK);
+		Menu Drink5 = new Menu("Wein", Money.of(EUR, 4.00), Type.DRINK);
 		
-		mealsRepository.save(Arrays.asList(meal1, meal2, meal3, meal4, meal5, meal6,
-				meal7, meal8));
+		menusRepository.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5, Meal6,
+				Meal7, Meal8, Drink1, Drink2, Drink3, Drink4, Drink5));
 		
-		//mealsRepository.save(meal1);
+		System.out.println(menusRepository.findAll());
 		
-		drinksRepository.save(Arrays.asList(drink1, drink2, drink3, drink4, drink5));
-		
-		System.out.println(mealsRepository.findAll());
-		
-		for (Meal meal : mealsRepository.findAll()) {
-			InventoryItem inventoryItem = new InventoryItem(meal, Units.of(50));			//löst NullPointerException aus!
+		for (Menu Menu : menusRepository.findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
 		
-		for (Drink drink : drinksRepository.findAll()) {
-			InventoryItem inventoryItem = new InventoryItem(drink, Units.of(50));
+		for (Menu Menu : menusRepository.findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
 	}
@@ -108,6 +97,6 @@ public class CateringDataInitializer implements DataInitializer {
 		UserAccount caterer_1 = userAccountManager.create("tussi", "pommes", catererRole);
 		userAccountManager.save(caterer_1);
 		
-		staffRepository.save(caterer_1); //vllt ist das mal gut!
+		staffRepository.save(caterer_1);
 	}
 }
