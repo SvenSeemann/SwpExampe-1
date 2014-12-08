@@ -7,7 +7,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fviv.catering.model.StaffRepository;
+import fviv.model.StaffRepository;
 import fviv.model.Employee;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
@@ -34,12 +34,6 @@ public class ManagerDataInitializer implements DataInitializer{
 	
 	private void initializeStaff(UserAccountManager userAccountManager, StaffRepository staffRepository){		
 		final Role employeeRole = new Role("ROLE_EMPLOYEE");
-		final Role managerRole = new Role("ROLE_MANAGER");	
-		
-		//Create manager
-		UserAccount manager = userAccountManager.create("manager", "123", managerRole);
-		userAccountManager.save(manager);
-		staffRepository.save(manager);
 		
 		//Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates", "123", employeeRole);

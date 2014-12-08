@@ -18,23 +18,19 @@ import org.springframework.util.Assert;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
-import fviv.catering.model.StaffRepository;
 import fviv.catering.model.Menu.Type;
+import fviv.model.StaffRepository;
 
 @Component
 public class CateringDataInitializer implements DataInitializer {
 
 	private final Inventory<InventoryItem> inventory;
 	private final MenusRepository menusRepository;
-	private final UserAccountManager userAccountManager;
-	private final StaffRepository staffRepository;
 	
 	
 	@Autowired
 	public CateringDataInitializer (MenusRepository menusRepository,
-									Inventory<InventoryItem> inventory,
-									UserAccountManager userAccountManager,
-									StaffRepository staffRepository) {
+									Inventory<InventoryItem> inventory) {
 		
 		
 		Assert.notNull(inventory, "Inventory must not be null!");
@@ -42,15 +38,12 @@ public class CateringDataInitializer implements DataInitializer {
 		
 		this.menusRepository = menusRepository;
 		this.inventory = inventory;
-		this.userAccountManager = userAccountManager;
-		this.staffRepository = staffRepository;
 	}
 
 	
 	@Override
 	public void initialize() {
 		initializeMenus(menusRepository, inventory);
-		initializeUsers(userAccountManager, staffRepository);
 	}
 	
 	private void initializeMenus(MenusRepository menusRepository,
@@ -85,15 +78,5 @@ public class CateringDataInitializer implements DataInitializer {
 			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
-	}
-
-	private void initializeUsers(UserAccountManager userAccountManager, StaffRepository staffRepository){
-	
-		final Role catererRole = new Role("ROLE_CATERER");
-		
-		UserAccount caterer_1 = userAccountManager.create("tussi", "pommes", catererRole);
-		userAccountManager.save(caterer_1);
-		
-		staffRepository.save(caterer_1);
 	}
 }

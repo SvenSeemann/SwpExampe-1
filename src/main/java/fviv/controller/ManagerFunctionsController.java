@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
-import fviv.catering.model.StaffRepository;
+import fviv.model.StaffRepository;
 import fviv.model.Employee;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
