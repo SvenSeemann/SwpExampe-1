@@ -1,4 +1,4 @@
-package fviv.catering.model;
+package fviv.model;
 
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountIdentifier;
