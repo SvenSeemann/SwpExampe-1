@@ -46,8 +46,6 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(boss);
 		userAccountManager.save(manager);
 		userAccountManager.save(caterer);
-		
-		//staffRepository.save(caterer_1);
 	}
 	
 }
