@@ -67,7 +67,7 @@ public class CateringController {
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
 
-	@RequestMapping({ "/", "/index", "/catering" })
+	@RequestMapping({"/", "/catering"})
 	public String index(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
 				this.menusRepository.findByType(Type.MEAL));
