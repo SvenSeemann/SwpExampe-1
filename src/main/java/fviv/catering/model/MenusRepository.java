@@ -1,10 +1,9 @@
-package catering.model;
+package fviv.catering.model;
 
 import org.salespointframework.catalog.ProductIdentifier;
-import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
-import catering.model.Menu.Type;
+import fviv.catering.model.Menu.Type;
 
 public interface MenusRepository extends CrudRepository<Menu, ProductIdentifier> {
 

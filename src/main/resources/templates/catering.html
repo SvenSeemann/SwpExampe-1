@@ -13,6 +13,8 @@
   <div id="header"><span id="header_text">HEADLINE</span><!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
     <div id="loggedAs">
       <p sec:authorize="isAuthenticated()" th:text="${'Hallo ' + #authentication?.Username}">Caterer</p>
+      <span sec:authentication="name" ></span>
+      <span th:text = "${#authentication?.name}"></span>
       <span>CATERER XXXXXX</span></div>
     <!-- Hier kommt dann die ID des Caterers hin--> 
   </div>
@@ -37,8 +39,8 @@
   	</div>
 
   
-  	<div class="storno"><a th:href="cancel" th:text="#{catering.confirm}">CONFIRM</a></div>
-  	<div class="storno"><a th:href="cancel" th:text="#{catering.cancel}">CANCEL</a></div>
+  	<div class="storno"><a href="/catering-confirm" th:text="#{catering.confirm}">CONFIRM</a></div>
+  	<div class="storno"><a href="/catering-cancel" th:text="#{catering.cancel}">CANCEL</a></div>
   	
   </div>
     
@@ -47,7 +49,7 @@
     
     	
     	<div th:case="meals">
-	    	<a th:each="meal : ${meals}" th:href="@{'/menu/' + ${meal.identifier}}">
+	    	<a th:each="meal : ${meals}" th:href="@{'/catering-menu/' + ${meal.identifier}}">
 	    		<div class="field">
 	    			<p th:text="${meal.name}"></p>
 	    			<p th:text="${meal.price}"></p>
@@ -56,7 +58,7 @@
     	</div>
     	
     	<div th:case="drinks">
-    	<a th:each="drink : ${drinks}" th:href="@{'/menu/' + ${drink.identifier}}">
+    	<a th:each="drink : ${drinks}" th:href="@{'/catering-menu/' + ${drink.identifier}}">
     		<div class="field">
     			<p th:text="${drink.name}"></p>
     			<p th:text="${drink.price}"></p>
@@ -71,16 +73,16 @@
   
   <div id="menu">
     <div id="menuPointNormal">
-      <p>LOGOUT</p>
+      <a href="/logout">LOGOUT</a>
     </div>
     <div id="menuPointNormal">
       <p>CHAT</p>
     </div>
     <div id="menuPointBold">
-      <p><a href="/meals" th:text="#{catering.meals}">MEALS</a></p>
+      <p><a href="/catering-meals" th:text="#{catering.meals}">MEALS</a></p>
     </div>
     <div id="menuPointBold">
-      <p><a href="/drinks" th:text="#{catering.drinks}">DRINKS</a></p>
+      <p><a href="/catering-drinks" th:text="#{catering.drinks}">DRINKS</a></p>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-package catering;
+package fviv;
 
 import org.salespointframework.Salespoint;
 import org.salespointframework.SalespointSecurityConfiguration;
@@ -21,13 +21,13 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackageClasses = { Salespoint.class, CateringPrototype.class })
-@EnableJpaRepositories(basePackageClasses = { Salespoint.class, CateringPrototype.class })
+@EntityScan(basePackageClasses = { Salespoint.class, Application.class })
+@EnableJpaRepositories(basePackageClasses = { Salespoint.class, Application.class })
 @ComponentScan
-public class CateringPrototype {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(CateringPrototype.class, args);
+        SpringApplication.run(Application.class, args);
     }
     
     @Configuration
@@ -59,7 +59,7 @@ public class CateringPrototype {
 			http.csrf().disable();
 			http.authorizeRequests().antMatchers("/**").permitAll().and().//
 					formLogin().loginPage("/login").loginProcessingUrl("/login").and(). //
-					logout().logoutUrl("/logout").logoutSuccessUrl("/");
+					logout().logoutUrl("/logout").logoutSuccessUrl("/login");
 		}
 	}
 }

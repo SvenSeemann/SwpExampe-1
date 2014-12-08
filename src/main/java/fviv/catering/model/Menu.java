@@ -1,4 +1,4 @@
-package catering.model;
+package fviv.catering.model;
 
 import javax.persistence.Entity;
 
@@ -7,13 +7,14 @@ import org.salespointframework.catalog.Product;
 import org.salespointframework.quantity.Units;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings("serial")
 @Entity
 public class Menu extends Product {
 	public static enum Type {
 		MEAL, DRINK;
 	}
 	
+	@SuppressWarnings("unused")
 	private Type type;
 	
 	@Autowired

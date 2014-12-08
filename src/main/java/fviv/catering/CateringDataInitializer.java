@@ -1,4 +1,4 @@
-package catering;
+package fviv.catering;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
@@ -16,11 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import catering.model.Menu;
-import catering.model.MenusRepository;
-import catering.model.Menu;
-import catering.model.StaffRepository;
-import catering.model.Menu.Type;
+import fviv.catering.model.Menu;
+import fviv.catering.model.MenusRepository;
+import fviv.catering.model.StaffRepository;
+import fviv.catering.model.Menu.Type;
 
 @Component
 public class CateringDataInitializer implements DataInitializer {
@@ -76,8 +75,6 @@ public class CateringDataInitializer implements DataInitializer {
 		
 		menusRepository.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5, Meal6,
 				Meal7, Meal8, Drink1, Drink2, Drink3, Drink4, Drink5));
-		
-		System.out.println(menusRepository.findAll());
 		
 		for (Menu Menu : menusRepository.findAll()) {
 			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
