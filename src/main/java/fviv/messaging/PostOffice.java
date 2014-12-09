@@ -1,13 +1,15 @@
 package fviv.messaging;
 
+import fviv.user.UserRepository;
+import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import fviv.user.Role;
-import fviv.user.User;
-import fviv.user.UserRepository;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
-import java.lang.Iterable;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -29,21 +31,21 @@ public class PostOffice {
         this.repo = repo;
     }
 
-    public Iterable<Message> getMessages(long userId) {
-        Optional<User> x = users.findOne(userId);
+    public Iterable<Message> getMessages(UserAccountIdentifier userId) {
+        Optional<UserAccount> x = users.findOne(userId);
         if (x.isPresent()) return getMessages(x.get());
         else throw new SecurityException();
     }
 
-    public Iterable<Message> getMessages(User user) {
+    public Iterable<Message> getMessages(UserAccount user) {
         if (canReceive(user)) {
-            return repo.findByRecipient(user.getId());
+            return repo.findByRecipient(user);
         } else {
             throw new SecurityException();
         }
     }
 
-    public boolean sendMessage(long sender, long receiver, String message) {
+    public boolean sendMessage(UserAccount sender, UserAccount receiver, String message) {
         if (canSend(sender) && canReceive(receiver)){
             repo.save(new Message(message, sender, receiver));
             return true;
@@ -51,30 +53,25 @@ public class PostOffice {
         return false;
     }
 
-    public boolean hasRole(User user, Role role) {
-        return user.getRoles().contains(role);
+    public boolean hasRole(UserAccount user, Role role) {
+        return user.hasRole(role);
     }
 
-    public boolean hasRole(long userId, Role role) {
-        Optional<User> x = users.findOne(userId);
-
-        return x.isPresent() && hasRole(x.get(), role);
-    }
-
-    public boolean canSend(User user) {
+    public boolean canSend(UserAccount user) {
         return hasRole(user, senderRole);
     }
 
-    public boolean canSend(long userId) {
-        return hasRole(userId, senderRole);
-    }
-
-    public boolean canReceive(User user) {
-        return hasRole(user, receiverRole);
-    }
-
-    public boolean canReceive(long userId) {
+    public boolean canReceive(UserAccount userId) {
         return hasRole(userId, receiverRole);
+    }
+
+    public Iterable<UserAccount> getRecipients(){
+        List<UserAccount> acc = new LinkedList<>();
+
+        for (UserAccount user : users.findAll())  if (user.hasRole(receiverRole)) acc.add(user);
+
+        return acc;
+
     }
 
 }

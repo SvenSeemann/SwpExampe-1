@@ -1,10 +1,12 @@
 package fviv.messaging;
 
 import org.hibernate.annotations.Type;
+import org.salespointframework.useraccount.UserAccount;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 /**
@@ -25,27 +27,29 @@ public class Message {
     @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime dateReceived;
 
-    private long sender;
+    @OneToOne
+    private UserAccount sender;
 
-    private long recipient;
+    @OneToOne
+    private UserAccount recipient;
 
     private boolean read = false;
 
     @Deprecated
     public Message(){}
 
-    public Message(String message, LocalDateTime dateSent, long sender, long recipient) {
+    public Message(String message, LocalDateTime dateSent, UserAccount sender, UserAccount recipient) {
         this.message = message;
         this.dateSent = dateSent;
         this.sender = sender;
         this.recipient = recipient;
     }
 
-    public Message(String message, long sender, long recipient) {
+    public Message(String message, UserAccount sender, UserAccount recipient) {
         this.message = message;
+        this.dateSent = LocalDateTime.now();
         this.sender = sender;
         this.recipient = recipient;
-        this.dateSent = LocalDateTime.now();
     }
 
     public LocalDateTime getDateSent() {
@@ -60,11 +64,11 @@ public class Message {
         this.dateReceived = dateReceived;
     }
 
-    public long getSender() {
+    public UserAccount getSender() {
         return sender;
     }
 
-    public long getRecipient() {
+    public UserAccount getRecipient() {
         return recipient;
     }
 

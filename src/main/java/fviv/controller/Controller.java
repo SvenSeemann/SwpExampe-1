@@ -2,6 +2,8 @@ package fviv.controller;
 
 import fviv.messaging.PostOffice;
 import fviv.messaging.SendMessageForm;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.Optional;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -26,10 +30,11 @@ public class Controller {
     }
 
     @RequestMapping(value = "/messaging/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String send(@ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult){
+    public String send(@LoggedIn Optional<UserAccount> user, @ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "error";
+        if (!user.isPresent()) return "error";
 
-        return postOffice.sendMessage(messageForm.getSender(), messageForm.getReceiver(), messageForm.getMessage()) ? "sucess" : "failed";
+        return postOffice.sendMessage(user.get(), messageForm.getReceiver(), messageForm.getMessage()) ? "success" : "failed";
     }
 
     @RequestMapping(value = "/")
@@ -37,5 +42,10 @@ public class Controller {
         return "index";
     }
 
-
+    public void withMessaging(Model model, Optional<UserAccount> user) {
+        if (user.isPresent()) {
+            model.addAttribute("recipients", postOffice.getRecipients());
+            model.addAttribute("messages", postOffice.getMessages(user.get()));
+        }
+    }
 }
