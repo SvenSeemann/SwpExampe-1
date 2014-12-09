@@ -1,4 +1,4 @@
-package messaging
+package fviv.messaging
 
 import java.time.LocalDateTime
 import javax.persistence._
