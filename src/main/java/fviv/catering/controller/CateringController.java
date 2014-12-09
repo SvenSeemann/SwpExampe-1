@@ -21,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fviv.catering.model.Menu;
@@ -37,6 +38,7 @@ public class CateringController {
 	private String mode = "";
 	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
+	private final UserAccountManager userAccountManager;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
@@ -45,6 +47,7 @@ public class CateringController {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
+		this.userAccountManager = userAccountManager;
 
 	}
 
@@ -56,7 +59,7 @@ public class CateringController {
 	}
 
 	@ModelAttribute("cart")
-	public Cart getCart(HttpSession session) {
+	public Cart initializeCart(HttpSession session) {
 		Cart cart = (Cart) session.getAttribute("cart");
 		if (cart == null) {
 			cart = new Cart();
@@ -67,8 +70,8 @@ public class CateringController {
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
 
-	@RequestMapping({"/", "/catering"})
-	public String index(ModelMap modelMap) {
+	@RequestMapping("/catering")
+	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
 				this.menusRepository.findByType(Type.MEAL));
 		modelMap.addAttribute("drinks",
@@ -76,20 +79,13 @@ public class CateringController {
 		return "/catering";
 	}
 
-	@RequestMapping("/catering-drinks")
+	@RequestMapping(value = "/catering-drinks", method = RequestMethod.POST)
 	public String drinks() {
 		mode = "drinks";
 		return "redirect:/catering";
 	}
 
-	@RequestMapping("/catering-cancel")
-	public String cancel(HttpSession session) {
-		Cart cart = getCart(session);
-		cart.clear();
-		return "redirect:/catering";
-	}
-
-	@RequestMapping("/catering-meals")
+	@RequestMapping(value = "/catering-meals", method = RequestMethod.POST)
 	public String meals() {
 		mode = "meals";
 		return "redirect:/catering";
@@ -105,6 +101,13 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
+	@RequestMapping("/catering-cancel")
+	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
+		//Cart cart = getCart(session);
+		cart.clear();
+		return "redirect:/catering";
+	}
+	
 	@RequestMapping("/catering-confirm")
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {

@@ -79,11 +79,15 @@
       <p>CHAT</p>
     </div>
     <div id="menuPointBold">
-      <p><a href="/catering-meals" th:text="#{catering.meals}">MEALS</a></p>
+    	<form method="post" action="/catering-meals">
+    		<input type="submit" th:value="#{catering.meals}" value="catering-meals" />
+    	</form>
     </div>
     <div id="menuPointBold">
-      <p><a href="/catering-drinks" th:text="#{catering.drinks}">DRINKS</a></p>
-    </div>
+    	<form method="post" action="/catering-drinks">
+    		<input type="submit" th:value="#{catering.drinks}" value="catering-drinks" />
+   		</form>
+   	</div>
   </div>
 </div>
 </body>
