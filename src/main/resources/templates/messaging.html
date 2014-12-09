@@ -13,8 +13,8 @@
             </li>
 
         </ul>
-        <form sec:authorize="hasRole('MESSAGE_SENDER')" class="send-form" action="/messaging/send" method="post">
-            <label for="receiver">Receiver</label> <input type="number" name="receiver" id="receiver" />
+        <form sec:authorize="hasRole('MESSAGE_SENDER')" class="send-form" action="/fviv/messaging/send" method="post">
+            <label for="recipient">Receiver</label> <input type="number" name="recipient" id="recipient" />
             <label for="message-content">Your Message</label><textarea id="message-content"></textarea>
             <input type="submit" value="Submit" />
             <input sec:authorize="isAuthenticated()" type="hidden" name="sender" th:value="${#authentication?.id}"/>

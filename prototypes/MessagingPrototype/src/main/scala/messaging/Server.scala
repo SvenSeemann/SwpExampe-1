@@ -1,4 +1,4 @@
-package messaging
+package fviv.messaging
 
 import org.springframework.beans.factory.annotation.Autowired
 

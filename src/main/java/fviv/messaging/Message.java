@@ -1,4 +1,4 @@
-package messaging;
+package fviv.messaging;
 
 import org.hibernate.annotations.Type;
 
@@ -27,24 +27,24 @@ public class Message {
 
     private long sender;
 
-    private long receiver;
+    private long recipient;
 
     private boolean read = false;
 
     @Deprecated
     public Message(){}
 
-    public Message(String message, LocalDateTime dateSent, long sender, long receiver) {
+    public Message(String message, LocalDateTime dateSent, long sender, long recipient) {
         this.message = message;
         this.dateSent = dateSent;
         this.sender = sender;
-        this.receiver = receiver;
+        this.recipient = recipient;
     }
 
-    public Message(String message, long sender, long receiver) {
+    public Message(String message, long sender, long recipient) {
         this.message = message;
         this.sender = sender;
-        this.receiver = receiver;
+        this.recipient = recipient;
         this.dateSent = LocalDateTime.now();
     }
 
@@ -64,8 +64,8 @@ public class Message {
         return sender;
     }
 
-    public long getReceiver() {
-        return receiver;
+    public long getRecipient() {
+        return recipient;
     }
 
     public long getId() {

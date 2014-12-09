@@ -1,4 +1,4 @@
-package user;
+package fviv.user;
 
 import org.salespointframework.core.SalespointRepository;
 

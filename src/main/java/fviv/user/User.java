@@ -1,14 +1,16 @@
-package user;
+package fviv.user;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
  * Created by justusadam on 09/12/14.
  */
 @Entity
-public class User implements Serializable{
+public class User {
     @GeneratedValue
     @Id
     private long id;

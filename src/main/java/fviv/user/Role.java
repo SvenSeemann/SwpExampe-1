@@ -1,4 +1,4 @@
-package user;
+package fviv.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

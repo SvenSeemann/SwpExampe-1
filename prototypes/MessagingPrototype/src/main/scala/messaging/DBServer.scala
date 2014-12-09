@@ -1,6 +1,6 @@
-package messaging
+package fviv.messaging
 
-import messaging.errors.NoSuchUserError
+import fviv.messaging.errors.NoSuchUserError
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 

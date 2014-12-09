@@ -1,10 +1,10 @@
-package messaging;
+package fviv.messaging;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import user.Role;
-import user.User;
-import user.UserRepository;
+import fviv.user.Role;
+import fviv.user.User;
+import fviv.user.UserRepository;
 
 import java.util.Optional;
 import java.lang.Iterable;
@@ -37,7 +37,7 @@ public class PostOffice {
 
     public Iterable<Message> getMessages(User user) {
         if (canReceive(user)) {
-            return repo.findByUser(user);
+            return repo.findByRecipient(user.getId());
         } else {
             throw new SecurityException();
         }

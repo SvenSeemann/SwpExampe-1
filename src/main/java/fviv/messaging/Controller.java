@@ -1,4 +1,4 @@
-package messaging;
+package fviv.messaging;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -22,7 +22,7 @@ public class Controller {
         this.postOffice = postOffice;
     }
 
-    @RequestMapping(value = "/messaging/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/fviv/messaging/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public String send(@ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return "error";
 
