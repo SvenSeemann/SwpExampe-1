@@ -1,19 +1,18 @@
-package fviv.catering.controller;
+package fviv.controller;
 
 //import static org.joda.money.CurrencyUnit.EUR;
 
-import java.util.Optional;
-
-import javax.servlet.http.HttpSession;
-
+import fviv.catering.model.Menu;
+import fviv.catering.model.Menu.Type;
+import fviv.catering.model.MenusRepository;
+import org.salespointframework.order.Cart;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
-import org.salespointframework.order.Cart;
-import org.salespointframework.order.Order;
-import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -24,9 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fviv.catering.model.Menu;
-import fviv.catering.model.MenusRepository;
-import fviv.catering.model.Menu.Type;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_CATERER')")
@@ -67,7 +65,7 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
-	
+
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",

@@ -1,6 +1,6 @@
-package messaging.controller
+package fviv.messaging.controller
 
-import messaging._
+import fviv.messaging._
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -25,14 +25,14 @@ class TestController() {
     this.people = people
   }
 
-  @RequestMapping(Array("/messaging/choose"))
+  @RequestMapping(Array("/fviv/messaging/choose"))
   def page(model:Model) = {
     model addAttribute ("people", people.findAll())
     "overview"
   }
 
 
-  @RequestMapping(Array("/messaging/choose/{id}"))
+  @RequestMapping(Array("/fviv/messaging/choose/{id}"))
   def page(@PathVariable("id") id:Int, model:Model) = {
     def messageAggregate(x:Employee) = {
       JavaConversions.iterableAsScalaIterable(postOffice.findByRecipient(x.getId)).map(m => m.toString)
@@ -46,7 +46,7 @@ class TestController() {
       model addAttribute("name", x.getName)
       x match {
         case x:Employee =>
-          model addAttribute("messaging", new MessageForm(x.canReceive, x.canSend, x.canReceive match {
+          model addAttribute("fviv/messaging", new MessageForm(x.canReceive, x.canSend, x.canReceive match {
             case true => messageAggregate(x)
             case false => List[String]()
           }))
@@ -71,7 +71,7 @@ class TestController() {
       "choose"
     }
   }
-  @RequestMapping(value=Array("/messaging/send"), method = Array(RequestMethod.GET, RequestMethod.POST))
+  @RequestMapping(value=Array("/fviv/messaging/send"), method = Array(RequestMethod.GET, RequestMethod.POST))
   def send(@RequestParam recipient:Int, @RequestParam message:String, @RequestParam sender:Int, model:Model) = {
     val operson = people.findOne(sender)
     if (!operson.isPresent) "redirect:/error"
@@ -94,7 +94,7 @@ class TestController() {
     }
   }
 
-  @RequestMapping(value = Array("/messaging/add"), method = Array(RequestMethod.POST))
+  @RequestMapping(value = Array("/fviv/messaging/add"), method = Array(RequestMethod.POST))
   def add(@RequestParam kind:String, @RequestParam name:String): String = {
     val person = kind match {
         case "caterer" => new Employee(name, true, false)
