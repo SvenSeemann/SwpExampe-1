@@ -20,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -65,8 +66,8 @@ public class CateringController {
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
 
-	@RequestMapping({ "/index", "/catering" })
-	public String index(ModelMap modelMap) {
+	@RequestMapping("/catering")
+	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
 				this.menusRepository.findByType(Type.MEAL));
 		modelMap.addAttribute("drinks",
@@ -99,7 +100,6 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
-
 		return "redirect:/catering";
 	}
 
