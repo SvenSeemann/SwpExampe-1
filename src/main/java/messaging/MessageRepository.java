@@ -7,4 +7,5 @@ import user.User;
  * Created by justusadam on 09/12/14.
  */
 public interface MessageRepository extends SalespointRepository<Message, User>{
+    public Iterable<Message> findByUser(User user);
 }

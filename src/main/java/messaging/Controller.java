@@ -27,8 +27,6 @@ public class Controller {
         if (bindingResult.hasErrors()) return "error";
 
         return postOffice.sendMessage(messageForm.getSender(), messageForm.getReceiver(), messageForm.getMessage()) ? "sucess" : "failed";
-
-
     }
 
 

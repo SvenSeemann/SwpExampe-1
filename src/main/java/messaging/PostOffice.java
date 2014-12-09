@@ -7,6 +7,7 @@ import user.User;
 import user.UserRepository;
 
 import java.util.Optional;
+import java.lang.Iterable;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -26,6 +27,20 @@ public class PostOffice {
     public PostOffice(UserRepository users, MessageRepository repo) {
         this.users = users;
         this.repo = repo;
+    }
+
+    public Iterable<Message> getMessages(long userId) {
+        Optional<User> x = users.findOne(userId);
+        if (x.isPresent()) return getMessages(x.get());
+        else throw new SecurityException();
+    }
+
+    public Iterable<Message> getMessages(User user) {
+        if (canReceive(user)) {
+            return repo.findByUser(user);
+        } else {
+            throw new SecurityException();
+        }
     }
 
     public boolean sendMessage(long sender, long receiver, String message) {
