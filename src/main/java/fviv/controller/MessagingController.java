@@ -18,14 +18,14 @@ import java.util.Optional;
  * Created by justusadam on 09/12/14.
  */
 @org.springframework.stereotype.Controller
-public class Controller {
+public class MessagingController {
 
     private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 
     private PostOffice postOffice;
 
     @Autowired
-    public Controller(PostOffice postOffice) {
+    public MessagingController(PostOffice postOffice) {
         this.postOffice = postOffice;
     }
 
