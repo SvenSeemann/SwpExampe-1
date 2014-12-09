@@ -29,7 +29,7 @@ import fviv.catering.model.MenusRepository;
 import fviv.catering.model.Menu.Type;
 
 @Controller
-
+@PreAuthorize("hasRole('ROLE_CATERER')")
 @SessionAttributes("cart")
 public class CateringController {
 
@@ -67,10 +67,7 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
-
 	
-	
-	@PreAuthorize("hasRole('ROLE_CATERER')")
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
