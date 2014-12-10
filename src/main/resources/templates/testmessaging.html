@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+</head>
+<body>
+<div th:fragment="message-list">
+    <h3>Hello and welcome ... dude</h3>
+    <ul class="messages">
+        <li th:each="message : ${messages}" th:text="${message}" th:fragment="message">
+            Error
+        </li>
+
+    </ul>
+</div>
+<div th:fragment="message-form">
+    <form class="message-form" action="/messaging/send" method="post">
+        <label for="recipient">Receiver</label>
+        <select id="recipient" name="recipient">
+            <option th:each="recipient : ${recipients}" th:value="${recipient}" th:text="${recipient}">Empty</option>
+        </select>
+        <label for="message-content">Your Message</label><textarea id="message-content" name="message"></textarea>
+        <input type="submit" value="Submit" />
+    </form>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/resources/js/messaging.js"></script>
+</div>
+
+
+</body>
+</html>
