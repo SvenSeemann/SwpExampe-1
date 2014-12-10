@@ -123,7 +123,7 @@
         <a href="/messaging/choose" class="back">Back</a>
         <div class="clear"></div>
         <h1 th:text="${name}">Name</h1>
-        <form th:if="${messaging.sends}" method="post" action="/messaging/send">
+        <form th:if="${fviv.messaging.sends}" method="post" action="/messaging/send">
             <div class="messaging-form messaging">
                 <h4>Send new Message</h4>
                 <label for="recipient">Recipient</label><input type="number" name="recipient" id="recipient" />
@@ -133,18 +133,18 @@
             </div>
         </form>
 
-        <div th:if="${messaging.sends}" id="recipients">
+        <div th:if="${fviv.messaging.sends}" id="recipients">
             <h4>Recipients</h4>
             <table>
-            <tr th:each="receiver : ${receivers}" class="recipient">
-                <td class="recipient-name" th:text="${receiver.name}"></td>
-                <td class="recipient-id" th:text="${receiver.id}"></td>
+            <tr th:each="recipient : ${receivers}" class="recipient">
+                <td class="recipient-name" th:text="${recipient.name}"></td>
+                <td class="recipient-id" th:text="${recipient.id}"></td>
             </tr>
             </table>
         </div>
 
-        <div th:if="${messaging.receives}" class="messages-received messaging"><h4>My Messages</h4>
-            <div class="message" th:each="message : ${messaging.message}"><p th:text="${message}">error</p></div>
+        <div th:if="${fviv.messaging.receives}" class="messages-received messaging"><h4>My Messages</h4>
+            <div class="message" th:each="message : ${fviv.messaging.message}"><p th:text="${message}">error</p></div>
         </div>
         <div class="clear"></div>
     </div>
