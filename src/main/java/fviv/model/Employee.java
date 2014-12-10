@@ -31,36 +31,16 @@ public class Employee{
 	public UserAccount getUserAccount(){
 		return userAccount;
 	}
-	
-	public String getLastname(){
-		return userAccount.getLastname();
-	}
-	
-	public String getFirstname(){
-		return userAccount.getFirstname();
-	}
-	
-	public String getEmail(){
-		return userAccount.getEmail();
-	}
-	
+		
 	public String getPhone(){
 		return phone;
 	}
-	
-	public void setLastname(String lastname){
-		userAccount.setLastname(lastname);
-	}
-	
-	public void setFirstname(String firstname){
-		userAccount.setFirstname(firstname);
-	}
-	
-	public void setEmail(String email){
-		userAccount.setEmail(email);
-	}
-	
+		
 	public void setPhone(String phone){
 		this.phone = phone;
+	}
+	
+	public long getId(){
+		return id;
 	}
 }

@@ -9,11 +9,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
-import fviv.model.StaffRepository;
+import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
@@ -22,13 +23,13 @@ import fviv.model.Registration;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 @Controller
 class ManagerFunctionsController{
-	private final StaffRepository staffRepository;
+	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	private final UserAccountManager userAccountManager;
 	
 	@Autowired
-	public ManagerFunctionsController(StaffRepository staffRepository, ExpenseRepository expenseRepository, UserAccountManager userAccountManager){
-		this.staffRepository = staffRepository;
+	public ManagerFunctionsController(EmployeeRepository employeeRepository, ExpenseRepository expenseRepository, UserAccountManager userAccountManager){
+		this.employeeRepository = employeeRepository;
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
 	}
@@ -40,10 +41,8 @@ class ManagerFunctionsController{
 	
 	@RequestMapping("/checkEmployees")
 	public String checkEmployees(ModelMap modelMap){
-		
-		modelMap.addAttribute("employeelist", staffRepository.findAll());
+		modelMap.addAttribute("employeelist", employeeRepository.findAll());
 		modelMap.addAttribute("registration", new Registration());
-		modelMap.addAttribute("deleteEmployee", new Employee(null, ""));
 		return "checkEmployees";
 	}	
 	
@@ -52,25 +51,33 @@ class ManagerFunctionsController{
 		//Return to checkEmployees if new employee data are invalid or incomplete
 		if(results.hasErrors())return "redirect:/checkEmployees";
 		
-		//Create new employee
 		final Role employeeRole = new Role("ROLE_EMPLOYEE");
 		
+		//Create useraccount
 		UserAccount employeeAccount = userAccountManager.create(registration.getLastname(), "123", employeeRole);
+		employeeAccount.setFirstname(registration.getFirstname());
+		employeeAccount.setLastname(registration.getLastname());
+		employeeAccount.setEmail(registration.getEmail());
+		
+		//Create employee
 		Employee employee = new Employee(employeeAccount, registration.getPhone());
+		
+		//Add employee and useraccount to the specific repositories
 		userAccountManager.save(employeeAccount);
-		staffRepository.save(employee.getUserAccount());
+		employeeRepository.save(employee);
 		
 		return "redirect:/checkEmployees";
 	}
 	
 	@RequestMapping("/deleteEmployee")
-	public String deleteEmployee(@ModelAttribute(value="deleteEmployee") @Valid Employee employee, BindingResult results){
-		if(results.hasErrors() || staffRepository.findByUserAccountIdentifier(employee.getUserAccount().getId()) == null){
+	public String deleteEmployee(@RequestParam("eId") long eId){
+		if(employeeRepository.findById(eId) == null){
 			return "redirect:/checkEmployees";
 		}
 		
-		UserAccount deleteThisEmployee = staffRepository.findByUserAccountIdentifier(employee.getUserAccount().getId());
-		staffRepository.delete(deleteThisEmployee);
+		Employee deleteThisEmployee = employeeRepository.findById(eId);
+		userAccountManager.disable(deleteThisEmployee.getUserAccount().getId());;
+		employeeRepository.delete(deleteThisEmployee);
 		
 		return "redirect:/checkEmployees";
 	}
