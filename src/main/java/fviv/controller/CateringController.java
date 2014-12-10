@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 
-@RestController
+@Controller
 @PreAuthorize("hasRole('ROLE_CATERER')")
 @SessionAttributes("cart")
 public class CateringController {

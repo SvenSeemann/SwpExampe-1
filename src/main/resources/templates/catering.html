@@ -16,11 +16,9 @@
 			<span id="header_text">HEADLINE</span>
 			<!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
 			<div id="loggedAs">
-				<p sec:authorize="isAuthenticated()"
-					th:text="${'Hallo ' + #authentication?.Username}">Caterer</p>
-				<span sec:authentication="username"></span> <span
-					th:text="${#authentication?.Username}"></span> <span>CATERER
-					XXXXXX</span>
+				
+			CATERER <p th:text="${#authentication?.name}">XXXXXX</p>
+			
 			</div>
 			<!-- Hier kommt dann die ID des Caterers hin-->
 		</div>
