@@ -17,6 +17,20 @@ function send_message(e) {
     })
 }
 
+var messages = [];
+
+function check_messages() {
+    $.ajax({
+        type: "POST",
+        cache : true,
+        url : '/messages/get',
+        data : {
+            date : messages[messages.length - 1]
+        }
+    })
+}
+
+
 $(document).ready(function() {
     var forms = $('form.message-form');
     for (var form in forms) {

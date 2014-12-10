@@ -15,7 +15,7 @@
     </ul>
 </div>
 <div th:fragment="message-form">
-    <form class="message-form" action="/messaging/send" method="post">
+    <form class="message-form" action="/messaging/test/send" method="post">
         <label for="recipient">Receiver</label>
         <select id="recipient" name="recipient">
             <option th:each="recipient : ${recipients}" th:value="${recipient}" th:text="${recipient}">Empty</option>
