@@ -37,11 +37,6 @@ public class MessagingController {
         return postOffice.sendMessage(user.get(), messageForm.getReceiver(), messageForm.getMessage()) ? "success" : "failed";
     }
 
-    @RequestMapping(value = "/")
-    public String handle(Model model) {
-        return "index";
-    }
-
     public void withMessaging(Model model, Optional<UserAccount> user) {
         if (user.isPresent()) {
             model.addAttribute("recipients", postOffice.getRecipients());
