@@ -1,4 +1,4 @@
-package messaging.errors
+package fviv.messaging.errors
 
 /**
  * Created by justusadam on 19/11/14.

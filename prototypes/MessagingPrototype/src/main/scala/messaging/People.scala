@@ -1,4 +1,4 @@
-package messaging
+package fviv.messaging
 
 import org.salespointframework.core.SalespointRepository
 import org.springframework.context.annotation.Bean
