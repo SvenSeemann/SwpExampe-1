@@ -71,6 +71,7 @@ public class CateringController {
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
 
+
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",

@@ -1,6 +1,8 @@
 package fviv;
 
+
 import fviv.model.StaffRepository;
+
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -8,6 +10,8 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+
+import fviv.model.StaffRepository;
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
