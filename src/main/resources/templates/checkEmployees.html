@@ -33,23 +33,23 @@
 		</thead>
 		<tbody>
 			<tr th:each=" employee : ${employeelist}">
-			 	<td th:text="${employee.id}"></td>
-				<td th:text="${employee.lastname}"></td>
-				<td th:text="${employee.firstname}"></td>
-				<td th:text="${employee.email}"></td>
+				<td th:text="${employee.id}"></td>
+				<td th:text="${employee.userAccount.lastname}"></td>
+				<td th:text="${employee.userAccount.firstname}"></td>
+				<td th:text="${employee.userAccount.email}"></td>
 				<td th:text="${employee.phone}"></td>
 			</tr>
 		</tbody>
 	</table>
 	<p>Mitarbeiter entfernen:</p>
-	<form th:action="@{/deleteEmployee}" method="post" th:object="${deleteEmployee}">
+ 	<form th:action="@{/deleteEmployee}" method="post">
 		<label for="deleteEmployeeText">ID eingeben:</label>
-		<input type="text" id="deleteEmployeeText" th:field="*{id}"></input>
+		<input type="text" name="eId" id="deleteEmployeeText"></input>
 		<input type="submit" value="Löschen"></input>
 	</form>
 	<p>Neuen Mitarbeiter hinzufügen:</p>
-	<!-- Communicates with controller @RequestMapping("/newEmployee") -->
-	<form th:action="@{/newEmployee}" method="post" th:object="${registration}">
+	<!--Communicates with controller @RequestMapping("/newEmployee") -->
+ 	<form th:action="@{/newEmployee}" method="post" th:object="${registration}">
 		<label for="lastname">Nachname:</label>
 		<input type="text" id="lastname" th:field="*{lastname}"></input>
 		<br />
