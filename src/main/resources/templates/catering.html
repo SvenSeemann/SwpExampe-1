@@ -1,94 +1,108 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
-		<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
-		<title th:text="#{catering.title}">Catering</title>
-	</head>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css' />
+<title th:text="#{catering.title}">Catering</title>
+</head>
 
 <body>
-<div id="webseite">
-  <div id="header"><span id="header_text">HEADLINE</span><!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
-    <div id="loggedAs">
-      <p sec:authorize="isAuthenticated()" th:text="${'Hallo ' + #authentication?.Username}">Caterer</p>
-      <span sec:authentication="username" ></span>
-      <span th:text = "${#authentication?.Username}"></span>
-      <span>CATERER XXXXXX</span></div>
-    <!-- Hier kommt dann die ID des Caterers hin--> 
-  </div>
-  <div id="content">
-  <div id="orderList">
-  
-  <div th:unless="${cart.empty}">
-  	<table>
-  		<tr th:each="orderline : ${cart}">
-  			<td th:text="${orderline.productName}">Currywurst</td>
-  			<td th:text="${orderline.price}">3.00 EUR</td>
-  			<td th:text="${orderline.quantity}">1</td>
-  		</tr>
-	</table>
-	
-	<table>
-		<tr>
-  			<td th:text="#{catering.total} + ': ' + ${cart.price}">
-  			</td>
-	  	</tr>
-  	</table>
-  	</div>
+	<div id="webseite">
+		<div id="header">
+			<span id="header_text">HEADLINE</span>
+			<!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
+			<div id="loggedAs">
+				<p sec:authorize="isAuthenticated()"
+					th:text="${'Hallo ' + #authentication?.Username}">Caterer</p>
+				<span sec:authentication="username"></span> <span
+					th:text="${#authentication?.Username}"></span> <span>CATERER
+					XXXXXX</span>
+			</div>
+			<!-- Hier kommt dann die ID des Caterers hin-->
+		</div>
+		<div id="content">
+			<div id="orderList">
 
-  
-  	<div class="storno"><a href="/catering-confirm" th:text="#{catering.confirm}">CONFIRM</a></div>
-  	<div class="storno"><a href="/catering-cancel" th:text="#{catering.cancel}">CANCEL</a></div>
-  	
-  </div>
-    
-    <div  id="chooseBox" th:switch="${ordermode}">	<!--  man kann auch aus der messages.properties machen #{shit} -->
-    
-    
-    	
-    	<div th:case="meals">
-	    	<a th:each="meal : ${meals}" th:href="@{'/catering-menu/' + ${meal.identifier}}">
-	    		<div class="field">
-	    			<p th:text="${meal.name}"></p>
-	    			<p th:text="${meal.price}"></p>
-	    		</div>
-	    	</a>
-    	</div>
-    	
-    	<div th:case="drinks">
-    	<a th:each="drink : ${drinks}" th:href="@{'/catering-menu/' + ${drink.identifier}}">
-    		<div class="field">
-    			<p th:text="${drink.name}"></p>
-    			<p th:text="${drink.price}"></p>
-    		</div>
-    	</a>	
-    	</div>	
- 	 	<h2 th:case="*" th:text="#{catering.welcome}">New Customer</h2>
- 	 </div>
+				<div th:unless="${cart.empty}">
+					<table>
+						<tr th:each="orderline : ${cart}">
+							<td th:text="${orderline.productName}">Currywurst</td>
+							<td th:text="${orderline.price}">3.00 EUR</td>
+							<td th:text="${orderline.quantity}">1</td>
+						</tr>
+					</table>
+
+					<table>
+						<tr>
+							<td th:text="#{catering.total} + ': ' + ${cart.price}"></td>
+						</tr>
+					</table>
+				</div>
+
+
+				<div class="storno">
+					<a href="/catering-confirm" th:text="#{catering.confirm}">CONFIRM</a>
+				</div>
+				<div class="storno">
+					<a href="/catering-cancel" th:text="#{catering.cancel}">CANCEL</a>
+				</div>
+
+			</div>
+
+			<div id="chooseBox" th:switch="${ordermode}">
+				<!--  man kann auch aus der messages.properties machen #{shit} -->
+
+
+
+				<div th:case="meals">
+					<a th:each="meal : ${meals}"
+						th:href="@{'/catering-menu/' + ${meal.identifier}}">
+						<div class="field">
+							<p th:text="${meal.name}"></p>
+							<p th:text="${meal.price}"></p>
+						</div>
+					</a>
+				</div>
+
+				<div th:case="drinks">
+					<a th:each="drink : ${drinks}"
+						th:href="@{'/catering-menu/' + ${drink.identifier}}">
+						<div class="field">
+							<p th:text="${drink.name}"></p>
+							<p th:text="${drink.price}"></p>
+						</div>
+					</a>
+				</div>
+				<h2 th:case="*" th:text="#{catering.welcome}">New Customer</h2>
+			</div>
+		</div>
+
+
+
+		<div id="menu">
+			<div id="menuPointNormal">
+				<a href="/logout">LOGOUT</a>
+			</div>
+			<div id="menuPointNormal">
+				<p>CHAT</p>
+			</div>
+			<div id="menuPointBold">
+				<form method="post" action="/catering-meals">
+					<input type="submit" th:value="#{catering.meals}"
+						value="catering-meals" />
+				</form>
+			</div>
+			<div id="menuPointBold">
+				<form method="post" action="/catering-drinks">
+					<input type="submit" th:value="#{catering.drinks}"
+						value="catering-drinks" />
+				</form>
+			</div>
+		</div>
 	</div>
-	
-	
-  
-  <div id="menu">
-    <div id="menuPointNormal">
-      <a href="/logout">LOGOUT</a>
-    </div>
-    <div id="menuPointNormal">
-      <p>CHAT</p>
-    </div>
-    <div id="menuPointBold">
-    	<form method="post" action="/catering-meals">
-    		<input type="submit" th:value="#{catering.meals}" value="catering-meals" />
-    	</form>
-    </div>
-    <div id="menuPointBold">
-    	<form method="post" action="/catering-drinks">
-    		<input type="submit" th:value="#{catering.drinks}" value="catering-drinks" />
-   		</form>
-   	</div>
-  </div>
-</div>
 </body>
 </html>
