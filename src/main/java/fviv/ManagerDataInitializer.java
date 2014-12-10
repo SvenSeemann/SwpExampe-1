@@ -46,7 +46,7 @@ public class ManagerDataInitializer implements DataInitializer{
 		Employee employee3 = new Employee(employeeAccount3, "0351/777888");
 		Employee employee4 = new Employee(employeeAccount4, "0351/666555");
 		Employee employee5 = new Employee(employeeAccount5, "20304050");
-				
+
 		//Save to repository
 		staffRepository.save(employee1.getUserAccount());
 		staffRepository.save(employee2.getUserAccount());
