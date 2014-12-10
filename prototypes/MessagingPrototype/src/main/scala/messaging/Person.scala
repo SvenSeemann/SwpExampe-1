@@ -1,4 +1,4 @@
-package messaging
+package fviv.messaging
 
 /**
  * Created by justusadam on 19/11/14.

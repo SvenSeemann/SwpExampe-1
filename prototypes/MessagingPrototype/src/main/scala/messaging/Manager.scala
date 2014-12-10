@@ -1,4 +1,4 @@
-package messaging
+package fviv.messaging
 
 import javax.persistence.Entity
 
