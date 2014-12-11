@@ -1,14 +1,27 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head lang="en">
-    <meta charset="UTF-8" />
-    <title>Hello</title>
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css' />
+<title th:text="#{home.title}">FVIV Festivalmanager</title>
 </head>
+
 <body>
-    <h1>Awesome overview</h1>
+	<div id="content">
+		<div id="menuPointNormal">
+			<a href="/catering">Catering Terminal</a>
+		</div>
+	</div>
+	
+	 <h1>Awesome overview</h1>
     <div th:include="messaging :: message-list">
     </div>
     <div th:include="messaging :: message-form">
     </div>
+    
 </body>
 </html>

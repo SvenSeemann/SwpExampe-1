@@ -44,7 +44,7 @@ public class MessagingController {
 
         return postOffice.sendMessage(user.get(), messageForm.getRecipient(), messageForm.getMessage()) ? "success" : "failed";
     }
-
+    
     @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public Object send(@RequestParam("message") String message) {
         System.out.println("got message " + message );

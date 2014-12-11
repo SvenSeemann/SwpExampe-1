@@ -5,6 +5,7 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
+
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
@@ -15,18 +16,19 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
+
 import java.util.Optional;
 
-@Controller
+@RestController
 @PreAuthorize("hasRole('ROLE_CATERER')")
 @SessionAttributes("cart")
 public class CateringController {
@@ -36,6 +38,7 @@ public class CateringController {
 	private String mode = "";
 	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
+	private final UserAccountManager userAccountManager;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
@@ -44,6 +47,7 @@ public class CateringController {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
+		this.userAccountManager = userAccountManager;
 
 	}
 
@@ -55,7 +59,7 @@ public class CateringController {
 	}
 
 	@ModelAttribute("cart")
-	public Cart getCart(HttpSession session) {
+	public Cart initializeCart(HttpSession session) {
 		Cart cart = (Cart) session.getAttribute("cart");
 		if (cart == null) {
 			cart = new Cart();
@@ -75,20 +79,13 @@ public class CateringController {
 		return "/catering";
 	}
 
-	@RequestMapping("/catering-drinks")
+	@RequestMapping(value = "/catering-drinks", method = RequestMethod.POST)
 	public String drinks() {
 		mode = "drinks";
 		return "redirect:/catering";
 	}
 
-	@RequestMapping("/catering-cancel")
-	public String cancel(HttpSession session) {
-		Cart cart = getCart(session);
-		cart.clear();
-		return "redirect:/catering";
-	}
-
-	@RequestMapping("/catering-meals")
+	@RequestMapping(value = "/catering-meals", method = RequestMethod.POST)
 	public String meals() {
 		mode = "meals";
 		return "redirect:/catering";
@@ -103,6 +100,13 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
+	@RequestMapping("/catering-cancel")
+	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
+		//Cart cart = getCart(session);
+		cart.clear();
+		return "redirect:/catering";
+	}
+	
 	@RequestMapping("/catering-confirm")
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
