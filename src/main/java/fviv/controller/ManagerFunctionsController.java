@@ -55,12 +55,10 @@ class ManagerFunctionsController{
 		
 		//Create useraccount
 		UserAccount employeeAccount = userAccountManager.create(registration.getLastname(), "123", employeeRole);
-		employeeAccount.setFirstname(registration.getFirstname());
-		employeeAccount.setLastname(registration.getLastname());
-		employeeAccount.setEmail(registration.getEmail());
 		
 		//Create employee
-		Employee employee = new Employee(employeeAccount, registration.getPhone());
+		Employee employee = new Employee(employeeAccount, registration.getLastname(), registration.getFirstname(), 
+										registration.getEmail(), registration.getPhone());
 		
 		//Add employee and useraccount to the specific repositories
 		userAccountManager.save(employeeAccount);
