@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -79,9 +80,14 @@ public class MessagingController {
     }
 
     @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String getTestMessages(Model model){
-        System.out.println("messages requested");
-        model.addAttribute("messages", postOffice.getMessages(testUser));
+    public String getTestMessages(Model model, @RequestParam("last") String date){
+        if (date.length() < 2){
+            model.addAttribute("messages", postOffice.getMessages(testUser));
+        } else {
+            System.out.println("messages requested " + date);
+            LocalDateTime dateObj = LocalDateTime.parse(date);
+            model.addAttribute("messages", postOffice.getMessages(testUser, dateObj));
+        }
         return "testmessaging :: messages";
     }
 }

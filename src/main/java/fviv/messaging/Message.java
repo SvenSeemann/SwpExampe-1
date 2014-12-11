@@ -22,10 +22,7 @@ public class Message {
     private String message;
 
     @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    private LocalDateTime dateSent;
-
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    private LocalDateTime dateReceived;
+    private LocalDateTime date;
 
     @OneToOne
     private UserAccount sender;
@@ -38,30 +35,22 @@ public class Message {
     @Deprecated
     public Message(){}
 
-    public Message(String message, LocalDateTime dateSent, UserAccount sender, UserAccount recipient) {
+    public Message(String message, LocalDateTime date, UserAccount sender, UserAccount recipient) {
         this.message = message;
-        this.dateSent = dateSent;
+        this.date = date;
         this.sender = sender;
         this.recipient = recipient;
     }
 
     public Message(String message, UserAccount sender, UserAccount recipient) {
         this.message = message;
-        this.dateSent = LocalDateTime.now();
+        this.date = LocalDateTime.now();
         this.sender = sender;
         this.recipient = recipient;
     }
 
-    public LocalDateTime getDateSent() {
-        return dateSent;
-    }
-
-    public LocalDateTime getDateReceived() {
-        return dateReceived;
-    }
-
-    public void setDateReceived(LocalDateTime dateReceived) {
-        this.dateReceived = dateReceived;
+    public LocalDateTime getDate() {
+        return date;
     }
 
     public UserAccount getSender() {
@@ -91,6 +80,6 @@ public class Message {
 
     @Override
     public String toString(){
-        return sender + "  [" + dateReceived.toString() + "]  " + message;
+        return sender + "  [" + date.toString() + "]  " + message;
     }
 }

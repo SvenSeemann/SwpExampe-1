@@ -7,6 +7,7 @@ import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,18 @@ public class PostOffice {
         } else {
             throw new SecurityException();
         }
+    }
+
+    public Iterable<Message> getMessages(UserAccount user, LocalDateTime fromDate) {
+        Iterable<Message> messages = getMessages(user);
+        List<Message> out = new LinkedList<>();
+
+        for (Message message : messages) {
+            if (message.getDate().isAfter(fromDate)){
+                out.add(message);
+            }
+        }
+        return out;
     }
 
     public boolean sendMessage(UserAccount sender, UserAccount receiver, String message) {

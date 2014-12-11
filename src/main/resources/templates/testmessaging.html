@@ -36,10 +36,10 @@
 
     <table>
         <tr th:each="message : ${messages}" th:fragment="messages">
-            <td th:text="${message.sender.identifier}"></td>
+            <td th:text="${message.sender.identifier}" class="message-sender"></td>
             <td>:</td>
-            <td th:text="${message.dateReceived}"></td>
-            <td th:text="${message.message}"></td>
+            <td th:text="${message.date}" class="message-date"></td>
+            <td th:text="${message.message}" class="message-message"></td>
         </tr>
     </table>
 

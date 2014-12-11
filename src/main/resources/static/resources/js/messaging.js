@@ -4,10 +4,9 @@
 
 var debug = true;
 
-function send_message(e) {
+function send_message(e, form) {
     e.preventDefault();
-
-    var form = $(this);
+    form = $(form);
     console.log(form);
     $.ajax({
         type: "POST",
@@ -16,6 +15,7 @@ function send_message(e) {
         data : form.serialize(),
         success : function(data){
             e.target.reset();
+            check_messages();
         }
     })
 }
@@ -43,9 +43,7 @@ var messages = {
     array : [],
     add : function (message) {
         //this.array.push(message);
-        this.message_thing.html(
-            message
-        );
+        this.message_thing.append(message)
     },
     contains : function(message) {
         return this.array.indexOf(message) != -1
@@ -55,10 +53,10 @@ var messages = {
 function check_messages() {
     $.ajax({
         type: "POST",
-        cache : true,
+        cache : false,
         url : debug ? '/messaging/test/get' : '/messaging/get',
         data : {
-            date : ""
+            last : messages.message_thing.children().last('tr').children('.message-date').text()
         },
         success : function (data) {
             add_messages(data);
@@ -75,8 +73,7 @@ function init_check() {
 $(document).ready(function() {
     init_check();
     $('form#message-form').submit(function(e) {
-        send_message(e);
-        check_messages();
+        send_message(e, this);
     });
     $('#refresh-messages').on('click', function() {
         check_messages();
