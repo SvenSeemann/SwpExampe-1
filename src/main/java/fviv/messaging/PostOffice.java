@@ -38,15 +38,19 @@ public class PostOffice {
         else throw new SecurityException();
     }
 
-    public Iterable<Message> getMessages(UserAccount user) {
+    public List<Message> getMessages(UserAccount user) {
         if (canReceive(user)) {
-            return repo.findByRecipient(user);
+            List<Message> out = new LinkedList<>();
+            for (Message message : repo.findByRecipient(user)) {
+                out.add(message);
+            }
+            return out;
         } else {
             throw new SecurityException();
         }
     }
 
-    public Iterable<Message> getMessages(UserAccount user, LocalDateTime fromDate) {
+    public List<Message> getMessages(UserAccount user, LocalDateTime fromDate) {
         Iterable<Message> messages = getMessages(user);
         List<Message> out = new LinkedList<>();
 

@@ -1,26 +1,24 @@
 package fviv.controller;
 
+import fviv.messaging.Message;
 import fviv.messaging.PostOffice;
 import fviv.messaging.SendMessageForm;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Created by justusadam on 09/12/14.
  */
-@org.springframework.stereotype.Controller
+@RestController
 public class MessagingController {
 
     private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
@@ -48,46 +46,23 @@ public class MessagingController {
     }
 
     @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String send(@RequestParam("message") String message) {
+    public Object send(@RequestParam("message") String message) {
         System.out.println("got message " + message );
         postOffice.sendMessage(testUser, testUser, message);
 
-        return "testmessaging :: success";
-    }
-
-    @RequestMapping(value = "/")
-    public String handle(Model model) {
-        return "index";
-    }
-
-    public void withMessaging(Model model, Optional<UserAccount> user) {
-        if (user.isPresent()) {
-            model.addAttribute("recipients", postOffice.getRecipients());
-            model.addAttribute("messages", postOffice.getMessages(user.get()));
-        }
-    }
-
-    @RequestMapping(value = "/messaging/test")
-    public String testhandle(Model model) {
-        model.addAttribute("recipients", postOffice.getRecipients());
-        return "testmessaging";
+        return true;
     }
 
     @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String getMessages(Model model){
+    public String getMessages(){
         System.out.println("wrong method");
         return "";
     }
 
     @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String getTestMessages(Model model, @RequestParam("last") String date){
-        if (date.length() < 2){
-            model.addAttribute("messages", postOffice.getMessages(testUser));
-        } else {
-            System.out.println("messages requested " + date);
-            LocalDateTime dateObj = LocalDateTime.parse(date);
-            model.addAttribute("messages", postOffice.getMessages(testUser, dateObj));
-        }
-        return "testmessaging :: messages";
+    public List<Message> getTestMessages(@RequestParam("last") LocalDateTime date){
+        System.out.println("messages requested " + date.toString());
+
+        return date == null ? postOffice.getMessages(testUser) : postOffice.getMessages(testUser, date);
     }
 }
