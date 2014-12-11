@@ -3,6 +3,7 @@ package fviv.controller;
 import fviv.messaging.PostOffice;
 import fviv.messaging.SendMessageForm;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -24,9 +26,14 @@ public class MessagingController {
 
     private PostOffice postOffice;
 
+    private UserAccount testUser;
+
     @Autowired
-    public MessagingController(PostOffice postOffice) {
+    public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
         this.postOffice = postOffice;
+        this.testUser = userManager.create("bob", "passwd", PostOffice.receiverRole, PostOffice.senderRole);
+        userManager.save(testUser);
+
     }
 
     @RequestMapping(value = "/messaging/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
@@ -38,11 +45,10 @@ public class MessagingController {
     }
 
     @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String send(@LoggedIn Optional<UserAccount> user) {
+    public String send(@RequestParam("message") String message) {
+        postOffice.sendMessage(testUser, testUser, message);
 
-        if (!user.isPresent()) return "error";
-
-        return "hello";
+        return "testmessaging :: success";
     }
 
     @RequestMapping(value = "/")
@@ -64,7 +70,13 @@ public class MessagingController {
     }
 
     @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String getMessages(){
+    public String getMessages(Model model){
         return "";
+    }
+
+    @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    public String getTestMessages(Model model){
+        model.addAttribute("messages", postOffice.getMessages(testUser));
+        return "testmessaging :: messages";
     }
 }

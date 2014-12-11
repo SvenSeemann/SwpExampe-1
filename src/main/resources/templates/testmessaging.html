@@ -27,6 +27,13 @@
     <script type="text/javascript" src="/resources/js/messaging.js"></script>
 </div>
 
+    <table>
+        <tr th:each="message : ${messages}" th:fragment="messages">
+            <td th:text="${message.sender}"></td>
+            <td th:text="${message.dateReceived}"></td>
+            <td th:text="${message.message}"></td>
+        </tr>
+    </table>
 
 </body>
 </html>
