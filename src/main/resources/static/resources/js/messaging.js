@@ -21,19 +21,20 @@ function send_message(e, form) {
 }
 
 function add_messages(data) {
-    for (var i =0 ; i < data.length ; i++) {
+    for (var i = 0 ; i < data.length ; i++) {
         var message = data[i];
-        message = new Message(message.message, message.date, message.sender);
+        message = new Message(message.message, message.date, message.sender, message.id);
         if (!messages.contains(message)) {
             messages.add_new(message)
         }
     }
 }
 
-var Message = function(message_content, dateReceived, sender) {
+var Message = function(message_content, dateReceived, sender, id) {
     this.message_content = message_content;
     this.dateReceived = new Date(dateReceived.nano);
     this.sender = sender;
+    this.id = id;
 };
 
 var messages = {
@@ -44,13 +45,17 @@ var messages = {
         this.message_thing.append(
             '<tr class="highlight">' +
             '<td class="message-sender">' + message.sender.firstname + message.sender.lastname + '</td>' +
-            '<td class="message-date">' + message.dateReceived.toString() + '</td>' +
+            '<td class="message-date">[' + message.dateReceived.toString() + ']</td>' +
+            '<td class="message-separator" style="text-align: center;">:</td>' +
             '<td class="message-message">' + message.message_content + '</td>' +
             '</tr>'
         )
     },
     contains : function(message) {
-        return this.array.indexOf(message) != -1
+        for (var i = 0 ; i < this.array.length ; i++) {
+            if (message.id == this.array[i].id) return true;
+        }
+        return false;
     }
 };
 
@@ -59,9 +64,9 @@ function check_messages() {
         type: "POST",
         cache : false,
         url : debug ? '/messaging/test/get' : '/messaging/get',
-        data : messages.array.length > 0 ? {
-            last :  messages.array[messages.array.length - 1].dateReceived
-        } : {},
+        data : {
+            last : messages.array.length == 0 ? new Date(0,0).toISOString() : messages.array[messages.array.length - 1].dateReceived.toISOString()
+        },
         success : function (data) {
             if (data.length > 0) {
                 messages.message_thing.children('.highlight').removeClass('highlight');

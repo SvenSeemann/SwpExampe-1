@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,8 @@ public class MessagingController {
     private PostOffice postOffice;
 
     private UserAccount testUser;
+
+    public static DateTimeFormatter javaScriptISODateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     @Autowired
     public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
@@ -44,7 +47,7 @@ public class MessagingController {
 
         return postOffice.sendMessage(user.get(), messageForm.getRecipient(), messageForm.getMessage()) ? "success" : "failed";
     }
-    
+
     @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public Object send(@RequestParam("message") String message) {
         System.out.println("got message " + message );
@@ -60,9 +63,10 @@ public class MessagingController {
     }
 
     @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public List<Message> getTestMessages(@RequestParam("last") LocalDateTime date){
-        System.out.println("messages requested " + date.toString());
+    public List<Message> getTestMessages(@RequestParam("last") String date){
+        LocalDateTime dateTime = LocalDateTime.parse(date, javaScriptISODateTimeFormat);
+        System.out.println("messages requested " + dateTime.toString());
 
-        return date == null ? postOffice.getMessages(testUser) : postOffice.getMessages(testUser, date);
+        return date == null ? postOffice.getMessages(testUser) : postOffice.getMessages(testUser, dateTime);
     }
 }
