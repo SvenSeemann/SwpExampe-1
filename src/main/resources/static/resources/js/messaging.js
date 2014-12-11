@@ -8,6 +8,7 @@ function send_message(e) {
     e.preventDefault();
 
     var form = $(this);
+    console.log(form);
     $.ajax({
         type: "POST",
         cache : false,
@@ -20,12 +21,15 @@ function send_message(e) {
 }
 
 function add_messages(data) {
-    data = JSON.parse(data);
-    for (var message in data.messages) {
-        if (!messages.contains(message)) {
-            messages.add(message)
-        }
+    if (!messages.contains(data)) {
+        messages.add(data)
     }
+    //data = JSON.parse(data);
+    //for (var message in data.messages) {
+    //    if (!messages.contains(message)) {
+    //        messages.add(message)
+    //    }
+    //}
 }
 
 var Message = function(message_content, dateReceived, sender) {
@@ -35,12 +39,12 @@ var Message = function(message_content, dateReceived, sender) {
 };
 
 var messages = {
-    message_thing : $("#messages"),
+    message_thing : $("#messages").children('tbody'),
     array : [],
     add : function (message) {
-        this.array.push(message);
-        this.message_thing.append(
-            '<tr><td>' + message.sender + '</td><td>' + message.dateReceived + '</td><td>' + message.message_content + '</td>'
+        //this.array.push(message);
+        this.message_thing.html(
+            message
         );
     },
     contains : function(message) {
@@ -54,7 +58,7 @@ function check_messages() {
         cache : true,
         url : debug ? '/messaging/test/get' : '/messaging/get',
         data : {
-            date : messages[messages.length - 1].dateReceived
+            date : ""
         },
         success : function (data) {
             add_messages(data);
@@ -62,11 +66,19 @@ function check_messages() {
     })
 }
 
+function init_check() {
+    check_messages();
+    window.setInterval(check_messages, 30000);
+}
+
 
 $(document).ready(function() {
-    var forms = $('form.message-form');
-    for (var form in forms) {
-        $(form).submit(send_message);
-    }
-    window.setInterval(check_messages, 60000);
+    init_check();
+    $('form#message-form').submit(function(e) {
+        send_message(e);
+        check_messages();
+    });
+    $('#refresh-messages').on('click', function() {
+        check_messages();
+    });
 });

@@ -32,12 +32,14 @@ public class MessagingController {
     public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
         this.postOffice = postOffice;
         this.testUser = userManager.create("bob", "passwd", PostOffice.receiverRole, PostOffice.senderRole);
+        testUser.setFirstname("Bob");
+        testUser.setLastname("Barker");
         userManager.save(testUser);
-
     }
 
     @RequestMapping(value = "/messaging/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public String send(@LoggedIn Optional<UserAccount> user, @ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult) {
+        System.out.println("wrong method");
         if (bindingResult.hasErrors()) return "error";
         if (!user.isPresent()) return "error";
 
@@ -46,6 +48,7 @@ public class MessagingController {
 
     @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public String send(@RequestParam("message") String message) {
+        System.out.println("got message " + message );
         postOffice.sendMessage(testUser, testUser, message);
 
         return "testmessaging :: success";
@@ -71,11 +74,13 @@ public class MessagingController {
 
     @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public String getMessages(Model model){
+        System.out.println("wrong method");
         return "";
     }
 
     @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public String getTestMessages(Model model){
+        System.out.println("messages requested");
         model.addAttribute("messages", postOffice.getMessages(testUser));
         return "testmessaging :: messages";
     }

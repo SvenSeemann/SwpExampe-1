@@ -2,34 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
 </head>
 <body>
 <div th:fragment="message-list">
     <h3>Hello and welcome ... dude</h3>
-    <ul class="messages">
-        <li th:each="message : ${messages}" th:text="${message}" th:fragment="message">
-            Error
-        </li>
+    <table id="messages">
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th style="font-weight: normal;"><i>separator</i></th>
+                <th>Date received</th>
+                <th>Message content</th>
+            </tr>
+        </thead>
+        <tbody>
 
-    </ul>
+        </tbody>
+    </table>
 </div>
 <div th:fragment="message-form">
-    <form class="message-form" action="/messaging/test/send" method="post">
+    <form id="message-form" action="/messaging/test/send" method="post">
         <label for="recipient">Receiver</label>
         <select id="recipient" name="recipient">
-            <option th:each="recipient : ${recipients}" th:value="${recipient}" th:text="${recipient}">Empty</option>
+            <option th:each="recipient : ${recipients}" th:value="${recipient.identifier}" th:text="${recipient.firstname} + ' ' + ${recipient.lastname}">Empty</option>
         </select>
         <label for="message-content">Your Message</label><textarea id="message-content" name="message"></textarea>
         <input type="submit" value="Submit" />
     </form>
+    <button id="refresh-messages">Manual Refresh</button>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/resources/js/messaging.js"></script>
 </div>
 
     <table>
         <tr th:each="message : ${messages}" th:fragment="messages">
-            <td th:text="${message.sender}"></td>
+            <td th:text="${message.sender.identifier}"></td>
+            <td>:</td>
             <td th:text="${message.dateReceived}"></td>
             <td th:text="${message.message}"></td>
         </tr>

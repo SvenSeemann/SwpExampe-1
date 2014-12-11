@@ -76,8 +76,12 @@ public class Message {
         return id;
     }
 
-    public String readMessage(){
+    public String readMessage() {
         this.read = true;
+        return this.message;
+    }
+
+    public String getMessage() {
         return this.message;
     }
 
