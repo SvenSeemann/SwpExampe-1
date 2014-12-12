@@ -16,6 +16,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,11 +70,6 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
-
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
