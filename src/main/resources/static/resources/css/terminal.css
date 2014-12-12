@@ -1,0 +1,58 @@
+@charset "utf-8";
+/* CSS Document */
+#title {
+	height: 80px;
+}
+
+#substance{
+	width: 765px;
+	height: 800px;
+	border: #09F medium solid;
+	margin-top: 10px;
+	padding-top:20px;
+	padding-left:70px;
+}
+
+.slimButton {
+	border: #09F medium solid !important;
+}
+.boldButton {
+	border: #09F medium solid !important;
+}
+.slimButton:active {
+	border: #09F medium solid !important;
+}
+.boldButton:active {
+	border: #09F medium solid  !important;
+}
+#content {
+	border-top: #09F thick dashed !important;
+}
+
+.day{
+	width:200px;
+	height:200px;
+	border:#09F medium solid;
+	float:left;
+	margin-top:15px;
+	margin-left:15px;
+}
+
+.dayHeadline{
+	width:200px;
+	height:30px;
+	font-size:20px;
+	text-align:center;
+	font-weight:bold;
+	border-bottom:#fff dashed medium;
+}
+
+.dayContent{
+	width:200px;
+	height:170px;
+}
+
+.dayContent table{
+	width:200px;
+	height:170px;
+}
