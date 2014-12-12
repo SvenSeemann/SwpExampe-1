@@ -52,32 +52,17 @@ public class FvivDataInitializer implements DataInitializer {
 				
 		//Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates", "123", employeeRole);
-		employeeAccount1.setFirstname("Bill");
-		employeeAccount1.setLastname("Gates");
-		employeeAccount1.setEmail("BillGates@Microsoft.com");
 		UserAccount employeeAccount2 = userAccountManager.create("merkel", "123", employeeRole);
-		employeeAccount2.setFirstname("Angela");
-		employeeAccount2.setLastname("Merkel");
-		employeeAccount2.setEmail("Angie@Bundestag");
 		UserAccount employeeAccount3 = userAccountManager.create("wurst", "123", employeeRole);
-		employeeAccount3.setFirstname("Hans");
-		employeeAccount3.setLastname("Wurst");
-		employeeAccount3.setEmail("HansWurst@fviv.de");
 		UserAccount employeeAccount4 = userAccountManager.create("white", "123", employeeRole);
-		employeeAccount4.setFirstname("Walter");
-		employeeAccount4.setLastname("White");
-		employeeAccount4.setEmail("Walter.White@Kochkurse.de");
 		UserAccount employeeAccount5 = userAccountManager.create("müller", "123", employeeRole);
-		employeeAccount5.setFirstname("Thomas");
-		employeeAccount5.setLastname("Müller");
-		employeeAccount5.setEmail("Thomas.Müller@Weltmeister.de");
 		
-		Employee employee1 = new Employee(employeeAccount1, "0190CallBill");
-		Employee employee2 = new Employee(employeeAccount2, "0123456789");
-		Employee employee3 = new Employee(employeeAccount3, "0351/777888");
-		Employee employee4 = new Employee(employeeAccount4, "BetterCaulSaul");
-		Employee employee5 = new Employee(employeeAccount5, "20304050");
-
+		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill", "Bill.Gates@Microsoft.com", "0190CallBill");
+		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela", "Angie@Bundestag.de", "0123456789");
+		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans", "Hans.Wurst@fviv.de", "0351/777888");
+		Employee employee4 = new Employee(employeeAccount4, "White", "Walter", "Walter.White@Kochkurse.de", "BetterCallSaul");
+		Employee employee5 = new Employee(employeeAccount5, "Müller", "Thomas", "Thomas.Müller@Weltmeister.de", "20304050");
+	
 		//Save to repository
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
