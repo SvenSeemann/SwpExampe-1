@@ -1,10 +1,10 @@
 <!doctype html>
-<html >
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
 <meta charset="utf-8"/>
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
 	rel='stylesheet' type='text/css'/>
-<link rel="stylesheet" href="../resources/css/standart.css" />
+<link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/ticket.css" />
 <title>tickets</title>
 </head>
@@ -19,7 +19,8 @@
 		
 		<div id="content">
 			<div id="substance">
-				<form action="newTicket" method="post">
+			
+				<form th:action="@{/newTicket}" method="post">
 					<fieldset>
 						<label class="label" for="festivals"> Festival
 							ausw&auml;hlen: <select name="festivals" size="1">
@@ -28,7 +29,7 @@
 						<label class="label" for="ticketart"> Ticketart
 							ausw&auml;hlen:</label>
 						<br />	
-						<input type="radio" name="ticketart" value="true" />Tagesticket
+						<input type="radio" name="ticketart" value="true" checked="checked" />Tagesticket
 						<br />
 						<input type="radio" name="ticketart" value="false" />3-Tagesticket
 						
@@ -37,7 +38,7 @@
 						<label class="label" for="price"> 
 						<input type="text" name="price" size="40" placeholder="Preis pro Stück" /></label>
 						
-						<input type="submit" value="Ticket erstellen" />
+						<input type="submit" onclick="alert('Ticket wurde erstellt')" value="Ticket erstellen" />
 					</fieldset>
 				</form>
 			</div>
@@ -47,7 +48,7 @@
 		<div id="menu">
 			<button class="slimButton">Logout</button>
 			<button class="slimButton">Chat</button>
-			<button class="boldButton">Ticket Drucken</button>
+			<form th:action="@{/ticketDrucken}" method="post"> <button class="boldButton">Ticket Drucken</button></form>
 			<button class="boldButton">Ticket Pr&uuml;fen</button>
 		</div>
 	</div>

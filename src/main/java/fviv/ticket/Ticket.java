@@ -1,5 +1,4 @@
 package fviv.ticket;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ public class Ticket {
 	 @Autowired
 	public Ticket(boolean ticketArt, boolean checked ){
 		this.ticketArt = ticketArt;
-		this.checked =checked;
+		checked = false;
 	}
 	public long getId(){
 		return id;

@@ -76,7 +76,7 @@ public class CateringController {
 				this.menusRepository.findByType(Type.MEAL));
 		modelMap.addAttribute("drinks",
 				this.menusRepository.findByType(Type.DRINK));
-		return "/catering";
+		return "catering";
 	}
 
 	@RequestMapping(value = "/catering-drinks", method = RequestMethod.POST)
