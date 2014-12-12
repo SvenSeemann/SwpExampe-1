@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+#orderList {
+	width: 250px;
+	height: 500px;
+	border: #f9731C 2px solid;
+	margin-top: 10px;
+	float: left;
+}
+#chooseBox {
+	width: 560px;
+	height: 500px;
+	margin-top: 10px;
+	border: #f9731C 2px solid;
+	float: right;
+	color: white;
+}
