@@ -14,14 +14,17 @@ public class TestMessagingController {
 
     private PostOffice postOffice;
 
+    private MessagingController messagingController;
+
     @Autowired
-    public TestMessagingController(PostOffice postOffice) {
+    public TestMessagingController(PostOffice postOffice, MessagingController otherController) {
         this.postOffice = postOffice;
+        this.messagingController = otherController;
     }
 
     @RequestMapping(value = "/messaging/test")
     public String testhandle(Model model) {
-        model.addAttribute("recipients", postOffice.getRecipients());
+        model.addAttribute("recipients", postOffice.getRecipients(messagingController.testUser));
         return "testmessaging";
     }
 }

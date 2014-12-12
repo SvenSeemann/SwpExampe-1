@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,8 @@ public class MessagingController {
 
     private PostOffice postOffice;
 
-    private UserAccount testUser;
+    @Deprecated
+    public UserAccount testUser;
 
     @Autowired
     public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
@@ -46,20 +48,26 @@ public class MessagingController {
         return postOffice.sendMessage(user.get(), messageForm.getRecipient(), messageForm.getMessage()) ? "success" : "failed";
     }
 
+    @Deprecated
     @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public Object send(@RequestParam("message") String message) {
-        System.out.println("got message " + message );
-        postOffice.sendMessage(testUser, testUser, message);
+    public Object send(@ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult) {
+        System.out.println("got message " + messageForm.getMessage() );
 
+        postOffice.sendMessage(testUser, testUser, messageForm.getMessage());
         return true;
     }
 
+
     @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public String getMessages(){
-        System.out.println("wrong method");
-        return "";
+    public List<Message> getMessages(@LoggedIn Optional<UserAccount> user, @RequestParam("last") String date){
+        if (!user.isPresent()) return new LinkedList<>();
+        ZonedDateTime dateTime = ZonedDateTime.parse(date, JavaScriptDateTimeFormatters.javaScriptUTCDateTimeFormat);
+        System.out.println("messages requested " + date);
+
+        return postOffice.getMessages(user.get(), dateTime);
     }
 
+    @Deprecated
     @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public List<Message> getTestMessages(@RequestParam("last") String date){
         ZonedDateTime dateTime = ZonedDateTime.parse(date, JavaScriptDateTimeFormatters.javaScriptUTCDateTimeFormat);
@@ -68,13 +76,15 @@ public class MessagingController {
         return postOffice.getMessages(testUser, dateTime);
     }
 
+    @Deprecated
     @RequestMapping(value = "/messaging/test/get/receivers", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public List<UserAccount> getTestReceivers() {
-        return postOffice.getRecipients();
+        return postOffice.getRecipients(testUser);
     }
 
     @RequestMapping(value = "/messaging/get/receivers", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-    public List<UserAccount> getReceivers() {
-        return null;
+    public List<UserAccount> getReceivers(@LoggedIn Optional<UserAccount> user) {
+        if (!user.isPresent()) return new LinkedList<>();
+        return postOffice.getRecipients(user.get());
     }
 }
