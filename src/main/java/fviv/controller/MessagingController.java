@@ -3,6 +3,7 @@ package fviv.controller;
 import fviv.messaging.Message;
 import fviv.messaging.PostOffice;
 import fviv.messaging.SendMessageForm;
+import fviv.util.time.JavaScriptDateTimeFormatters;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
@@ -11,8 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +27,6 @@ public class MessagingController {
     private PostOffice postOffice;
 
     private UserAccount testUser;
-
-    public static DateTimeFormatter javaScriptISODateTimeFormat = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     @Autowired
     public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
@@ -64,9 +62,9 @@ public class MessagingController {
 
     @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
     public List<Message> getTestMessages(@RequestParam("last") String date){
-        LocalDateTime dateTime = LocalDateTime.parse(date, javaScriptISODateTimeFormat);
-        System.out.println("messages requested " + dateTime.toString());
+        ZonedDateTime dateTime = ZonedDateTime.parse(date, JavaScriptDateTimeFormatters.javaScriptUTCDateTimeFormat);
+        System.out.println("messages requested " + date);
 
-        return date == null ? postOffice.getMessages(testUser) : postOffice.getMessages(testUser, dateTime);
+        return postOffice.getMessages(testUser, dateTime);
     }
 }

@@ -30,9 +30,20 @@ function add_messages(data) {
     }
 }
 
+function dateFromReceived(dateReceived) {
+    return new Date(
+        dateReceived.year,
+        dateReceived.monthValue - 1, // because the month value is 0-based
+        dateReceived.dayOfMonth,
+        dateReceived.hour,
+        dateReceived.minute,
+        dateReceived.second
+    );
+}
+
 var Message = function(message_content, dateReceived, sender, id) {
     this.message_content = message_content;
-    this.dateReceived = new Date(dateReceived.nano);
+    this.dateReceived = dateFromReceived(dateReceived);
     this.sender = sender;
     this.id = id;
 };
@@ -65,7 +76,7 @@ function check_messages() {
         cache : false,
         url : debug ? '/messaging/test/get' : '/messaging/get',
         data : {
-            last : messages.array.length == 0 ? new Date(0,0).toISOString() : messages.array[messages.array.length - 1].dateReceived.toISOString()
+            last : messages.array.length == 0 ? new Date(1000,0).toUTCString() : messages.array[messages.array.length - 1].dateReceived.toUTCString()
         },
         success : function (data) {
             if (data.length > 0) {

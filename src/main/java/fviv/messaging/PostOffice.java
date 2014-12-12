@@ -7,7 +7,8 @@ import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,8 @@ public class PostOffice {
     public static final Role senderRole = new Role("MESSAGE_SENDER");
 
     public static final Role receiverRole = new Role("MESSAGE_RECEIVER");
+
+    private static final ZoneId gmt = ZoneId.of("GMT");
 
     @Autowired
     public PostOffice(UserRepository users, MessageRepository repo) {
@@ -50,12 +53,13 @@ public class PostOffice {
         }
     }
 
-    public List<Message> getMessages(UserAccount user, LocalDateTime fromDate) {
+    public List<Message> getMessages(UserAccount user, ZonedDateTime fromDate) {
         Iterable<Message> messages = getMessages(user);
         List<Message> out = new LinkedList<>();
 
         for (Message message : messages) {
             if (message.getDate().isAfter(fromDate)){
+                System.out.println(message.getDate().toString() + " is after " + fromDate.toString());
                 out.add(message);
             }
         }

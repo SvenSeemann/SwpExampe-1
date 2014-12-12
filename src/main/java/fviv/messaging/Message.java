@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -21,8 +21,8 @@ public class Message {
 
     private String message;
 
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    private LocalDateTime date;
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+    private ZonedDateTime date;
 
     @OneToOne
     private UserAccount sender;
@@ -35,7 +35,7 @@ public class Message {
     @Deprecated
     public Message(){}
 
-    public Message(String message, LocalDateTime date, UserAccount sender, UserAccount recipient) {
+    public Message(String message, ZonedDateTime date, UserAccount sender, UserAccount recipient) {
         this.message = message;
         this.date = date;
         this.sender = sender;
@@ -44,12 +44,12 @@ public class Message {
 
     public Message(String message, UserAccount sender, UserAccount recipient) {
         this.message = message;
-        this.date = LocalDateTime.now();
+        this.date = ZonedDateTime.now();
         this.sender = sender;
         this.recipient = recipient;
     }
 
-    public LocalDateTime getDate() {
+    public ZonedDateTime getDate() {
         return date;
     }
 
