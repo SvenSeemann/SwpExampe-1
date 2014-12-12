@@ -19,32 +19,18 @@
 .boldButton:active {
 	border: #0c3 medium solid  !important;
 }
-
-#request {
-	width: 400px;
-	height: 200px;
-	border: #0C3 medium solid;
-	background-color: #383839;
-	position: absolute;
-	top: 20%;
-	left: 35%;
-	color: #fff;
-	display: none;
-	cursor: pointer;
-	position: absolute;
-}
-.requestAll {
-	width: 400px;
-	height: 200px;
-	border: #0C3 medium solid;
-	background-color: #383839;
-	position: absolute;
-	top: 20%;
-	left: 35%;
-	color: #fff;
-	display: none;
-	cursor: pointer;
-}
 #content {
 	border-top: #0c3 thick dashed !important;
+}
+fieldset{
+	width:240px;
+	height:100px;
+	border: #0c3 medium solid;
+	margin:auto;
+	margin-top:100px;
+	padding:50px 30px;
+}
+
+.label input{
+	margin-top:10px;
 }
