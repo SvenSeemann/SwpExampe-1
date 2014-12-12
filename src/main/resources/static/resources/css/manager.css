@@ -22,3 +22,15 @@
 #content {
 	border-top: #0c3 thick dashed !important;
 }
+.salaryTable {
+	margin:auto;
+	float:left;
+}
+.cateringTable {
+	margin:auto;
+	float:left;
+}
+.rentTable {
+	margin:auto;
+	float:left;
+}

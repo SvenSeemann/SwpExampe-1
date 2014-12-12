@@ -1,33 +1,226 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="styles/standard.css"/>
-<link rel="stylesheet" href="styles/manager.css"/>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/manager.css" />
 <title>Manager</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script th:inline="Javascript">
+$(function () { 
+	var salary = [[${salaryTotal}]];
+	var catering = [[${cateringTotal}]];
+	var rent = [[${rentTotal}]];
+	var total = salary+catering+rent;
+	var deposit = [[${deposit}]];
+	var balance = deposit - total;
+	
+    $('#finances_chart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'FVIV Finanzen'
+        },
+        xAxis: {
+        	categories: ['Gesamt']
+        },
+        yAxis: {
+            title: {
+                text: 'Ausgaben in €'
+            }
+        },
+        series: [{
+        	name: 'Balance',
+        	data: [balance]
+    	},{		
+            name: 'Guthaben',
+            data: [deposit]
+        },{
+        	name: 'Ausgaben Total',
+        	data: [total]     	
+        },{
+        	name: 'Gehälter Total',
+        	data: [salary]
+        },{
+        	name: 'Catering Total',
+        	data: [catering]
+        },{
+        	name: 'Miete Total',
+        	data: [rent]
+        }]
+    });
+});
+</script>
+
 </head>
 
 <body>
-<div id="webseite">
-  <div id="header">
-    <div id="loggedAs">angemeldet als:</div>
-    <div id="title">HEADLINE</div>
-    <div id="loginName">Manager</div>
-  </div>
-  <div id="content">
-	<div id="substance">
-    
-    </div>
-  </div>
-  <div id="menu">
-    <button class="slimButton">Logout</button>
-    <button class="slimButton">Chat</button>
-    <button class="boldButton">proTerminal</button>
-    <button class="boldButton">Mitarbeiter</button>
-    <button class="boldButton">Finanzen</button>
-    <button class="boldButton">Accounts</button>
-  </div>
-</div>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs">angemeldet als:</div>
+			<div id="title">HEADLINE</div>
+			<div id="loginName">Manager</div>
+		</div>
+		<div id="content">
+			<div id="substance">
+				<div id="chooseManagerView" th:switch="${managermode}">
+					<!-- Employee case -->
+					<div th:case="employees">
+						<h1>FVIV Mitarbeiter:</h1>
+						<table border="1" class="employeeTable">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Nachname</th>
+									<th>Vorname</th>
+									<th>Email-Adresse</th>
+									<th>Telefonnummer</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each=" employee : ${employeelist}">
+									<td th:text="${employee.id}"></td>
+									<td th:text="${employee.userAccount.lastname}"></td>
+									<td th:text="${employee.userAccount.firstname}"></td>
+									<td th:text="${employee.userAccount.email}"></td>
+									<td th:text="${employee.phone}"></td>
+								</tr>
+							</tbody>
+						</table>
+						<p>Mitarbeiter entfernen:</p>
+						<form th:action="@{/deleteEmployee}" method="post">
+							<input type="text" placeholder="ID eingeben" name="employeeId"
+								id="deleteEmployeeText"></input> <input type="submit"
+								value="Löschen"></input>
+						</form>
+						<p>Neuen Mitarbeiter hinzufügen:</p>
+						<!--Communicates with controller @RequestMapping("/newEmployee") -->
+						<form th:action="@{/newEmployee}" method="post"
+							th:object="${registration}">
+							<input type="text" placeholder="Nachname" id="lastname"
+								th:field="*{lastname}"></input> <br /> <input type="text"
+								placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
+							<br /> <input type="text" placeholder="E-mail Adresse"
+								id="email" th:field="*{email}"></input> <br /> <input
+								type="text" placeholder="Telefonnummer" id="phone"
+								th:field="*{phone}"></input> <br /> <input type="submit"
+								value="Speichern" style="margin-top: 3px"></input>
+						</form>
+					</div>
+
+					<!-- Finance case -->
+					<div th:case="finances">
+						<h1>FVIV Finanzen:</h1>
+						<div>
+							<table border="1" class="salaryTable">
+								<tr>
+									<th>Ausgabenart</th>
+									<th>Menge</th>
+								</tr>
+								<tr th:each=" salary : ${salary}">
+									<td>Gehalt</td>
+									<td th:text="${salary.amount}"></td>
+								</tr>
+								<tr>
+									<th>Gehälter Total:</th>
+									<th th:text="${salaryTotal}" id="salaryTotal"></th>
+								</tr>
+							</table>
+						</div>
+						<div>
+							<table border="1" class="cateringTable">
+								<tr>
+									<th>Ausgabenart</th>
+									<th>Menge</th>
+								</tr>
+								<tr th:each=" catering : ${catering}">
+									<td>Catering</td>
+									<td th:text="${catering.amount}"></td>
+								</tr>
+								<tr>
+									<th>Catering Total:</th>
+									<th th:text="${cateringTotal}"></th>
+								</tr>
+							</table>
+						</div>
+						<div>
+							<table border="1" class="rentTable">
+								<tr>
+									<th>Ausgabenart</th>
+									<th>Menge</th>
+								</tr>
+								<tr th:each=" rent : ${rent}">
+									<td>Miete</td>
+									<td th:text="${rent.amount}"></td>
+								</tr>
+								<tr>
+									<th>Miete Total:</th>
+									<th th:text="${rentTotal}"></th>
+								</tr>
+							</table>
+						</div>
+						<div id="finances_chart" style="width: 70%; height: 400px;">
+						</div>
+					</div>
+
+					<!-- Accounts case -->
+					<div th:case="accounts">
+						<h1>FVIV Accounts:</h1>
+						<table border="1">
+							<tr>
+								<th>Benutzername</th>
+								<th>Berechtigung</th>
+							</tr>
+							<tr th:each=" bossAccount : ${bossAccounts}">
+								<td th:text="${bossAccount.identifier}"></td>
+								<td>Boss</td>
+							</tr>
+							<tr th:each=" managerAccount : ${managerAccounts}">
+								<td th:text="${managerAccount.identifier}"></td>
+								<td>Manager</td>
+							</tr>
+							<tr th:each=" catererAccount : ${catererAccounts}">
+								<td th:text="${catererAccount.identifier}"></td>
+								<td>Caterer</td>
+							</tr>
+							<tr th:each=" employeeAccount : ${employeeAccounts}">
+								<td th:text="${employeeAccount.identifier}"></td>
+								<td>Mitarbeiter</td>
+							</tr>
+						</table>
+					</div>
+
+					<!-- Standard case -->
+					<div th:case="*">
+						<h1>Willkommen im FVIV Terminal</h1>
+						<img src="../resources/img/FVIVgmbh.png"
+							style="width: 100%; height: 150px;"></img>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div id="menu">
+			<button class="slimButton">Logout</button>
+			<button class="slimButton">Chat</button>
+			<form method="post" action="/Terminal">
+				<input type="submit" class="boldButton" value="Terminal"></input>
+			</form>
+			<form method="post" action="/Employees">
+				<input type="submit" class="boldButton" value="Mitarbeiter"></input>
+			</form>
+			<form method="post" action="/Finances">
+				<input type="submit" class="boldButton" value="Finanzen"></input>
+			</form>
+			<form method="post" action="/Accountmanagement">
+				<input type="submit" class="boldButton" value="Accounts"></input>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
