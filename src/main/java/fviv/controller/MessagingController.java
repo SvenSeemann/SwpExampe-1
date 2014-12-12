@@ -67,4 +67,14 @@ public class MessagingController {
 
         return postOffice.getMessages(testUser, dateTime);
     }
+
+    @RequestMapping(value = "/messaging/test/get/receivers", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    public List<UserAccount> getTestReceivers() {
+        return postOffice.getRecipients();
+    }
+
+    @RequestMapping(value = "/messaging/get/receivers", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    public List<UserAccount> getReceivers() {
+        return null;
+    }
 }

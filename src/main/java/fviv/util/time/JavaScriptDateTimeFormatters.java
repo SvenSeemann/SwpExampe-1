@@ -10,7 +10,7 @@ public abstract class JavaScriptDateTimeFormatters {
     /**
      * DateTimeFormatter corresponding to the JavaScript Date().toISOString() method output.
      */
-    public static final DateTimeFormatter javaScriptISODateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    public static final DateTimeFormatter javaScriptISODateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
     /**
      * DateTimeFormatter corresponding to the Javascript Date().toUTCString() method output.

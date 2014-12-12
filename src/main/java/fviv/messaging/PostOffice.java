@@ -86,13 +86,12 @@ public class PostOffice {
         return hasRole(userId, receiverRole);
     }
 
-    public Iterable<UserAccount> getRecipients(){
+    public List<UserAccount> getRecipients(){
         List<UserAccount> acc = new LinkedList<>();
 
         for (UserAccount user : users.findAll())  if (user.hasRole(receiverRole)) acc.add(user);
 
         return acc;
-
     }
 
 }

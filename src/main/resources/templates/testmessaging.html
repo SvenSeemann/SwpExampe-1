@@ -7,6 +7,9 @@
             background-color: red;
         }
     </style>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
 </head>
 <body>
 <div th:fragment="message-list">
@@ -26,27 +29,11 @@
     </table>
 </div>
 <div th:fragment="message-form">
-    <form id="message-form" action="/messaging/test/send" method="post">
-        <label for="recipient">Receiver</label>
-        <select id="recipient" name="recipient">
-            <option th:each="recipient : ${recipients}" th:value="${recipient.identifier}" th:text="${recipient.firstname} + ' ' + ${recipient.lastname}">Empty</option>
-        </select>
-        <label for="message-content">Your Message</label><textarea id="message-content" name="message"></textarea>
-        <input type="submit" value="Submit" />
-    </form>
-    <button id="refresh-messages">Manual Refresh</button>
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/resources/js/messaging.js"></script>
+    <div id="recipients"></div>
+    <div id="message-forms"></div>
+    <button id="refresh-messages">Refresh Messages</button>
+    <button id="refresh-receivers">Refresh Receivers</button>
 </div>
-
-    <table>
-        <tr th:each="message : ${messages}" th:fragment="messages">
-            <td th:text="${message.sender.identifier}" class="message-sender"></td>
-            <td>:</td>
-            <td th:text="${message.date}" class="message-date"></td>
-            <td th:text="${message.message}" class="message-message"></td>
-        </tr>
-    </table>
-
+    <script src="/resources/js/messaging.js" type="text/javascript"></script>
 </body>
 </html>
