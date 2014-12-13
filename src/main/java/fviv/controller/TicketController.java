@@ -4,18 +4,23 @@ import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
+
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
 import com.lowagie.text.pdf.AcroFields;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import org.springframework.stereotype.Controller;
+
 import fviv.ticket.TicketRepository;
 import fviv.ticket.Ticket;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TicketController {
-	private static float preis;
-	private static boolean ticketart;
 	private final TicketRepository ticketRepository;
 	private static long ticketid;
 
@@ -40,23 +43,48 @@ public class TicketController {
 		return "ticket";
 	}
 
+	@RequestMapping({ "/ticketPruefen" })
+	public String ticketpruefen() {
+		return "ticketpruefung";
+	}
+
+	@RequestMapping(value = "/pruefeTicket", method = RequestMethod.POST)
+	// ticketeinchecken methode
+	public String pruefeTicket(@RequestParam("ticketart") boolean ticketart,
+			@RequestParam("numbers") long id) {
+		Ticket ticketkontrolle = ticketRepository.findById(id);
+		if (ticketRepository.findById(id) == null) {
+			return "redirect:/ticket";
+		}
+		if (ticketkontrolle.getChecked() == true) {
+			System.out.println("" + id + "already checked in!!!");
+			return "ticketpruefung";
+		} else {
+			ticketkontrolle.setChecked(true);
+			System.out.println("" + id + "now checked in");
+			ticketRepository.save(ticketkontrolle);
+			return "ticketpruefung";
+		}
+	}
+
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
 	public String newTicket(@RequestParam("ticketart") boolean ticketart,
-			@RequestParam("price") float kosten) throws IOException,
+			@RequestParam("price") float kosten,
+			@RequestParam("numbers") int anzahl) throws IOException,
 			BarcodeException {
-		// Create Ticket
-		setPreis(kosten);
-		setTicketart(ticketart);
-		boolean checked = false;
-		Ticket ticket = new Ticket(ticketart, checked); // Eins ist gleich
-														// Tagesticket // Null
-														// ist gleich
-														// 3Tagesticket
-		ticketRepository.save(ticket);
-		setTicketid(ticket.getId());
-		pdfvorlagebearbeiten();
-		barcodegen();
-		addbarcode();
+		for (int i = 1; i <= anzahl; i++) {
+			// Create Ticket
+			Ticket ticket = new Ticket(ticketart, false); // Eins ist gleich
+															// Tagesticket //
+															// Null
+															// ist gleich
+															// 3Tagesticket
+			ticketRepository.save(ticket);
+			setTicketid(ticket.getId());
+			pdfvorlagebearbeiten(kosten, ticketart);
+			barcodegen();
+			addbarcode();
+		}
 		return "ticket";
 	}
 
@@ -71,14 +99,28 @@ public class TicketController {
 	}
 
 	@RequestMapping({ "/ticketDrucken" })
-	public String ticketDrucken() {
+	public String ticketDrucken(
+			@RequestParam(value = "ticketnummer", required = false) String ticketnmr) {
+		if (ticketnmr == "") {
+			ticketnmr = "" + ticketid;
+		} else {
+			long ticketnummer = Long.parseLong(ticketnmr);
+
+			if (ticketnummer > ticketid) {
+				return "ticket";
+			} else {
+				if (ticketnummer > 0) {
+					return "redirect:/ticket" + ticketnummer + ".pdf";
+				} else
+					return "redirect:/ticket" + ticketnummer + ".pdf";
+			}
+		}
 		return "redirect:/ticket" + ticketid + ".pdf";
 	}
 
-	public static void pdfvorlagebearbeiten() throws IOException,
-			BarcodeException {
-		float dummy = getPreis();
-		String price = "" + dummy + "0 Euro";
+	public static void pdfvorlagebearbeiten(float ticketkosten,
+			boolean ticketart) throws IOException, BarcodeException {
+		String price = "" + ticketkosten + " Euro";
 		try {
 			// (1) Einlesen der PDF-Vorlage
 			PdfReader reader = new PdfReader("test_file.pdf");
@@ -163,22 +205,6 @@ public class TicketController {
 		}
 	}
 
-	public static float getPreis() {
-		return preis;
-	}
-
-	public void setPreis(float preis) {
-		TicketController.preis = preis;
-	}
-
-	public static boolean getTicketart() {
-		return ticketart;
-	}
-
-	public static void setTicketart(boolean ticketart) {
-		TicketController.ticketart = ticketart;
-	}
-
 	public static long getTicketid() {
 		return ticketid;
 	}
@@ -186,4 +212,5 @@ public class TicketController {
 	public static void setTicketid(long ticketid) {
 		TicketController.ticketid = ticketid;
 	}
+
 }

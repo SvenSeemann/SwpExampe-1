@@ -34,11 +34,11 @@
 						<input type="radio" name="ticketart" value="false" />3-Tagesticket
 						
 						<label class="label" for="numbers"> 
-						<input type="text" name="numbers" size="40" placeholder="Anzahl" /></label> 
+						<input type="text" name="numbers" size="40" placeholder="Anzahl"/></label> 
 						<label class="label" for="price"> 
 						<input type="text" name="price" size="40" placeholder="Preis pro Stück" /></label>
 						
-						<input type="submit" onclick="alert('Ticket wurde erstellt')" value="Ticket erstellen" />
+						<input type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')" value="Ticket erstellen" />
 					</fieldset>
 				</form>
 			</div>
@@ -48,8 +48,11 @@
 		<div id="menu">
 			<button class="slimButton">Logout</button>
 			<button class="slimButton">Chat</button>
-			<form th:action="@{/ticketDrucken}" method="post"> <button class="boldButton">Ticket Drucken</button></form>
-			<button class="boldButton">Ticket Pr&uuml;fen</button>
+			<form th:action="@{/ticketDrucken}" method="post" target="_blank"> 	
+			<label class="label" for="ticketnummer"> 
+			<input type="text" name="ticketnummer" size="26" placeholder="Ticket ID drucken"/></label> 
+			<button class="boldButton">Ticket Drucken</button></form>
+			<form th:action="@{/ticketPruefen}" method="post"> <button class="boldButton">Ticket Pr&uuml;fen</button></form>
 		</div>
 	</div>
 </body>

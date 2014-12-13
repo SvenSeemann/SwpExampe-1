@@ -6,13 +6,13 @@ import javax.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 @Entity
 public class Ticket {
+	private boolean ticketArt;
+	private boolean checked;
+	
 	
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	private boolean ticketArt;
-	 private boolean checked;
 	 
 	 @Deprecated
 		protected Ticket(){
@@ -22,13 +22,16 @@ public class Ticket {
 	 @Autowired
 	public Ticket(boolean ticketArt, boolean checked ){
 		this.ticketArt = ticketArt;
-		checked = false;
+		this.checked = checked;
 	}
 	public long getId(){
 		return id;
 	}
+	public void setTicketArt(boolean ticketArt){
+		this.ticketArt = ticketArt;
+	}
 	public boolean getticketArt(){
-		return ticketArt; // Eins ist gleich Tagesticket // Null ist gleich 3Tagesticket
+		return ticketArt; // Eins (true) ist gleich Tagesticket // Null (false) ist gleich 3Tagesticket
 	}
 	public boolean getChecked() {
 		return checked;
