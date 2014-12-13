@@ -20,4 +20,11 @@ public class MenuRepositoryIntegrationTests extends AbstractIntegrationTests {
 		assertThat(result, is(iterableWithSize(5)));
 	}
 	
+	@Test
+	public void findsAllMeals() {
+		
+		Iterable<Menu> result = menus.findByType(Type.MEAL);
+		assertThat(result, is(iterableWithSize(8)));
+	}
+	
 }
