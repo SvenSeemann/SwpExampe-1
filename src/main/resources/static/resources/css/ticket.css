@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+#substance{
+	width: 835px;
+	height: 800px;
+	border: #0c3 medium solid;
+	margin-top: 10px;
+}
+
+.slimButton {
+	border: #0C3 medium solid !important;
+}
+.boldButton {
+	border: #0c3 medium solid !important;
+}
+.slimButton:active {
+	border: #0c3 medium solid !important;
+}
+.boldButton:active {
+	border: #0c3 medium solid  !important;
+}
+#content {
+	border-top: #0c3 thick dashed !important;
+}
+fieldset{
+	width:240px;
+	height:100px;
+	border: #0c3 medium solid;
+	margin:auto;
+	margin-top:100px;
+	padding:50px 30px;
+}
+
+.label input{
+	margin-top:10px;
+}
