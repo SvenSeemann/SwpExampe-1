@@ -60,14 +60,14 @@ public class CateringDataInitializer implements DataInitializer {
 		
 		// --- Getränke --- \\
 		
-		Menu Drink1 = new Menu("Pils", Money.of(EUR, 2.50), Type.DRINK);
+	//	Menu Drink1 = new Menu("Pils", Money.of(EUR, 2.50), Type.DRINK);
 		Menu Drink2 = new Menu("Alt", Money.of(EUR, 3.00), Type.DRINK);
 		Menu Drink3 = new Menu("Alkoholfrei", Money.of(EUR, 3.00), Type.DRINK);
 		Menu Drink4 = new Menu("Softdrink", Money.of(EUR, 2.20), Type.DRINK);
 		Menu Drink5 = new Menu("Wein", Money.of(EUR, 4.00), Type.DRINK);
 		
 		menusRepository.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5, Meal6,
-				Meal7, Meal8, Drink1, Drink2, Drink3, Drink4, Drink5));
+				Meal7, Meal8, /*Drink1,*/ Drink2, Drink3, Drink4, Drink5));
 		
 		for (Menu Menu : menusRepository.findAll()) {
 			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));

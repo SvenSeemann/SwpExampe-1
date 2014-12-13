@@ -116,14 +116,15 @@ public class CateringController {
 			Order order = new Order(account, Cash.CASH);
 
 			cart.addItemsTo(order);
+			
 
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-
+			
 			cart.clear();
 
-			return "redirect:/";
+			return "redirect:/catering";
 		}).orElse("redirect:/catering");
 	}
 }
