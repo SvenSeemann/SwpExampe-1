@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,10 @@ import fviv.model.Employee;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
 import fviv.model.Registration;
+
+/**
+ *@author Hendric Eckelt
+*/
 
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 @Controller
@@ -164,7 +169,7 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 	
-	@RequestMapping("/changeRole")
+	@RequestMapping(value="/changeRole", method=RequestMethod.POST)
 	public String changeRole(@RequestParam("userNameChangeRole") String userName){
 		System.out.println("Selected username: "+userName);
 		return "redirect:/manager";

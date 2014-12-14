@@ -1,5 +1,8 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Author: Hendric Eckelt -->
+
 <head>
 <meta charset="utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
@@ -203,7 +206,7 @@ $(function () {
 								<td>Mitarbeiter</td>
 							</tr>
 						</table>
-						<form action="@{/changeRole}" method="post">
+						<form action="/changeRole" method="post">
 							<input type="text" name="userNameChangeRole" placeholder="Benutzername"></input>
 							<select name="roles">
 								<option th:each=" role : ${roles}" th:value="${role}" th:text="${role.getName()}"></option>

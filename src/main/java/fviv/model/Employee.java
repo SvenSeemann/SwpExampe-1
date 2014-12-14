@@ -8,6 +8,10 @@ import javax.persistence.OneToOne;
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ *@author Hendric Eckelt
+*/
+
 @Entity
 public class Employee{
 	private String phone;
