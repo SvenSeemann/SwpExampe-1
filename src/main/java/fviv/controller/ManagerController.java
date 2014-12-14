@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -39,14 +38,6 @@ public class ManagerController {
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
 	}
-	
-	public LinkedList<String> toList(LinkedList<String> list, String string1, String string2, String string3, String string4){
-		list.add(string1);
-		list.add(string2);
-		list.add(string3);
-		list.add(string4);
-		return list;
-	}
 
 	@ModelAttribute("managermode")
 	public String managermode() {
@@ -62,8 +53,13 @@ public class ManagerController {
 		LinkedList<UserAccount> managerAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> catererAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> employeeAccounts = new LinkedList<UserAccount>();
-		LinkedList<String> roles = toList(new LinkedList<String>(), "Boss", "Manager", "Caterer", "Mitarbeiter");
+		LinkedList<Role> roles = new LinkedList<Role>();
+		roles.add(new Role("ROLE_BOSS"));
+		roles.add(new Role("ROLE_MANAGER"));
+		roles.add(new Role("ROLE_CATERER"));
+		roles.add(new Role("ROLE_EMPLOYEE"));
 
+		
 		// Sort accounts by Role
 		for (UserAccount userAccount : userAccounts) {
 			if (userAccount.hasRole(new Role("ROLE_BOSS")))
@@ -167,6 +163,13 @@ public class ManagerController {
 
 		return "redirect:/manager";
 	}
+	
+	@RequestMapping("/changeRole")
+	public String changeRole(@RequestParam("userNameChangeRole") String userName){
+		System.out.println("Selected username: "+userName);
+		return "redirect:/manager";
+	}
+	
 
 	@RequestMapping("/Finances")
 	public String finances() {
