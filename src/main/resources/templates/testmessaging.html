@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <style>
+        .highlight {
+            background-color: red;
+        }
+        .receiver {
+            display: block;
+            margin: 10px;
+            background-color: #2e7cdc;
+            padding: 15px;
+            color: whitesmoke;
+            float: left;
+        }
+        #recipients {
+            display: block;
+        }
+    </style>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
+</head>
+<body>
+<div th:fragment="message-list">
+    <h3>Hello and welcome ... dude</h3>
+    <table id="messages">
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Date received</th>
+                <th style="font-weight: normal;"><i>separator</i></th>
+                <th>Message content</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+<div th:fragment="message-form">
+    <div id="recipients"></div>
+    <div id="message-forms"></div>
+    <button id="refresh-messages">Refresh Messages</button>
+    <button id="refresh-receivers">Refresh Receivers</button>
+</div>
+    <script src="/resources/js/messaging.js" type="text/javascript"></script>
+</body>
+</html>
