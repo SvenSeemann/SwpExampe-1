@@ -193,6 +193,12 @@ $(function () {
 								<td>Mitarbeiter</td>
 							</tr>
 						</table>
+						<form action="@{/changeRole}" method="post">
+							<input type="text" name="username" placeholder="Benutzername"></input>
+							<select name="roles">
+								<option th:each=" role : ${roles}" th:value="${role}" th:text="#{role}"></option>
+							</select> <input type="submit" value="Speichern"></input>
+						</form>
 					</div>
 
 					<!-- Standard case -->

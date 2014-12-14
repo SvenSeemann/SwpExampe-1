@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,14 @@ public class ManagerController {
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
 	}
+	
+	public LinkedList<String> toList(LinkedList<String> list, String string1, String string2, String string3, String string4){
+		list.add(string1);
+		list.add(string2);
+		list.add(string3);
+		list.add(string4);
+		return list;
+	}
 
 	@ModelAttribute("managermode")
 	public String managermode() {
@@ -48,30 +57,27 @@ public class ManagerController {
 	public String index(ModelMap modelMap) {
 		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0, deposit = 0;
 
-		final Role bossRole = new Role("ROLE_BOSS");
-		final Role managerRole = new Role("ROLE_MANAGER");
-		final Role catererRole = new Role("ROLE_CATERER");
-		final Role employeeRole = new Role("ROLE_EMPLOYEE");
-
 		Iterable<UserAccount> userAccounts = userAccountManager.findAll();
 		LinkedList<UserAccount> bossAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> managerAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> catererAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> employeeAccounts = new LinkedList<UserAccount>();
+		LinkedList<String> roles = toList(new LinkedList<String>(), "Boss", "Manager", "Caterer", "Mitarbeiter");
 
 		// Sort accounts by Role
 		for (UserAccount userAccount : userAccounts) {
-			if (userAccount.hasRole(bossRole))
+			if (userAccount.hasRole(new Role("ROLE_BOSS")))
 				bossAccounts.add(userAccount);
-			if (userAccount.hasRole(managerRole))
+			if (userAccount.hasRole(new Role("ROLE_MANAGER")))
 				managerAccounts.add(userAccount);
-			if (userAccount.hasRole(catererRole))
+			if (userAccount.hasRole(new Role("ROLE_CATERER")))
 				catererAccounts.add(userAccount);
-			if (userAccount.hasRole(employeeRole))
+			if (userAccount.hasRole(new Role("ROLE_EMPLOYEE")))
 				employeeAccounts.add(userAccount);
 		}
 
 		// Add accounts to modelMap
+		modelMap.addAttribute("roles", roles);
 		modelMap.addAttribute("bossAccounts", bossAccounts);
 		modelMap.addAttribute("managerAccounts", managerAccounts);
 		modelMap.addAttribute("catererAccounts", catererAccounts);
