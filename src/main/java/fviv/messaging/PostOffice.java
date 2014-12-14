@@ -3,13 +3,13 @@ package fviv.messaging;
 import fviv.user.UserRepository;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -25,24 +25,37 @@ public class PostOffice {
 
     public static final Role receiverRole = new Role("MESSAGE_RECEIVER");
 
+    private static final ZoneId gmt = ZoneId.of("GMT");
+
     @Autowired
     public PostOffice(UserRepository users, MessageRepository repo) {
         this.users = users;
         this.repo = repo;
     }
 
-    public Iterable<Message> getMessages(UserAccountIdentifier userId) {
-        Optional<UserAccount> x = users.findOne(userId);
-        if (x.isPresent()) return getMessages(x.get());
-        else throw new SecurityException();
-    }
-
-    public Iterable<Message> getMessages(UserAccount user) {
+    public List<Message> getMessages(UserAccount user) {
         if (canReceive(user)) {
-            return repo.findByRecipient(user);
+            List<Message> out = new LinkedList<>();
+            for (Message message : repo.findByRecipient(user)) {
+                out.add(message);
+            }
+            return out;
         } else {
             throw new SecurityException();
         }
+    }
+
+    public List<Message> getMessages(UserAccount user, ZonedDateTime fromDate) {
+        Iterable<Message> messages = getMessages(user);
+        List<Message> out = new LinkedList<>();
+
+        for (Message message : messages) {
+            if (message.getDate().isAfter(fromDate)){
+                System.out.println(message.getDate().toString() + " is after " + fromDate.toString());
+                out.add(message);
+            }
+        }
+        return out;
     }
 
     public boolean sendMessage(UserAccount sender, UserAccount receiver, String message) {
@@ -65,13 +78,13 @@ public class PostOffice {
         return hasRole(userId, receiverRole);
     }
 
-    public Iterable<UserAccount> getRecipients(){
+    public List<UserAccount> getRecipients(UserAccount requestingUser){
+        if (!canSend(requestingUser)) throw new SecurityException();
         List<UserAccount> acc = new LinkedList<>();
 
         for (UserAccount user : users.findAll())  if (user.hasRole(receiverRole)) acc.add(user);
 
         return acc;
-
     }
 
 }

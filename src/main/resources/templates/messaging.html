@@ -3,26 +3,34 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/resources/js/messaging.js"></script>
 </head>
 <body>
     <div th:fragment="message-list">
-        <h3>Hello and welcome ... dude</h3>
-        <ul sec:authorize="hasRole('MESSAGE_RECEIVER')" class="messages">
-            <li th:each="message : ${messages}" th:text="${message}" th:fragment="message">
-                Error
-            </li>
+        <h3>Hello and welcome ... dude, TO THE MESSAGING!!!</h3>
+        <table id="messages" sec:authorize="hasRole('MESSAGE_RECEIVER')">
+            <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Date received</th>
+                <th style="font-weight: normal;"><i>separator</i></th>
+                <th>Message content</th>
+            </tr>
+            </thead>
+            <tbody>
 
-        </ul>
+            </tbody>
+        </table>
     </div>
     <div th:fragment="message-form">
-        <form sec:authorize="hasRole('MESSAGE_SENDER')" class="send-form" action="/messaging/send" method="post">
-            <label for="recipient">Receiver</label>
-            <select id="recipient" name="recipient">
-                <option th:each="recipient : ${recipients}" th:value="${recipient}" th:text="${recipient}">Empty</option>
-            </select>
-            <label for="message-content">Your Message</label><textarea id="message-content"></textarea>
-            <input type="submit" value="Submit" />
-        </form>
+        <div sec:authorize="hasRole('MESSAGE_SENDER')">
+            <div id="recipients"></div>
+            <div id="message-forms"></div>
+            <button id="refresh-messages">Refresh Messages</button>
+            <button id="refresh-receivers">Refresh Receivers</button>
+        </div>
     </div>
 
 
