@@ -16,6 +16,7 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 
-@RestController
+@Controller
 @PreAuthorize("hasRole('ROLE_CATERER')")
 @SessionAttributes("cart")
 public class CateringController {
@@ -69,7 +70,6 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
-
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
@@ -116,14 +116,15 @@ public class CateringController {
 			Order order = new Order(account, Cash.CASH);
 
 			cart.addItemsTo(order);
+			
 
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-
+			
 			cart.clear();
 
-			return "redirect:/";
+			return "redirect:/catering";
 		}).orElse("redirect:/catering");
 	}
 }

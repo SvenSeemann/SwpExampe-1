@@ -4,24 +4,21 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
-<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
+
+<link rel="stylesheet" href="../resources/css/standard.css"/>
+<link rel="stylesheet" href="../resources/css/catering.css"/>
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
 <title th:text="#{catering.title}">Catering</title>
 </head>
 
 <body>
+
 	<div id="webseite">
 		<div id="header">
-			<span id="header_text">HEADLINE</span>
-			<!-- Je nachdem ob man auf speisen, getraenke oder chat ist, muss hier halt die jeiweilige headline stehen -->
-			<div id="loggedAs">
-				<p sec:authorize="isAuthenticated()"
-					th:text="${'Hallo ' + #authentication?.Username}">Caterer</p>
-				<span sec:authentication="username"></span> <span
-					th:text="${#authentication?.Username}"></span> <span>CATERER
-					XXXXXX</span>
-			</div>
-			<!-- Hier kommt dann die ID des Caterers hin-->
+			<div id="loggedAs" th:text="#{catering.whoami}"></div>
+			<div id="title">title</div>
+			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
+			<!--<p th:text="${#authentication?.name}">XXXXXX</p> -->
 		</div>
 		<div id="content">
 			<div id="orderList">
@@ -91,14 +88,14 @@
 			</div>
 			<div id="menuPointBold">
 				<form method="post" action="/catering-meals">
-					<input type="submit" th:value="#{catering.meals}"
-						value="catering-meals" />
+					<button class="boldButton" type="submit"
+						th:value="#{catering.meals}" value="catering-meals">Menupunkt1</button>
 				</form>
 			</div>
 			<div id="menuPointBold">
 				<form method="post" action="/catering-drinks">
-					<input type="submit" th:value="#{catering.drinks}"
-						value="catering-drinks" />
+					<button class="boldButton" type="submit"
+						th:value="#{catering.drinks}" value="catering-drinks">Menupunkt1</button>
 				</form>
 			</div>
 		</div>

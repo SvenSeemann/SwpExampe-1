@@ -73,10 +73,5 @@ public class CateringDataInitializer implements DataInitializer {
 			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
-		
-		for (Menu Menu : menusRepository.findAll()) {
-			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
-			inventory.save(inventoryItem);
-		}
 	}
 }
