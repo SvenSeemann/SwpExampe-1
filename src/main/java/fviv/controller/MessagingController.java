@@ -53,7 +53,7 @@ public class MessagingController {
     public Object send(@ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult) {
         System.out.println("got message " + messageForm.getMessage() );
 
-        postOffice.sendMessage(testUser, testUser, messageForm.getMessage());
+        postOffice.sendMessage(testUser, messageForm.getRecipient(), messageForm.getMessage());
         return true;
     }
 

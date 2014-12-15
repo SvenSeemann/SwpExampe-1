@@ -12,7 +12,7 @@
       date_from_received = function(date) {
         return new Date(date.year, date.monthValue - 1, date.dayOfMonth, date.hour, date.minute, date.second);
       };
-      messages = {
+      this.messages = messages = {
         thing: $("#messages").children('tbody'),
         array: [],
         add_new: function(message) {
@@ -56,7 +56,7 @@
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           message = data[_i];
           message = new Message(message.message, message.date, message.sender, message.id);
-          if (!messages.contain(message)) {
+          if (!messages.contains(message)) {
             messages.add_new(message);
           }
         }
@@ -71,7 +71,7 @@
           },
           success: function(data) {
             if (data.length > 0) {
-              messages.message_thing.children('.highlight').removeClass('highlight');
+              messages.thing.children('.highlight').removeClass('highlight');
               return add_messages(data);
             }
           }
@@ -97,7 +97,7 @@
           form = _this.templates.find('.message-form').clone();
           form.find('.recipient').val(receiver);
           form.submit(function(e) {
-            return send_message(e, form);
+            return send_message(e, this);
           });
           return $('#message-forms').html(form);
         };

@@ -16,7 +16,7 @@ class Messaging
         date.second
       )
 
-    messages =
+    @messages = messages =
       thing : $("#messages").children('tbody')
       array : []
       add_new : (message) ->
@@ -29,13 +29,6 @@ class Messaging
         template.find('.message-date').text(message.dateReceived.toString())
         template.find('.message-message').text(message.message_content)
         template
-#      templated : (message) ->
-#        '<tr class="highlight">
-#        <td class="message-sender">' + message.sender.firstname + message.sender.lastname + '</td>
-#        <td class="message-date">[' + message.dateReceived.toString() + ']</td>
-#        <td class="message-separator" style="text-align: center;">:</td>
-#        <td class="message-message">' + message.message_content + '</td>
-#        </tr>'
       contains : (message) ->
         for item in @array
           if item.id is message.id
@@ -49,7 +42,7 @@ class Messaging
     add_messages = (data) ->
       for message in data
         message = new Message(message.message, message.date, message.sender, message.id)
-        unless messages.contain message
+        unless messages.contains message
           messages.add_new message
       return
 
@@ -63,7 +56,7 @@ class Messaging
 
         success: (data) ->
           if data.length > 0
-            messages.message_thing.children('.highlight').removeClass 'highlight'
+            messages.thing.children('.highlight').removeClass 'highlight'
             add_messages data
       )
 
@@ -84,7 +77,7 @@ class Messaging
       form = @templates.find('.message-form').clone()
       form.find('.recipient').val(receiver)
       form.submit(
-        (e) -> send_message(e, form)
+        (e) -> send_message(e, this)
       )
       $('#message-forms').html(
         form
@@ -100,7 +93,7 @@ class Messaging
       template : @templates.find('.receiver')
       add_all : (recipients) ->
         for r in recipients
-          @add r
+          @add(r)
       add : (recipient) ->
         rec = new Receiver(recipient.firstname, recipient.lastname, recipient.id.identifier)
         unless @contains(rec)
