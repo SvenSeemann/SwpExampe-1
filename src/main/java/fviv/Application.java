@@ -15,29 +15,29 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
-
-
 @Configuration
 @EnableAutoConfiguration
 @EntityScan(basePackageClasses = { Salespoint.class, Application.class })
-@EnableJpaRepositories(basePackageClasses = { Salespoint.class, Application.class })
+@EnableJpaRepositories(basePackageClasses = { Salespoint.class,
+		Application.class })
 @ComponentScan
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-    
-    @Configuration
-	static class CateringPrototypeWebConfiguration extends SalespointWebConfiguration {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Configuration
+	static class CateringPrototypeWebConfiguration extends
+			SalespointWebConfiguration {
 
 		@Override
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addViewController("/login").setViewName("login");
 		}
-	} 
-    
-    @Bean
+	}
+
+	@Bean
 	public CharacterEncodingFilter characterEncodingFilter() {
 
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
@@ -45,18 +45,21 @@ public class Application {
 		characterEncodingFilter.setForceEncoding(true);
 
 		return characterEncodingFilter;
-	} 
-   
-    @Configuration
+	}
+
+	@Configuration
 	@EnableGlobalMethodSecurity(prePostEnabled = true)
-	static class WebSecurityConfiguration extends SalespointSecurityConfiguration {
+	static class WebSecurityConfiguration extends
+			SalespointSecurityConfiguration {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			
+
 			http.csrf().disable();
-			http.authorizeRequests().antMatchers("/**").permitAll().and().//
-					formLogin().loginPage("/login").loginProcessingUrl("/login").and(). //
+			http.authorizeRequests().antMatchers("/**").permitAll().and()
+					.//
+					formLogin().loginPage("/login")
+					.loginProcessingUrl("/login").and(). //
 					logout().logoutUrl("/logout").logoutSuccessUrl("/login");
 		}
 	}

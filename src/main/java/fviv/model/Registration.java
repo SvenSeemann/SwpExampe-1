@@ -2,6 +2,10 @@ package fviv.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ *@author Hendric Eckelt
+*/
+
 public class Registration {
 	@NotEmpty(message = "{Registration.lastname.NotEmpty}")
 	private String lastname;

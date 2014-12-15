@@ -6,6 +6,10 @@ import javax.persistence.Id;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ *@author Hendric Eckelt
+*/
+
 @Entity
 public class Expense {
 	private float amount;

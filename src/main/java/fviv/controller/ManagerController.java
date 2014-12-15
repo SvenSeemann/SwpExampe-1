@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,10 @@ import fviv.model.Employee;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
 import fviv.model.Registration;
+
+/**
+ *@author Hendric Eckelt
+*/
 
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 @Controller
@@ -48,30 +53,32 @@ public class ManagerController {
 	public String index(ModelMap modelMap) {
 		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0, deposit = 0;
 
-		final Role bossRole = new Role("ROLE_BOSS");
-		final Role managerRole = new Role("ROLE_MANAGER");
-		final Role catererRole = new Role("ROLE_CATERER");
-		final Role employeeRole = new Role("ROLE_EMPLOYEE");
-
 		Iterable<UserAccount> userAccounts = userAccountManager.findAll();
 		LinkedList<UserAccount> bossAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> managerAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> catererAccounts = new LinkedList<UserAccount>();
 		LinkedList<UserAccount> employeeAccounts = new LinkedList<UserAccount>();
+		LinkedList<Role> roles = new LinkedList<Role>();
+		roles.add(new Role("ROLE_BOSS"));
+		roles.add(new Role("ROLE_MANAGER"));
+		roles.add(new Role("ROLE_CATERER"));
+		roles.add(new Role("ROLE_EMPLOYEE"));
 
+		
 		// Sort accounts by Role
 		for (UserAccount userAccount : userAccounts) {
-			if (userAccount.hasRole(bossRole))
+			if (userAccount.hasRole(new Role("ROLE_BOSS")))
 				bossAccounts.add(userAccount);
-			if (userAccount.hasRole(managerRole))
+			if (userAccount.hasRole(new Role("ROLE_MANAGER")))
 				managerAccounts.add(userAccount);
-			if (userAccount.hasRole(catererRole))
+			if (userAccount.hasRole(new Role("ROLE_CATERER")))
 				catererAccounts.add(userAccount);
-			if (userAccount.hasRole(employeeRole))
+			if (userAccount.hasRole(new Role("ROLE_EMPLOYEE")))
 				employeeAccounts.add(userAccount);
 		}
 
 		// Add accounts to modelMap
+		modelMap.addAttribute("roles", roles);
 		modelMap.addAttribute("bossAccounts", bossAccounts);
 		modelMap.addAttribute("managerAccounts", managerAccounts);
 		modelMap.addAttribute("catererAccounts", catererAccounts);
@@ -161,6 +168,13 @@ public class ManagerController {
 
 		return "redirect:/manager";
 	}
+	
+	@RequestMapping(value="/changeRole", method=RequestMethod.POST)
+	public String changeRole(@RequestParam("userNameChangeRole") String userName){
+		System.out.println("Selected username: "+userName);
+		return "redirect:/manager";
+	}
+	
 
 	@RequestMapping("/Finances")
 	public String finances() {
