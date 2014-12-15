@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * bootstrapping the core fviv {@link Application} configuration class as proposed in the videoshop example.
  * 
  * @author Niklas Fallik
+ * @author Hendric Eckelt
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
