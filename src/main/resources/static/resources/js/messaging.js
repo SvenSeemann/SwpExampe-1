@@ -122,13 +122,11 @@
         array: [],
         template: this.templates.find('.receiver'),
         add_all: function(recipients) {
-          var r, _i, _len, _results;
-          _results = [];
+          var r, _i, _len;
           for (_i = 0, _len = recipients.length; _i < _len; _i++) {
             r = recipients[_i];
-            _results.push(this.add(r));
+            this.add(r);
           }
-          return _results;
         },
         add: function(recipient) {
           var rec, template;
