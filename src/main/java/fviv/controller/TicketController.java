@@ -37,6 +37,7 @@ public class TicketController {
 	public TicketController(TicketRepository ticketRepository) {
 		this.ticketRepository = ticketRepository;
 	}
+	
 
 	@RequestMapping({ "/ticket" })
 	public String index() {
@@ -45,7 +46,7 @@ public class TicketController {
 
 	@RequestMapping({ "/ticketPruefen" })
 	public String ticketpruefen() {
-		return "ticketpruefung";
+		return "ticketpruefen";
 	}
 
 	@RequestMapping(value = "/pruefeTicket", method = RequestMethod.POST)
@@ -63,7 +64,7 @@ public class TicketController {
 			ticketkontrolle.setChecked(true);
 			System.out.println("" + id + "now checked in");
 			ticketRepository.save(ticketkontrolle);
-			return "ticketpruefung";
+			return "ticket";
 		}
 	}
 

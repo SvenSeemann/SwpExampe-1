@@ -1,9 +1,9 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
+<meta charset="utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
-	rel='stylesheet' type='text/css'/>
+	rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/ticket.css" />
 <title>tickets</title>
@@ -15,45 +15,46 @@
 			<div id="title">Ticketverkauf</div>
 			<div id="loginName">UserName</div>
 		</div>
-		
-		
+
+
 		<div id="content">
 			<div id="substance">
-			
+
 				<form th:action="@{/newTicket}" method="post">
 					<fieldset>
 						<label class="label" for="festivals"> Festival
 							ausw&auml;hlen: <select name="festivals" size="1">
 								<option>Inhalt1</option>
-						</select></label>
-						<label class="label" for="ticketart"> Ticketart
-							ausw&auml;hlen:</label>
-						<br />	
-						<input type="radio" name="ticketart" value="true" checked="checked" />Tagesticket
-						<br />
-						<input type="radio" name="ticketart" value="false" />3-Tagesticket
-						
-						<label class="label" for="numbers"> 
-						<input type="text" name="numbers" size="40" placeholder="Anzahl"/></label> 
-						<label class="label" for="price"> 
-						<input type="text" name="price" size="40" placeholder="Preis pro Stück" /></label>
-						
-						<input type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')" value="Ticket erstellen" />
+						</select>
+						</label> <label class="label" for="ticketart"> Ticketart
+							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
+							value="true" checked="checked" />Tagesticket <br /> <input
+							type="radio" name="ticketart" value="false" />3-Tagesticket <label
+							class="label" for="numbers"> <input type="text"
+							name="numbers" size="40" placeholder="Anzahl" /></label> <label
+							class="label" for="price"> <input type="text"
+							name="price" size="40" placeholder="Preis pro Stück" /></label> <input
+							type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')"
+							value="Ticket erstellen" />
 					</fieldset>
 				</form>
+
 			</div>
 		</div>
-		
-		
+
 		<div id="menu">
 			<button class="slimButton">Logout</button>
 			<button class="slimButton">Chat</button>
-			<form th:action="@{/ticketDrucken}" method="post" target="_blank"> 	
-			<label class="label" for="ticketnummer"> 
-			<input type="text" name="ticketnummer" size="26" placeholder="Ticket ID drucken"/></label> 
-			<button class="boldButton">Ticket Drucken</button></form>
-			<form th:action="@{/ticketPruefen}" method="post"> <button class="boldButton">Ticket Pr&uuml;fen</button></form>
+			<form th:action="@{/ticketDrucken}" method="post" target="_blank">
+				<label class="label" for="ticketnummer"> <input type="text"
+					name="ticketnummer" size="26" placeholder="Ticket ID drucken" /></label>
+				<button class="boldButton">Ticket Drucken</button>
+			</form>
+			<form th:action="@{/ticketPruefen}" method="post">
+				<button class="boldButton">Ticket Pr&uuml;fen</button>
+			</form>
 		</div>
 	</div>
+
 </body>
 </html>

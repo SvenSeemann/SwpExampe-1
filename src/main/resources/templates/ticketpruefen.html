@@ -1,9 +1,9 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
+<meta charset="utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
-	rel='stylesheet' type='text/css'/>
+	rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/ticket.css" />
 <title>ticketstest</title>
@@ -15,36 +15,28 @@
 			<div id="title">Ticketverkauf</div>
 			<div id="loginName">UserName</div>
 		</div>
-		
-		
 		<div id="content">
 			<div id="substance">
-			
 				<form th:action="@{/pruefeTicket}" method="post">
 					<fieldset>
-						
 						<label class="label" for="ticketart"> Ticketart
-							ausw&auml;hlen:</label>
-						<br />	
-						<input type="radio" name="ticketart" value="true" checked="checked" />Tagesticket
-						<br />
-						<input type="radio" name="ticketart" value="false" />3-Tagesticket
-						
-						<label class="label" for="numbers"> 
-						<input type="text" name="numbers" size="40" placeholder="TicketID" /></label> 
-						
-						<input type="submit" value="Ticket einchecken" />
+							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
+							value="true" checked="checked" />Tagesticket <br /> <input
+							type="radio" name="ticketart" value="false" />3-Tagesticket <label
+							class="label" for="numbers"> <input type="text"
+							name="numbers" size="40" placeholder="TicketID" /></label> <input
+							type="submit" value="Ticket einchecken" />
 					</fieldset>
 				</form>
 			</div>
 		</div>
-		
-		
 		<div id="menu">
 			<button class="slimButton">Logout</button>
 			<button class="slimButton">Chat</button>
 			<a href="ticket.html"><button class="boldButton">Zurück</button></a>
-			<form th:action="@{/ticketPruefen}" method="post"> <button class="boldButton">Ticket Pr&uuml;fen</button></form>
+			<form th:action="@{/ticketPruefen}" method="post">
+				<button class="boldButton">Ticket Pr&uuml;fen</button>
+			</form>
 		</div>
 	</div>
 </body>
