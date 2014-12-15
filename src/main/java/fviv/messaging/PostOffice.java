@@ -3,6 +3,7 @@ package fviv.messaging;
 import fviv.user.UserRepository;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +65,10 @@ public class PostOffice {
             return true;
         }
         return false;
+    }
+
+    public boolean sendMessage(UserAccount sender, String receiver, String message) {
+        return sendMessage(sender, users.findOne(new UserAccountIdentifier(receiver)).get(), message);
     }
 
     public boolean hasRole(UserAccount user, Role role) {

@@ -4,6 +4,8 @@ import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
+import fviv.ticket.Ticket;
+import fviv.ticket.TicketRepository;
 
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.useraccount.Role;
@@ -20,27 +22,37 @@ public class FvivDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final ExpenseRepository expenseRepository;
 
+	private final TicketRepository ticketRepository;
+	
 	@Autowired
-	public FvivDataInitializer(EmployeeRepository employeeRepository,
-			UserAccountManager userAccountManager,
-			ExpenseRepository expenseRepository) {
-
-		Assert.notNull(employeeRepository,
-				"EmployeeRepository must not be null!");
-
+	public FvivDataInitializer (EmployeeRepository employeeRepository, UserAccountManager userAccountManager, ExpenseRepository expenseRepository, TicketRepository ticketRepository) {
+		
+		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
 		this.expenseRepository = expenseRepository;
+		this.ticketRepository = ticketRepository;
 	}
 
 	@Override
 	public void initialize() {
 		initializeUsers(userAccountManager, employeeRepository);
 		initializeExpenses(expenseRepository);
+		initializeTickets(ticketRepository);
 	}
+
+	
+	private void initializeTickets(TicketRepository ticketRepository) {
+		Ticket ticket1 = new Ticket(true, false);
+		Ticket ticke2 = new Ticket(false, true);
+		ticketRepository.save(ticket1);
+		ticketRepository.save(ticke2);
+	}
+
 
 	private void initializeUsers(UserAccountManager userAccountManager,
 			EmployeeRepository employeeRepository) {
+
 
 		final Role bossRole = new Role("ROLE_BOSS");
 		final Role managerRole = new Role("ROLE_MANAGER");
@@ -120,4 +132,5 @@ public class FvivDataInitializer implements DataInitializer {
 		expenseRepository.save(expense9);
 		expenseRepository.save(expense10);
 	}
+	
 }

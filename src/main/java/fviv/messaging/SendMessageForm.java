@@ -1,7 +1,6 @@
 package fviv.messaging;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.salespointframework.useraccount.UserAccount;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -12,7 +11,7 @@ public class SendMessageForm {
     private String message;
 
     @NotEmpty
-    private UserAccount recipient;
+    private String recipient;
 
     public String getMessage() {
         return message;
@@ -22,11 +21,11 @@ public class SendMessageForm {
         this.message = message;
     }
 
-    public UserAccount getRecipient() {
+    public String getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(UserAccount recipient) {
+    public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
 }
