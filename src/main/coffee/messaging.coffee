@@ -3,8 +3,9 @@ debug = true
 
 class Messaging
   constructor : ->
-    @templates = $('#messaging-templates').clone()
-    $(document).remove('#messaging-templates')
+    templates = $('#messaging-templates')
+    @templates = templates.clone()
+    templates.remove()
 
     date_from_received = (date) ->
       new Date(

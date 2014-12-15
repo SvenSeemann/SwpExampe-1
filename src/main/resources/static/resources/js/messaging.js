@@ -6,9 +6,10 @@
 
   Messaging = (function() {
     function Messaging() {
-      var Message, Receiver, add_messages, check_messages, date_from_received, get_receivers, messages, new_form, receivers, refresh_receivers, send_message;
-      this.templates = $('#messaging-templates').clone();
-      $(document).remove('#messaging-templates');
+      var Message, Receiver, add_messages, check_messages, date_from_received, get_receivers, messages, new_form, receivers, refresh_receivers, send_message, templates;
+      templates = $('#messaging-templates');
+      this.templates = templates.clone();
+      templates.remove();
       date_from_received = function(date) {
         return new Date(date.year, date.monthValue - 1, date.dayOfMonth, date.hour, date.minute, date.second);
       };
