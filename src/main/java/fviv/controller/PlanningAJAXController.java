@@ -23,7 +23,7 @@ public class PlanningAJAXController {
 		this.planningRepository = planningRepository;
 	}
 
-	@RequestMapping(value = "/newArea", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+	@RequestMapping(value = "/newArea", method = RequestMethod.GET, headers = IS_AJAX_HEADER)
 	public boolean neuesAreal(@RequestParam("width") int width,
 			@RequestParam("height") int height) {
 		Coords area = planningRepository.findByName("Areal");

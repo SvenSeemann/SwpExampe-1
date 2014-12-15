@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-#substance{
+#substance {
 	width: 835px;
 	height: 800px;
 	border: #0c3 medium solid;
@@ -9,15 +9,20 @@
 
 .slimButton {
 	border: #0C3 medium solid !important;
+	position: relative;
 }
+
 .boldButton {
 	border: #0c3 medium solid !important;
+	position: relative;
 }
+
 .slimButton:active {
 	border: #0c3 medium solid !important;
 }
+
 .boldButton:active {
-	border: #0c3 medium solid  !important;
+	border: #0c3 medium solid !important;
 }
 
 #request {
@@ -32,7 +37,9 @@
 	display: none;
 	cursor: pointer;
 	position: absolute;
+	z-index: 100000;
 }
+
 .requestAll {
 	width: 400px;
 	height: 200px;
@@ -45,6 +52,24 @@
 	display: none;
 	cursor: pointer;
 }
+
 #content {
 	border-top: #0c3 thick dashed !important;
+}
+
+.objectMenu {
+	width: 150px;
+	height: auto;
+	display: block;
+	position: relative;
+	cursor:move;
+}
+
+.chooseObject {
+	width: 150px;
+	height: 100px;
+	margin-bottom: 10px;
+	border: #f9731c medium solid;
+	background-color: #383839;
+	cursor: pointer;
 }

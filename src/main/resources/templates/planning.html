@@ -1,11 +1,13 @@
+
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<html>
 <head>
 <meta charset="utf-8" />
-<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
+<link href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/planning.css" />
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="../resources/scripts/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="../resources/scripts/planning.js"></script>
 <title>Planer</title>
 </head>
@@ -21,12 +23,12 @@
 			<div id="substance">
 				<div id="request">
 					<h3>Grö&szlig;e eingeben</h3>
-					<form action="/newArea" method="post" id="size">
+					<form action="/newArea" method="get" id="size" name="size">
 						<table>
 							<tr>
 								<td>Weite:</td>
 								<td><input type="number" name="width" size="30" /> m</td>
-							</tr>	
+							</tr>
 							<tr>
 								<td>Höhe:</td>
 								<td><input type="number" name="height" size="30" /> m</td>
@@ -40,9 +42,29 @@
 			</div>
 		</div>
 		<div id="menu">
-			<button class="boldButton" onClick="newArea();">Neues Areal</button>
-			<button class="boldButton">Menupunkt2</button>
-			<button class="boldButton">Menupunkt1</button>
+			<button class="boldButton" onClick="newArea();">New Area</button>
+			<button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
+			<div class="objectMenu" id="stages">
+				<div class="chooseObject" onmousedown="dragstart(this)">small Stage</div>
+				<div class="chooseObject">medium Stage</div>
+				<div class="chooseObject">big Stage</div>
+			</div>
+			<button class="boldButton" onClick="openSubMenu('toilet');">Toilets</button>
+			<div class="objectMenu" id="toilets">
+				<div class="chooseObject">Toilet</div>
+			</div>
+			<button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
+			<div class="objectMenu" id="catering">
+				<div class="chooseObject">small Catering</div>
+				<div class="chooseObject">normal size</div>
+				<div class="chooseObject">big buffet</div>
+			</div>
+			<button class="boldButton" onClick="openSubMenu('camping');">Camping</button>
+			<div class="objectMenu" id="camping">
+				<div class="chooseObject">small camping</div>
+				<div class="chooseObject">large camping</div>
+				<div class="chooseObject">camping city</div>
+			</div>
 		</div>
 	</div>
 </body>
