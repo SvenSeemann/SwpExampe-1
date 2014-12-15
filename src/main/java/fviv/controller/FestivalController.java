@@ -14,9 +14,4 @@ public class FestivalController {
 	public String index() {
 		return "index";
 	}
-	
-	@RequestMapping({"/messaging", "/chat"})
-	public String chat() {
-		return "messaging";
-	}
 }
