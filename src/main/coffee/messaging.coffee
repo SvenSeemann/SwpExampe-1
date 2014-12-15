@@ -17,11 +17,13 @@ class Messaging
       )
 
     @messages = messages =
-      thing : $("#messages").children('tbody')
+      thing : $("#messages")
       array : []
       add_new : (message) ->
         @array.push(message)
-        @thing.append @templated message
+        m_rep = @templated message
+        m_rep.addClass('highlight')
+        @thing.append m_rep
       template : @templates.find(".single-message")
       templated : (message) ->
         template = @template.clone()

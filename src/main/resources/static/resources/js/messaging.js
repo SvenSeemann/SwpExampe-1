@@ -13,11 +13,14 @@
         return new Date(date.year, date.monthValue - 1, date.dayOfMonth, date.hour, date.minute, date.second);
       };
       this.messages = messages = {
-        thing: $("#messages").children('tbody'),
+        thing: $("#messages"),
         array: [],
         add_new: function(message) {
+          var m_rep;
           this.array.push(message);
-          return this.thing.append(this.templated(message));
+          m_rep = this.templated(message);
+          m_rep.addClass('highlight');
+          return this.thing.append(m_rep);
         },
         template: this.templates.find(".single-message"),
         templated: function(message) {

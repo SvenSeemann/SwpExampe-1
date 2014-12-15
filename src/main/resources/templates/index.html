@@ -8,7 +8,6 @@
 <link href='http://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css' />
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="/resources/js/messaging.js"></script>
 <title th:text="#{home.title}">FVIV Festivalmanager</title>
 </head>
 
@@ -20,10 +19,7 @@
 	</div>
 	
 	 <h1>Awesome overview</h1>
-    <div th:include="messaging :: message-list">
+    <div th:include="messaging :: messaging">
     </div>
-    <div th:include="messaging :: message-form">
-    </div>
-    
 </body>
 </html>
