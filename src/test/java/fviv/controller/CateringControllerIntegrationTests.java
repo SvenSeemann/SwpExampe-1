@@ -22,6 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -31,10 +35,16 @@ import fviv.AbstractWebIntegrationTests;
 public class CateringControllerIntegrationTests extends AbstractWebIntegrationTests {
 	
 	@Autowired CateringController controller;
+	@Autowired AuthenticationManager authenticationManager;
+	
+	protected void login(String username, String password) {
+		Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+		SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authentication));
+	}
 	
 	@Test
 	public void sampleMvcIntegrationTest() throws Exception {
-
+		login("caterer", "123");
 		mvc.perform(get("/catering")). //
 				andExpect(status().isOk()).//
 				andExpect(model().attribute("meals", is(not(emptyIterable())))).
@@ -48,7 +58,7 @@ public class CateringControllerIntegrationTests extends AbstractWebIntegrationTe
 
 		String returnedView = controller.catering(modelMap);
 
-		assertThat(returnedView, is("catering"));
+		assertThat(returnedView, is("/catering"));
 
 	}
 	
