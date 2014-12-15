@@ -1,126 +1,134 @@
 
 debug = true
 
-class messaging
-  date_from_received = (date) ->
-    new Date(
-      date.year,
-      date.monthValue - 1,
-      date.dayOfMonth,
-      date.hour,
-      date.minute,
-      date.second
-    )
+class Messaging
+  constructor : ->
+    @templates = $('#messaging-templates').clone()
+    $(document).remove('#messaging-templates')
 
-  messages =
-    thing : $("#messages").children('tbody')
-    array : []
-    add_new : (message) ->
-      @array.push(message)
-      @thing.append @templated message
-    templated : (message) ->
-      '<tr class="highlight">
-      <td class="message-sender">' + message.sender.firstname + message.sender.lastname + '</td>
-      <td class="message-date">[' + message.dateReceived.toString() + ']</td>
-      <td class="message-separator" style="text-align: center;">:</td>
-      <td class="message-message">' + message.message_content + '</td>
-      </tr>'
-    contains : (message) ->
-      for item in @array
-        if item.id is message.id
-          return true
-      false
+    date_from_received = (date) ->
+      new Date(
+        date.year,
+        date.monthValue - 1,
+        date.dayOfMonth,
+        date.hour,
+        date.minute,
+        date.second
+      )
 
-  class Message
-    constructor : (@message_content, dateReceived, @sender, @id) ->
-      @dateReceived = date_from_received dateReceived
+    messages =
+      thing : $("#messages").children('tbody')
+      array : []
+      add_new : (message) ->
+        @array.push(message)
+        @thing.append @templated message
+      template : @templates.find(".single-message")
+      templated : (message) ->
+        template = @template.clone()
+        template.find(".message-sender").text(message.sender.firstname + ' ' + message.sender.lastname)
+        template.find('.message-date').text(message.dateReceived.toString())
+        template.find('.message-message').text(message.message_content)
+        template
+#      templated : (message) ->
+#        '<tr class="highlight">
+#        <td class="message-sender">' + message.sender.firstname + message.sender.lastname + '</td>
+#        <td class="message-date">[' + message.dateReceived.toString() + ']</td>
+#        <td class="message-separator" style="text-align: center;">:</td>
+#        <td class="message-message">' + message.message_content + '</td>
+#        </tr>'
+      contains : (message) ->
+        for item in @array
+          if item.id is message.id
+            return true
+        false
 
-  add_messages = (data) ->
-    for message in data
-      message = new Message(message.message, message.date, message.sender, message.id)
-      unless messages.contain message
-        messages.add_new message
+    class Message
+      constructor : (@message_content, dateReceived, @sender, @id) ->
+        @dateReceived = date_from_received dateReceived
 
-  check_messages = ->
-    $.ajax(
-      type: "POST",
-      cache: false,
-      url: if debug then '/messaging/test/get' else '/messaging/get',
-      data:
-        last: if messages.array.length == 0 then new Date(1000, 0).toUTCString() else messages.array[messages.array.length - 1].dateReceived.toUTCString()
+    add_messages = (data) ->
+      for message in data
+        message = new Message(message.message, message.date, message.sender, message.id)
+        unless messages.contain message
+          messages.add_new message
+      return
 
-      success: (data) ->
-        if data.length > 0
-          messages.message_thing.children('.highlight').removeClass 'highlight'
-          add_messages data
-    )
+    check_messages = ->
+      $.ajax(
+        type: "POST",
+        cache: false,
+        url: if debug then '/messaging/test/get' else '/messaging/get',
+        data:
+          last: if messages.array.length == 0 then new Date(1000, 0).toUTCString() else messages.array[messages.array.length - 1].dateReceived.toUTCString()
 
-  send_message = (e, form) ->
-    e.preventDefault()
-    form = $(form)
-    console.log(form)
-    $.ajax(
-      type: "POST"
-      cache: false
-      url: form.attr('action')
-      data: form.serialize()
-      success: (data) ->
-        e.target.reset()
-    )
+        success: (data) ->
+          if data.length > 0
+            messages.message_thing.children('.highlight').removeClass 'highlight'
+            add_messages data
+      )
 
-  new_form = (receiver) ->
-    form = $(
-      '<form id="message-forms" action="/messaging/test/send" method="post">
-      <input type="hidden" value="' + receiver + '" name="recipient">
-      <label for="message-content">Your Message</label>
-      <textarea name="message" id="message-content"></textarea>
-      <button type="Submit" value="submit">Submit</button>
-      </form>'
-    )
-    form.submit(
-      (e) => send_message(e)
-    )
-    $('#message-forms').html(
-      form
-    )
+    send_message = (e, form) ->
+      e.preventDefault()
+      form = $(form)
+      console.log(form)
+      $.ajax(
+        type: "POST"
+        cache: false
+        url: form.attr('action')
+        data: form.serialize()
+        success: (data) ->
+          e.target.reset()
+      )
 
-  class Receiver
-    constructor : (@firstname, @lastname, @id) ->
+    new_form = (receiver) =>
+      form = @templates.find('.message-form').clone()
+      form.find('.recipient').val(receiver)
+      form.submit(
+        (e) -> send_message(e, form)
+      )
+      $('#message-forms').html(
+        form
+      )
+    @new_form = new_form
 
-  receivers =
-    representation : $("#recipients")
-    array : []
-    add_all : (recipients) ->
-      for r in recipients
-        @add r
-    add : (recipient) ->
-      rec = new Receiver(recipient.firstname, recipient.lastname, recipient.id.identifier)
-      unless @contains(rec)
-        @array.push rec
-        @representation.append(
-          '<a class="receiver" onclick="messaging.new_form(\'' + rec.id + '\')">' +
-          rec.firstname +
-          rec.lastname +
-          '</a>'
-        )
-    contains : (recipient) ->
-      for r in @array
-        if r.id is recipient.id
-          return true
-      false
+    class Receiver
+      constructor : (@firstname, @lastname, @id) ->
 
-  refresh_receivers = ->
-    get_receivers (data) -> receivers.add_all(data)
+    receivers =
+      representation : $("#recipients")
+      array : []
+      template : @templates.find('.receiver')
+      add_all : (recipients) ->
+        for r in recipients
+          @add r
+      add : (recipient) ->
+        rec = new Receiver(recipient.firstname, recipient.lastname, recipient.id.identifier)
+        unless @contains(rec)
+          template = @template.clone()
+          template.find('.firstname').text(rec.firstname)
+          template.find('.lastname').text(rec.lastname)
+          @array.push rec
+          @representation.append(
+            template
+          )
+          template.on('click', -> new_form(rec.id))
+      contains : (recipient) ->
+        for r in @array
+          if r.id is recipient.id
+            return true
+        false
 
-  get_receivers = (callback) ->
-    $.ajax(
-      type: "POST",
-      cache: false,
-      url: if debug then '/messaging/test/get/receivers' else '/messaging/get/receivers'
-      success: callback
-    )
+    refresh_receivers = ->
+      get_receivers (data) -> receivers.add_all(data)
 
-  constructor: ->
+    get_receivers = (callback) ->
+      $.ajax(
+        type: "POST",
+        cache: false,
+        url: if debug then '/messaging/test/get/receivers' else '/messaging/get/receivers'
+        success: callback
+      )
+
     $('form#message-form').submit((e) ->
       send_message(e, this)
     )
@@ -135,4 +143,7 @@ class messaging
     check_messages()
 
 
-$(document).ready -> messaging = new messaging()
+$(document).ready( ->
+  window.messaging = new Messaging() unless window.messaging?
+  return
+)

@@ -31,9 +31,24 @@
             <button id="refresh-messages">Refresh Messages</button>
             <button id="refresh-receivers">Refresh Receivers</button>
         </div>
-    </div>
-    <div id="messaging-templates">
-
+        <div id="messaging-templates">
+            <tr class="single-message">
+                <td class="message-sender"></td>
+                <td class="message-date"></td>
+                <td class="message-separator" style="text-align: center;"></td>
+                <td class="message-message"></td>
+            </tr>
+            <form class="message-form" action="/messaging/test/send" method="post">
+                <input class="recipient" type="hidden" name="recipient">
+                <label for="message-content">Your Message</label>
+                <textarea name="message" id="message-content"></textarea>
+                <button type="Submit" value="submit">Submit</button>
+            </form>
+            <div class="receiver">
+                <span class="firstname"></span>
+                <span class="lastname"></span>
+            </div>
+        </div>
     </div>
 
 
