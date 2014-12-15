@@ -100,14 +100,14 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
-	@RequestMapping("/catering-cancel")
+	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
 		//Cart cart = getCart(session);
 		cart.clear();
 		return "redirect:/catering";
 	}
 	
-	@RequestMapping("/catering-confirm")
+	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST	)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
@@ -117,7 +117,6 @@ public class CateringController {
 
 			cart.addItemsTo(order);
 			
-
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
