@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package fviv;
 
 import org.junit.Before;
@@ -25,9 +26,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+
 /**
-* @author Oliver Gierke,
 * @author Niklas Fallik
+* @author Hendric Eckelt
 */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

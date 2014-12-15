@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * Created by justusadam on 09/12/14.
@@ -21,11 +21,8 @@ public class Message {
 
     private String message;
 
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    private LocalDateTime dateSent;
-
-    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-    private LocalDateTime dateReceived;
+    @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentZonedDateTime")
+    private ZonedDateTime date;
 
     @OneToOne
     private UserAccount sender;
@@ -38,30 +35,22 @@ public class Message {
     @Deprecated
     public Message(){}
 
-    public Message(String message, LocalDateTime dateSent, UserAccount sender, UserAccount recipient) {
+    public Message(String message, ZonedDateTime date, UserAccount sender, UserAccount recipient) {
         this.message = message;
-        this.dateSent = dateSent;
+        this.date = date;
         this.sender = sender;
         this.recipient = recipient;
     }
 
     public Message(String message, UserAccount sender, UserAccount recipient) {
         this.message = message;
-        this.dateSent = LocalDateTime.now();
+        this.date = ZonedDateTime.now();
         this.sender = sender;
         this.recipient = recipient;
     }
 
-    public LocalDateTime getDateSent() {
-        return dateSent;
-    }
-
-    public LocalDateTime getDateReceived() {
-        return dateReceived;
-    }
-
-    public void setDateReceived(LocalDateTime dateReceived) {
-        this.dateReceived = dateReceived;
+    public ZonedDateTime getDate() {
+        return date;
     }
 
     public UserAccount getSender() {
@@ -76,8 +65,12 @@ public class Message {
         return id;
     }
 
-    public String readMessage(){
+    public String readMessage() {
         this.read = true;
+        return this.message;
+    }
+
+    public String getMessage() {
         return this.message;
     }
 
@@ -87,6 +80,6 @@ public class Message {
 
     @Override
     public String toString(){
-        return sender + "  [" + dateReceived.toString() + "]  " + message;
+        return sender + "  [" + date.toString() + "]  " + message;
     }
 }
