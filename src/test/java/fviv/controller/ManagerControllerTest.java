@@ -21,13 +21,13 @@ import fviv.model.EmployeeRepository;
 
 public class ManagerControllerTest extends AbstractIntegrationTests{
 	
-	@Autowired AuthenticationManager am;
+	@Autowired AuthenticationManager authenticationManager;
 	@Autowired ManagerController controller;
 	@Autowired EmployeeRepository employeeRepository;
 	
 	protected void login(String userName, String password){
-		Authentication auth = new UsernamePasswordAuthenticationToken(userName, password);
-		SecurityContextHolder.getContext().setAuthentication(am.authenticate(auth));
+		Authentication authentication = new UsernamePasswordAuthenticationToken(userName, password);
+		SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authentication));
 	}
 	
 	@Test

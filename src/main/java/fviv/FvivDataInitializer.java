@@ -68,21 +68,30 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(manager);
 		userAccountManager.save(caterer);
 
-				
-		//Create employees
-		UserAccount employeeAccount1 = userAccountManager.create("gates", "123", employeeRole);
-		UserAccount employeeAccount2 = userAccountManager.create("merkel", "123", employeeRole);
-		UserAccount employeeAccount3 = userAccountManager.create("wurst", "123", employeeRole);
-		UserAccount employeeAccount4 = userAccountManager.create("white", "123", employeeRole);
-		UserAccount employeeAccount5 = userAccountManager.create("müller", "123", employeeRole);
-		
-		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill", "Bill.Gates@Microsoft.com", "0190CallBill");
-		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela", "Angie@Bundestag.de", "0123456789");
-		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans", "Hans.Wurst@fviv.de", "0351/777888");
-		Employee employee4 = new Employee(employeeAccount4, "White", "Walter", "Walter.White@Kochkurse.de", "BetterCallSaul");
-		Employee employee5 = new Employee(employeeAccount5, "Müller", "Thomas", "Thomas.Müller@Weltmeister.de", "20304050");
-	
-		//Save to repository
+		// Create employees
+		UserAccount employeeAccount1 = userAccountManager.create("gates",
+				"123", employeeRole);
+		UserAccount employeeAccount2 = userAccountManager.create("merkel",
+				"123", employeeRole);
+		UserAccount employeeAccount3 = userAccountManager.create("wurst",
+				"123", employeeRole);
+		UserAccount employeeAccount4 = userAccountManager.create("white",
+				"123", employeeRole);
+		UserAccount employeeAccount5 = userAccountManager.create("müller",
+				"123", employeeRole);
+
+		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill",
+				"Bill.Gates@Microsoft.com", "0190CallBill");
+		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela",
+				"Angie@Bundestag.de", "0123456789");
+		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans",
+				"Hans.Wurst@fviv.de", "0351/777888");
+		Employee employee4 = new Employee(employeeAccount4, "White", "Walter",
+				"Walter.White@Kochkurse.de", "BetterCallSaul");
+		Employee employee5 = new Employee(employeeAccount5, "Müller", "Thomas",
+				"Thomas.Müller@Weltmeister.de", "20304050");
+
+		// Save to repository
 
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
