@@ -131,7 +131,6 @@ class Messaging
 
     $('#refresh-receivers').on 'click', -> refresh_receivers()
 
-
     refresh_receivers()
     check_messages()
 
