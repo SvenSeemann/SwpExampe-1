@@ -2,7 +2,7 @@
 (function() {
   var Messaging, debug;
 
-  debug = true;
+  debug = false;
 
   Messaging = (function() {
     function Messaging() {
