@@ -69,8 +69,8 @@ public class CateringDataInitializer implements DataInitializer {
 		menusRepository.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5, Meal6,
 				Meal7, Meal8, Drink1, Drink2, Drink3, Drink4, Drink5));
 		
-		for (Menu Menu : menusRepository.findAll()) {
-			InventoryItem inventoryItem = new InventoryItem(Menu, Units.of(50));
+		for (Menu menu : menusRepository.findAll()) {
+			InventoryItem inventoryItem = new InventoryItem(menu, Units.of(5));
 			inventory.save(inventoryItem);
 		}
 	}
