@@ -1,8 +1,12 @@
 package fviv.festival;
 
+import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
+
+@Entity
 public class Festival {
 
 	@Id
@@ -13,22 +17,21 @@ public class Festival {
 	private String festivalName;
 	private String actors;
 	private int maxVisitors;
-	private int preisTag;
-	private int preisTage;
+	private long preisTag;
 
 	@Deprecated
 	protected Festival() {
 	}
 
-	public Festival(Date startDatum,Date endDatum, String festivalName, String actors, int maxVisitors, int preisTag, int preisTage){
+	public Festival(Date startDatum, Date endDatum, String festivalName,
+			String actors, int maxVisitors, long preisTag) {
 		this.actors = actors;
 		this.endDatum = endDatum;
 		this.startDatum = startDatum;
 		this.festivalName = festivalName;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
-		this.preisTage = preisTage;
-		
+
 	}
 
 	public Date getStartDatum() {
@@ -71,21 +74,12 @@ public class Festival {
 		this.actors = actors;
 	}
 
-	public int getPreisTag() {
+	public long getPreisTag() {
 		return preisTag;
 	}
 
-	public void setPreisTag(int preisTag) {
+	public void setPreisTag(long preisTag) {
 		this.preisTag = preisTag;
 	}
 
-	public int getPreisTage() {
-		return preisTage;
-	}
-
-	public void setPreisTage(int preisTage) {
-		this.preisTage = preisTage;
-	}
-
-	
 }

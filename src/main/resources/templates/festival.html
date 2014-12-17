@@ -5,56 +5,65 @@
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
 	rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="../resources/css/standard.css" />
-<link rel="stylesheet" href="../resources/css/ticket.css" />
-<title>tickets</title>
+<link rel="stylesheet" href="../resources/css/festival.css" />
+<title>Festival erstellung</title>
 </head>
 <body>
 	<div id="webseite">
 		<div id="header">
 			<div id="loggedAs">angemeldet als:</div>
-			<div id="title">Ticketverkauf</div>
+			<div id="title">Festival Erstellung</div>
 			<div id="loginName">UserName</div>
 		</div>
 
 
 		<div id="content">
 			<div id="substance">
-
-				<form th:action="@{/newTicket}" method="post">
+				<div id="chooseFestivalview" th:switch="${festivalmode}">
+				<!-- FestivalCase -->
+				<div th:case="festival">
+				<form th:action="@{/newFestival}" method="post">
 					<fieldset>
-						<label class="label" for="festivals"> Festival
-							ausw&auml;hlen: <select name="festivals" size="1">
-								<option>Inhalt1</option>
-						</select>
-						</label> <label class="label" for="ticketart"> Ticketart
-							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
-							value="true" checked="checked" />Tagesticket <br /> <input
-							type="radio" name="ticketart" value="false" />3-Tagesticket <label
-							class="label" for="numbers"> <input type="text"
-							name="numbers" size="40" placeholder="Anzahl" /></label> <label
-							class="label" for="price"> <input type="text"
-							name="price" size="40" placeholder="Preis pro Stück" /></label> <input
-							type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')"
-							value="Ticket erstellen" />
+							<label
+							class="label" for="festivalName"> <input type="text"
+							name="festivalName" size="40" placeholder="festivalname"></input>Festivalname</label> 	
+							<br/>
+							<label
+							class="label" for="startDate"> <input type="text"
+							name="startDate" size="40" placeholder="dd MMMM, yyyy"></input>Startdatum</label> 
+							<br/>
+							<label class="label" for="endDate"> <input type="text"
+							name="endDate" size="40" placeholder="dd MMMM, yyyy"></input>EndDatum</label> 
+							<br/>
+							<label class="label" for="actors"> <input type="text"
+							name="actors" size="40" placeholder="Künstler"></input>Künstler</label> 
+							<br/>
+							<label
+							class="label" for="maxVisitors"> <input type="text"
+							name="maxVisitors" size="40" placeholder="Festivalkapazität"></input>Festivalkapazität</label> 
+							<br/>
+							<label
+							class="label" for="preisTag"> <input type="text"
+							name="preisTag" size="40" placeholder="Kosten Tageskarte"></input>Kosten Tageskarte</label>
+							<br/>
+							
+							
+							<input
+							type="submit" onclick="alert('Festival wird erstellt')"
+							value="Festival erstellen" />
 					</fieldset>
 				</form>
-
+			</div>
 			</div>
 		</div>
-
+</div>
 		<div id="menu">
 			<button class="slimButton">Logout</button>
 			<button class="slimButton">Chat</button>
-			<form th:action="@{/ticketDrucken}" method="post" target="_blank">
-				<label class="label" for="ticketnummer"> <input type="text"
-					name="ticketnummer" size="26" placeholder="Ticket ID drucken" /></label>
-				<button class="boldButton">Ticket Drucken</button>
-			</form>
-			<form th:action="@{/ticketPruefen}" method="post">
-				<button class="boldButton">Ticket Pr&uuml;fen</button>
-			</form>
+			<button class="boldButton">Festival erstellen</button>
+			<form th:action="@{/showFestival}" method="post"><button class="boldButton">Festivals anzeigen</button></form>
 		</div>
-	</div>
-
+	
+</div>
 </body>
 </html>

@@ -9,6 +9,9 @@
 <title>tickets</title>
 </head>
 <body>
+				<div id="chooseTicketView" th:switch="${ticketmode}">
+				<!-- TicketCase -->
+				<div th:case="ticket">
 	<div id="webseite">
 		<div id="header">
 			<div id="loggedAs">angemeldet als:</div>
@@ -24,8 +27,8 @@
 					<fieldset>
 						<label class="label" for="festivals"> Festival
 							ausw&auml;hlen: <select name="festivals" size="1">
-								<option>Inhalt1</option>
-						</select>
+					<option th:each=" festival : ${festivallist}" th:text="${festival.festivalName}"></option>
+						</select><br/>
 						</label> <label class="label" for="ticketart"> Ticketart
 							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
 							value="true" checked="checked" />Tagesticket <br /> <input
@@ -55,6 +58,39 @@
 			</form>
 		</div>
 	</div>
-
+	</div>
+	<div th:case="ticketpruefen">
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs">angemeldet als:</div>
+			<div id="title">Ticketverkauf</div>
+			<div id="loginName">UserName</div>
+		</div>
+		<div id="content">
+			<div id="substance">
+				<form th:action="@{/pruefeTicket}" method="post">
+					<fieldset>
+						<label class="label" for="ticketart"> Ticketart
+							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
+							value="true" checked="checked" />Tagesticket <br /> <input
+							type="radio" name="ticketart" value="false" />3-Tagesticket <label
+							class="label" for="numbers"> <input type="text"
+							name="numbers" size="40" placeholder="TicketID" /></label> <input
+							type="submit" value="Ticket einchecken" />
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div id="menu">
+			<button class="slimButton">Logout</button>
+			<button class="slimButton">Chat</button>
+			<form th:action="@{/changeMode}" method="post"><button class="boldButton">Zurück</button></form>
+			<form th:action="@{/ticketPruefen}" method="post">
+				<button class="boldButton">Ticket Pr&uuml;fen</button>
+			</form>
+		</div>
+	</div>
+	</div>
+</div>
 </body>
 </html>

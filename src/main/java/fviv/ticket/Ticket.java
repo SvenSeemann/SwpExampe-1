@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Ticket {
 	private boolean ticketArt;
 	private boolean checked;
+	private String festivalName;
 	
 	
 	@Id
@@ -20,9 +21,10 @@ public class Ticket {
 	 }
 	 
 	 @Autowired
-	public Ticket(boolean ticketArt, boolean checked ){
+	public Ticket(boolean ticketArt, boolean checked, String festivalName ){
 		this.ticketArt = ticketArt;
 		this.checked = checked;
+		this.setFestivalName(festivalName);
 	}
 	public long getId(){
 		return id;
@@ -38,6 +40,14 @@ public class Ticket {
 	}
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+
+	public String getFestivalName() {
+		return festivalName;
+	}
+
+	public void setFestivalName(String festivalName) {
+		this.festivalName = festivalName;
 	}
 	
 

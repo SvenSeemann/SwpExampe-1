@@ -17,11 +17,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 
+import fviv.festival.FestivalRepository;
 import fviv.ticket.TicketRepository;
 import fviv.ticket.Ticket;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,22 +34,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class TicketController {
 	private final TicketRepository ticketRepository;
+	private final FestivalRepository festivalRepository;
 	private static long ticketid;
+	private String mode = "";
+
 
 	@Autowired
-	public TicketController(TicketRepository ticketRepository) {
+	public TicketController(TicketRepository ticketRepository, FestivalRepository festivalRepository) {
 		this.ticketRepository = ticketRepository;
+		this.festivalRepository = festivalRepository;
 	}
 	
+	@ModelAttribute("ticketmode")
+	public String ticketmode() {
+		return mode;
+	}
 
 	@RequestMapping({ "/ticket" })
-	public String index() {
+	public String index(ModelMap modelMap) {
+		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+		mode="ticket";
 		return "ticket";
+	}
+	@RequestMapping(value = "/changeMode", method = RequestMethod.POST )
+	public String changeMod() {
+		mode="ticket";
+		return "redirect:/ticket";
 	}
 
 	@RequestMapping({ "/ticketPruefen" })
 	public String ticketpruefen() {
-		return "ticketpruefen";
+		mode="ticketpruefen";
+		return "redirect:/ticket";
 	}
 
 	@RequestMapping(value = "/pruefeTicket", method = RequestMethod.POST)
@@ -75,7 +94,7 @@ public class TicketController {
 			BarcodeException {
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket
-			Ticket ticket = new Ticket(ticketart, false); // Eins ist gleich
+			Ticket ticket = new Ticket(ticketart, false, "festivalname"); // Eins ist gleich
 															// Tagesticket //
 															// Null
 															// ist gleich
