@@ -147,7 +147,8 @@ public class ManagerController {
 
 		// Get employee, disable his account and delete him from the repository
 		Employee deleteThisEmployee = employeeRepository.findById(employeeId);
-		userAccountManager.disable(deleteThisEmployee.getUserAccount().getId());
+		userAccountManager.disable(deleteThisEmployee.getUserAccount().getIdentifier());
+		userAccountManager.save(deleteThisEmployee.getUserAccount());
 		employeeRepository.delete(deleteThisEmployee);
 
 		return "redirect:/manager";

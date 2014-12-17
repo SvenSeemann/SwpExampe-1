@@ -17,14 +17,18 @@
 
 	<div id="content">
 		<div id="menuPointNormal">
-			<a href="/catering.html">Catering Terminal</a>
-			<a href="/ticket.html">Ticket Terminal</a>
+			<form action="/catering" method="post">
+				<input type="submit" value="Catering Terminal"></input>
+			</form>
+			<form action="/manager" method="post">
+				<input type="submit" value="Manager Terminal"></input>
+			</form>
+			<form action="/ticket" method="post">
+				<input type="submit" value="Ticket Terminal"></input>
+			</form>
 		</div>
 	</div>
-	
-	 <h1>Awesome overview</h1>
-    <div th:include="messaging :: messaging">
-    </div>
 
+>>>>>>> 199df493a758356db697ab69fe9475ccd6bf286b
 </body>
 </html>
