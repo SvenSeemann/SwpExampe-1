@@ -8,8 +8,7 @@
 </head>
 <body>
     <div th:fragment="messaging">
-
-        <div id="toggle-chat" class="smallButton">Show Chat</div>
+        <div sec:authorize="hasAnyRole('MESSAGE_SENDER', 'MESSAGE_RECEIVER')" id="toggle-chat" class="smallButton">Show Chat</div>
 
         <div id="messaging-area">
             <table sec:authorize="hasRole('MESSAGE_RECEIVER')">

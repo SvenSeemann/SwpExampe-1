@@ -220,7 +220,6 @@ $(function () {
 			<form action="@{/logout}">
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
-			<button class="slimButton">Chat</button>
 			<form method="post" action="/Terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>
 			</form>
@@ -234,6 +233,7 @@ $(function () {
 				<input type="submit" class="boldButton" value="Accounts"></input>
 			</form>
 		</div>
+		<div th:include="messaging :: messaging"></div>
 	</div>
 </body>
 </html>
