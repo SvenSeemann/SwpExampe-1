@@ -7,7 +7,7 @@
 // 4 = behindertenklo
 // 5 = Badcontainer
 // 6 = Standard-catering
-var objectValues = new Array(new Array('10','5'),new Array('20','10'),new Array('40','20'),new Array('3','3'),new Array('6','6'),new Array('3','10'),new Array('3','8'),new Array('',''));
+var objectValues = new Array(new Array('10','5'),new Array('20','10'),new Array('40','20'),new Array('3','3'),new Array('6','6'),new Array('10','3'),new Array('8','3'),new Array('',''));
 //...........................
 var factor;
 
@@ -45,7 +45,7 @@ function areaRequest(event, form) {
 	var action = form.attr("action");
 	var method = form.attr("method");
 	buildArea(width, height);
-	$.ajax({
+	/*$.ajax({
 		url : action,
 		type : method,
 		data : {
@@ -56,7 +56,7 @@ function areaRequest(event, form) {
 		success : function(data) {
 			console.log(data);
 		}
-	});
+	});*/
 }
 $(document).ready(function() {
 	$('#size').submit(function(event) {
@@ -71,7 +71,7 @@ function reset(){
 function buildArea(width, height){
 	var parent = document.getElementById("substance");
 	var area = document.createElement("div");
-	area.setAttribute('id', 'area');
+	area.setAttribute("id", "area");
 	
 	parent.appendChild(area);
 	
@@ -122,7 +122,7 @@ function dragstop() {
 
 function drag(ereignis) {
   //Wird aufgerufen, wenn die Maus bewegt wird und bewegt bei Bedarf das Objekt.
-
+  //checkTheFrame();
   posx = document.all ? window.event.clientX : ereignis.pageX;
   posy = document.all ? window.event.clientY : ereignis.pageY;
   if(dragobjekt != null) {
@@ -136,37 +136,37 @@ function cloneIt(element,type){
 	newElem.attr('onmousedown','dragstart(this)');
 	switch(type){
 		case 0:
-			newElem.attr("id" ,"smallStage");
+			newElem.attr("class", "object");
 			var width = objectValues[0][0];
 			var height = objectValues[0][1];
 			break;
 		case 1:
-			newElem.attr("id" , "mediumStage");
+			newElem.attr("class", "object");
 			var width = objectValues[1][0];
 			var height = objectValues[1][1];
 			break;
 		case 2:
-			newElem.attr("class" , "bigStage");
+			newElem.attr("class", "object");
 			var width = objectValues[2][0];
 			var height = objectValues[2][1];
 			break;
 		case 3:
-			newElem.attr("class","standardToilet")
+			newElem.attr("class", "object");
 			var width = objectValues[3][0];
 			var height = objectValues[3][1];
 			break;
 		case 4:
-			newElem.attr("class","handicaped");
+			newElem.attr("class", "object");
 			var width = objectValues[4][0];
 			var height = objectValues[4][1];
 			break;
 		case 5:
-			newElem.attr("class","bathcontainer")
+			newElem.attr("class", "object");
 			var width = objectValues[5][0];
 			var height = objectValues[5][1];
 			break;
 		case 6:
-			newElem.attr("class", "standardCatering")
+			newElem.attr("class", "object");
 			var width = objectValues[6][0];
 			var height = objectValues[6][1];
 			break;

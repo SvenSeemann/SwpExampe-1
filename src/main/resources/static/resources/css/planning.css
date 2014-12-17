@@ -73,52 +73,43 @@
 	background-color: #383839;
 	cursor: pointer;
 }
-.area{
+#area{
 	width:0px;
 	height:0px;
 	background-color:#666;
 }
-
-.smallStage{
-	width:100px;
-	height:70px;
+.object{
+	position:absolute;
+	cursor:move;
+	border: #f9731c medium solid;
+	background-color: #383839;
+}
+/*
+#smallStage{
 	position:absolute;
 	cursor:move;
 }
-.mediumStage{
-	width:150px;
-	height:100px;
+#mediumStage{
 	position:absolute;
 	cursor:move;
 }
-.bigStage{
-	width:200px;
-	height:130px;
+#bigStage{
 	position:absolute;
 	cursor:move;
 }
-
-.standardToilet{
-	width:100px;
-	height:70px;
+#standardToilet{
 	position:absolute;
 	cursor:move;
 }
-.handicaped{
-	width:100px;
-	height:70px;
+#handicaped{
 	position:absolute;
 	cursor:move;
 }
-.bathcontainer{
-	width:100px;
-	height:70px;
+#bathcontainer{
 	position:absolute;
 	cursor:move;
 }
-.standardCatering{
-	width:100px;
-	height:70px;
+#standardCatering{
 	position:absolute;
 	cursor:move;
-}
+}*/
