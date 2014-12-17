@@ -5,7 +5,6 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
-import fviv.catering.model.MenusToBeRemovedFromInventory;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -45,18 +44,16 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
-	private final MenusToBeRemovedFromInventory menusToBeRemovedFromInventory;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-			UserAccountManager userAccountManager, Inventory<InventoryItem> inventory, MenusToBeRemovedFromInventory menusToBeRemovedFromInventory) {
+			UserAccountManager userAccountManager, Inventory<InventoryItem> inventory) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
-		this.inventory = inventory;
-		this.menusToBeRemovedFromInventory = menusToBeRemovedFromInventory; 
+		this.inventory = inventory; 
 
 	}
 
@@ -105,7 +102,6 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
-		menusToBeRemovedFromInventory.save(menu);
 		return "redirect:/catering";
 	}
 
@@ -129,10 +125,6 @@ public class CateringController {
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-			for (Menu menu : menusToBeRemovedFromInventory.findAll()) {
-				Optional<InventoryItem> inventoryItem = inventory.findByProduct(menu);
-				inventory.delete(inventoryItem.get());
-			}
 			
 			cart.clear();
 
