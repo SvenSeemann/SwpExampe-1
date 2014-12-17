@@ -5,7 +5,6 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
-import fviv.catering.model.MenusToBeRemovedFromInventory;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -45,18 +43,17 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
-	private final MenusToBeRemovedFromInventory menusToBeRemovedFromInventory;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-			UserAccountManager userAccountManager, Inventory<InventoryItem> inventory, MenusToBeRemovedFromInventory menusToBeRemovedFromInventory) {
+			UserAccountManager userAccountManager,
+			Inventory<InventoryItem> inventory) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
-		this.menusToBeRemovedFromInventory = menusToBeRemovedFromInventory; 
 
 	}
 
@@ -105,18 +102,18 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
-		
+
 		return "redirect:/catering";
 	}
 
 	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
-		//Cart cart = getCart(session);
+		// Cart cart = getCart(session);
 		cart.clear();
 		return "redirect:/catering";
 	}
-	
-	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST	)
+
+	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
@@ -125,12 +122,11 @@ public class CateringController {
 			Order order = new Order(account, Cash.CASH);
 
 			cart.addItemsTo(order);
-			
+
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-			
-			
+
 			cart.clear();
 
 			return "redirect:/catering";
