@@ -2,13 +2,14 @@
 (function() {
   var Messaging, debug;
 
-  debug = true;
+  debug = false;
 
   Messaging = (function() {
     function Messaging() {
-      var Message, Receiver, add_messages, check_messages, date_from_received, get_receivers, messages, new_form, receivers, refresh_receivers, send_message;
-      this.templates = $('#messaging-templates').clone();
-      $(document).remove('#messaging-templates');
+      var Message, Receiver, add_messages, check_messages, date_from_received, get_receivers, messages, new_form, receivers, refresh_receivers, send_message, templates;
+      templates = $('#messaging-templates');
+      this.templates = templates.clone();
+      templates.remove();
       date_from_received = function(date) {
         return new Date(date.year, date.monthValue - 1, date.dayOfMonth, date.hour, date.minute, date.second);
       };
@@ -121,13 +122,11 @@
         array: [],
         template: this.templates.find('.receiver'),
         add_all: function(recipients) {
-          var r, _i, _len, _results;
-          _results = [];
+          var r, _i, _len;
           for (_i = 0, _len = recipients.length; _i < _len; _i++) {
             r = recipients[_i];
-            _results.push(this.add(r));
+            this.add(r);
           }
-          return _results;
         },
         add: function(recipient) {
           var rec, template;
