@@ -6,6 +6,9 @@ import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
 
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.inventory.InventoryItemIdentifier;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
@@ -39,15 +42,18 @@ public class CateringController {
 	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
+	private final Inventory<InventoryItem> inventory;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-			UserAccountManager userAccountManager) {
+			UserAccountManager userAccountManager,
+			Inventory<InventoryItem> inventory) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
+		this.inventory = inventory;
 
 	}
 
@@ -96,17 +102,18 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
+
 		return "redirect:/catering";
 	}
 
-	@RequestMapping("/catering-cancel")
+	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
-		//Cart cart = getCart(session);
+		// Cart cart = getCart(session);
 		cart.clear();
 		return "redirect:/catering";
 	}
-	
-	@RequestMapping("/catering-confirm")
+
+	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
@@ -115,12 +122,11 @@ public class CateringController {
 			Order order = new Order(account, Cash.CASH);
 
 			cart.addItemsTo(order);
-			
 
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-			
+
 			cart.clear();
 
 			return "redirect:/catering";

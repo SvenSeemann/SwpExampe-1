@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- Author: Hendric Eckelt -->
 
@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/manager.css" />
 <title>Manager</title>
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -105,10 +106,11 @@ $(function () {
 						</table>
 						<div align="center">
 							<p>Mitarbeiter entfernen:</p>
-							<form th:action="@{/deleteEmployee}" method="post">
+							<form th:action="@{/deleteEmployee}" method="post"
+								onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
 								<input type="text" placeholder="ID eingeben" name="employeeId"
 									id="deleteEmployeeText"></input> <input type="submit"
-									value="Löschen"></input>
+									class="button_green" value="Löschen"></input>
 							</form>
 						</div>
 						<div align="center">
@@ -123,7 +125,7 @@ $(function () {
 									id="email" th:field="*{email}"></input> <br /> <input
 									type="text" placeholder="Telefonnummer" id="phone"
 									th:field="*{phone}"></input> <br /> <input type="submit"
-									value="Speichern" style="margin-top: 3px"></input>
+									value="Speichern" class="button_green" style="margin-top: 3px"></input>
 							</form>
 						</div>
 					</div>
@@ -193,16 +195,69 @@ $(function () {
 							</tr>
 						</table>
 						<div align="center">
-							<p>Berechtigung bearbeiten:</p>
-							<form action="/editAccount" method="post">
+							<p>Account bearbeiten:</p>
+							<form action="/switchToEditAccount" method="post">
 								<input type="text" name="userNameEdit"
-									placeholder="Benutzername"></input> <select name="roles">
+									placeholder="Benutzername"></input> <input type="submit"
+									class="button_green" value="Account bearbeiten"></input>
+							</form>
+						</div>
+					</div>
+
+					<div th:case="editAccount">
+						<div align="center">
+							<table class="editAccountTable">
+								<tr>
+									<th>Benutzername</th>
+									<th>Nachname</th>
+									<th>Vorname</th>
+									<th>Email-Adresse</th>
+									<th>Berechtigung</th>
+									<th>Status</th>
+								</tr>
+								<tr th:each=" account : ${editSingleAccount}">
+									<td th:text="${account.identifier}"></td>
+									<td th:text="${account.lastname}"></td>
+									<td th:text="${account.firstname}"></td>
+									<td th:text="${account.email}"></td>
+									<td th:text="${account.getRoles()}"></td>
+									<td th:if="${account.isEnabled()}">aktiviert</td>
+									<td th:unless="${account.isEnabled()}">deaktiviert</td>
+								</tr>
+							</table>
+						</div>
+						<div align="center">
+							<form action="/editAccount" method="post">
+								<p>Berechtigung ändern:</p>
+								<select name="roles">
 									<option th:each=" role : ${roles}" th:value="${role}"
 										th:text="${role.getName()}"></option>
-								</select> <input type="submit" name="save" value="Hinzufügen"></input> <input
-									type="submit" name="delete" value="Löschen"></input> <input
-									type="submit" name="enable" value="Aktivieren"></input> <input
-									type="submit" name="disable" value="Deaktivieren"></input>
+								</select> <input type="submit" class="button_green" name="save"
+									value="Berechtigung Hinzufügen"></input> <input type="submit"
+									class="button_green" name="delete" value="Berechtigung Löschen"></input>
+								<br />
+								<p>Account aktivieren/deaktivieren:</p>
+								<input type="submit" class="button_green" name="enable"
+									value="Account aktivieren"></input> <input type="submit"
+									class="button_green" name="disable"
+									value="Account deaktivieren"></input>
+							</form>
+							<p>Nuterinformationen ändern:</p>
+							<form action="/editEmployeeDetails" method="post">
+								<input type="text" name="editLastname" placeholder="Nachname"></input>
+								<br /> <input type="text" name="editFirstname"
+									placeholder="Vorname"></input> <br /> <input type="text"
+									name="editEmail" placeholder="Email-Adresse"></input> <br /> <input
+									type="submit" class="button_green" value="Speichern"
+									style="margin-top: 2px;"></input>
+							</form>
+							<p>Passwort ändern:</p>
+							<form action="/changePassword" method="post"
+								onsubmit="return confirm('Passwort wirklich ändern?');">
+								<input type="password" placeholder="Neues Passwort"
+									name="changePassword1"></input> <br /> <input type="password"
+									placeholder="Passwort wiederholen" name="changePassword2"></input>
+								<br /> <input type="submit" class="button_green" value="Passwort speichern" style="margin-top:2px;"></input>
 							</form>
 						</div>
 					</div>
@@ -217,10 +272,12 @@ $(function () {
 			</div>
 		</div>
 		<div id="menu">
-			<form action="@{/logout}">
+			<form action="/logout" method="post">
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
+			<form>
 			<button class="slimButton">Chat</button>
+			</form>
 			<form method="post" action="/Terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>
 			</form>

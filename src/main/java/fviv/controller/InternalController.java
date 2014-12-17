@@ -17,4 +17,8 @@ public class InternalController {
 		return "internal";
 	}
 	
+	@RequestMapping({"/messaging", "/chat"})
+	public String chat() {
+		return "messaging";
+	}
 }

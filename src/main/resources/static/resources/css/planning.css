@@ -1,80 +1,28 @@
-body {
-	background-color: #383839;
-	font-family: 'Oxygen', sans-serif;
-}
-
-#webseite {
-	width: 1000px;
+@charset "utf-8";
+/* CSS Document */
+#substance {
+	width: 835px;
 	height: auto;
-	margin: auto;
+	border: #0c3 medium solid;
+	margin-top: 10px;
 }
 
-#header {
-	width: 1000px;
-	height: 80px;
-	clear: both;
-}
-
-#header_text {
-	color: #fff;
-	font-size: 50px;
+.slimButton {
+	border: #0C3 medium solid !important;
 	position: relative;
-	margin-top: 30px;
 }
 
-#loggedAs {
-	float: right;
-	height: 80px;
-	width: auto;
-	color: #fff;
+.boldButton {
+	border: #0c3 medium solid !important;
+	position: relative;
 }
 
-#loggedAs p {
-	text-align: right;
-	margin: 0;
+.slimButton:active {
+	border: #0c3 medium solid !important;
 }
 
-#loggedAs span {
-	margin-top: 0;
-	font-size: 50px;
-}
-
-#menu {
-	width: 150px;
-	height: 300px;
-	float: right;
-}
-
-#menu p {
-	margin: 0;
-}
-
-.menuPointNormal {
-	width: 150px;
-	height: 20px;
-	margin-bottom: 5px;
-	border: #0C3 medium solid;
-	color: #FFF;
-	text-align: center;
-	cursor: pointer;
-}
-
-.menuPointBold {
-	width: 150px;
-	height: 50px;
-	margin-bottom: 5px;
-	padding-top: 30px;
-	border: #0C3 medium solid;
-	color: #FFF;
-	text-align: center;
-	cursor: pointer;
-}
-
-#content {
-	width: 840px;
-	height: auto;
-	float: left;
-	border-top: #0C3 thick dashed;
+.boldButton:active {
+	border: #0c3 medium solid !important;
 }
 
 #request {
@@ -89,9 +37,10 @@ body {
 	display: none;
 	cursor: pointer;
 	position: absolute;
+	z-index: 100000;
 }
 
-#requestAll {
+.requestAll {
 	width: 400px;
 	height: 200px;
 	border: #0C3 medium solid;
@@ -104,48 +53,63 @@ body {
 	cursor: pointer;
 }
 
-#frame {
-	width: 835px;
-	height: 800px;
-	border: #0C3 medium solid;
-	margin-top: 10px;
+#content {
+	border-top: #0c3 thick dashed !important;
 }
 
-#area {
-	width: 0px;
-	height: 0px;
-	background-color:#333;
-	border: #fff thin solid;
+.objectMenu {
+	width: 150px;
+	height: auto;
+	display: block;
+	position: relative;
+	cursor:move;
 }
-#stage{
-	width: 0px;
-	height: 0px;
-	background-color:#cd0;
-	overflow:hidden;
-	position:relative;
-	z-index:5;
+
+.chooseObject {
+	width: 150px;
+	height: 100px;
+	margin-bottom: 10px;
+	border: #f9731c medium solid;
+	background-color: #383839;
+	cursor: pointer;
 }
-#camping{
-	width: 0px;
-	height: 0px;
-	background-color:#3cc;
-	overflow:hidden;
-	position:relative;
-	z-index:10;
-}
-#catering{
+#area{
 	width:0px;
 	height:0px;
-	background-color:#e8bd23;
-	overflow:hidden;
-	position:relative;
-	z-index:15;
+	background-color:#666;
 }
-#toilet{
-	width:0px;
-	height:0px;
-	background-color:#0c3;
-	overflow:hidden;
-	position:relative;
-	z-index:20;
+.object{
+	position:absolute;
+	cursor:move;
+	border: #f9731c medium solid;
+	background-color: #383839;
 }
+/*
+#smallStage{
+	position:absolute;
+	cursor:move;
+}
+#mediumStage{
+	position:absolute;
+	cursor:move;
+}
+#bigStage{
+	position:absolute;
+	cursor:move;
+}
+#standardToilet{
+	position:absolute;
+	cursor:move;
+}
+#handicaped{
+	position:absolute;
+	cursor:move;
+}
+#bathcontainer{
+	position:absolute;
+	cursor:move;
+}
+#standardCatering{
+	position:absolute;
+	cursor:move;
+}*/

@@ -4,7 +4,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../resources/css/indexcss.css" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css' />
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -14,15 +14,20 @@
 <!--  Festival Plan -->
 
 <body>
+
 	<div id="content">
-		<div id="menuPointNormal">
-			<a href="/catering.html">Catering Terminal</a>
-			<a href="/ticket.html">Ticket Terminal</a>
-		</div>
+			<form action="/catering" method="post">
+				<input type="submit" value="Catering Terminal" class="slimButton"></input>
+			</form>
+			<form action="/manager" method="post">
+				<input type="submit" value="Manager Terminal" class="slimButton"></input>
+			</form>
+			<form action="/ticket" method="post">
+				<input type="submit" value="Ticket Terminal" class="slimButton"></input>
+			</form>
+			<form action="/planning" method="post">
+				<input type="submit" value="Gel&auml;ndeplaner" class="slimButton"></input>
+			</form>
 	</div>
-	
-	 <h1>Awesome overview</h1>
-    <div th:include="messaging :: messaging">
-    </div>
 </body>
 </html>
