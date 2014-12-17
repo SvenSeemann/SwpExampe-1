@@ -105,7 +105,7 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
-		
+		menusToBeRemovedFromInventory.save(menu);
 		return "redirect:/catering";
 	}
 
@@ -129,7 +129,10 @@ public class CateringController {
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-			
+			for (Menu menu : menusToBeRemovedFromInventory.findAll()) {
+				Optional<InventoryItem> inventoryItem = inventory.findByProduct(menu);
+				inventory.delete(inventoryItem.get());
+			}
 			
 			cart.clear();
 
