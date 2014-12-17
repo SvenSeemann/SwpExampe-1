@@ -5,7 +5,9 @@
 	padding: 0;
 }
 
-
+body {
+	color: floralwhite;
+}
 
 /* Nav */
 
@@ -240,6 +242,7 @@ table {
 table thead {
 	border:1px solid #B3C2C7;
 	background-color: #f9f9f9;
+	color: black;
 	/* color:#2e7cdc; */
 	background-color: white;
 }

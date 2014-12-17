@@ -6,7 +6,7 @@
 
   Messaging = (function() {
     function Messaging() {
-      var Message, Receiver, add_messages, check_messages, date_from_received, get_receivers, messages, new_form, receivers, refresh_receivers, send_message, templates;
+      var Message, Receiver, add_messages, chat_visible, check_messages, date_from_received, get_receivers, hide_chat, messages, new_form, receivers, refresh_receivers, send_message, show_chat, templates, toggle_chat;
       templates = $('#messaging-templates');
       this.templates = templates.clone();
       templates.remove();
@@ -167,6 +167,22 @@
           success: callback
         });
       };
+      chat_visible = false;
+      toggle_chat = function() {
+        if (chat_visible) {
+          hide_chat();
+          return chat_visible = false;
+        } else {
+          show_chat();
+          return chat_visible = true;
+        }
+      };
+      hide_chat = function() {
+        return $('#messaging-area').css('display', 'none');
+      };
+      show_chat = function() {
+        return $('#messaging-area').css('display', 'block');
+      };
       $('form#message-form').submit(function(e) {
         return send_message(e, this);
       });
@@ -176,8 +192,12 @@
       $('#refresh-receivers').on('click', function() {
         return refresh_receivers();
       });
+      $('#toggle-chat').on('click', function() {
+        return toggle_chat();
+      });
       refresh_receivers();
       check_messages();
+      hide_chat();
     }
 
     return Messaging;

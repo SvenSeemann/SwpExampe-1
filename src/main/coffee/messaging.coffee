@@ -125,14 +125,34 @@ class Messaging
         success: callback
       )
 
+    chat_visible = false
+
+    toggle_chat = ->
+      if chat_visible
+        hide_chat()
+        chat_visible = false
+      else
+        show_chat()
+        chat_visible = true
+
+    hide_chat = ->
+      $('#messaging-area').css 'display', 'none'
+
+    show_chat = ->
+      $('#messaging-area').css 'display', 'block'
+
+
     $('form#message-form').submit (e) -> send_message e, this
 
     $('#refresh-messages').on 'click', -> check_messages()
 
     $('#refresh-receivers').on 'click', -> refresh_receivers()
 
+    $('#toggle-chat').on 'click', -> toggle_chat()
+
     refresh_receivers()
     check_messages()
+    hide_chat()
 
 
 $(document).ready( ->

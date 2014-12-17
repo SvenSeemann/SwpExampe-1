@@ -9,25 +9,30 @@
 <body>
     <div th:fragment="messaging">
 
-        <table sec:authorize="hasRole('MESSAGE_RECEIVER')">
-            <thead>
-            <tr>
-                <th>Sender</th>
-                <th>Date received</th>
-                <th style="font-weight: normal;"><i>separator</i></th>
-                <th>Message content</th>
-            </tr>
-            </thead>
-            <tbody id="messages">
+        <div id="toggle-chat" class="smallButton">Show Chat</div>
 
-            </tbody>
-        </table>
-        <div sec:authorize="hasRole('MESSAGE_SENDER')">
-            <div id="recipients"></div>
-            <div id="message-forms"></div>
-            <button id="refresh-messages">Refresh Messages</button>
-            <button id="refresh-receivers">Refresh Receivers</button>
+        <div id="messaging-area">
+            <table sec:authorize="hasRole('MESSAGE_RECEIVER')">
+                <thead>
+                <tr>
+                    <th>Sender</th>
+                    <th>Date received</th>
+                    <th style="font-weight: normal;"><i>separator</i></th>
+                    <th>Message content</th>
+                </tr>
+                </thead>
+                <tbody id="messages">
+
+                </tbody>
+            </table>
+            <div sec:authorize="hasRole('MESSAGE_SENDER')">
+                <div id="recipients"></div>
+                <div id="message-forms"></div>
+                <button id="refresh-messages">Refresh Messages</button>
+                <button id="refresh-receivers">Refresh Receivers</button>
+            </div>
         </div>
+
         <div id="messaging-templates" style="display: none;">
             <table>
                 <tr class="single-message">
@@ -38,7 +43,7 @@
                 </tr>
             </table>
             <form class="message-form" action="/messaging/send" method="post">
-                <input class="recipient" type="hidden" name="recipient">
+                <input class="recipient" type="hidden" name="recipient" />
                 <label for="message-content">Your Message</label>
                 <textarea name="message" id="message-content"></textarea>
                 <button type="Submit" value="submit">Submit</button>
@@ -95,7 +100,7 @@
             </tr>
         </table>
         <form class="message-form" action="/messaging/send" method="post">
-            <input class="recipient" type="hidden" name="recipient">
+            <input class="recipient" type="hidden" name="recipient" />
             <label for="message-content">Your Message</label>
             <textarea name="message" id="message-content"></textarea>
             <button type="Submit" value="submit">Submit</button>
