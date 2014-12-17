@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -48,12 +47,21 @@ public class CateringController {
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
+<<<<<<< HEAD
 			UserAccountManager userAccountManager, Inventory<InventoryItem> inventory) {
+=======
+			UserAccountManager userAccountManager,
+			Inventory<InventoryItem> inventory) {
+>>>>>>> master
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
+<<<<<<< HEAD
 		this.inventory = inventory; 
+=======
+		this.inventory = inventory;
+>>>>>>> master
 
 	}
 
@@ -102,17 +110,18 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
+		
 		return "redirect:/catering";
 	}
 
 	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
-		//Cart cart = getCart(session);
+		// Cart cart = getCart(session);
 		cart.clear();
 		return "redirect:/catering";
 	}
-	
-	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST	)
+
+	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
@@ -121,11 +130,11 @@ public class CateringController {
 			Order order = new Order(account, Cash.CASH);
 
 			cart.addItemsTo(order);
-			
+
 			orderManager.payOrder(order);
 			orderManager.completeOrder(order);
 			orderManager.save(order);
-			
+
 			cart.clear();
 
 			return "redirect:/catering";

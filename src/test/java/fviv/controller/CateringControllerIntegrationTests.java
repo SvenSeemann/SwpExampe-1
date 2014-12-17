@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Test;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +39,8 @@ public class CateringControllerIntegrationTests extends AbstractWebIntegrationTe
 	
 	@Autowired CateringController controller;
 	@Autowired AuthenticationManager authenticationManager;
+	//@Autowired OrderManager orderManager;
+	@Autowired Inventory<InventoryItem> inventory;
 	
 	protected void login(String username, String password) {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
@@ -60,6 +65,12 @@ public class CateringControllerIntegrationTests extends AbstractWebIntegrationTe
 
 		assertThat(returnedView, is("/catering"));
 
+	}
+	
+	@Test
+	public void StockHasDecremented() {
+		long count = inventory.count();
+		
 	}
 	
 }
