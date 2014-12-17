@@ -22,15 +22,56 @@
 #content {
 	border-top: #0c3 thick dashed !important;
 }
-.salaryTable {
+table {
+	border-collapse: collapse;
+}
+tr:nth-child(even) {
+	background: #666;
+}
+tr:nth-child(odd) {
+	background: #383839;
+}
+th{
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	padding: 5px;
+}
+td {
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	padding: 5px;
+}
+.employeeTable {
 	margin:auto;
-	float:left;
+	margin-top:5px;
+	text-align:center;
+}
+#deleteEmployeeDiv {
+	margin:auto;
+}
+.salaryTable {
+	margin-top:5px;
+	display:inline-block;
+	text-align:center;
 }
 .cateringTable {
-	margin:auto;
-	float:left;
+	display:inline-block;
+	text-align:center;
 }
 .rentTable {
+	display:inline-block;
+	text-align:center;
+}
+#financesChart {
+	width:70%;
+	height:400px;
 	margin:auto;
-	float:left;
+	margin-top:5px;
+}
+.accountTable {
+	margin:auto;
+	margin-top:5px;
+	text-align:center;
 }

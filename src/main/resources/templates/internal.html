@@ -7,26 +7,23 @@
 <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css' />
-<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title th:text="#{home.title}">FVIV Festivalmanager</title>
 </head>
-
-<!--  Festival Plan -->
 
 <body>
 
 	<div id="content">
 		<div id="menuPointNormal">
-			<form action="/catering" method="post">
-				<input type="submit" value="Catering Terminal"></input>
-			</form>
-			<form action="/manager" method="post">
-				<input type="submit" value="Manager Terminal"></input>
-			</form>
-			<form action="/ticket" method="post">
-				<input type="submit" value="Ticket Terminal"></input>
-			</form>
+			<a href="/catering">Catering Terminal</a>
 		</div>
 	</div>
+	
+	 <h1>Awesome overview</h1>
+    <div th:include="messaging :: message-list">
+    </div>
+    <div th:include="messaging :: message-form">
+    </div>
+
 </body>
+
 </html>

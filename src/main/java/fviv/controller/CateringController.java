@@ -6,6 +6,9 @@ import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
 
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.inventory.InventoryItemIdentifier;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
@@ -16,19 +19,19 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 
-@RestController
+@Controller
 @PreAuthorize("hasRole('ROLE_CATERER')")
 @SessionAttributes("cart")
 public class CateringController {
@@ -39,15 +42,18 @@ public class CateringController {
 	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
+	private final Inventory<InventoryItem> inventory;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-			UserAccountManager userAccountManager) {
+			UserAccountManager userAccountManager,
+			Inventory<InventoryItem> inventory) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
+		this.inventory = inventory;
 
 	}
 
@@ -69,7 +75,6 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
-
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
@@ -97,17 +102,18 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
+
 		return "redirect:/catering";
 	}
 
-	@RequestMapping("/catering-cancel")
+	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
-		//Cart cart = getCart(session);
+		// Cart cart = getCart(session);
 		cart.clear();
 		return "redirect:/catering";
 	}
-	
-	@RequestMapping("/catering-confirm")
+
+	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
@@ -123,7 +129,7 @@ public class CateringController {
 
 			cart.clear();
 
-			return "redirect:/";
+			return "redirect:/catering";
 		}).orElse("redirect:/catering");
 	}
 }

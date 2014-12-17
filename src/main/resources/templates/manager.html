@@ -1,5 +1,8 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Author: Hendric Eckelt -->
+
 <head>
 <meta charset="utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
@@ -19,7 +22,7 @@ $(function () {
 	var deposit = [[${deposit}]];
 	var balance = deposit - total;
 	
-    $('#finances_chart').highcharts({
+    $('#financesChart').highcharts({
         chart: {
             type: 'column'
         },
@@ -63,61 +66,72 @@ $(function () {
 	<div id="webseite">
 		<div id="header">
 			<div id="loggedAs">angemeldet als:</div>
-			<div id="title">HEADLINE</div>
-			<div id="loginName">Manager</div>
+			<div th:switch="${managermode}">
+				<div th:case="employees">
+					<div id="title">MITARBEITER</div>
+				</div>
+				<div th:case="finances">
+					<div id="title">FINANZEN</div>
+				</div>
+				<div th:case="accounts">
+					<div id="title">ACCOUNTS</div>
+				</div>
+				<div th:case="*">
+					<div id="title">TERMINAL</div>
+				</div>
+			</div>
+			<div id="loginName" th:text="${#authentication?.name}"></div>
 		</div>
 		<div id="content">
 			<div id="substance">
 				<div id="chooseManagerView" th:switch="${managermode}">
 					<!-- Employee case -->
 					<div th:case="employees">
-						<h1>FVIV Mitarbeiter:</h1>
-						<table border="1" class="employeeTable">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Nachname</th>
-									<th>Vorname</th>
-									<th>Email-Adresse</th>
-									<th>Telefonnummer</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each=" employee : ${employeelist}">
-									<td th:text="${employee.id}"></td>
-									<td th:text="${employee.userAccount.lastname}"></td>
-									<td th:text="${employee.userAccount.firstname}"></td>
-									<td th:text="${employee.userAccount.email}"></td>
-									<td th:text="${employee.phone}"></td>
-								</tr>
-							</tbody>
+						<table class="employeeTable">
+							<tr>
+								<th>ID</th>
+								<th>Nachname</th>
+								<th>Vorname</th>
+								<th>Email-Adresse</th>
+								<th>Telefonnummer</th>
+							</tr>
+							<tr th:each=" employee : ${employeelist}">
+								<td th:text="${employee.id}"></td>
+								<td th:text="${employee.userAccount.lastname}"></td>
+								<td th:text="${employee.userAccount.firstname}"></td>
+								<td th:text="${employee.userAccount.email}"></td>
+								<td th:text="${employee.phone}"></td>
+							</tr>
 						</table>
-						<p>Mitarbeiter entfernen:</p>
-						<form th:action="@{/deleteEmployee}" method="post">
-							<input type="text" placeholder="ID eingeben" name="employeeId"
-								id="deleteEmployeeText"></input> <input type="submit"
-								value="Löschen"></input>
-						</form>
-						<p>Neuen Mitarbeiter hinzufügen:</p>
-						<!--Communicates with controller @RequestMapping("/newEmployee") -->
-						<form th:action="@{/newEmployee}" method="post"
-							th:object="${registration}">
-							<input type="text" placeholder="Nachname" id="lastname"
-								th:field="*{lastname}"></input> <br /> <input type="text"
-								placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
-							<br /> <input type="text" placeholder="E-mail Adresse"
-								id="email" th:field="*{email}"></input> <br /> <input
-								type="text" placeholder="Telefonnummer" id="phone"
-								th:field="*{phone}"></input> <br /> <input type="submit"
-								value="Speichern" style="margin-top: 3px"></input>
-						</form>
+						<div align="center">
+							<p>Mitarbeiter entfernen:</p>
+							<form th:action="@{/deleteEmployee}" method="post">
+								<input type="text" placeholder="ID eingeben" name="employeeId"
+									id="deleteEmployeeText"></input> <input type="submit"
+									value="Löschen"></input>
+							</form>
+						</div>
+						<div align="center">
+							<p>Neuen Mitarbeiter hinzufügen:</p>
+							<!--Communicates with controller @RequestMapping("/newEmployee") -->
+							<form th:action="@{/newEmployee}" method="post"
+								th:object="${registration}">
+								<input type="text" placeholder="Nachname" id="lastname"
+									th:field="*{lastname}"></input> <br /> <input type="text"
+									placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
+								<br /> <input type="text" placeholder="E-mail Adresse"
+									id="email" th:field="*{email}"></input> <br /> <input
+									type="text" placeholder="Telefonnummer" id="phone"
+									th:field="*{phone}"></input> <br /> <input type="submit"
+									value="Speichern" style="margin-top: 3px"></input>
+							</form>
+						</div>
 					</div>
 
 					<!-- Finance case -->
 					<div th:case="finances">
-						<h1>FVIV Finanzen:</h1>
-						<div>
-							<table border="1" class="salaryTable">
+						<div align="center">
+							<table class="salaryTable">
 								<tr>
 									<th>Ausgabenart</th>
 									<th>Menge</th>
@@ -131,9 +145,7 @@ $(function () {
 									<th th:text="${salaryTotal}" id="salaryTotal"></th>
 								</tr>
 							</table>
-						</div>
-						<div>
-							<table border="1" class="cateringTable">
+							<table class="cateringTable">
 								<tr>
 									<th>Ausgabenart</th>
 									<th>Menge</th>
@@ -147,9 +159,7 @@ $(function () {
 									<th th:text="${cateringTotal}"></th>
 								</tr>
 							</table>
-						</div>
-						<div>
-							<table border="1" class="rentTable">
+							<table class="rentTable">
 								<tr>
 									<th>Ausgabenart</th>
 									<th>Menge</th>
@@ -164,40 +174,41 @@ $(function () {
 								</tr>
 							</table>
 						</div>
-						<div id="finances_chart" style="width: 70%; height: 400px;">
-						</div>
+						<div id="financesChart"></div>
 					</div>
 
 					<!-- Accounts case -->
 					<div th:case="accounts">
-						<h1>FVIV Accounts:</h1>
-						<table border="1">
+						<table class="accountTable">
 							<tr>
 								<th>Benutzername</th>
 								<th>Berechtigung</th>
+								<th>Status</th>
 							</tr>
-							<tr th:each=" bossAccount : ${bossAccounts}">
-								<td th:text="${bossAccount.identifier}"></td>
-								<td>Boss</td>
-							</tr>
-							<tr th:each=" managerAccount : ${managerAccounts}">
-								<td th:text="${managerAccount.identifier}"></td>
-								<td>Manager</td>
-							</tr>
-							<tr th:each=" catererAccount : ${catererAccounts}">
-								<td th:text="${catererAccount.identifier}"></td>
-								<td>Caterer</td>
-							</tr>
-							<tr th:each=" employeeAccount : ${employeeAccounts}">
-								<td th:text="${employeeAccount.identifier}"></td>
-								<td>Mitarbeiter</td>
+							<tr th:each=" account : ${userAccounts}">
+								<td th:text="${account.identifier}"></td>
+								<td th:text="${account.getRoles()}"></td>
+								<td th:if="${account.isEnabled()}">aktiviert</td>
+								<td th:unless="${account.isEnabled()}">deaktiviert</td>
 							</tr>
 						</table>
+						<div align="center">
+							<p>Berechtigung bearbeiten:</p>
+							<form action="/editAccount" method="post">
+								<input type="text" name="userNameEdit"
+									placeholder="Benutzername"></input> <select name="roles">
+									<option th:each=" role : ${roles}" th:value="${role}"
+										th:text="${role.getName()}"></option>
+								</select> <input type="submit" name="save" value="Hinzufügen"></input> <input
+									type="submit" name="delete" value="Löschen"></input> <input
+									type="submit" name="enable" value="Aktivieren"></input> <input
+									type="submit" name="disable" value="Deaktivieren"></input>
+							</form>
+						</div>
 					</div>
 
 					<!-- Standard case -->
 					<div th:case="*">
-						<h1>Willkommen im FVIV Terminal</h1>
 						<img src="../resources/img/FVIVgmbh.png"
 							style="width: 100%; height: 150px;"></img>
 					</div>
@@ -206,7 +217,9 @@ $(function () {
 			</div>
 		</div>
 		<div id="menu">
-			<button class="slimButton">Logout</button>
+			<form action="/logout" method="post">
+				<input type="submit" class="slimButton" value="Logout"></input>
+			</form>
 			<button class="slimButton">Chat</button>
 			<form method="post" action="/Terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>
