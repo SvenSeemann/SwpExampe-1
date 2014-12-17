@@ -47,21 +47,14 @@ public class CateringController {
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-<<<<<<< HEAD
-			UserAccountManager userAccountManager, Inventory<InventoryItem> inventory) {
-=======
+
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory) {
->>>>>>> master
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
-<<<<<<< HEAD
-		this.inventory = inventory; 
-=======
 		this.inventory = inventory;
->>>>>>> master
 
 	}
 
