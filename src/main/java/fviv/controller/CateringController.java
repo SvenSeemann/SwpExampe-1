@@ -8,7 +8,6 @@ import fviv.catering.model.MenusRepository;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.inventory.InventoryItemIdentifier;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
@@ -47,7 +46,6 @@ public class CateringController {
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory) {
 
@@ -103,7 +101,7 @@ public class CateringController {
 			@LoggedIn UserAccount userAccount) {
 
 		cart.addOrUpdateItem(menu, Units.of(1));
-		
+
 		return "redirect:/catering";
 	}
 
