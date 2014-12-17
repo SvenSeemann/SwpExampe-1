@@ -6,10 +6,90 @@
 
   Messaging = (function() {
     function Messaging() {
-      var Message, Receiver, add_messages, chat_visible, check_messages, date_from_received, get_receivers, hide_chat, messages, new_form, receivers, refresh_receivers, send_message, show_chat, templates, toggle_chat;
+      var Message, Receiver, add_messages, chat_visible, check_messages, date_from_received, get_receivers, hide_chat, messages, new_form, receiver_role, receivers, refresh_receivers, send_message, sender_role, show_chat, templates, toggle_chat, user;
       templates = $('#messaging-templates');
       this.templates = templates.clone();
       templates.remove();
+      sender_role = 'MESSAGE_SENDER';
+      receiver_role = 'MESSAGE_RECEIVER';
+      user = {
+        initialize: function(callback) {
+          if (callback == null) {
+            callback = function() {};
+          }
+          if (this.is_initializing) {
+            return this.queue.push(callback());
+          } else {
+            this.is_initializing = true;
+            this.queue.push(callback);
+            return $.ajax({
+              type: 'post',
+              cache: false,
+              url: '/messaging/get/me',
+              success: (function(_this) {
+                return function(data) {
+                  var call, _i, _len, _ref, _results;
+                  _this.is_initialized = true;
+                  _this.is_initializing = false;
+                  _this.data = data;
+                  _ref = _this.queue;
+                  _results = [];
+                  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    call = _ref[_i];
+                    _results.push(call());
+                  }
+                  return _results;
+                };
+              })(this)
+            });
+          }
+        },
+        queue: [],
+        is_initialized: false,
+        is_initializing: false,
+        data: null,
+        is_authenticated: function() {
+          return this.is_initialized && (this.data != null);
+        },
+        has_role: function(role) {
+          var r, _i, _len, _ref;
+          if (!this.is_authenticated()) {
+            return false;
+          } else {
+            _ref = this.data.roles;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              r = _ref[_i];
+              if (r.name === role) {
+                return true;
+              }
+            }
+            return false;
+          }
+        },
+        ensure_role: function(role, callback) {
+          if (this.is_initialized) {
+            if (this.has_role(role)) {
+              return callback(true);
+            } else {
+              return callback(false);
+            }
+          } else {
+            return this.initialize(function() {
+              return this.ensure_role(role, callback);
+            });
+          }
+        },
+        can_send: function(callback) {
+          return this.ensure_role(sender_role, function(res) {
+            return res;
+          });
+        },
+        can_receive: function() {
+          return this.ensure_role(receiver_role, function(res) {
+            return res;
+          });
+        }
+      };
       date_from_received = function(date) {
         return new Date(date.year, date.monthValue - 1, date.dayOfMonth, date.hour, date.minute, date.second);
       };
@@ -66,19 +146,21 @@
         }
       };
       check_messages = function() {
-        return $.ajax({
-          type: "POST",
-          cache: false,
-          url: debug ? '/messaging/test/get' : '/messaging/get',
-          data: {
-            last: messages.array.length === 0 ? new Date(1000, 0).toUTCString() : messages.array[messages.array.length - 1].dateReceived.toUTCString()
-          },
-          success: function(data) {
-            if (data.length > 0) {
-              messages.thing.children('.highlight').removeClass('highlight');
-              return add_messages(data);
+        return user.ensure_role(receiver_role, function() {
+          return $.ajax({
+            type: "POST",
+            cache: false,
+            url: debug ? '/messaging/test/get' : '/messaging/get',
+            data: {
+              last: messages.array.length === 0 ? new Date(1000, 0).toUTCString() : messages.array[messages.array.length - 1].dateReceived.toUTCString()
+            },
+            success: function(data) {
+              if (data.length > 0) {
+                messages.thing.children('.highlight').removeClass('highlight');
+                return add_messages(data);
+              }
             }
-          }
+          });
         });
       };
       send_message = function(e, form) {
@@ -155,8 +237,12 @@
         }
       };
       refresh_receivers = function() {
-        return get_receivers(function(data) {
-          return receivers.add_all(data);
+        return user.ensure_role(sender_role, function(res) {
+          if (res) {
+            return get_receivers(function(data) {
+              return receivers.add_all(data);
+            });
+          }
         });
       };
       get_receivers = function(callback) {
@@ -195,8 +281,10 @@
       $('#toggle-chat').on('click', function() {
         return toggle_chat();
       });
-      refresh_receivers();
-      check_messages();
+      user.initialize(function() {
+        refresh_receivers();
+        return check_messages();
+      });
       hide_chat();
     }
 
