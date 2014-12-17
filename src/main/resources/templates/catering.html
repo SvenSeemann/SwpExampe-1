@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../resources/css/standard.css"/>
 <link rel="stylesheet" href="../resources/css/catering.css"/>
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
+
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title th:text="#{catering.title}">Catering</title>
 </head>
@@ -16,10 +17,19 @@
 
 	<div id="webseite">
 		<div id="header">
-			<div id="loggedAs" th:text="#{catering.whoami}"></div>
-			<div id="title">title</div>
+			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
+			<div th:switch="${ordermode}">
+				<div th:case="meals">
+					<div id="title" th:text="#{catering.meals}">meals</div>
+				</div>
+				<div th:case="drinks" th:text="#{catering.drinks}">
+					<div id="title">drinks</div>
+				</div>
+				<div th:case="*">
+					<div id="title">TERMINAL</div>
+				</div>
+			</div>
 			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
-			<!--<p th:text="${#authentication?.name}">XXXXXX</p> -->
 		</div>
 		<div id="content">
 			<div id="orderList">
@@ -40,21 +50,18 @@
 					</table>
 				</div>
 
-
-				<div class="storno">
-					<a href="/catering-confirm" th:text="#{catering.confirm}">CONFIRM</a>
-				</div>
-				<div class="storno">
-					<a href="/catering-cancel" th:text="#{catering.cancel}">CANCEL</a>
-				</div>
+				<form method="post" action="/catering-confirm">
+					<button class="slimButton" type="submit"
+						th:text="#{catering.confirm}" value="confirm">confirm</button>
+				</form>
+				<form method="post" action="/catering-cancel">
+					<button class="slimButton" type="submit"
+						th:text="#{catering.cancel}" value="cancel">cancel</button>
+				</form>
 
 			</div>
 
 			<div id="chooseBox" th:switch="${ordermode}">
-				<!--  man kann auch aus der messages.properties machen #{shit} -->
-
-
-
 				<div th:case="meals">
 					<a th:each="meal : ${meals}"
 						th:href="@{'/catering-menu/' + ${meal.identifier}}">
@@ -81,21 +88,18 @@
 
 
 		<div id="menu">
-			<div id="menuPointNormal">
-				<a href="/logout">LOGOUT</a>
-			</div>
-			<div id="menuPointBold">
-				<form method="post" action="/catering-meals">
-					<button class="boldButton" type="submit"
-						th:value="#{catering.meals}" value="catering-meals">Menupunkt1</button>
-				</form>
-			</div>
-			<div id="menuPointBold">
-				<form method="post" action="/catering-drinks">
-					<button class="boldButton" type="submit"
-						th:value="#{catering.drinks}" value="catering-drinks">Menupunkt1</button>
-				</form>
-			</div>
+			<form method="post" action="/logout">
+				<button class="slimButton" type="submit"
+					th:text="#{catering.logout}" value="logout">Logout</button>
+			</form>
+			<form method="post" action="/catering-meals">
+				<button class="boldButton" type="submit" value="catering-meals"
+					th:text="#{catering.meals}">Menu</button>
+			</form>
+			<form method="post" action="/catering-drinks">
+				<button class="boldButton" type="submit" value="catering-drinks"
+					th:text="#{catering.drinks}">Menu</button>
+			</form>
 		</div>
 		<div th:include="messaging :: messaging"></div>
 	</div>
