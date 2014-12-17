@@ -24,6 +24,7 @@ public class Coords {
 	private int xPos;
 	private Type type;
 	private String name;
+	private float factor;
 	public Coords(){
 		
 	}
@@ -35,6 +36,17 @@ public class Coords {
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
+	}
+	
+	@Autowired
+	public Coords(String name, int width, int height, int xPos, int yPos, Type type, float factor) {
+		this.width = width;
+		this.height = height;
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.type = type;
+		this.name = name;
+		this.setFactor(factor);
 	}
 	public long getId(){
 		return id;
@@ -77,5 +89,11 @@ public class Coords {
 	
 	public String getName() {
 		return name;
+	}
+	public float getFactor() {
+		return factor;
+	}
+	public void setFactor(float factor) {
+		this.factor = factor;
 	}
 }

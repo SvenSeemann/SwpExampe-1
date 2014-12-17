@@ -2,7 +2,7 @@
 /* CSS Document */
 #substance {
 	width: 835px;
-	height: 800px;
+	height: auto;
 	border: #0c3 medium solid;
 	margin-top: 10px;
 }
@@ -72,4 +72,53 @@
 	border: #f9731c medium solid;
 	background-color: #383839;
 	cursor: pointer;
+}
+.area{
+	width:0px;
+	height:0px;
+	background-color:#666;
+}
+
+.smallStage{
+	width:100px;
+	height:70px;
+	position:absolute;
+	cursor:move;
+}
+.mediumStage{
+	width:150px;
+	height:100px;
+	position:absolute;
+	cursor:move;
+}
+.bigStage{
+	width:200px;
+	height:130px;
+	position:absolute;
+	cursor:move;
+}
+
+.standardToilet{
+	width:100px;
+	height:70px;
+	position:absolute;
+	cursor:move;
+}
+.handicaped{
+	width:100px;
+	height:70px;
+	position:absolute;
+	cursor:move;
+}
+.bathcontainer{
+	width:100px;
+	height:70px;
+	position:absolute;
+	cursor:move;
+}
+.standardCatering{
+	width:100px;
+	height:70px;
+	position:absolute;
+	cursor:move;
 }

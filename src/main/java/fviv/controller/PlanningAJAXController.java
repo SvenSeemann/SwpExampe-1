@@ -23,17 +23,20 @@ public class PlanningAJAXController {
 		this.planningRepository = planningRepository;
 	}
 
-	@RequestMapping(value = "/newArea", method = RequestMethod.GET, headers = IS_AJAX_HEADER)
+	@SuppressWarnings("null")
+	@RequestMapping(value = "/newArea", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public boolean neuesAreal(@RequestParam("width") int width,
-			@RequestParam("height") int height) {
+			@RequestParam("height") int height, @RequestParam("faktor") float factor) {
 		Coords area = planningRepository.findByName("Areal");
 		if (area == null) {
 			planningRepository.save(new Coords("Areal", width, height, 0, 0,
-					Type.AREA));
+					Type.AREA, factor));
+			System.out.println("weite: " + area.getWidth() + "hoehe: "
+					+ area.getHeight() + "faktor: " + area.getFactor());
 			return true;
 		} else {
 			System.out.println("weite: " + area.getWidth() + "hoehe: "
-					+ area.getHeight());
+					+ area.getHeight() + "faktor: " + area.getFactor());
 			return false;
 		}
 	}
