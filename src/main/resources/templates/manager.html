@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- Author: Hendric Eckelt -->
 
@@ -257,9 +258,14 @@ $(function () {
 								<input type="password" placeholder="Neues Passwort"
 									name="changePassword1"></input> <br /> <input type="password"
 									placeholder="Passwort wiederholen" name="changePassword2"></input>
-								<br /> <input type="submit" class="button_green" value="Passwort speichern" style="margin-top:2px;"></input>
+								<br /> <input type="submit" class="button_green"
+									value="Passwort speichern" style="margin-top: 2px;"></input>
 							</form>
 						</div>
+					</div>
+					
+					<div th:case="checkStock">
+					
 					</div>
 
 					<!-- Standard case -->
@@ -276,7 +282,7 @@ $(function () {
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
 			<form>
-			<button class="slimButton">Chat</button>
+				<button class="slimButton">Chat</button>
 			</form>
 			<form method="post" action="/Terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>
@@ -289,6 +295,9 @@ $(function () {
 			</form>
 			<form method="post" action="/Accountmanagement">
 				<input type="submit" class="boldButton" value="Accounts"></input>
+			</form>
+			<form method="post" action="/Stock">
+				<input type="submit" class="boldButton" value="Stock"></input>
 			</form>
 		</div>
 	</div>

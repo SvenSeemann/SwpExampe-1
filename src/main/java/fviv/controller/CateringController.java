@@ -1,7 +1,5 @@
 package fviv.controller;
 
-//import static org.joda.money.CurrencyUnit.EUR;
-
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
@@ -29,6 +27,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
+
+/**
+ * @author Niklas Fallik
+ */
 
 @Controller
 @PreAuthorize("hasRole('ROLE_CATERER')")

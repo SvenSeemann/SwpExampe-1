@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import javax.validation.Valid;
 
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -35,14 +37,18 @@ public class ManagerController {
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	private final UserAccountManager userAccountManager;
+	private final Inventory<InventoryItem> inventory;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
 			ExpenseRepository expenseRepository,
-			UserAccountManager userAccountManager) {
+			UserAccountManager userAccountManager,
+			Inventory<InventoryItem> inventory) {
+		
 		this.employeeRepository = employeeRepository;
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
+		this.inventory = inventory;
 	}
 
 	// String managermode for th:switch to decide which div to display
@@ -109,6 +115,10 @@ public class ManagerController {
 		modelMap.addAttribute("cateringTotal", cateringTotal);
 		modelMap.addAttribute("rentTotal", rentTotal);
 
+		// -------------------------- STOCK -------------------------- \\
+
+		modelMap.addAttribute("inventory", inventory);
+		
 		return "manager";
 	}
 
@@ -333,6 +343,12 @@ public class ManagerController {
 	@RequestMapping("/Terminal")
 	public String terminal() {
 		mode = "terminal";
+		return "redirect:/manager";
+	}
+
+	@RequestMapping("/Stock")
+	public String stock() {
+		mode = "checkStock";
 		return "redirect:/manager";
 	}
 }
