@@ -15,6 +15,7 @@ public class Festival {
 	private Date startDatum;
 	private Date endDatum;
 	private String festivalName;
+	private String location;
 	private String actors;
 	private int maxVisitors;
 	private long preisTag;
@@ -23,7 +24,7 @@ public class Festival {
 	protected Festival() {
 	}
 
-	public Festival(Date startDatum, Date endDatum, String festivalName,
+	public Festival(Date startDatum, Date endDatum, String festivalName, String location,
 			String actors, int maxVisitors, long preisTag) {
 		this.actors = actors;
 		this.endDatum = endDatum;
@@ -32,6 +33,9 @@ public class Festival {
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
 
+	}
+	public long getId(){
+		return id;
 	}
 
 	public Date getStartDatum() {
@@ -81,5 +85,14 @@ public class Festival {
 	public void setPreisTag(long preisTag) {
 		this.preisTag = preisTag;
 	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 
 }

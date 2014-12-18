@@ -25,18 +25,16 @@
 
 				<form th:action="@{/newTicket}" method="post">
 					<fieldset>
-						<label class="label" for="festivals"> Festival
-							ausw&auml;hlen: <select name="festivals" size="1">
-					<option th:each=" festival : ${festivallist}" th:text="${festival.festivalName}"></option>
+						<label class="label" for="festivalId"> Festival
+							ausw&auml;hlen: <select name="festivalId" size="1">
+						<option th:each=" festival : ${festivallist}" th:text="${festival.id} + ${festival.festivalName}" th:value="${festival.id}"></option>
 						</select><br/>
 						</label> <label class="label" for="ticketart"> Ticketart
 							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
 							value="true" checked="checked" />Tagesticket <br /> <input
 							type="radio" name="ticketart" value="false" />3-Tagesticket <label
 							class="label" for="numbers"> <input type="text"
-							name="numbers" size="40" placeholder="Anzahl" /></label> <label
-							class="label" for="price"> <input type="text"
-							name="price" size="40" placeholder="Preis pro Stück" /></label> <input
+							name="numbers" size="40" placeholder="Anzahl" /></label> <input
 							type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')"
 							value="Ticket erstellen" />
 					</fieldset>
@@ -70,13 +68,14 @@
 			<div id="substance">
 				<form th:action="@{/pruefeTicket}" method="post">
 					<fieldset>
-						<label class="label" for="ticketart"> Ticketart
-							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
-							value="true" checked="checked" />Tagesticket <br /> <input
-							type="radio" name="ticketart" value="false" />3-Tagesticket <label
+						 <label
 							class="label" for="numbers"> <input type="text"
 							name="numbers" size="40" placeholder="TicketID" /></label> <input
-							type="submit" value="Ticket einchecken" />
+							type="submit" value="Ticket einchecken" /><br/>
+						
+						
+						<label class="label" for="checken" th:text="${forhtml}"></label>
+							
 					</fieldset>
 				</form>
 			</div>

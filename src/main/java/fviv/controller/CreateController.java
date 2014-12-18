@@ -20,7 +20,7 @@ import fviv.festival.Festival;
 @Controller
 public class CreateController {
 	private final FestivalRepository festivalRepository;
-	private String mode = "";
+	private String mode = "festival";
 
 	@Autowired
 	public CreateController(FestivalRepository festivalRepository) {
@@ -29,6 +29,11 @@ public class CreateController {
 
 	@RequestMapping({ "/festival" })
 	public String index() {
+		mode="festival";
+		return "festival";
+	}
+	@RequestMapping({ "/showFestival" })
+	public String showFestival() {
 		mode="festival";
 		return "festival";
 	}
@@ -44,13 +49,14 @@ public class CreateController {
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
 			@RequestParam("maxVisitors") int maxVisitors,
+			@RequestParam("location") String location,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
 		DateFormat format = new SimpleDateFormat("d MMMM, yyyy", Locale.GERMAN);
 		Date dateStart = format.parse(startDate);
 		Date dateEnd = format.parse(endDate);
 		
-		Festival festival = new Festival(dateStart, dateEnd, festivalName,
+		Festival festival = new Festival(dateStart, dateEnd, festivalName, location,
 				actors, (int) maxVisitors , (long) preisTag);
 		
 	

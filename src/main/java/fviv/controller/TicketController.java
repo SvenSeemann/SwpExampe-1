@@ -19,6 +19,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
+import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.ticket.TicketRepository;
 import fviv.ticket.Ticket;
@@ -36,7 +37,8 @@ public class TicketController {
 	private final TicketRepository ticketRepository;
 	private final FestivalRepository festivalRepository;
 	private static long ticketid;
-	private String mode = "";
+	private String mode = "ticket";
+	private static Festival festival;
 
 
 	@Autowired
@@ -53,7 +55,6 @@ public class TicketController {
 	@RequestMapping({ "/ticket" })
 	public String index(ModelMap modelMap) {
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-		mode="ticket";
 		return "ticket";
 	}
 	@RequestMapping(value = "/changeMode", method = RequestMethod.POST )
@@ -70,42 +71,63 @@ public class TicketController {
 
 	@RequestMapping(value = "/pruefeTicket", method = RequestMethod.POST)
 	// ticketeinchecken methode
-	public String pruefeTicket(@RequestParam("ticketart") boolean ticketart,
+	public String pruefeTicket(ModelMap modelMap,
 			@RequestParam("numbers") long id) {
 		Ticket ticketkontrolle = ticketRepository.findById(id);
 		if (ticketRepository.findById(id) == null) {
-			return "redirect:/ticket";
+			
+			return "ticket";
 		}
 		if (ticketkontrolle.getChecked() == true) {
-			System.out.println("" + id + "already checked in!!!");
-			return "ticketpruefung";
+			ticketkontrolle.setForhtml("" + id + "already checked in!");
+			modelMap.addAttribute("forhtml", ticketkontrolle.getForhtml());
+			ticketRepository.save(ticketkontrolle);
+
+			return "ticket";
 		} else {
 			ticketkontrolle.setChecked(true);
-			System.out.println("" + id + "now checked in");
+			ticketkontrolle.setForhtml("" + id + "now checked in");
+			modelMap.addAttribute("forhtml", ticketkontrolle.getForhtml());
 			ticketRepository.save(ticketkontrolle);
+
 			return "ticket";
 		}
 	}
 
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
 	public String newTicket(@RequestParam("ticketart") boolean ticketart,
-			@RequestParam("price") float kosten,
+			@RequestParam("festivalId") String id,
 			@RequestParam("numbers") int anzahl) throws IOException,
 			BarcodeException {
+		
+		Long longId = Long.parseLong(id);
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket
-			Ticket ticket = new Ticket(ticketart, false, "festivalname"); // Eins ist gleich
+			 festival = festivalRepository.findById(longId);
+			String festivalname = festival.getFestivalName();
+			long preistag = festival.getPreisTag();
+
+			Ticket ticket = new Ticket(ticketart, false, festivalname); // Eins ist gleich
 															// Tagesticket //
 															// Null
 															// ist gleich
 															// 3Tagesticket
+			if (ticketart == true){
 			ticketRepository.save(ticket);
 			setTicketid(ticket.getId());
-			pdfvorlagebearbeiten(kosten, ticketart);
+			pdfvorlagebearbeiten(preistag, ticketart);
 			barcodegen();
 			addbarcode();
+			} else {
+				ticketRepository.save(ticket);
+				setTicketid(ticket.getId());
+				pdfvorlagebearbeiten(preistag*7/3, ticketart);
+				barcodegen();
+				addbarcode();	
+				
+			}
 		}
-		return "ticket";
+		return "redirect:/ticket";
 	}
 
 	// true = tagesticket
@@ -130,18 +152,19 @@ public class TicketController {
 				return "ticket";
 			} else {
 				if (ticketnummer > 0) {
-					return "redirect:/ticket" + ticketnummer + ".pdf";
+					return "redirect:/ticket"+ festival.getFestivalName() + ticketnummer + ".pdf";
 				} else
-					return "redirect:/ticket" + ticketnummer + ".pdf";
+					return "redirect:/ticket"+ festival.getFestivalName() + ticketnummer + ".pdf";
 			}
 		}
-		return "redirect:/ticket" + ticketid + ".pdf";
+		return "redirect:/"+ festival.getFestivalName() + ticketid + ".pdf";
 	}
 
 	public static void pdfvorlagebearbeiten(float ticketkosten,
 			boolean ticketart) throws IOException, BarcodeException {
-		String price = "" + ticketkosten + " Euro";
+		String price = "" + ticketkosten + "Euro";
 		try {
+			
 			// (1) Einlesen der PDF-Vorlage
 			PdfReader reader = new PdfReader("test_file.pdf");
 
@@ -153,17 +176,17 @@ public class TicketController {
 			AcroFields acroFields = stamper.getAcroFields();
 
 			// (4) Felder bearbeiten
+			
 			acroFields.setField("ticketart", ticketarthelper(ticketart));
-			acroFields.setField("eventname", "Wonderworld");
+			acroFields.setField("eventname", festival.getFestivalName());
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
-			acroFields.setField("actors", "Actors");
-			acroFields.setField("adressofvenue",
-					"The StreetAdress \n youtown \n 666666Dreden ");
-			acroFields.setField("date", "66-66-6666");
+			acroFields.setField("actors", festival.getActors());
+			acroFields.setField("adressofvenue", festival.getLocation());
+			acroFields.setField("date", festival.getStartDatum()+"");
 			acroFields.setField("price", price);
-			acroFields.setField("eventnamesmall", "Wunderland");
-			acroFields.setField("datesmall", "66-66-6666€");
+			acroFields.setField("eventnamesmall", festival.getFestivalName());
+			acroFields.setField("datesmall", festival.getStartDatum()+"");
 
 			// (5) Dokumente schließen
 			stamper.close();
@@ -181,7 +204,7 @@ public class TicketController {
 
 	public static void barcodegen() throws IOException, BarcodeException {
 		// get a Barcode from the BarcodeFactory
-		Barcode barcode = BarcodeFactory.createCode128B("" + ticketid); // hier
+		Barcode barcode = BarcodeFactory.createCode128B(festival.getFestivalName() + ticketid); // hier
 																		// der
 																		// code
 																		// später
@@ -198,7 +221,7 @@ public class TicketController {
 
 	public static void addbarcode() {
 		String name;
-		name = "ticket" + ticketid;
+		name = festival.getFestivalName() + ticketid;
 		try {
 			PdfReader pdfReader = new PdfReader("change.pdf");
 
@@ -232,5 +255,6 @@ public class TicketController {
 	public static void setTicketid(long ticketid) {
 		TicketController.ticketid = ticketid;
 	}
+
 
 }
