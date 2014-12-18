@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import fviv.catering.model.Menu;
+import fviv.catering.model.MenusRepository;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Expense;
@@ -37,18 +40,21 @@ public class ManagerController {
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	private final UserAccountManager userAccountManager;
+	private final MenusRepository menusRepository;
 	private final Inventory<InventoryItem> inventory;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
 			ExpenseRepository expenseRepository,
 			UserAccountManager userAccountManager,
-			Inventory<InventoryItem> inventory) {
+			Inventory<InventoryItem> inventory,
+			MenusRepository menusRepository) {
 		
 		this.employeeRepository = employeeRepository;
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
+		this.menusRepository = menusRepository;
 	}
 
 	// String managermode for th:switch to decide which div to display
@@ -117,7 +123,7 @@ public class ManagerController {
 
 		// -------------------------- STOCK -------------------------- \\
 
-		modelMap.addAttribute("inventory", inventory);
+		modelMap.addAttribute("inventory", this.inventory.findAll());
 		
 		return "manager";
 	}
@@ -327,7 +333,19 @@ public class ManagerController {
 
 		return "redirect:/manager";
 	}
+	
+	@RequestMapping("orderMore")
+	public String orderMore(@RequestParam("itemid") InventoryItem item, @RequestParam("units") Long units) {
+		//InventoryItem inventoryItem = new InventoryItem(menusRepository.findOne(item.getProduct().getIdentifier()), Units.of(units));
+		//inventory.save(inventoryItem);
+		item.increaseQuantity(Units.of(units));
+		inventory.save(item);
+		
+		return "redirect:/manager";
+	}
 
+	//--- --- --- --- --- --- --- --- --- ModeMapping --- --- --- --- --- --- --- --- --- \\
+	
 	@RequestMapping("/Finances")
 	public String finances() {
 		mode = "finances";

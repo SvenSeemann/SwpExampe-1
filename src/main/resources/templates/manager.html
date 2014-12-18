@@ -243,7 +243,7 @@ $(function () {
 									class="button_green" name="disable"
 									value="Account deaktivieren"></input>
 							</form>
-							<p>Nuterinformationen ändern:</p>
+							<p>Nutzerinformationen ändern:</p>
 							<form action="/editEmployeeDetails" method="post">
 								<input type="text" name="editLastname" placeholder="Nachname"></input>
 								<br /> <input type="text" name="editFirstname"
@@ -263,9 +263,24 @@ $(function () {
 							</form>
 						</div>
 					</div>
-					
+
 					<div th:case="checkStock">
-					
+						<table>
+							<tr th:each="item : ${inventory}">
+								<td th:text="${item.product}">Currywurst</td>
+								<td th:text="${item.quantity}">50</td>
+								<td th:text="item"></td>
+								<td>
+									<form action="/orderMore" method="post">
+										<input type="hidden" name="itemid" value="0"
+											th:value="${item.identifier}" /> <input id="number"
+											type="number" name="units" min="1" max="50" step="1"
+											placeholder="0"  /> <input type="submit" class="button_green"
+											value="Order!" style="margin-top: 2px;" />
+									</form>
+								</td>
+							</tr>
+						</table>
 					</div>
 
 					<!-- Standard case -->

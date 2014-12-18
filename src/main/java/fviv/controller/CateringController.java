@@ -10,6 +10,7 @@ import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
+import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -98,9 +99,12 @@ public class CateringController {
 	}
 
 	@RequestMapping("catering-menu/{mid}")
-	public String addMeal(@PathVariable("mid") Menu menu,
+	public String addMeal(ModelMap modelMap,
+			@PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
+		Quantity quantity = inventory.findByProduct(menu).get().getQuantity();
+		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO));		//does not work in thymeleaf
 
 		cart.addOrUpdateItem(menu, Units.of(1));
 
