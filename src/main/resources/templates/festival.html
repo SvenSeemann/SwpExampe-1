@@ -1,0 +1,72 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/festival.css" />
+<title>Festival erstellung</title>
+</head>
+<body>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs">angemeldet als:</div>
+			<div id="title">Festival Erstellung</div>
+			<div id="loginName">UserName</div>
+		</div>
+
+
+		<div id="content">
+			<div id="substance">
+				<div id="chooseFestivalview" th:switch="${festivalmode}">
+				<!-- FestivalCase -->
+				<div th:case="festival">
+				<form th:action="@{/newFestival}" method="post">
+					<fieldset>
+							<label
+							class="label" for="festivalName"> <input type="text"
+							name="festivalName" size="40" placeholder="festivalname"></input>Festivalname</label> 	
+							<br/>
+							<label class="label" for="location"> <input type="text"
+							name="location" size="40" placeholder="Adresse"></input>Adresse</label> 
+							<br/>
+							<label
+							class="label" for="startDate"> <input type="text"
+							name="startDate" size="40" placeholder="dd MMMM, yyyy"></input>Startdatum</label> 
+							<br/>
+							<label class="label" for="endDate"> <input type="text"
+							name="endDate" size="40" placeholder="dd MMMM, yyyy"></input>EndDatum</label> 
+							<br/>
+							<label class="label" for="actors"> <input type="text"
+							name="actors" size="40" placeholder="Künstler"></input>Künstler</label> 
+							<br/>
+							<label
+							class="label" for="maxVisitors"> <input type="text"
+							name="maxVisitors" size="40" placeholder="Festivalkapazität"></input>Festivalkapazität</label> 
+							<br/>
+							<label
+							class="label" for="preisTag"> <input type="text"
+							name="preisTag" size="40" placeholder="Kosten Tageskarte"></input>Kosten Tageskarte</label>
+							<br/>
+							
+							
+							<input
+							type="submit" onclick="alert('Festival wird erstellt')"
+							value="Festival erstellen" />
+					</fieldset>
+				</form>
+			</div>
+			</div>
+		</div>
+</div>
+		<div id="menu">
+			<button class="slimButton">Logout</button>
+			<button class="slimButton">Chat</button>
+			<button class="boldButton">Festival erstellen</button>
+			<form th:action="@{/showFestival}" method="post"><button class="boldButton">Festivals anzeigen</button></form>
+		</div>
+	
+</div>
+</body>
+</html>
