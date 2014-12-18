@@ -60,7 +60,7 @@ public class Application {
 					.//
 					formLogin().loginPage("/login")
 					.loginProcessingUrl("/login").and(). //
-					logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+					logout().logoutUrl("/logout").logoutSuccessUrl("/index");
 		}
 	}
 }

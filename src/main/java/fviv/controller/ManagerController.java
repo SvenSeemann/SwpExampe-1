@@ -30,7 +30,8 @@ import fviv.model.Registration;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 @Controller
 public class ManagerController {
-	private String mode = "";
+	private String mode = "startConfiguration";
+	private String editSingleAccount = "startConfiguration";
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	private final UserAccountManager userAccountManager;
@@ -68,9 +69,15 @@ public class ManagerController {
 		// Add accounts and roles to modelMap
 		modelMap.addAttribute("roles", allRoles);
 		modelMap.addAttribute("userAccounts", userAccountManager.findAll());
+		if (userAccountManager.findByUsername(editSingleAccount).isPresent()) {
+			modelMap.addAttribute("editSingleAccount", userAccountManager
+					.findByUsername(editSingleAccount).get());
+		}
+
 		// Add list of all employees and an empty registration to the modelMap
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
 		modelMap.addAttribute("registration", new Registration());
+
 		// Add finances by type to the modelMap
 		modelMap.addAttribute("salary",
 				expenseRepository.findByExpenseType("salary"));
@@ -147,7 +154,8 @@ public class ManagerController {
 
 		// Get employee, disable his account and delete him from the repository
 		Employee deleteThisEmployee = employeeRepository.findById(employeeId);
-		userAccountManager.disable(deleteThisEmployee.getUserAccount().getIdentifier());
+		userAccountManager.disable(deleteThisEmployee.getUserAccount()
+				.getIdentifier());
 		userAccountManager.save(deleteThisEmployee.getUserAccount());
 		employeeRepository.delete(deleteThisEmployee);
 
@@ -156,87 +164,156 @@ public class ManagerController {
 
 	// Mapping to add a certain role to a useraccount
 	@RequestMapping(params = "save", value = "/editAccount", method = RequestMethod.POST)
-	public String addRole(@RequestParam("userNameEdit") String userName,
-			@RequestParam("roles") String role) {
+	public String addRole(@RequestParam("roles") String role) {
 
 		// Define a role by the given string "role"
 		final Role addRole = new Role(role);
 
 		// Redirect if the useraccount doesn't exist or already have the role
 		// attached
-		if (!(userAccountManager.findByUsername(userName).isPresent())
-				|| userAccountManager.findByUsername(userName).get()
+		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
+				|| userAccountManager.findByUsername(editSingleAccount).get()
 						.hasRole(addRole)) {
 			return "redirect:/manager";
 		}
 
 		// Add role to the useraccount and save it
-		userAccountManager.findByUsername(userName).get().add(addRole);
-		userAccountManager.save(userAccountManager.findByUsername(userName)
-				.get());
+		userAccountManager.findByUsername(editSingleAccount).get().add(addRole);
+		userAccountManager.save(userAccountManager.findByUsername(
+				editSingleAccount).get());
 		return "redirect:/manager";
 	}
 
 	// Mapping to delete a certain role from a useraccount
 	@RequestMapping(params = "delete", value = "/editAccount", method = RequestMethod.POST)
-	public String deleteRole(@RequestParam("userNameEdit") String userName,
-			@RequestParam("roles") String role) {
+	public String deleteRole(@RequestParam("roles") String role) {
+
+		// Ensure that manager, boss and caterer role cannot be deleted entirely
+		if (editSingleAccount.equals("manager") && role.equals("ROLE_MANAGER"))
+			return "redirect:/manager";
+		if (editSingleAccount.equals("boss") && role.equals("ROLE_BOSS"))
+			return "redirect:/manager";
+		if (editSingleAccount.equals("caterer") && role.equals("ROLE_CATERER"))
+			return "redirect:/manager";
 
 		// Define a role by the given string "role"
 		final Role deleteRole = new Role(role);
 
 		// Redirect if the useraccount doesn't exist or doesn't have the role
 		// attached
-		if (!(userAccountManager.findByUsername(userName).isPresent())
-				|| !(userAccountManager.findByUsername(userName).get()
+		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
+				|| !(userAccountManager.findByUsername(editSingleAccount).get()
 						.hasRole(deleteRole))) {
 			return "redirect:/manager";
 		}
 
 		// Delete role from the useraccount and save it
-		userAccountManager.findByUsername(userName).get().remove(deleteRole);
-		userAccountManager.save(userAccountManager.findByUsername(userName)
-				.get());
+		userAccountManager.findByUsername(editSingleAccount).get()
+				.remove(deleteRole);
+		userAccountManager.save(userAccountManager.findByUsername(
+				editSingleAccount).get());
 
 		return "redirect:/manager";
 	}
 
 	// Mapping to activate a certain account
 	@RequestMapping(params = "enable", value = "/editAccount", method = RequestMethod.POST)
-	public String enableAccount(@RequestParam("userNameEdit") String userName) {
+	public String enableAccount() {
 
 		// Redirect if the useraccount doesn't exist or is already enabled
-		if (!(userAccountManager.findByUsername(userName).isPresent())
-				|| userAccountManager.findByUsername(userName).get()
+		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
+				|| userAccountManager.findByUsername(editSingleAccount).get()
 						.isEnabled()) {
 			return "redirect:/manager";
 		}
 
 		// Enable useraccount and save it
-		userAccountManager.enable(userAccountManager.findByUsername(userName)
-				.get().getIdentifier());
-		userAccountManager.save(userAccountManager.findByUsername(userName)
-				.get());
+		userAccountManager.enable(userAccountManager
+				.findByUsername(editSingleAccount).get().getIdentifier());
+		userAccountManager.save(userAccountManager.findByUsername(
+				editSingleAccount).get());
 
 		return "redirect:/manager";
 	}
 
 	// Mapping to deactivate a certain account
 	@RequestMapping(params = "disable", value = "/editAccount", method = RequestMethod.POST)
-	public String disableAccount(@RequestParam("userNameEdit") String userName) {
+	public String disableAccount() {
 
 		// Redirect if the useraccount doesn't exist or is already disabled
-		if (!(userAccountManager.findByUsername(userName).isPresent())
-				|| !(userAccountManager.findByUsername(userName).get()
+		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
+				|| !(userAccountManager.findByUsername(editSingleAccount).get()
 						.isEnabled())) {
 			return "redirect:/manager";
 		}
 
 		// Disable useraccount and save it
-		userAccountManager.disable(userAccountManager.findByUsername(userName)
-				.get().getIdentifier());
-		userAccountManager.save(userAccountManager.findByUsername(userName)
-				.get());
+		userAccountManager.disable(userAccountManager
+				.findByUsername(editSingleAccount).get().getIdentifier());
+		userAccountManager.save(userAccountManager.findByUsername(
+				editSingleAccount).get());
+
+		return "redirect:/manager";
+	}
+
+	// Mapping to get the editAccount view
+	@RequestMapping("/switchToEditAccount")
+	public String editAccount(@RequestParam("userNameEdit") String userName,
+			ModelMap modelMap) {
+
+		// Redirect if useraccount doesn't exist
+		if (userName == ""
+				|| !(userAccountManager.findByUsername(userName).isPresent()))
+			return "redirect:/manager";
+
+		// change mode for th:switch and change string to selected account
+		mode = "editAccount";
+		editSingleAccount = userName;
+
+		return "redirect:/manager";
+	}
+
+	// Mapping to edit lastname, firstname or email of a useraccount
+	@RequestMapping("/editEmployeeDetails")
+	public String editEmployeeDetails(
+			@RequestParam("editLastname") String lastname,
+			@RequestParam("editFirstname") String firstname,
+			@RequestParam("editEmail") String email) {
+
+		// Update user information
+		UserAccount userAccount = userAccountManager.findByUsername(
+				editSingleAccount).get();
+		if (lastname != "")
+			userAccount.setLastname(lastname);
+		if (firstname != "")
+			userAccount.setFirstname(firstname);
+		if (email != "")
+			userAccount.setEmail(email);
+
+		// Save account
+		userAccountManager.save(userAccount);
+
+		return "redirect:/manager";
+	}
+
+	// Mapping to change the password of a single account
+	@RequestMapping("/changePassword")
+	public String changePassword(
+			@RequestParam("changePassword1") String password1,
+			@RequestParam("changePassword2") String password2) {
+
+		// Password must not be empty and both passwords must match
+		if (password1.equals("") || password2.equals(""))
+			return "redirect:/manager";
+		if (!(password1.equals(password2)))
+			return "redirect:/manager";
+
+		// Change the password and save the account
+		userAccountManager.changePassword(
+				userAccountManager.findByUsername(editSingleAccount).get(),
+				password1);
+		userAccountManager.save(userAccountManager.findByUsername(
+				editSingleAccount).get());
 
 		return "redirect:/manager";
 	}
