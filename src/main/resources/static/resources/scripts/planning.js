@@ -86,12 +86,8 @@ function buildArea(width, height) {
 		'height' : height
 	});
 }
-// ------Drag-and-Drop-Code----------
-// ----------------------------------------------------------
+
 function cloneIt(element, type) {
-	var newElem = $(element).clone().appendTo("#area");
-	newElem.removeAttr('onClick');
-	//newElem.attr('onmousedown', 'dragDrop(this)');
 	switch (type) {
 	case 0:
 		var width = objectValues[0][0];
@@ -122,35 +118,57 @@ function cloneIt(element, type) {
 		var height = objectValues[6][1];
 		break;
 	}
-	newElem.attr("class", "objekt");
-	newElem.css({
-		'width' : (width * factor),
-		'height' : (height * factor)
-	});
-	$(function(){
-	    $( ".objekt" ).draggable({containment : "#area" });
-	   });
+	if ($('#area').width() <= (width * factor)
+			|| $('#area').height() <= (height * factor)) {
+		alert("Objekt zu gross. Bitte nehmen sie ein anderes.");
+		return false;
+	} else {
+		var newElem = $(element).clone().appendTo("#area");
+		newElem.removeAttr('onClick');
+		newElem.attr("class", "objekt");
+		newElem.css({
+			'width' : (width * factor),
+			'height' : (height * factor)
+		});
+
+		$(function() {
+			$(".objekt").draggable({
+				containment : "#area",
+				snap : true,
+				snapMode : "outer",
+				snapTolerance : "8"
+			});
+			var widthArray = new Array();
+			var heightArray = new Array();
+			$('.objekt').each(function(i) {
+				widthArray.push($(this).width());
+				heightArray.push($(this).height());
+			});
+			for (i = 0; i < widthArray.length; i++) {
+				console.log(widthArray[i] + " x " + heightArray[i]);
+			}
+		});
+	}
 
 }
 
+function deleteObject(element) {
+	element.parentNode.removeChild(element);
+}
 // ----------------------------------
 
-/* hier das zeug zum validieren fuers gelanede- theoretisch	var areaBorderLeft = $('#area').offset().left;
-var areaBorderRight = $('#area').width() + $('#area').offset().left;
-var areaBorderTop = $('#area').offset().top;
-var areaBorderBottom = $('#area').offset().top + $('#area').height();
-
-var objectBorderLeft = element.offsetLeft;
-var objectBorderRight = element.offsetLeft
-		+ parseInt(element.style.width, 10);
-var objectBorderTop = element.offsetTop;
-var objectBorderBottom = element.offsetTop
-		+ parseInt(element.style.height, 10);
-
-if (objectBorderLeft >= areaBorderLeft
-			&& objectBorderRight <= areaBorderRight
-			&& objectBorderTop >= areaBorderTop
-			&& objectBorderBottom <= areaBorderBottom) {
-	console.log("funzt");
-	}
-*/
+/*
+ * hier das zeug zum validieren fuers gelanede- theoretisch var areaBorderLeft =
+ * $('#area').offset().left; var areaBorderRight = $('#area').width() +
+ * $('#area').offset().left; var areaBorderTop = $('#area').offset().top; var
+ * areaBorderBottom = $('#area').offset().top + $('#area').height();
+ * 
+ * var objectBorderLeft = element.offsetLeft; var objectBorderRight =
+ * element.offsetLeft + parseInt(element.style.width, 10); var objectBorderTop =
+ * element.offsetTop; var objectBorderBottom = element.offsetTop +
+ * parseInt(element.style.height, 10);
+ * 
+ * if (objectBorderLeft >= areaBorderLeft && objectBorderRight <=
+ * areaBorderRight && objectBorderTop >= areaBorderTop && objectBorderBottom <=
+ * areaBorderBottom) { console.log("funzt"); }
+ */

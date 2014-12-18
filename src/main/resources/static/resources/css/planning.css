@@ -80,7 +80,7 @@
 }
 .objekt{
 	position:absolute;
-	/*cursor:move;*/
+	cursor:move;
 	border: #f9731c medium solid;
 	background-color: #383839;
 }
