@@ -1,5 +1,12 @@
 package fviv;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
+
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
@@ -15,23 +22,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.text.SimpleDateFormat;
+
 @Component
 public class FvivDataInitializer implements DataInitializer {
 
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
 	private final ExpenseRepository expenseRepository;
-
+	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
-	
+
 	@Autowired
-	public FvivDataInitializer (EmployeeRepository employeeRepository, UserAccountManager userAccountManager, ExpenseRepository expenseRepository, TicketRepository ticketRepository) {
-		
-		Assert.notNull(employeeRepository, "EmployeeRepository must not be null!");
+	public FvivDataInitializer(EmployeeRepository employeeRepository,
+			UserAccountManager userAccountManager,
+			ExpenseRepository expenseRepository,
+			TicketRepository ticketRepository, 
+			FestivalRepository festivalRepository) {
+
+		Assert.notNull(employeeRepository,
+				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
 		this.expenseRepository = expenseRepository;
 		this.ticketRepository = ticketRepository;
+		this.festivalRepository = festivalRepository;
 	}
 
 	@Override
@@ -39,20 +54,37 @@ public class FvivDataInitializer implements DataInitializer {
 		initializeUsers(userAccountManager, employeeRepository);
 		initializeExpenses(expenseRepository);
 		initializeTickets(ticketRepository);
+		try {
+			initializeFestivals(festivalRepository);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
-	
+	private void initializeFestivals(FestivalRepository festivalRepository2)
+			throws ParseException {
+		DateFormat format = new SimpleDateFormat("d, MMMM, yyyy", Locale.GERMAN);
+		Date date1 = format.parse("2, Januar, 2010");
+		Date date2 = format.parse("4, März, 2012");
+
+		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
+				"Avicii, Linkin Park", 5, (long) 55.0);
+		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
+				"Netflix", 6 , (long) 12.0);
+		festivalRepository.save(festival1);
+		festivalRepository.save(festival2);
+
+	}
+
 	private void initializeTickets(TicketRepository ticketRepository) {
-		Ticket ticket1 = new Ticket(true, false);
-		Ticket ticke2 = new Ticket(false, true);
+		Ticket ticket1 = new Ticket(true, false, "Wonderland");
+		Ticket ticke2 = new Ticket(false, true, "Rock am Ring");
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
 	}
 
-
 	private void initializeUsers(UserAccountManager userAccountManager,
 			EmployeeRepository employeeRepository) {
-
 
 		final Role bossRole = new Role("ROLE_BOSS");
 		final Role managerRole = new Role("ROLE_MANAGER");
@@ -132,5 +164,5 @@ public class FvivDataInitializer implements DataInitializer {
 		expenseRepository.save(expense9);
 		expenseRepository.save(expense10);
 	}
-	
+
 }
