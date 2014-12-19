@@ -1,4 +1,4 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -16,17 +16,18 @@
 <body>
 
 	<div id="content">
-		<div id="menuPointNormal">
 			<form action="/catering" method="post">
-				<input type="submit" value="Catering Terminal" />
+				<input type="submit" value="Catering Terminal" class="slimButton"></input>
 			</form>
 			<form action="/manager" method="post">
-				<input type="submit" value="Manager Terminal" />
+				<input type="submit" value="Manager Terminal" class="slimButton"></input>
 			</form>
 			<form action="/ticket" method="post">
-				<input type="submit" value="Ticket Terminal" />
+				<input type="submit" value="Ticket Terminal" class="slimButton"></input>
 			</form>
-		</div>
+			<form action="/planning" method="post">
+				<input type="submit" value="Gel&auml;ndeplaner" class="slimButton"></input>
+			</form>
 	</div>
     <div th:include="messaging :: messaging"></div>
 

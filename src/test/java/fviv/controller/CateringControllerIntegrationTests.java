@@ -15,25 +15,23 @@
  */
 package fviv.controller;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import fviv.AbstractWebIntegrationTests;
 import org.junit.Test;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.order.OrderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
-import fviv.AbstractWebIntegrationTests;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class CateringControllerIntegrationTests extends AbstractWebIntegrationTests {
 	
@@ -50,10 +48,12 @@ public class CateringControllerIntegrationTests extends AbstractWebIntegrationTe
 	@Test
 	public void sampleMvcIntegrationTest() throws Exception {
 		login("caterer", "123");
+
 		mvc.perform(get("/catering")). //
-				andExpect(status().isOk()).//
-				andExpect(model().attribute("meals", is(not(emptyIterable())))).
-				andExpect(model().attribute("drinks", is(not(emptyIterable()))));
+			andExpect(status().isOk()).//
+			andExpect(model().attribute("meals", is(not(emptyIterable())))).
+			andExpect(model().attribute("drinks", is(not(emptyIterable()))));
+
 	}
 	
 	@Test
