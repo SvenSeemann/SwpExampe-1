@@ -10,6 +10,10 @@
 var objectValues = new Array(new Array('10', '5'), new Array('20', '10'),
 		new Array('40', '20'), new Array('3', '3'), new Array('6', '6'),
 		new Array('10', '3'), new Array('8', '3'), new Array('', ''));
+
+// Array mit allen Objekten, die in die DB geschickt werden. ObjektArray(typ,
+// bezeichnung, weite, hoehe)
+var objectList = new Array();
 // ...........................
 var factor;
 
@@ -37,6 +41,7 @@ $(document).ready(function() {
 	$(".objectMenu").hide();
 });
 // --------------------------------------------------
+
 function areaRequest(event, form) {
 	document.getElementById('request').style.display = "none";
 	event.preventDefault();
@@ -67,7 +72,7 @@ $(document).ready(function() {
 	});
 });
 
-function reset() {
+function breakIt() {
 	document.getElementById('request').style.display = "none";
 }
 // ------------------------------------------
@@ -87,7 +92,7 @@ function buildArea(width, height) {
 	});
 }
 
-function cloneIt(element, type) {
+function cloneIt(element, type, name) {
 	switch (type) {
 	case 0:
 		var width = objectValues[0][0];
@@ -126,6 +131,8 @@ function cloneIt(element, type) {
 		var newElem = $(element).clone().appendTo("#area");
 		newElem.removeAttr('onClick');
 		newElem.attr("class", "objekt");
+		newElem.attr("name", name);
+		newElem.attr("oncontextmenu", ("contextMenu(this " + "," + type + ")"));
 		newElem.css({
 			'width' : (width * factor),
 			'height' : (height * factor)
@@ -138,37 +145,47 @@ function cloneIt(element, type) {
 				snapMode : "outer",
 				snapTolerance : "8"
 			});
-			var widthArray = new Array();
-			var heightArray = new Array();
-			$('.objekt').each(function(i) {
-				widthArray.push($(this).width());
-				heightArray.push($(this).height());
-			});
-			for (i = 0; i < widthArray.length; i++) {
-				console.log(widthArray[i] + " x " + heightArray[i]);
-			}
 		});
+		// Gedanke: nicht each nutzen- nur pro Element einen eintrag
+		// erstellen. Abrufen in einer extra Funktion
+		objectList.push(new Array(newElem.attr('name'), width, height));
+		validateIt();
 	}
-
 }
 
-function deleteObject(element) {
-	element.parentNode.removeChild(element);
+function validateIt() {
+	for(i = 0; i < objectList.length; i++){
+		console.log(objectList[i][0] + ", " + objectList[i][1] + ", " +objectList[i][2]);
+	}
 }
-// ----------------------------------
 
-/*
- * hier das zeug zum validieren fuers gelanede- theoretisch var areaBorderLeft =
- * $('#area').offset().left; var areaBorderRight = $('#area').width() +
- * $('#area').offset().left; var areaBorderTop = $('#area').offset().top; var
- * areaBorderBottom = $('#area').offset().top + $('#area').height();
- * 
- * var objectBorderLeft = element.offsetLeft; var objectBorderRight =
- * element.offsetLeft + parseInt(element.style.width, 10); var objectBorderTop =
- * element.offsetTop; var objectBorderBottom = element.offsetTop +
- * parseInt(element.style.height, 10);
- * 
- * if (objectBorderLeft >= areaBorderLeft && objectBorderRight <=
- * areaBorderRight && objectBorderTop >= areaBorderTop && objectBorderBottom <=
- * areaBorderBottom) { console.log("funzt"); }
- */
+function deleteObject(index) {
+	
+	var parent = $(".contextButton").parents('.objekt');
+	parent.remove();
+}
+
+// -- Versuch ein Kontextmenu zu bauen. aber irgendwas ist noch nicht ganz
+// korrekt :/
+function contextMenu(element, type) {
+	$(document).bind("contextmenu", function(e) {
+		return false;
+	});
+	var menu = $('#context');
+	// console.log($("#area").index(element));
+	var menuTop = window.event.clientY - 320;
+	var menuLeft = window.event.clientX - 280;
+	menu.clone().appendTo(element);
+	menu.css({
+		'display' : 'block',
+		'top' : menuTop,
+		'left' : menuLeft
+	});
+	$("#loeschen").attr("onClick", "deleteObject(this)");
+	$(document).click(function() {
+		menu.css({
+			'display' : 'none',
+		});
+	 $('#context').remove();
+	});
+}
