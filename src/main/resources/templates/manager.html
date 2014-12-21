@@ -18,7 +18,7 @@
 <script th:inline="Javascript">
 $(function () { 
 	var salary = [[${salaryTotal}]];
-	var catering = [[${cateringTotal}]];
+	var catering = [[${cateringTotal.amount}]];
 	var rent = [[${rentTotal}]];
 	var total = salary+catering+rent;
 	var deposit = [[${deposit}]];
@@ -266,17 +266,24 @@ $(function () {
 
 					<div th:case="checkStock">
 						<table>
+							<tr>
+								<td>Menu</td>
+								<td>Quantity</td>
+								<td>Purchase price</td>
+								<td>Selling price</td>
+								<td>Get more</td>
+							</tr>
 							<tr th:each="item : ${inventory}">
-								<td th:text="${item.product}">Currywurst</td>
-								<td th:text="${item.quantity}">50</td>
-								<td th:text="${item.purchasePrice}">50</td>
-								<td th:text="item"></td>
+								<td th:text="${item.product.name}" />
+								<td th:text="${item.quantity}" />
+								<td th:text="${item.product.purchasePrice}" />
+								<td th:text="${item.product.sellingPrice}" />
 								<td>
 									<form action="/orderMore" method="post">
 										<input type="hidden" name="itemid" value="0"
 											th:value="${item.identifier}" /> <input id="number"
 											type="number" name="units" min="1" max="50" step="1"
-											placeholder="0"  /> <input type="submit" class="button_green"
+											placeholder="0" /> <input type="submit" class="button_green"
 											value="Order!" style="margin-top: 2px;" />
 									</form>
 								</td>

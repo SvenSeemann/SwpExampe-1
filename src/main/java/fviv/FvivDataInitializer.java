@@ -11,6 +11,7 @@ import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
+import fviv.model.Expense.ExpenseType;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
@@ -141,16 +142,16 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeExpenses(ExpenseRepository expenseRepository) {
 		// Create expenses
-		Expense expense1 = new Expense("catering", 1500f);
-		Expense expense2 = new Expense("catering", 800.50f);
-		Expense expense3 = new Expense("salary", 98.50f);
-		Expense expense4 = new Expense("salary", 8.50f);
-		Expense expense5 = new Expense("rent", 5000f);
-		Expense expense6 = new Expense("rent", 2600f);
-		Expense expense7 = new Expense("salary", 13.80f);
-		Expense expense8 = new Expense("catering", 473f);
-		Expense expense9 = new Expense("salary", 860.4f);
-		Expense expense10 = new Expense("deposit", 10000f);
+		/*Expense expense1 = new Expense(ExpenseType.CATERING, 1500f);
+		Expense expense2 = new Expense(ExpenseType.CATERING, 800.50f);
+		Expense expense3 = new Expense(ExpenseType.SALARY, 98.50f);
+		Expense expense4 = new Expense(ExpenseType.SALARY, 8.50f);
+		Expense expense5 = new Expense(ExpenseType.RENT, 5000f);
+		Expense expense6 = new Expense(ExpenseType.RENT, 2600f);
+		Expense expense7 = new Expense(ExpenseType.SALARY, 13.80f);
+		Expense expense8 = new Expense(ExpenseType.CATERING, 473f);
+		Expense expense9 = new Expense(ExpenseType.SALARY, 860.4f);
+		Expense expense10 = new Expense(ExpenseType.DEPOSIT, 10000f);
 
 		// Save to repository
 		expenseRepository.save(expense1);
@@ -162,7 +163,7 @@ public class FvivDataInitializer implements DataInitializer {
 		expenseRepository.save(expense7);
 		expenseRepository.save(expense8);
 		expenseRepository.save(expense9);
-		expenseRepository.save(expense10);
+		expenseRepository.save(expense10);*/
 	}
 
 }

@@ -5,6 +5,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import fviv.catering.model.Menu.Type;
 
+/**
+ *@author Niklas Fallik
+*/
+
 public interface MenusRepository extends CrudRepository<Menu, ProductIdentifier> {
 
 	Menu findByProductIdentifier(ProductIdentifier id);

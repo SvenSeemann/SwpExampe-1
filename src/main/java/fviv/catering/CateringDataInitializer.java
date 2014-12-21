@@ -21,6 +21,10 @@ import fviv.catering.model.MenusRepository;
 import fviv.catering.model.Menu.Type;
 import fviv.model.StaffRepository;
 
+/**
+ *@author Niklas Fallik
+*/
+
 @Component
 public class CateringDataInitializer implements DataInitializer {
 

@@ -1,11 +1,17 @@
 package fviv.controller;
 
+import static org.joda.money.CurrencyUnit.EUR;
+
 import java.util.LinkedList;
 
 import javax.validation.Valid;
 
+import org.joda.money.Money;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.order.Order;
+import org.salespointframework.order.OrderManager;
+import org.salespointframework.order.OrderStatus;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -22,10 +28,10 @@ import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
-import fviv.catering.model.MenusToBeDisplayedInStock;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Expense;
+import fviv.model.Expense.ExpenseType;
 import fviv.model.ExpenseRepository;
 import fviv.model.Registration;
 
@@ -41,21 +47,20 @@ public class ManagerController {
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	private final UserAccountManager userAccountManager;
-	private final MenusToBeDisplayedInStock menusToBeDisplayedInStock;
 	private final Inventory<InventoryItem> inventory;
+	private final OrderManager<Order> orderManager;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
 			ExpenseRepository expenseRepository,
 			UserAccountManager userAccountManager,
-			Inventory<InventoryItem> inventory,
-			MenusToBeDisplayedInStock menusToBeDisplayedInStock) {
-		
+			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager) {
+
 		this.employeeRepository = employeeRepository;
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
-		this.menusToBeDisplayedInStock = menusToBeDisplayedInStock;
+		this.orderManager = orderManager;
 	}
 
 	// String managermode for th:switch to decide which div to display
@@ -65,10 +70,12 @@ public class ManagerController {
 	}
 
 	// Main mapping for the manager functions
-	@RequestMapping({ "/manager" })
+	@RequestMapping("/manager")
 	public String index(ModelMap modelMap) {
-		// Floats used as sum for each type of expense
-		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0, deposit = 0;
+		// Money used as sum for each type of expense
+		Money salaryTotal = Money.of(EUR, 0.00), cateringTotal = Money.of(EUR,
+				0.00), rentTotal = Money.of(EUR, 0.00), deposit = Money.of(EUR,
+				0.00);
 
 		// List of available roles for the account management
 		LinkedList<Role> allRoles = new LinkedList<Role>();
@@ -93,27 +100,38 @@ public class ManagerController {
 
 		// Add finances by type to the modelMap
 		modelMap.addAttribute("salary",
-				expenseRepository.findByExpenseType("salary"));
+				expenseRepository.findByExpenseType(ExpenseType.SALARY));
 		modelMap.addAttribute("catering",
-				expenseRepository.findByExpenseType("catering"));
+				expenseRepository.findByExpenseType(ExpenseType.CATERING));
 		modelMap.addAttribute("rent",
-				expenseRepository.findByExpenseType("rent"));
-
+				expenseRepository.findByExpenseType(ExpenseType.RENT));
+		
+		// Calculate sold catering menus
+		/*for (Order order : orderManager.find(OrderStatus.COMPLETED)) {
+			expenseRepository.save(new Expense(ExpenseType.CATERING, order
+					.getTotalPrice()));
+		}*/
+		
+		
 		// Calculate total amounts of each expense type
-		for (Expense exp : expenseRepository.findByExpenseType("salary")) {
-			salaryTotal += exp.getAmount();
+		for (Expense exp : expenseRepository
+				.findByExpenseType(ExpenseType.SALARY)) {
+			salaryTotal.plus(exp.getAmount());
 		}
 
-		for (Expense exp : expenseRepository.findByExpenseType("catering")) {
-			cateringTotal += exp.getAmount();
+		for (Expense exp : expenseRepository
+				.findByExpenseType(ExpenseType.CATERING)) {
+			cateringTotal = cateringTotal.plus(exp.getAmount());
 		}
 
-		for (Expense exp : expenseRepository.findByExpenseType("rent")) {
-			rentTotal += exp.getAmount();
+		for (Expense exp : expenseRepository
+				.findByExpenseType(ExpenseType.RENT)) {
+			rentTotal.plus(exp.getAmount());
 		}
 
-		for (Expense exp : expenseRepository.findByExpenseType("deposit")) {
-			deposit += exp.getAmount();
+		for (Expense exp : expenseRepository
+				.findByExpenseType(ExpenseType.DEPOSIT)) {
+			deposit.plus(exp.getAmount());
 		}
 
 		// Add deposit and total amounts to modelMap
@@ -125,12 +143,6 @@ public class ManagerController {
 		// -------------------------- STOCK -------------------------- \\
 
 		modelMap.addAttribute("inventory", this.inventory.findAll());
-		
-		//TODO Weg finden, um auf die Attribute von Menu in InventoryItem zugreifen zu können
-		
-		for (InventoryItem item : this.inventory.findAll()) {
-			menusToBeDisplayedInStock.save(item.getProduct());
-		}		
 		return "manager";
 	}
 
@@ -339,18 +351,20 @@ public class ManagerController {
 
 		return "redirect:/manager";
 	}
-	
+
 	// Check stock and order more food if necessary
 	@RequestMapping("orderMore")
-	public String orderMore(@RequestParam("itemid") InventoryItem item, @RequestParam("units") Long units) {
+	public String orderMore(@RequestParam("itemid") InventoryItem item,
+			@RequestParam("units") Long units) {
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
-		
+
 		return "redirect:/manager";
 	}
 
-	//--- --- --- --- --- --- --- --- --- ModeMapping --- --- --- --- --- --- --- --- --- \\
-	
+	// --- --- --- --- --- --- --- --- --- ModeMapping --- --- --- --- --- ---
+	// --- --- --- \\
+
 	@RequestMapping("/Finances")
 	public String finances() {
 		mode = "finances";

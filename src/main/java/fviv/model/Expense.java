@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Expense {
-	private float amount;
-	private String expenseType;
+	public static enum ExpenseType {
+		SALARY, RENT, CATERING, DEPOSIT;
+	}
+	
+	private Money amount;
+	private ExpenseType expenseType;
 	
 	@Id
 	@GeneratedValue
@@ -23,19 +28,19 @@ public class Expense {
 	protected Expense(){}
 	
 	@Autowired
-	public Expense(String expenseType, float amount){
+	public Expense(ExpenseType expenseType, Money amount){
 		this.expenseType = expenseType;
 		this.amount = amount;
-		if(expenseType != "salary" && expenseType != "rent" && expenseType != "catering" && expenseType != "deposit"){
+		/*if(expenseType != "salary" && expenseType != "rent" && expenseType != "catering" && expenseType != "deposit"){
 			throw new IllegalArgumentException("only salary, rent or catering allowed");
-		}
+		}*/
 	}
 	
-	public String getExpenseType(){
+	public ExpenseType getExpenseType(){
 		return expenseType;
 	}
 	
-	public float getAmount(){
+	public Money getAmount(){
 		return amount;
 	}
 }

@@ -3,6 +3,9 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
+import fviv.model.Expense.ExpenseType;
+import fviv.model.ExpenseRepository;
+import fviv.model.Expense;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -45,17 +48,20 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
+	private final ExpenseRepository expenseRepository;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			UserAccountManager userAccountManager,
-			Inventory<InventoryItem> inventory) {
+			Inventory<InventoryItem> inventory,
+			ExpenseRepository expenseRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
+		this.expenseRepository = expenseRepository;
 
 	}
 
@@ -99,12 +105,15 @@ public class CateringController {
 	}
 
 	@RequestMapping("catering-menu/{mid}")
-	public String addMeal(ModelMap modelMap,
-			@PathVariable("mid") Menu menu,
+	public String addMeal(ModelMap modelMap, @PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
 		Quantity quantity = inventory.findByProduct(menu).get().getQuantity();
-		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO));		//does not work in thymeleaf
+		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO)); // does
+																				// not
+																				// work
+																				// in
+																				// thymeleaf
 
 		cart.addOrUpdateItem(menu, Units.of(1));
 
@@ -122,19 +131,23 @@ public class CateringController {
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
-		return userAccount.map(account -> {
+		return userAccount.map(
+				account -> {
 
-			Order order = new Order(account, Cash.CASH);
+					Order order = new Order(account, Cash.CASH);
 
-			cart.addItemsTo(order);
+					cart.addItemsTo(order);
 
-			orderManager.payOrder(order);
-			orderManager.completeOrder(order);
-			orderManager.save(order);
+					orderManager.payOrder(order);
+					orderManager.completeOrder(order);
+					orderManager.save(order);
+					
+					expenseRepository.save(new Expense(ExpenseType.CATERING,
+							order.getTotalPrice()));
 
-			cart.clear();
+					cart.clear();
 
-			return "redirect:/catering";
-		}).orElse("redirect:/catering");
+					return "redirect:/catering";
+				}).orElse("redirect:/catering");
 	}
 }
