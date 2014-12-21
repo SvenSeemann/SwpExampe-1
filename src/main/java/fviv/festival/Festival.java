@@ -26,10 +26,11 @@ public class Festival {
 
 	public Festival(Date startDatum, Date endDatum, String festivalName, String location,
 			String actors, int maxVisitors, long preisTag) {
-		this.actors = actors;
-		this.endDatum = endDatum;
 		this.startDatum = startDatum;
+		this.endDatum = endDatum;
 		this.festivalName = festivalName;
+		this.location = location;
+		this.actors = actors;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
 
@@ -43,6 +44,7 @@ public class Festival {
 	}
 
 	public void setStartDatum(Date startDatum) {
+		
 		this.startDatum = startDatum;
 	}
 
