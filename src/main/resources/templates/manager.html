@@ -269,6 +269,7 @@ $(function () {
 							<tr th:each="item : ${inventory}">
 								<td th:text="${item.product}">Currywurst</td>
 								<td th:text="${item.quantity}">50</td>
+								<td th:text="${item.purchasePrice}">50</td>
 								<td th:text="item"></td>
 								<td>
 									<form action="/orderMore" method="post">

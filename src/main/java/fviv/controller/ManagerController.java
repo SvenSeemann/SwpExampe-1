@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
+import fviv.catering.model.MenusToBeDisplayedInStock;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Expense;
@@ -40,7 +41,7 @@ public class ManagerController {
 	private final EmployeeRepository employeeRepository;
 	private final ExpenseRepository expenseRepository;
 	private final UserAccountManager userAccountManager;
-	private final MenusRepository menusRepository;
+	private final MenusToBeDisplayedInStock menusToBeDisplayedInStock;
 	private final Inventory<InventoryItem> inventory;
 
 	@Autowired
@@ -48,13 +49,13 @@ public class ManagerController {
 			ExpenseRepository expenseRepository,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
-			MenusRepository menusRepository) {
+			MenusToBeDisplayedInStock menusToBeDisplayedInStock) {
 		
 		this.employeeRepository = employeeRepository;
 		this.expenseRepository = expenseRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
-		this.menusRepository = menusRepository;
+		this.menusToBeDisplayedInStock = menusToBeDisplayedInStock;
 	}
 
 	// String managermode for th:switch to decide which div to display
@@ -125,6 +126,11 @@ public class ManagerController {
 
 		modelMap.addAttribute("inventory", this.inventory.findAll());
 		
+		//TODO Weg finden, um auf die Attribute von Menu in InventoryItem zugreifen zu können
+		
+		for (InventoryItem item : this.inventory.findAll()) {
+			menusToBeDisplayedInStock.save(item.getProduct());
+		}		
 		return "manager";
 	}
 
@@ -334,10 +340,9 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 	
+	// Check stock and order more food if necessary
 	@RequestMapping("orderMore")
 	public String orderMore(@RequestParam("itemid") InventoryItem item, @RequestParam("units") Long units) {
-		//InventoryItem inventoryItem = new InventoryItem(menusRepository.findOne(item.getProduct().getIdentifier()), Units.of(units));
-		//inventory.save(inventoryItem);
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
 		

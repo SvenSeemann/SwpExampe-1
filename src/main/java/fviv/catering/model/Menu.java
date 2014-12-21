@@ -16,13 +16,19 @@ public class Menu extends Product {
 	
 	@SuppressWarnings("unused")
 	private Type type;
+	private Money purchasePrice;
 	
 	@Autowired
-	public Menu(String name, Money price, Type type) {
+	public Menu(String name, Money purchasePrice, Money sellingPrice, Type type) {
 		
-		super(name, price, Units.METRIC);
+		super(name, sellingPrice, Units.METRIC);
 		this.type = type;
+		this.purchasePrice = purchasePrice;
 		
+	}
+	
+	public Money getPurchasePrice() {
+		return this.purchasePrice;
 	}
 	
 	@Deprecated
