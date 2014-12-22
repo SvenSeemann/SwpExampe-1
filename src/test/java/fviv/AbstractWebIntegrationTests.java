@@ -45,6 +45,8 @@ public class AbstractWebIntegrationTests {
 
 	@Before
 	public void setUp() {
+		context.getServletContext().setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, context);
+
 		mvc = MockMvcBuilders.webAppContextSetup(context).addFilters(this.proxy).build();
 	}
 }

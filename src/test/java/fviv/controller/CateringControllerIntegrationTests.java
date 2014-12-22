@@ -59,6 +59,8 @@ public class CateringControllerIntegrationTests extends AbstractWebIntegrationTe
 	@Test
 	public void ControllerIntegrationTest() {
 
+		login("caterer", "123");
+
 		ModelMap modelMap = new ExtendedModelMap();
 
 		String returnedView = controller.catering(modelMap);
