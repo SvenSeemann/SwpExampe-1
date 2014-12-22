@@ -29,7 +29,7 @@ public class Coords {
 		
 	}
 	@Autowired 
-	public Coords(String name, int width, int height, int xPos, int yPos, Type type) {
+	public Coords(Type type, String name, int width, int height, int xPos, int yPos) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
@@ -39,7 +39,7 @@ public class Coords {
 	}
 	
 	@Autowired
-	public Coords(String name, int width, int height, int xPos, int yPos, Type type, float factor) {
+	public Coords(Type type, String name, int width, int height, int xPos, int yPos, float factor) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;

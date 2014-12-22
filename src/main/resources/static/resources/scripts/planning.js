@@ -12,7 +12,7 @@ var objectValues = new Array(new Array('10', '5'), new Array('20', '10'),
 		new Array('10', '3'), new Array('8', '3'), new Array('', ''));
 
 // Array mit allen Objekten, die in die DB geschickt werden. ObjektArray(typ,
-// bezeichnung, weite, hoehe)
+// bezeichnung, weite, hoehe, left, top)
 var objectList = new Array();
 // ...........................
 var factor;
@@ -146,27 +146,52 @@ function cloneIt(element, type, name) {
 				snapTolerance : "8"
 			});
 		});
-		// Gedanke: nicht each nutzen- nur pro Element einen eintrag
-		// erstellen. Abrufen in einer extra Funktion
-		objectList.push(new Array(newElem.attr('name'), width, height));
+		// ich muss die left und top position des newElem bekommen. sonst geht
+		// die Validierung nicht
+		var leftpos = newElem.position().left;
+		var toppos = newElem.position().top;
+		objectList.push(new Array(newElem.attr('name'), newElem.text(), width,
+				height, leftpos, toppos));
 		validateIt();
 	}
 }
 
 function validateIt() {
-	for(i = 0; i < objectList.length; i++){
-		console.log(objectList[i][0] + ", " + objectList[i][1] + ", " +objectList[i][2]);
+	for (i = 0; i < objectList.length; i++) {
+		var usedPlace = new Array();
+		console.log(objectList[i][0] + ", " + objectList[i][1] + ", "
+				+ objectList[i][2] + ", " + objectList[i][3] + ", "
+				+ objectList[i][4] + ", " + objectList[i][5]);
+		// usedPlace.push();
 	}
 }
 
+function saveIt() {
+	$(document).ready(function() {
+		for (i = 0; i < objectList.length; i++) {
+			$.ajax({
+				url : "/new" + objectList[i][0],
+				type : "POST",
+				data : {
+					name : objectList[i][1],
+					width : objectList[i][2],
+					height : objectList[i][3],
+					left : objectList[i][4],
+					top : objectList[i][5]
+				},
+				success : function(data) {
+					console.log(data);
+				}
+			});
+		}
+	});
+}
+
 function deleteObject(index) {
-	
 	var parent = $(".contextButton").parents('.objekt');
 	parent.remove();
 }
 
-// -- Versuch ein Kontextmenu zu bauen. aber irgendwas ist noch nicht ganz
-// korrekt :/
 function contextMenu(element, type) {
 	$(document).bind("contextmenu", function(e) {
 		return false;
@@ -186,6 +211,6 @@ function contextMenu(element, type) {
 		menu.css({
 			'display' : 'none',
 		});
-	 $('#context').remove();
+		$('#context').remove();
 	});
 }
