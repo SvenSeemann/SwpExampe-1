@@ -27,10 +27,19 @@ fieldset{
 	height:150px;
 	border: #0c3 medium solid;
 	margin:auto;
-	margin-top:100px;
+	margin-top:40px;
 	padding:50px 30px;
 }
 
+
+ul{height:150px; width:200px; overflow:hidden; overflow-y:scroll; 
+	border: #0c3 medium solid;
+	
+}
+.ticketlist{
+	margin-left:300px;
+	margin-top:100px;
+}
 .label input{
 	margin-top:10px;
 }
