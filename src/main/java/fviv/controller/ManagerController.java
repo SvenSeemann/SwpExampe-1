@@ -3,6 +3,7 @@ package fviv.controller;
 import static org.joda.money.CurrencyUnit.EUR;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -30,9 +31,10 @@ import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
-import fviv.model.Expense;
-import fviv.model.Expense.ExpenseType;
-import fviv.model.ExpenseRepository;
+import fviv.model.Finance;
+import fviv.model.Finance.Calc;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
 import fviv.model.Registration;
 
 /**
@@ -45,19 +47,19 @@ public class ManagerController {
 	private String mode = "startConfiguration";
 	private String editSingleAccount = "startConfiguration";
 	private final EmployeeRepository employeeRepository;
-	private final ExpenseRepository expenseRepository;
+	private final FinanceRepository financeRepository;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final OrderManager<Order> orderManager;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
-			ExpenseRepository expenseRepository,
+			FinanceRepository financeRepository,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager) {
 
 		this.employeeRepository = employeeRepository;
-		this.expenseRepository = expenseRepository;
+		this.financeRepository = financeRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.orderManager = orderManager;
@@ -100,39 +102,52 @@ public class ManagerController {
 
 		// Add finances by type to the modelMap
 		modelMap.addAttribute("salary",
-				expenseRepository.findByExpenseType(ExpenseType.SALARY));
-		modelMap.addAttribute("catering",
-				expenseRepository.findByExpenseType(ExpenseType.CATERING));
+				financeRepository.findByReference(Reference.SALARY));
+		
+		List<Finance> list = financeRepository.findByReference(Reference.CATERING);
+		for (Finance finance : list) {
+			if (finance.getCalc() != Calc.DEPOSIT) {
+				list.remove(finance);
+			}
+		}
+		modelMap.addAttribute("catering", list);	//wenn list = null dann CRASH!!!
+		
+		
+		/*modelMap.addAttribute("catering",
+				financeRepository.findByReference(Reference.CATERING));*/
 		modelMap.addAttribute("rent",
-				expenseRepository.findByExpenseType(ExpenseType.RENT));
-		
+				financeRepository.findByReference(Reference.RENT));
+
 		// Calculate sold catering menus
-		/*for (Order order : orderManager.find(OrderStatus.COMPLETED)) {
-			expenseRepository.save(new Expense(ExpenseType.CATERING, order
-					.getTotalPrice()));
-		}*/
-		
-		
+		/*
+		 * for (Order order : orderManager.find(OrderStatus.COMPLETED)) {
+		 * expenseRepository.save(new Expense(ExpenseType.CATERING, order
+		 * .getTotalPrice())); }
+		 */
+
 		// Calculate total amounts of each expense type
-		for (Expense exp : expenseRepository
-				.findByExpenseType(ExpenseType.SALARY)) {
-			salaryTotal.plus(exp.getAmount());
+		for (Finance finance : financeRepository
+				.findByReference(Reference.SALARY)) {
+			salaryTotal = salaryTotal.plus(finance.getAmount());
 		}
 
-		for (Expense exp : expenseRepository
-				.findByExpenseType(ExpenseType.CATERING)) {
-			cateringTotal = cateringTotal.plus(exp.getAmount());
+		for (Finance finance : financeRepository
+				.findByReference(Reference.CATERING)) {
+			if (finance.getCalc() == Calc.DEPOSIT) {
+				cateringTotal = cateringTotal.plus(finance.getAmount());
+			}
 		}
 
-		for (Expense exp : expenseRepository
-				.findByExpenseType(ExpenseType.RENT)) {
-			rentTotal.plus(exp.getAmount());
+		for (Finance finance : financeRepository
+				.findByReference(Reference.RENT)) {
+			rentTotal = rentTotal.plus(finance.getAmount());
 		}
 
-		for (Expense exp : expenseRepository
-				.findByExpenseType(ExpenseType.DEPOSIT)) {
-			deposit.plus(exp.getAmount());
-		}
+		/*
+		 * for (Finance finance : financeRepository
+		 * .findByExpenseType(Reference.DEPOSIT)) {
+		 * deposit.plus(finance.getAmount()); }
+		 */
 
 		// Add deposit and total amounts to modelMap
 		modelMap.addAttribute("deposit", deposit);

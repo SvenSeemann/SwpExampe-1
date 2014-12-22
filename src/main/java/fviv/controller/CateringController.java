@@ -3,9 +3,10 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
-import fviv.model.Expense.ExpenseType;
-import fviv.model.ExpenseRepository;
-import fviv.model.Expense;
+import fviv.model.Finance.Calc;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
+import fviv.model.Finance;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -48,20 +49,20 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
-	private final ExpenseRepository expenseRepository;
+	private final FinanceRepository financeRepository;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
-			ExpenseRepository expenseRepository) {
+			FinanceRepository financeRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
-		this.expenseRepository = expenseRepository;
+		this.financeRepository = financeRepository;
 
 	}
 
@@ -142,7 +143,7 @@ public class CateringController {
 					orderManager.completeOrder(order);
 					orderManager.save(order);
 					
-					expenseRepository.save(new Expense(ExpenseType.CATERING,
+					financeRepository.save(new Finance(Reference.CATERING, Calc.DEPOSIT,
 							order.getTotalPrice()));
 
 					cart.clear();

@@ -9,9 +9,7 @@ import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
-import fviv.model.Expense;
-import fviv.model.ExpenseRepository;
-import fviv.model.Expense.ExpenseType;
+import fviv.model.FinanceRepository;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
@@ -30,14 +28,14 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
-	private final ExpenseRepository expenseRepository;
+	private final FinanceRepository financeRepository;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
-			ExpenseRepository expenseRepository,
+			FinanceRepository financeRepository,
 			TicketRepository ticketRepository, 
 			FestivalRepository festivalRepository) {
 
@@ -45,7 +43,7 @@ public class FvivDataInitializer implements DataInitializer {
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
-		this.expenseRepository = expenseRepository;
+		this.financeRepository = financeRepository;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
 	}
@@ -53,7 +51,7 @@ public class FvivDataInitializer implements DataInitializer {
 	@Override
 	public void initialize() {
 		initializeUsers(userAccountManager, employeeRepository);
-		initializeExpenses(expenseRepository);
+		initializeExpenses(financeRepository);
 		initializeTickets(ticketRepository);
 		try {
 			initializeFestivals(festivalRepository);
@@ -140,7 +138,7 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount5);
 	}
 
-	private void initializeExpenses(ExpenseRepository expenseRepository) {
+	private void initializeExpenses(FinanceRepository financeRepository) {
 		// Create expenses
 		/*Expense expense1 = new Expense(ExpenseType.CATERING, 1500f);
 		Expense expense2 = new Expense(ExpenseType.CATERING, 800.50f);
