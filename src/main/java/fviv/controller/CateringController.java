@@ -143,7 +143,7 @@ public class CateringController {
 					orderManager.completeOrder(order);
 					orderManager.save(order);
 					
-					financeRepository.save(new Finance(Reference.CATERING, Calc.DEPOSIT,
+					financeRepository.save(new Finance(Reference.CATERING, Calc.EXPENSE,
 							order.getTotalPrice()));
 
 					cart.clear();

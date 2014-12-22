@@ -51,6 +51,7 @@ public class ManagerController {
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final OrderManager<Order> orderManager;
+	private FinanceRepository cateringFinances;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
@@ -103,18 +104,18 @@ public class ManagerController {
 		// Add finances by type to the modelMap
 		modelMap.addAttribute("salary",
 				financeRepository.findByReference(Reference.SALARY));
-		
-		List<Finance> list = financeRepository.findByReference(Reference.CATERING);
-		for (Finance finance : list) {
-			if (finance.getCalc() != Calc.DEPOSIT) {
-				list.remove(finance);
-			}
+
+		for (Finance finance : financeRepository
+				.findByReference(Reference.CATERING)) {
+			this.cateringFinances.save(finance);			//irgendwas NULL, CRASH
 		}
-		modelMap.addAttribute("catering", list);	//wenn list = null dann CRASH!!!
-		
-		
-		/*modelMap.addAttribute("catering",
-				financeRepository.findByReference(Reference.CATERING));*/
+		modelMap.addAttribute("catering",
+				this.cateringFinances.findByCalc(Calc.DEPOSIT));
+
+		/*
+		 * modelMap.addAttribute("catering",
+		 * financeRepository.findByReference(Reference.CATERING));
+		 */
 		modelMap.addAttribute("rent",
 				financeRepository.findByReference(Reference.RENT));
 

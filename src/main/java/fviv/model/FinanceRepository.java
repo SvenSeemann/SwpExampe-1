@@ -9,6 +9,6 @@ import fviv.model.Finance.Reference;
 
 public interface FinanceRepository extends CrudRepository<Finance, Long>{
 	Finance findById(long id);
-	List<Finance> findByReference(Reference reference);
-	List<Finance> findByCalc(Calc calc);
+	Iterable<Finance> findByReference(Reference reference);
+	Iterable<Finance> findByCalc(Calc calc);
 }
