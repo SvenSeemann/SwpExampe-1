@@ -23,12 +23,13 @@ public class PlanningAJAXController {
 	}
 
 	@RequestMapping(value = "/newArea", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public boolean neuesAreal(@RequestParam("width") int width,
+	public boolean newAreal(@RequestParam("width") int width,
 			@RequestParam("height") int height,
 			@RequestParam("faktor") float factor) {
 		Coords area = planningRepository.findByName("Areal");
 		if (area == null) {
-			planningRepository.save(new Coords(Type.AREA, "Areal", width, height, 0, 0, factor));
+			planningRepository.save(new Coords(Type.AREA, "Areal", width,
+					height, 0, 0, factor));
 			return true;
 		} else {
 			System.out.println("weite: " + area.getWidth() + "hoehe: "
@@ -37,8 +38,10 @@ public class PlanningAJAXController {
 		}
 	}
 
-	@RequestMapping(value = "/newToilet", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public boolean newToilet(@RequestParam("name") String name, @RequestParam("width") int width,
+	@RequestMapping(value = "/newObject", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+	public boolean newToilet(@RequestParam("typ") String typ,
+			@RequestParam("name") String name,
+			@RequestParam("width") int width,
 			@RequestParam("height") int height, @RequestParam("left") int left,
 			@RequestParam("top") int top) {
 		if (planningRepository.findByName("Areal") != null) {
@@ -46,53 +49,23 @@ public class PlanningAJAXController {
 			while (planningRepository.findByName(name + i) != null) {
 				i++;
 			}
-			planningRepository.save(new Coords(Type.TOILET, (name + i), width, height, left,
-					top));
-		}
-		return true;
-	}
-	
-	@RequestMapping(value = "/newStage", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public boolean newStage(@RequestParam("name") String name, @RequestParam("width") int width,
-			@RequestParam("height") int height, @RequestParam("left") int left,
-			@RequestParam("top") int top) {
-		if (planningRepository.findByName("Areal") != null) {
-			int i = 1;
-			while (planningRepository.findByName(name + i) != null) {
-				i++;
+			switch (typ) {
+			case "TOILET":
+				planningRepository.save(new Coords(Type.TOILET, (name + i),
+						width, height, left, top));
+				break;
+			case "STAGE":
+				planningRepository.save(new Coords(Type.STAGE, (name + i),
+						width, height, left, top));
+				break;
+			case "CATERING":
+				planningRepository.save(new Coords(Type.CATERING, (name + i),
+						width, height, left, top));
+				break;
+			case "CAMPING":
+				planningRepository.save(new Coords(Type.CAMPING, (name + i),
+						width, height, left, top));
 			}
-			planningRepository.save(new Coords(Type.STAGE, (name + i), width, height, left,
-					top));
-		}
-		return true;
-	}
-	
-	@RequestMapping(value = "/newCatering", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public boolean newCatering(@RequestParam("name") String name, @RequestParam("width") int width,
-			@RequestParam("height") int height, @RequestParam("left") int left,
-			@RequestParam("top") int top) {
-		if (planningRepository.findByName("Areal") != null) {
-			int i = 1;
-			while (planningRepository.findByName(name + i) != null) {
-				i++;
-			}
-			planningRepository.save(new Coords(Type.CATERING, (name + i), width, height, left,
-					top));
-		}
-		return true;
-	}
-	
-	@RequestMapping(value = "/newCamping", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public boolean newCamping(@RequestParam("name") String name, @RequestParam("width") int width,
-			@RequestParam("height") int height, @RequestParam("left") int left,
-			@RequestParam("top") int top) {
-		if (planningRepository.findByName("Areal") != null) {
-			int i = 1;
-			while (planningRepository.findByName(name + i) != null) {
-				i++;
-			}
-			planningRepository.save(new Coords(Type.CAMPING, (name + i), width, height, left,
-					top));
 		}
 		return true;
 	}

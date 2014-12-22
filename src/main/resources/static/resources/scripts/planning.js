@@ -170,9 +170,10 @@ function saveIt() {
 	$(document).ready(function() {
 		for (i = 0; i < objectList.length; i++) {
 			$.ajax({
-				url : "/new" + objectList[i][0],
-				type : "POST",
+				url : "/newObject",
+				type : "post",
 				data : {
+					typ : objectList[i][0],
 					name : objectList[i][1],
 					width : objectList[i][2],
 					height : objectList[i][3],
