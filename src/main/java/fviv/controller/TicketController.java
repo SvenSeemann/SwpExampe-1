@@ -59,6 +59,8 @@ public class TicketController {
 	@RequestMapping({ "/ticket" })
 	public String index(ModelMap modelMap) {
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+		modelMap.addAttribute("ticketlist", ticketRepository.findAll());
+
 		return "ticket";
 	}
 
@@ -78,21 +80,21 @@ public class TicketController {
 	// ticketeinchecken methode
 	public String pruefeTicket(ModelMap modelMap,
 			@RequestParam("numbers") long id) {
+		modelMap.addAttribute("ticketlist", ticketRepository.findAll());
+
 		Ticket ticketkontrolle = ticketRepository.findById(id);
 		if (ticketRepository.findById(id) == null) {
 
 			return "ticket";
 		}
 		if (ticketkontrolle.getChecked() == true) {
-			ticketkontrolle.setForhtml("" + id + "already checked in!");
-			modelMap.addAttribute("forhtml", ticketkontrolle.getForhtml());
+			modelMap.addAttribute("forhtml", "" + id + "already checked in!");
 			ticketRepository.save(ticketkontrolle);
 
 			return "ticket";
 		} else {
 			ticketkontrolle.setChecked(true);
-			ticketkontrolle.setForhtml("" + id + "now checked in");
-			modelMap.addAttribute("forhtml", ticketkontrolle.getForhtml());
+			modelMap.addAttribute("forhtml", "" + id + "now checked in");
 			ticketRepository.save(ticketkontrolle);
 
 			return "ticket";

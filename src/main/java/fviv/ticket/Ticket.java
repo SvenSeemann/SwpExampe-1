@@ -9,7 +9,6 @@ public class Ticket {
 	private boolean ticketArt;
 	private boolean checked;
 	private String festivalName;
-	private String forhtml;
 
 	
 	@Id
@@ -50,16 +49,5 @@ public class Ticket {
 	public void setFestivalName(String festivalName) {
 		this.festivalName = festivalName;
 	}
-
-	public String getForhtml() {
-		return forhtml;
-	}
-
-	public void setForhtml(String forhtml) {
-		this.forhtml = forhtml;
-	}
-
-
 	
-
 }
