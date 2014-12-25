@@ -57,13 +57,14 @@ public class ManagerController {
 	public ManagerController(EmployeeRepository employeeRepository,
 			FinanceRepository financeRepository,
 			UserAccountManager userAccountManager,
-			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager) {
+			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, FinanceRepository cateringFinances) {
 
 		this.employeeRepository = employeeRepository;
 		this.financeRepository = financeRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.orderManager = orderManager;
+		this.cateringFinances = cateringFinances;
 	}
 
 	// String managermode for th:switch to decide which div to display
