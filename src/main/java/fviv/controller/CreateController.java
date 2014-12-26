@@ -6,8 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,24 +21,33 @@ import fviv.festival.Festival;
 // by niko // festivalerstellungscontroller
 
 @Controller
+@PreAuthorize("hasRole('ROLE_BOSS')")
+
 public class CreateController {
 	private final FestivalRepository festivalRepository;
 	private String mode = "festival";
+	private final UserAccountManager userAccountManager;
+
 
 	@Autowired
-	public CreateController(FestivalRepository festivalRepository) {
+	public CreateController(FestivalRepository festivalRepository, UserAccountManager userAccountManager) {
 		this.festivalRepository = festivalRepository;
+		this.userAccountManager = userAccountManager;
+
 	}
 
 	@RequestMapping({ "/festival" })
-	public String index() {
+	public String index(ModelMap modelMap) {
 		mode="festival";
+		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+
 		return "festival";
 	}
 	@RequestMapping({ "/showFestival" })
 	public String showFestival() {
-		mode="festival";
-		return "festival";
+		mode="showFestivals";
+
+		return "redirect:/festival";
 	}
 	
 		@ModelAttribute("festivalmode")

@@ -75,11 +75,11 @@ public class FvivDataInitializer implements DataInitializer {
 		Date date1 = format.parse("2, Januar, 2010");
 		Date date2 = format.parse("4, März, 2012");
 
-		Festival festival1 = new Festival(date1, date2, "Wonderland",
-				"Dresden EnergieVerbund Arena", "Avicii, Linkin Park", 5,
-				(long) 55.0);
-		Festival festival2 = new Festival(date1, date2, "Rock am Ring",
-				"Berlin in deiner Mom", "Netflix", 6, (long) 12.0);
+		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
+				"Avicii, Linkin Park", 500000, (long) 55.0);
+		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
+				"Netflix", 69999 , (long) 12.0);
+
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
 
