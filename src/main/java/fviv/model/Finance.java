@@ -9,21 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Hendric Eckelt
+ * @author Niklas Fallik
  */
 
 @Entity
 public class Finance {
-	public static enum Reference {
-		SALARY, RENT, CATERING;
-	}
 
-	public static enum Calc {
+	public static enum Reference {
 		EXPENSE, DEPOSIT;
 	}
 
 	private Money amount;
 	private Reference reference;
-	private Calc calc;
 
 	@Id
 	@GeneratedValue
@@ -34,9 +31,8 @@ public class Finance {
 	}
 
 	@Autowired
-	public Finance(Reference reference, Calc calc, Money amount) {
+	public Finance(Reference reference, Money amount) {
 		this.reference = reference;
-		this.calc = calc;
 		this.amount = amount;
 		/*
 		 * if(expenseType != "salary" && expenseType != "rent" && expenseType !=
@@ -47,10 +43,6 @@ public class Finance {
 
 	public Reference getReference() {
 		return this.reference;
-	}
-
-	public Calc getCalc() {
-		return this.calc;
 	}
 
 	public Money getAmount() {

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.joda.money.Money;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Order;
@@ -32,7 +33,6 @@ import fviv.catering.model.MenusRepository;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Finance;
-import fviv.model.Finance.Calc;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.model.Registration;
@@ -47,24 +47,31 @@ public class ManagerController {
 	private String mode = "startConfiguration";
 	private String editSingleAccount = "startConfiguration";
 	private final EmployeeRepository employeeRepository;
-	private final FinanceRepository financeRepository;
+	private final MenusRepository menusRepository;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final OrderManager<Order> orderManager;
 	private FinanceRepository cateringFinances;
+	private FinanceRepository salaryFinances;
+	private FinanceRepository rentFinances;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
-			FinanceRepository financeRepository,
+			MenusRepository menusRepository,
 			UserAccountManager userAccountManager,
-			Inventory<InventoryItem> inventory, OrderManager<Order> orderManager, FinanceRepository cateringFinances) {
+			Inventory<InventoryItem> inventory,
+			OrderManager<Order> orderManager,
+			FinanceRepository cateringFinances,
+			FinanceRepository salaryFinances, FinanceRepository rentFinances) {
 
 		this.employeeRepository = employeeRepository;
-		this.financeRepository = financeRepository;
+		this.menusRepository = menusRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.orderManager = orderManager;
 		this.cateringFinances = cateringFinances;
+		this.salaryFinances = salaryFinances;
+		this.rentFinances = rentFinances;
 	}
 
 	// String managermode for th:switch to decide which div to display
@@ -77,9 +84,10 @@ public class ManagerController {
 	@RequestMapping("/manager")
 	public String index(ModelMap modelMap) {
 		// Money used as sum for each type of expense
-		Money salaryTotal = Money.of(EUR, 0.00), cateringTotal = Money.of(EUR,
-				0.00), rentTotal = Money.of(EUR, 0.00), deposit = Money.of(EUR,
-				0.00);
+		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR,
+				0.00), rentExpTot = Money.of(EUR, 0.00);
+		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR,
+				0.00), rentDepTot = Money.of(EUR, 0.00);
 
 		// List of available roles for the account management
 		LinkedList<Role> allRoles = new LinkedList<Role>();
@@ -103,22 +111,17 @@ public class ManagerController {
 		modelMap.addAttribute("registration", new Registration());
 
 		// Add finances by type to the modelMap
-		modelMap.addAttribute("salary",
-				financeRepository.findByReference(Reference.SALARY));
+		modelMap.addAttribute("salaryExpense",
+				salaryFinances.findByReference(Reference.EXPENSE));
 
-		for (Finance finance : financeRepository
-				.findByReference(Reference.CATERING)) {
-			this.cateringFinances.save(finance);			//irgendwas NULL, CRASH
-		}
-		modelMap.addAttribute("catering",
-				this.cateringFinances.findByCalc(Calc.DEPOSIT));
+		modelMap.addAttribute("cateringExpense",
+				this.cateringFinances.findByReference(Reference.EXPENSE));
 
-		/*
-		 * modelMap.addAttribute("catering",
-		 * financeRepository.findByReference(Reference.CATERING));
-		 */
-		modelMap.addAttribute("rent",
-				financeRepository.findByReference(Reference.RENT));
+		modelMap.addAttribute("cateringDeposit",
+				this.cateringFinances.findByReference(Reference.DEPOSIT));
+		
+		modelMap.addAttribute("rentExpense",
+				this.rentFinances.findByReference(Reference.EXPENSE));
 
 		// Calculate sold catering menus
 		/*
@@ -128,21 +131,30 @@ public class ManagerController {
 		 */
 
 		// Calculate total amounts of each expense type
-		for (Finance finance : financeRepository
-				.findByReference(Reference.SALARY)) {
-			salaryTotal = salaryTotal.plus(finance.getAmount());
+		/*for (Finance salDep : salaryFinances.findByReference(Reference.DEPOSIT)) {
+			salDepTot = salDepTot.plus(salDep.getAmount());
+		}*/
+
+		for (Finance catDep : cateringFinances
+				.findByReference(Reference.DEPOSIT)) {
+			catDepTot = catDepTot.plus(catDep.getAmount());
 		}
 
-		for (Finance finance : financeRepository
-				.findByReference(Reference.CATERING)) {
-			if (finance.getCalc() == Calc.DEPOSIT) {
-				cateringTotal = cateringTotal.plus(finance.getAmount());
-			}
+		for (Finance catExp : cateringFinances
+				.findByReference(Reference.EXPENSE)) {
+			catExpTot = catExpTot.plus(catExp.getAmount());
 		}
 
-		for (Finance finance : financeRepository
-				.findByReference(Reference.RENT)) {
-			rentTotal = rentTotal.plus(finance.getAmount());
+		/*for (Finance rentDep : rentFinances.findByReference(Reference.DEPOSIT)) {
+			rentDepTot = rentDepTot.plus(rentDep.getAmount());
+		}*/
+		
+		for (Finance salExp : salaryFinances.findByReference(Reference.EXPENSE)) {
+			salExpTot = salExpTot.plus(salExp.getAmount());
+		}
+
+		for (Finance rentExp : rentFinances.findByReference(Reference.EXPENSE)) {
+			rentExpTot = rentExpTot.plus(rentExp.getAmount());
 		}
 
 		/*
@@ -152,10 +164,12 @@ public class ManagerController {
 		 */
 
 		// Add deposit and total amounts to modelMap
-		modelMap.addAttribute("deposit", deposit);
-		modelMap.addAttribute("salaryTotal", salaryTotal);
-		modelMap.addAttribute("cateringTotal", cateringTotal);
-		modelMap.addAttribute("rentTotal", rentTotal);
+		modelMap.addAttribute("salExpTot", salExpTot);
+		modelMap.addAttribute("catExpTot", catExpTot);
+		modelMap.addAttribute("rentExpTot", rentExpTot);
+		modelMap.addAttribute("salDepTot", salDepTot);
+		modelMap.addAttribute("catDepTot", catDepTot);
+		modelMap.addAttribute("rentDepTot", rentDepTot);
 
 		// -------------------------- STOCK -------------------------- \\
 
@@ -373,6 +387,9 @@ public class ManagerController {
 	@RequestMapping("orderMore")
 	public String orderMore(@RequestParam("itemid") InventoryItem item,
 			@RequestParam("units") Long units) {
+		ProductIdentifier mid = item.getProduct().getIdentifier();
+		cateringFinances.save(new Finance(Reference.EXPENSE, (menusRepository
+				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units))));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
 

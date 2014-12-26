@@ -134,48 +134,55 @@ $(function () {
 					<!-- Finance case -->
 					<div th:case="finances">
 						<div align="center">
+
 							<table class="salaryTable">
 								<tr>
-									<th>Ausgabenart</th>
-									<th>Menge</th>
+									<th>Gehälter Betrag:</th>
 								</tr>
-								<tr th:each=" salary : ${salary}">
-									<td>Gehalt</td>
+								<tr th:each=" salary : ${salaryExpense}">
 									<td th:text="${salary.amount}"></td>
 								</tr>
 								<tr>
-									<th>Gehälter Total:</th>
-									<th th:text="${salaryTotal}" id="salaryTotal"></th>
+									<th>Total: <p th:text="${salExpTot}" id="salaryTotal" /></th>
 								</tr>
 							</table>
+
 							<table class="cateringTable">
 								<tr>
-									<th>Ausgabenart</th>
-									<th>Menge</th>
+									<th>Catering Ausgaben Betrag:</th>
 								</tr>
-								<tr th:each=" catering : ${catering}">
-									<td>Catering</td>
+								<tr th:each=" item : ${cateringExpense}">
+									<td th:text="${item.amount}"></td>
+								</tr>
+								<tr>
+									<th>Total: <p th:text="${catExpTot}" /></th>
+								</tr>
+							</table>
+
+							<table class="cateringTable">
+								<tr>
+									<th>Catering Einnahmen Betrag:</th>
+								</tr>
+								<tr th:each=" catering : ${cateringDeposit}">
 									<td th:text="${catering.amount}"></td>
 								</tr>
 								<tr>
-									<th>Catering Total:</th>
-									<th th:text="${cateringTotal}"></th>
+									<th>Total: <p th:text="${catDepTot}" /></th>
 								</tr>
 							</table>
+
 							<table class="rentTable">
 								<tr>
-									<th>Ausgabenart</th>
-									<th>Menge</th>
+									<th>Mietausgaben Betrag:</th>
 								</tr>
-								<tr th:each=" rent : ${rent}">
-									<td>Miete</td>
+								<tr th:each=" rent : ${rentExpense}">
 									<td th:text="${rent.amount}"></td>
 								</tr>
 								<tr>
-									<th>Miete Total:</th>
-									<th th:text="${rentTotal}"></th>
+									<th>Total: <p th:text="${rentExpTot}" /></th>
 								</tr>
 							</table>
+
 						</div>
 						<div id="financesChart"></div>
 					</div>

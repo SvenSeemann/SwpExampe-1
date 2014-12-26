@@ -1,5 +1,6 @@
 package fviv;
 
+import static org.joda.money.CurrencyUnit.EUR;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -9,10 +10,13 @@ import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
+import fviv.model.Finance;
+import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
+import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -28,30 +32,35 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private final EmployeeRepository employeeRepository;
 	private final UserAccountManager userAccountManager;
-	private final FinanceRepository financeRepository;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
+	private final FinanceRepository cateringFinances;
+	private final FinanceRepository salaryFinances;
+	private final FinanceRepository rentFinances;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
-			FinanceRepository financeRepository,
-			TicketRepository ticketRepository, 
-			FestivalRepository festivalRepository) {
+			TicketRepository ticketRepository,
+			FestivalRepository festivalRepository,
+			FinanceRepository cateringFinances,
+			FinanceRepository salaryFinances, FinanceRepository rentFinances) {
 
 		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
-		this.financeRepository = financeRepository;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
+		this.cateringFinances = cateringFinances;
+		this.salaryFinances = salaryFinances;
+		this.rentFinances = rentFinances;
 	}
 
 	@Override
 	public void initialize() {
 		initializeUsers(userAccountManager, employeeRepository);
-		initializeExpenses(financeRepository);
+		initializeFinances(cateringFinances, salaryFinances, rentFinances);
 		initializeTickets(ticketRepository);
 		try {
 			initializeFestivals(festivalRepository);
@@ -66,10 +75,11 @@ public class FvivDataInitializer implements DataInitializer {
 		Date date1 = format.parse("2, Januar, 2010");
 		Date date2 = format.parse("4, März, 2012");
 
-		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
-				"Avicii, Linkin Park", 5, (long) 55.0);
-		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
-				"Netflix", 6 , (long) 12.0);
+		Festival festival1 = new Festival(date1, date2, "Wonderland",
+				"Dresden EnergieVerbund Arena", "Avicii, Linkin Park", 5,
+				(long) 55.0);
+		Festival festival2 = new Festival(date1, date2, "Rock am Ring",
+				"Berlin in deiner Mom", "Netflix", 6, (long) 12.0);
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
 
@@ -138,30 +148,13 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount5);
 	}
 
-	private void initializeExpenses(FinanceRepository financeRepository) {
+	private void initializeFinances(FinanceRepository cateringFinances, FinanceRepository salaryFinances, FinanceRepository rentFinances) {
+		
 		// Create expenses
-		/*Expense expense1 = new Expense(ExpenseType.CATERING, 1500f);
-		Expense expense2 = new Expense(ExpenseType.CATERING, 800.50f);
-		Expense expense3 = new Expense(ExpenseType.SALARY, 98.50f);
-		Expense expense4 = new Expense(ExpenseType.SALARY, 8.50f);
-		Expense expense5 = new Expense(ExpenseType.RENT, 5000f);
-		Expense expense6 = new Expense(ExpenseType.RENT, 2600f);
-		Expense expense7 = new Expense(ExpenseType.SALARY, 13.80f);
-		Expense expense8 = new Expense(ExpenseType.CATERING, 473f);
-		Expense expense9 = new Expense(ExpenseType.SALARY, 860.4f);
-		Expense expense10 = new Expense(ExpenseType.DEPOSIT, 10000f);
-
-		// Save to repository
-		expenseRepository.save(expense1);
-		expenseRepository.save(expense2);
-		expenseRepository.save(expense3);
-		expenseRepository.save(expense4);
-		expenseRepository.save(expense5);
-		expenseRepository.save(expense6);
-		expenseRepository.save(expense7);
-		expenseRepository.save(expense8);
-		expenseRepository.save(expense9);
-		expenseRepository.save(expense10);*/
+		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80)));
+		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40)));
+		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00)));
+		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00)));
+		 
 	}
-
 }
