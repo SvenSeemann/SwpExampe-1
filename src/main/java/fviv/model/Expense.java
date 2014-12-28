@@ -27,7 +27,7 @@ public class Expense {
 		this.expenseType = expenseType;
 		this.amount = amount;
 		if(expenseType != "salary" && expenseType != "rent" && expenseType != "catering" && expenseType != "deposit"){
-			throw new IllegalArgumentException("only salary, rent or catering allowed");
+			throw new IllegalArgumentException("only salary, rent, catering or deposit allowed");
 		}
 	}
 	
