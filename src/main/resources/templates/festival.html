@@ -1,0 +1,109 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/festival.css" />
+<title>Festival erstellung</title>
+</head>
+<body>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
+			<div id="title">Festival Erstellung</div>
+			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
+		</div>
+
+
+		<div id="content">
+			<div id="substance">
+				<div id="chooseFestivalview" th:switch="${festivalmode}">
+				<!-- FestivalCase -->
+				<div th:case="festival">
+				<form th:action="@{/newFestival}" method="post">
+					<fieldset>
+							<label
+							class="label" for="festivalName"> <input type="text"
+							name="festivalName" size="40" placeholder="festivalname"></input>Festivalname</label> 	
+							<br/>
+							<label class="label" for="location"> <input type="text"
+							name="location" size="40" placeholder="Adresse"></input>Adresse</label> 
+							<br/>
+							<label
+							class="label" for="startDate"> <input type="text"
+							name="startDate" size="40" placeholder="dd MMMM, yyyy"></input>Startdatum</label> 
+							<br/>
+							<label class="label" for="endDate"> <input type="text"
+							name="endDate" size="40" placeholder="dd MMMM, yyyy"></input>EndDatum</label> 
+							<br/>
+							<label class="label" for="actors"> <input type="text"
+							name="actors" size="40" placeholder="Künstler"></input>Künstler</label> 
+							<br/>
+							<label
+							class="label" for="maxVisitors"> <input type="text"
+							name="maxVisitors" size="40" placeholder="Festivalkapazität"></input>Festivalkapazität</label> 
+							<br/>
+							<label
+							class="label" for="preisTag"> <input type="text"
+							name="preisTag" size="40" placeholder="Kosten Tageskarte"></input>Kosten Tageskarte</label>
+							<br/>
+							
+							
+							<input
+							type="submit" onclick="alert('Festival wird erstellt')"
+							value="Festival erstellen" />
+					</fieldset>
+				</form>
+			</div>
+			
+			<!-- case show festivals -->
+			<div th:case="showFestivals">
+				<table class="festivalTable">
+							<tr>
+								<th>ID</th>
+								<th>StartDatum</th>
+								<th>EndDatum</th>
+								<th>Festival Name</th>
+								<th>Adresse</th>
+								<th>Künstler</th>
+								<th>Maximale Besucher</th>
+								<th>Kosten TagesKarte</th>
+							
+							</tr>
+							<tr th:each=" festival : ${festivallist}">
+								<td th:text="${festival.id}"></td>
+								<td th:text="${festival.startDatum}"></td>
+								<td th:text="${festival.endDatum}"></td>
+								<td th:text="${festival.festivalName}"></td>
+								<td th:text="${festival.location}"></td>
+								<td th:text="${festival.actors}"></td>
+								<td th:text="${festival.maxVisitors}"></td>
+								<td th:text="${festival.preisTag}"></td>
+							</tr>
+						</table>
+			</div>
+			
+			 
+			</div>
+		</div>
+</div>
+		<div id="menu">
+						<form method="post" action="/logout">
+				<button class="slimButton" type="submit"
+					th:text="#{catering.logout}" value="logout">Logout</button>
+			</form>
+			<form method="post" action="/chat">
+				<button class="slimButton" type="submit" value="chat"
+					th:text="#{catering.chat}">Chat</button>
+			</form>
+			<form th:action="@{/showFestival}" method="post"><button class="boldButton">Festivals anzeigen</button></form>
+			<form th:action="@{/festival}" method="post"><button class="boldButton">Festivals erstellen</button></form>
+			
+		</div>
+	
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- Author: Hendric Eckelt -->
 
@@ -17,7 +18,7 @@
 <script th:inline="Javascript">
 $(function () { 
 	var salary = [[${salaryTotal}]];
-	var catering = [[${cateringTotal}]];
+	var catering = [[${cateringTotal.amount}]];
 	var rent = [[${rentTotal}]];
 	var total = salary+catering+rent;
 	var deposit = [[${deposit}]];
@@ -133,48 +134,55 @@ $(function () {
 					<!-- Finance case -->
 					<div th:case="finances">
 						<div align="center">
+
 							<table class="salaryTable">
 								<tr>
-									<th>Ausgabenart</th>
-									<th>Menge</th>
+									<th>Gehälter Betrag:</th>
 								</tr>
-								<tr th:each=" salary : ${salary}">
-									<td>Gehalt</td>
+								<tr th:each=" salary : ${salaryExpense}">
 									<td th:text="${salary.amount}"></td>
 								</tr>
 								<tr>
-									<th>Gehälter Total:</th>
-									<th th:text="${salaryTotal}" id="salaryTotal"></th>
+									<th>Total: <p th:text="${salExpTot}" id="salaryTotal" /></th>
 								</tr>
 							</table>
+
 							<table class="cateringTable">
 								<tr>
-									<th>Ausgabenart</th>
-									<th>Menge</th>
+									<th>Catering Ausgaben Betrag:</th>
 								</tr>
-								<tr th:each=" catering : ${catering}">
-									<td>Catering</td>
+								<tr th:each=" item : ${cateringExpense}">
+									<td th:text="${item.amount}"></td>
+								</tr>
+								<tr>
+									<th>Total: <p th:text="${catExpTot}" /></th>
+								</tr>
+							</table>
+
+							<table class="cateringTable">
+								<tr>
+									<th>Catering Einnahmen Betrag:</th>
+								</tr>
+								<tr th:each=" catering : ${cateringDeposit}">
 									<td th:text="${catering.amount}"></td>
 								</tr>
 								<tr>
-									<th>Catering Total:</th>
-									<th th:text="${cateringTotal}"></th>
+									<th>Total: <p th:text="${catDepTot}" /></th>
 								</tr>
 							</table>
+
 							<table class="rentTable">
 								<tr>
-									<th>Ausgabenart</th>
-									<th>Menge</th>
+									<th>Mietausgaben Betrag:</th>
 								</tr>
-								<tr th:each=" rent : ${rent}">
-									<td>Miete</td>
+								<tr th:each=" rent : ${rentExpense}">
 									<td th:text="${rent.amount}"></td>
 								</tr>
 								<tr>
-									<th>Miete Total:</th>
-									<th th:text="${rentTotal}"></th>
+									<th>Total: <p th:text="${rentExpTot}" /></th>
 								</tr>
 							</table>
+
 						</div>
 						<div id="financesChart"></div>
 					</div>
@@ -242,7 +250,7 @@ $(function () {
 									class="button_green" name="disable"
 									value="Account deaktivieren"></input>
 							</form>
-							<p>Nuterinformationen ändern:</p>
+							<p>Nutzerinformationen ändern:</p>
 							<form action="/editEmployeeDetails" method="post">
 								<input type="text" name="editLastname" placeholder="Nachname"></input>
 								<br /> <input type="text" name="editFirstname"
@@ -257,9 +265,37 @@ $(function () {
 								<input type="password" placeholder="Neues Passwort"
 									name="changePassword1"></input> <br /> <input type="password"
 									placeholder="Passwort wiederholen" name="changePassword2"></input>
-								<br /> <input type="submit" class="button_green" value="Passwort speichern" style="margin-top:2px;"></input>
+								<br /> <input type="submit" class="button_green"
+									value="Passwort speichern" style="margin-top: 2px;"></input>
 							</form>
 						</div>
+					</div>
+
+					<div th:case="checkStock">
+						<table>
+							<tr>
+								<td>Menu</td>
+								<td>Quantity</td>
+								<td>Purchase price</td>
+								<td>Selling price</td>
+								<td>Get more</td>
+							</tr>
+							<tr th:each="item : ${inventory}">
+								<td th:text="${item.product.name}" />
+								<td th:text="${item.quantity}" />
+								<td th:text="${item.product.purchasePrice}" />
+								<td th:text="${item.product.sellingPrice}" />
+								<td>
+									<form action="/orderMore" method="post">
+										<input type="hidden" name="itemid" value="0"
+											th:value="${item.identifier}" /> <input id="number"
+											type="number" name="units" min="1" max="50" step="1"
+											placeholder="0" /> <input type="submit" class="button_green"
+											value="Order!" style="margin-top: 2px;" />
+									</form>
+								</td>
+							</tr>
+						</table>
 					</div>
 
 					<!-- Standard case -->
@@ -276,7 +312,7 @@ $(function () {
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
 			<form>
-			<button class="slimButton">Chat</button>
+				<button class="slimButton">Chat</button>
 			</form>
 			<form method="post" action="/Terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>
@@ -289,6 +325,9 @@ $(function () {
 			</form>
 			<form method="post" action="/Accountmanagement">
 				<input type="submit" class="boldButton" value="Accounts"></input>
+			</form>
+			<form method="post" action="/Stock">
+				<input type="submit" class="boldButton" value="Stock"></input>
 			</form>
 		</div>
 	</div>

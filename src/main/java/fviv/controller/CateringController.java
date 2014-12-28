@@ -1,18 +1,19 @@
 package fviv.controller;
 
-//import static org.joda.money.CurrencyUnit.EUR;
-
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
+import fviv.model.Finance;
 
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.inventory.InventoryItemIdentifier;
 import org.salespointframework.order.Cart;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
+import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -31,6 +32,10 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Optional;
 
+/**
+ * @author Niklas Fallik
+ */
+
 @Controller
 @PreAuthorize("hasRole('ROLE_CATERER')")
 @SessionAttributes("cart")
@@ -43,17 +48,20 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
+	private final FinanceRepository cateringFinances;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			UserAccountManager userAccountManager,
-			Inventory<InventoryItem> inventory) {
+			Inventory<InventoryItem> inventory,
+			FinanceRepository cateringFinances) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
+		this.cateringFinances = cateringFinances;
 
 	}
 
@@ -97,9 +105,15 @@ public class CateringController {
 	}
 
 	@RequestMapping("catering-menu/{mid}")
-	public String addMeal(@PathVariable("mid") Menu menu,
+	public String addMeal(ModelMap modelMap, @PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
+		Quantity quantity = inventory.findByProduct(menu).get().getQuantity();
+		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO)); // does
+																				// not
+																				// work
+																				// in
+																				// thymeleaf
 
 		cart.addOrUpdateItem(menu, Units.of(1));
 
@@ -117,19 +131,23 @@ public class CateringController {
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
-		return userAccount.map(account -> {
+		return userAccount.map(
+				account -> {
 
-			Order order = new Order(account, Cash.CASH);
+					Order order = new Order(account, Cash.CASH);
 
-			cart.addItemsTo(order);
+					cart.addItemsTo(order);
 
-			orderManager.payOrder(order);
-			orderManager.completeOrder(order);
-			orderManager.save(order);
+					orderManager.payOrder(order);
+					orderManager.completeOrder(order);
+					orderManager.save(order);
+					
+					cateringFinances.save(new Finance(Reference.DEPOSIT,
+							order.getTotalPrice()));
 
-			cart.clear();
+					cart.clear();
 
-			return "redirect:/catering";
-		}).orElse("redirect:/catering");
+					return "redirect:/catering";
+				}).orElse("redirect:/catering");
 	}
 }

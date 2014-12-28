@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
@@ -9,52 +10,112 @@
 <title>tickets</title>
 </head>
 <body>
-	<div id="webseite">
-		<div id="header">
-			<div id="loggedAs">angemeldet als:</div>
-			<div id="title">Ticketverkauf</div>
-			<div id="loginName">UserName</div>
-		</div>
+	<div id="chooseTicketView" th:switch="${ticketmode}">
+		<!-- TicketCase -->
+		<div th:case="ticket">
+			<div id="webseite">
+				<div id="header">
+					<div id="loggedAs" th:text="#{fviv.whoami}"></div>
+					<div id="title">Ticketverkauf</div>
+					<div id="loginName" th:text="${#authentication?.name}"></div>
+				</div>
 
 
-		<div id="content">
-			<div id="substance">
+				<div id="content">
+					<div id="substance">
 
-				<form th:action="@{/newTicket}" method="post">
-					<fieldset>
-						<label class="label" for="festivals"> Festival
-							ausw&auml;hlen: <select name="festivals" size="1">
-								<option>Inhalt1</option>
-						</select>
-						</label> <label class="label" for="ticketart"> Ticketart
-							ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
-							value="true" checked="checked" />Tagesticket <br /> <input
-							type="radio" name="ticketart" value="false" />3-Tagesticket <label
-							class="label" for="numbers"> <input type="text"
-							name="numbers" size="40" placeholder="Anzahl" /></label> <label
-							class="label" for="price"> <input type="text"
-							name="price" size="40" placeholder="Preis pro Stück" /></label> <input
-							type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')"
-							value="Ticket erstellen" />
-					</fieldset>
-				</form>
+						<form th:action="@{/newTicket}" method="post">
+							<fieldset>
+								<label class="label" for="festivalId"> Festival
+									ausw&auml;hlen: <select name="festivalId" size="1">
+										<option th:each=" festival : ${festivallist}"
+											th:text="${festival.id} + ${festival.festivalName}"
+											th:value="${festival.id}"></option>
+								</select><br />
+								</label> <label class="label" for="ticketart"> Ticketart
+									ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
+									value="true" checked="checked" />Tagesticket <br /> <input
+									type="radio" name="ticketart" value="false" />3-Tagesticket <label
+									class="label" for="numbers"> <input type="text"
+									name="numbers" size="40" placeholder="Anzahl" /></label> <input
+									type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')"
+									value="Ticket erstellen" />
+							</fieldset>
+						</form>
 
+					</div>
+				</div>
+
+				<div id="menu">
+					<form method="post" action="/logout">
+						<button class="slimButton" type="submit"
+							th:text="#{catering.logout}" value="logout">Logout</button>
+					</form>
+					<form method="post" action="/chat">
+						<button class="slimButton" type="submit" value="chat"
+							th:text="#{catering.chat}">Chat</button>
+					</form>
+					<form th:action="@{/ticketDrucken}" method="post" target="_blank">
+						<label class="label" for="ticketnummer"> <input
+							type="text" name="ticketnummer" size="26"
+							placeholder="Ticket ID drucken" /></label>
+						<button class="boldButton">Ticket Drucken</button>
+					</form>
+					<form th:action="@{/ticketPruefen}" method="post">
+						<button class="boldButton">Ticket Pr&uuml;fen</button>
+					</form>
+				</div>
 			</div>
 		</div>
+		<div th:case="ticketpruefen">
+			<div id="webseite">
+				<div id="header">
+					<div id="loggedAs" th:text="#{fviv.whoami}"></div>
+					<div id="title">Ticketverkauf</div>
+					<div id="loginName" th:text="${#authentication?.name}"></div>
+				</div>
+				<div id="content">
+					<div id="substance">
+						<div class="ticketlist">
+							<label class="label" for="ticketlist"> Liste aller
+								Tickets </label>
 
-		<div id="menu">
-			<button class="slimButton">Logout</button>
-			<button class="slimButton">Chat</button>
-			<form th:action="@{/ticketDrucken}" method="post" target="_blank">
-				<label class="label" for="ticketnummer"> <input type="text"
-					name="ticketnummer" size="26" placeholder="Ticket ID drucken" /></label>
-				<button class="boldButton">Ticket Drucken</button>
-			</form>
-			<form th:action="@{/ticketPruefen}" method="post">
-				<button class="boldButton">Ticket Pr&uuml;fen</button>
-			</form>
+							<ul>
+								<li th:each=" ticket : ${ticketlist}"
+									th:text="${ticket.id} + ' ' + ${ticket.festivalName}"></li>
+							</ul>
+						</div>
+
+
+						<form th:action="@{/pruefeTicket}" method="post">
+							<fieldset>
+								<label class="label" for="numbers"> <input type="text"
+									name="numbers" size="40" placeholder="TicketID" /></label> <input
+									type="submit" value="Ticket einchecken" /><br /> <label
+									class="label" for="checken" th:text="${forhtml}"></label>
+
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<div id="menu">
+					<form method="post" action="/logout">
+						<button class="slimButton" type="submit"
+							th:text="#{catering.logout}" value="logout">Logout</button>
+					</form>
+					<form method="post" action="/chat">
+						<button class="slimButton" type="submit" value="chat"
+							th:text="#{catering.chat}">Chat</button>
+					</form>
+					<form th:action="@{/changeMode}" method="post">
+						<button class="boldButton">Ticket Drucken</button>
+					</form>
+					<form th:action="@{/ticketPruefen}" method="post">
+						<button class="boldButton">Ticket Pr&uuml;fen</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
-
 </body>
 </html>
