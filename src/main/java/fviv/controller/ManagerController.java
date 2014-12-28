@@ -51,6 +51,7 @@ public class ManagerController {
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final OrderManager<Order> orderManager;
+	private final FinanceRepository financeRepository;
 	private FinanceRepository cateringFinances;
 	private FinanceRepository salaryFinances;
 	private FinanceRepository rentFinances;
@@ -61,6 +62,7 @@ public class ManagerController {
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
 			OrderManager<Order> orderManager,
+			FinanceRepository financeRepository,
 			FinanceRepository cateringFinances,
 			FinanceRepository salaryFinances, FinanceRepository rentFinances) {
 
@@ -72,6 +74,7 @@ public class ManagerController {
 		this.cateringFinances = cateringFinances;
 		this.salaryFinances = salaryFinances;
 		this.rentFinances = rentFinances;
+		this.financeRepository = financeRepository;
 	}
 
 	// String managermode for th:switch to decide which div to display
@@ -88,6 +91,24 @@ public class ManagerController {
 				0.00), rentExpTot = Money.of(EUR, 0.00);
 		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR,
 				0.00), rentDepTot = Money.of(EUR, 0.00);
+		
+		// Lists that contain Finances sorted by Type
+		LinkedList<Finance> salaryExpense = new LinkedList<Finance>();
+		LinkedList<Finance> salaryDeposit = new LinkedList<Finance>();
+		LinkedList<Finance> cateringExpense = new LinkedList<Finance>();
+		LinkedList<Finance> cateringDeposit = new LinkedList<Finance>();
+		LinkedList<Finance> rentExpense = new LinkedList<Finance>();
+		LinkedList<Finance> rentDeposit = new LinkedList<Finance>();
+		
+		// Fill the Finance lists
+		for(Finance finance : financeRepository.findAll()){
+			if(finance.getFinanceType().equals("salary") && finance.getReference() == Reference.EXPENSE)salaryExpense.add(finance);
+			if(finance.getFinanceType().equals("salary") && finance.getReference() == Reference.DEPOSIT)salaryDeposit.add(finance);
+			if(finance.getFinanceType().equals("catering") && finance.getReference() == Reference.EXPENSE)cateringExpense.add(finance);
+			if(finance.getFinanceType().equals("catering") && finance.getReference() == Reference.DEPOSIT)cateringDeposit.add(finance);
+			if(finance.getFinanceType().equals("rent") && finance.getReference() == Reference.EXPENSE)rentExpense.add(finance);
+			if(finance.getFinanceType().equals("rent") && finance.getReference() == Reference.DEPOSIT)rentDeposit.add(finance);		
+		}
 
 		// List of available roles for the account management
 		LinkedList<Role> allRoles = new LinkedList<Role>();
@@ -111,17 +132,12 @@ public class ManagerController {
 		modelMap.addAttribute("registration", new Registration());
 
 		// Add finances by type to the modelMap
-		modelMap.addAttribute("salaryExpense",
-				salaryFinances.findByReference(Reference.EXPENSE));
-
-		modelMap.addAttribute("cateringExpense",
-				this.cateringFinances.findByReference(Reference.EXPENSE));
-
-		modelMap.addAttribute("cateringDeposit",
-				this.cateringFinances.findByReference(Reference.DEPOSIT));
-		
-		modelMap.addAttribute("rentExpense",
-				this.rentFinances.findByReference(Reference.EXPENSE));
+		modelMap.addAttribute("salaryExpense", salaryExpense);
+		modelMap.addAttribute("salaryDeposit", salaryDeposit);
+		modelMap.addAttribute("cateringExpense", cateringExpense);
+		modelMap.addAttribute("cateringDeposit", cateringDeposit);		
+		modelMap.addAttribute("rentExpense", rentExpense);
+		modelMap.addAttribute("rentDeposit", rentDeposit);
 
 		// Calculate sold catering menus
 		/*
@@ -131,29 +147,27 @@ public class ManagerController {
 		 */
 
 		// Calculate total amounts of each expense type
-		/*for (Finance salDep : salaryFinances.findByReference(Reference.DEPOSIT)) {
+		for (Finance salDep : salaryDeposit) {
 			salDepTot = salDepTot.plus(salDep.getAmount());
-		}*/
+		}
 
-		for (Finance catDep : cateringFinances
-				.findByReference(Reference.DEPOSIT)) {
+		for (Finance catDep : cateringDeposit) {
 			catDepTot = catDepTot.plus(catDep.getAmount());
 		}
 
-		for (Finance catExp : cateringFinances
-				.findByReference(Reference.EXPENSE)) {
+		for (Finance catExp : cateringExpense) {
 			catExpTot = catExpTot.plus(catExp.getAmount());
 		}
 
-		/*for (Finance rentDep : rentFinances.findByReference(Reference.DEPOSIT)) {
+		for (Finance rentDep : rentDeposit) {
 			rentDepTot = rentDepTot.plus(rentDep.getAmount());
-		}*/
+		}
 		
-		for (Finance salExp : salaryFinances.findByReference(Reference.EXPENSE)) {
+		for (Finance salExp : salaryExpense) {
 			salExpTot = salExpTot.plus(salExp.getAmount());
 		}
 
-		for (Finance rentExp : rentFinances.findByReference(Reference.EXPENSE)) {
+		for (Finance rentExp : rentExpense) {
 			rentExpTot = rentExpTot.plus(rentExp.getAmount());
 		}
 
@@ -389,7 +403,7 @@ public class ManagerController {
 			@RequestParam("units") Long units) {
 		ProductIdentifier mid = item.getProduct().getIdentifier();
 		cateringFinances.save(new Finance(Reference.EXPENSE, (menusRepository
-				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units))));
+				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units)), "catering"));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
 

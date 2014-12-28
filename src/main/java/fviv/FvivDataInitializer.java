@@ -151,10 +151,10 @@ public class FvivDataInitializer implements DataInitializer {
 	private void initializeFinances(FinanceRepository cateringFinances, FinanceRepository salaryFinances, FinanceRepository rentFinances) {
 		
 		// Create expenses
-		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80)));
-		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40)));
-		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00)));
-		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00)));
+		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), "salary"));
+		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40), "salary"));
+		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), "rent"));
+		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), "rent"));
 		 
 	}
 }

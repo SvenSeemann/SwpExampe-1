@@ -17,12 +17,18 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script th:inline="Javascript">
 $(function () { 
-	var salary = [[${salaryTotal}]];
-	var catering = [[${cateringTotal.amount}]];
-	var rent = [[${rentTotal}]];
-	var total = salary+catering+rent;
-	var deposit = [[${deposit}]];
-	var balance = deposit - total;
+	var salaryExpTotal = [[${salExpTot.getAmountMajorLong()}]];
+	var salaryDepTotal = [[${salDepTot.getAmountMajorLong()}]];
+	
+	var cateringExpTotal = [[${catExpTot.getAmountMajorLong()}]];
+	var cateringDepTotal = [[${catDepTot.getAmountMajorLong()}]];
+	
+	var rentExpTotal = [[${rentExpTot.getAmountMajorLong()}]];
+	var rentDepTotal = [[${rentDepTot.getAmountMajorLong()}]];
+	
+	var totalExpense = salaryExpTotal+cateringExpTotal+rentExpTotal;
+	var totalDeposit = salaryDepTotal+cateringDepTotal+rentDepTotal;
+	var balance = totalDeposit - totalExpense;
 	
     $('#financesChart').highcharts({
         chart: {
@@ -43,20 +49,20 @@ $(function () {
         	name: 'Balance',
         	data: [balance]
     	},{		
-            name: 'Guthaben',
-            data: [deposit]
+            name: 'Guthaben: Total',
+            data: [totalDeposit]
         },{
-        	name: 'Ausgaben Total',
-        	data: [total]     	
+        	name: 'Ausgaben: Total',
+        	data: [totalExpense]     	
         },{
-        	name: 'Gehälter Total',
-        	data: [salary]
+        	name: 'Ausgaben: Gehälter',
+        	data: [salaryExpTotal]
         },{
-        	name: 'Catering Total',
-        	data: [catering]
+        	name: 'Ausgaben: Catering',
+        	data: [cateringExpTotal]
         },{
-        	name: 'Miete Total',
-        	data: [rent]
+        	name: 'Ausgaben: Miete',
+        	data: [rentExpTotal]
         }]
     });
 });
@@ -110,7 +116,7 @@ $(function () {
 							<form th:action="@{/deleteEmployee}" method="post"
 								onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
 								<input type="text" placeholder="ID eingeben" name="employeeId"
-									id="deleteEmployeeText"></input> <input type="submit"
+									id="deleteEmployeeText" ></input> <input type="submit"
 									class="button_green" value="Löschen"></input>
 							</form>
 						</div>
