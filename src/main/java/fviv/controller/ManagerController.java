@@ -52,9 +52,6 @@ public class ManagerController {
 	private final Inventory<InventoryItem> inventory;
 	private final OrderManager<Order> orderManager;
 	private final FinanceRepository financeRepository;
-	private FinanceRepository cateringFinances;
-	private FinanceRepository salaryFinances;
-	private FinanceRepository rentFinances;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
@@ -62,18 +59,13 @@ public class ManagerController {
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
 			OrderManager<Order> orderManager,
-			FinanceRepository financeRepository,
-			FinanceRepository cateringFinances,
-			FinanceRepository salaryFinances, FinanceRepository rentFinances) {
+			FinanceRepository financeRepository) {
 
 		this.employeeRepository = employeeRepository;
 		this.menusRepository = menusRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.orderManager = orderManager;
-		this.cateringFinances = cateringFinances;
-		this.salaryFinances = salaryFinances;
-		this.rentFinances = rentFinances;
 		this.financeRepository = financeRepository;
 	}
 
@@ -402,7 +394,7 @@ public class ManagerController {
 	public String orderMore(@RequestParam("itemid") InventoryItem item,
 			@RequestParam("units") Long units) {
 		ProductIdentifier mid = item.getProduct().getIdentifier();
-		cateringFinances.save(new Finance(Reference.EXPENSE, (menusRepository
+		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
 				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units)), "catering"));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
