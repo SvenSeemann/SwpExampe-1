@@ -198,7 +198,7 @@ function contextMenu(element, type) {
 		return false;
 	});
 	var menu = $('#context');
-	// console.log($("#area").index(element));
+	console.log(element.index());
 	var menuTop = window.event.clientY - 320;
 	var menuLeft = window.event.clientX - 280;
 	menu.clone().appendTo(element);
