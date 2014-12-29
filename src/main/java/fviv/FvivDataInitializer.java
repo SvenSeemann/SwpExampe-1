@@ -38,17 +38,14 @@ public class FvivDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
-	private final CateringFinances cateringFinances;
-	private final SalaryFinances salaryFinances;
-	private final RentFinances rentFinances;
+	private final FinanceRepository financeRepository;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
-			CateringFinances cateringFinances,
-			SalaryFinances salaryFinances, RentFinances rentFinances) {
+			FinanceRepository financeRepository) {
 
 		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
@@ -56,15 +53,13 @@ public class FvivDataInitializer implements DataInitializer {
 		this.userAccountManager = userAccountManager;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
-		this.cateringFinances = cateringFinances;
-		this.salaryFinances = salaryFinances;
-		this.rentFinances = rentFinances;
+		this.financeRepository = financeRepository;
 	}
 
 	@Override
 	public void initialize() {
 		initializeUsers(userAccountManager, employeeRepository);
-		initializeFinances(cateringFinances, salaryFinances, rentFinances);
+		initializeFinances(financeRepository);
 		initializeTickets(ticketRepository);
 		try {
 			initializeFestivals(festivalRepository);
@@ -152,13 +147,14 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount5);
 	}
 
-	private void initializeFinances(CateringFinances cateringFinances, SalaryFinances salaryFinances, RentFinances rentFinances) {
+
+	private void initializeFinances(FinanceRepository financeRepository) {
 		
 		// Create expenses
-		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80)));
-		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40)));
-		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00)));
-		rentFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00)));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), "salary"));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40), "salary"));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), "rent"));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), "rent"));
 		 
 	}
 }

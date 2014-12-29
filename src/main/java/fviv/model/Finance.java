@@ -21,6 +21,7 @@ public class Finance {
 
 	private Money amount;
 	private Reference reference;
+	private String financeType;
 
 	@Id
 	@GeneratedValue
@@ -31,14 +32,15 @@ public class Finance {
 	}
 
 	@Autowired
-	public Finance(Reference reference, Money amount) {
+	public Finance(Reference reference, Money amount, String financeType) {
 		this.reference = reference;
 		this.amount = amount;
-		/*
-		 * if(expenseType != "salary" && expenseType != "rent" && expenseType !=
-		 * "catering" && expenseType != "deposit"){ throw new
-		 * IllegalArgumentException("only salary, rent or catering allowed"); }
-		 */
+		
+		  if(financeType != "salary" && financeType != "rent" && financeType !=
+		  "catering"){ throw new
+		  IllegalArgumentException("only salary, rent or catering allowed"); }
+		
+		this.financeType = financeType;
 	}
 
 	public Reference getReference() {
@@ -47,5 +49,9 @@ public class Finance {
 
 	public Money getAmount() {
 		return this.amount;
+	}
+	
+	public String getFinanceType(){
+		return financeType;
 	}
 }
