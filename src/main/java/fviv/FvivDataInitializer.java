@@ -1,6 +1,7 @@
 package fviv;
 
 import static org.joda.money.CurrencyUnit.EUR;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -8,11 +9,14 @@ import java.util.Locale;
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
+import fviv.model.CateringFinances;
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Finance;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
+import fviv.model.RentFinances;
+import fviv.model.SalaryFinances;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
@@ -34,17 +38,17 @@ public class FvivDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
-	private final FinanceRepository cateringFinances;
-	private final FinanceRepository salaryFinances;
-	private final FinanceRepository rentFinances;
+	private final CateringFinances cateringFinances;
+	private final SalaryFinances salaryFinances;
+	private final RentFinances rentFinances;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
-			FinanceRepository cateringFinances,
-			FinanceRepository salaryFinances, FinanceRepository rentFinances) {
+			CateringFinances cateringFinances,
+			SalaryFinances salaryFinances, RentFinances rentFinances) {
 
 		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
@@ -148,7 +152,7 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount5);
 	}
 
-	private void initializeFinances(FinanceRepository cateringFinances, FinanceRepository salaryFinances, FinanceRepository rentFinances) {
+	private void initializeFinances(CateringFinances cateringFinances, SalaryFinances salaryFinances, RentFinances rentFinances) {
 		
 		// Create expenses
 		salaryFinances.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80)));

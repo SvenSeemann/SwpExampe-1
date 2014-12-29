@@ -30,12 +30,15 @@ import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
+import fviv.model.CateringFinances;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Finance;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.model.Registration;
+import fviv.model.RentFinances;
+import fviv.model.SalaryFinances;
 
 /**
  * @author Hendric Eckelt
@@ -51,9 +54,9 @@ public class ManagerController {
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final OrderManager<Order> orderManager;
-	private FinanceRepository cateringFinances;
-	private FinanceRepository salaryFinances;
-	private FinanceRepository rentFinances;
+	private CateringFinances cateringFinances;
+	private SalaryFinances salaryFinances;
+	private RentFinances rentFinances;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
@@ -61,8 +64,8 @@ public class ManagerController {
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
 			OrderManager<Order> orderManager,
-			FinanceRepository cateringFinances,
-			FinanceRepository salaryFinances, FinanceRepository rentFinances) {
+			CateringFinances cateringFinances,
+			SalaryFinances salaryFinances, RentFinances rentFinances) {
 
 		this.employeeRepository = employeeRepository;
 		this.menusRepository = menusRepository;
