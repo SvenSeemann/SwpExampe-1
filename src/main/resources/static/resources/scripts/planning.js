@@ -7,6 +7,8 @@
 // 4 = behindertenklo
 // 5 = Badcontainer
 // 6 = Standard-catering
+
+//objectValues(new Array(breite, hoehe, miete p.D.))
 var objectValues = new Array(new Array('10', '5'), new Array('20', '10'),
 		new Array('40', '20'), new Array('3', '3'), new Array('6', '6'),
 		new Array('10', '3'), new Array('8', '3'), new Array('', ''));
@@ -82,7 +84,7 @@ function buildArea(width, height) {
 	area.setAttribute("id", "area");
 
 	parent.appendChild(area);
-
+	$('#area').text("weite: " + width + "m <br> Höhe: " + height + "m");
 	factor = 835 / width;
 	height = height * factor;
 
@@ -90,6 +92,7 @@ function buildArea(width, height) {
 		'width' : '835px',
 		'height' : height
 	});
+
 }
 
 function cloneIt(element, type, name) {
@@ -133,6 +136,7 @@ function cloneIt(element, type, name) {
 		newElem.attr("class", "objekt");
 		newElem.attr("name", name);
 		newElem.attr("oncontextmenu", ("contextMenu(this " + "," + type + ")"));
+		newElem.attr("onmouseup", "validateIt(this)");
 		newElem.css({
 			'width' : (width * factor),
 			'height' : (height * factor)
@@ -146,19 +150,19 @@ function cloneIt(element, type, name) {
 				snapTolerance : "8"
 			});
 		});
-		// ich muss die left und top position des newElem bekommen. sonst geht
-		// die Validierung nicht
-		var leftpos = newElem.position().left;
-		var toppos = newElem.position().top;
 		objectList.push(new Array(newElem.attr('name'), newElem.text(), width,
-				height, leftpos, toppos));
-		validateIt();
+				height, newElem.position().left, newElem.position().top));
 	}
 }
 
-function validateIt() {
+function validateIt(element) {
+	var element = $(element);
+	var index = element.parent().children().index(element);
+	
+	objectList[index][4] = element.position().left;
+	objectList[index][5] = element.position().top;
+	
 	for (i = 0; i < objectList.length; i++) {
-		var usedPlace = new Array();
 		console.log(objectList[i][0] + ", " + objectList[i][1] + ", "
 				+ objectList[i][2] + ", " + objectList[i][3] + ", "
 				+ objectList[i][4] + ", " + objectList[i][5]);
@@ -168,6 +172,7 @@ function validateIt() {
 
 function saveIt() {
 	$(document).ready(function() {
+		
 		for (i = 0; i < objectList.length; i++) {
 			$.ajax({
 				url : "/newObject",
@@ -190,6 +195,9 @@ function saveIt() {
 
 function deleteObject(index) {
 	var parent = $(".contextButton").parents('.objekt');
+	var a = $(parent);
+	var my_index = a.parent().children().index(a);
+	objectList.splice(my_index, 1);
 	parent.remove();
 }
 
@@ -198,7 +206,6 @@ function contextMenu(element, type) {
 		return false;
 	});
 	var menu = $('#context');
-	console.log(element.index());
 	var menuTop = window.event.clientY - 320;
 	var menuLeft = window.event.clientX - 280;
 	menu.clone().appendTo(element);

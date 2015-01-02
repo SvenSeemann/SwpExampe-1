@@ -20,8 +20,8 @@ public class Coords {
 	private long id;
 	private int width;
 	private int height;
-	private int yPos;
-	private int xPos;
+	private float yPos;
+	private float xPos;
 	private Type type;
 	private String name;
 	private float factor;
@@ -29,7 +29,7 @@ public class Coords {
 		
 	}
 	@Autowired 
-	public Coords(Type type, String name, int width, int height, int xPos, int yPos) {
+	public Coords(Type type, String name, int width, int height, float xPos, float yPos) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
@@ -39,7 +39,7 @@ public class Coords {
 	}
 	
 	@Autowired
-	public Coords(Type type, String name, int width, int height, int xPos, int yPos, float factor) {
+	public Coords(Type type, String name, int width, int height, float xPos, float yPos, float factor) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
@@ -67,19 +67,19 @@ public class Coords {
 		this.height = height;
 	}
 
-	public int getyPos() {
+	public float getyPos() {
 		return yPos;
 	}
 
-	public void setyPos(int yPos) {
+	public void setyPos(float yPos) {
 		this.yPos = yPos;
 	}
 
-	public int getxPos() {
+	public float getxPos() {
 		return xPos;
 	}
 
-	public void setxPos(int xPos) {
+	public void setxPos(float xPos) {
 		this.xPos = xPos;
 	}
 	

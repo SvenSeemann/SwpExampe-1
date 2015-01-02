@@ -1,5 +1,8 @@
 package fviv.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,16 +42,17 @@ public class PlanningAJAXController {
 	}
 
 	@RequestMapping(value = "/newObject", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public boolean newToilet(@RequestParam("typ") String typ,
+	public boolean newObject(@RequestParam("typ") String typ,
 			@RequestParam("name") String name,
 			@RequestParam("width") int width,
-			@RequestParam("height") int height, @RequestParam("left") int left,
-			@RequestParam("top") int top) {
+			@RequestParam("height") int height,
+			@RequestParam("left") float left, @RequestParam("top") float top) {
 		if (planningRepository.findByName("Areal") != null) {
 			int i = 1;
 			while (planningRepository.findByName(name + i) != null) {
 				i++;
 			}
+			i = i + 1;
 			switch (typ) {
 			case "TOILET":
 				planningRepository.save(new Coords(Type.TOILET, (name + i),
@@ -67,6 +71,24 @@ public class PlanningAJAXController {
 						width, height, left, top));
 			}
 		}
+		showMe();
+		//System.out.println(typ + ", " + name + ", " + width + ", " + height
+		//		+ ", " + left + ", " + top);
 		return true;
+	}
+	public void showMe(){
+		Iterable<Coords> all = planningRepository.findAll();
+		Coords area = planningRepository.findByName("Areal");
+		System.out.println("weite: " + area.getWidth() + "hoehe: "
+				+ area.getHeight());
+	}
+	
+	
+	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+	public Map<String, Object> terminal() {
+
+		final Map<String, Object> response = new HashMap<String, Object>();
+		response.put("success", "true");
+		return response;
 	}
 }
