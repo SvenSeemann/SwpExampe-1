@@ -47,13 +47,28 @@ public class Finance {
 		this.financeType = financeType;
 	}
 
+	/** Returns whether the finance is an expense or an deposit.
+	 * 
+	 * @return Reference
+	 */
+	
 	public Reference getReference() {
 		return this.reference;
 	}
+	
+	/** Get the amount of the expense or deposit.
+	 * 
+	 * @return Amount of Finance
+	 */
 
 	public Money getAmount() {
 		return this.amount;
 	}
+	
+	/** Get the purpose of the deposit or expense.
+	 * 
+	 * @return FinanceType
+	 */
 	
 	public FinanceType getFinanceType(){
 		return financeType;

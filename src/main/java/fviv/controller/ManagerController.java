@@ -35,6 +35,7 @@ import fviv.model.Registration;
 
 /**
  * @author Hendric Eckelt
+ * @author Niklas Fallik
  */
 
 @PreAuthorize("hasRole('ROLE_MANAGER')")
@@ -65,13 +66,19 @@ public class ManagerController {
 
 	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
 
-	// String managermode for th:switch to decide which div to display
+	/** String managermode for th:switch to decide which div to display
+	 * 
+	 * @return link
+	 */
 	@ModelAttribute("managermode")
 	public String managermode() {
 		return mode;
 	}
 
-	// Switch to show errors in form validation
+	/** Switch to show errors in form validation
+	 * 
+	 * @return link
+	 */
 	@ModelAttribute("showErrors")
 	public String showErrors() {
 		return showErrors;
@@ -79,7 +86,11 @@ public class ManagerController {
 
 	// ------------------------ REQUESTMAPPING ------------------------ \\
 
-	// Main mapping for the manager functions
+	/** Main mapping for the manager functions
+	 * 
+	 * @param modelMap
+	 * @return link
+	 */
 	@RequestMapping("/manager")
 	public String index(ModelMap modelMap) {
 		// Money used as sum for each type of expense
@@ -202,7 +213,12 @@ public class ManagerController {
 
 	// ------------------------ NEW EMPLOYEE ------------------------ \\
 
-	// Mapping to add a new employee to the repository
+	/** Mapping to add a new employee to the repository
+	 * 
+	 * @param registration
+	 * @param results
+	 * @return link
+	 */
 	@RequestMapping("/newEmployee")
 	public String newEmployee(
 			@ModelAttribute(value = "registration") @Valid Registration registration,
@@ -235,7 +251,11 @@ public class ManagerController {
 
 	// ------------------------ DELETE EMPLOYEE ------------------------ \\
 
-	// Mapping to delete an employee from the repository
+	/** Mapping to delete an employee from the repository
+	 * 
+	 * @param employeeId
+	 * @return link
+	 */
 	@RequestMapping("/deleteEmployee")
 	public String deleteEmployee(@RequestParam("employeeId") long employeeId) {
 		// Assumption that the given input was valid
@@ -259,7 +279,11 @@ public class ManagerController {
 
 	// ------------------------ ADD ROLE ------------------------ \\
 
-	// Mapping to add a certain role to a useraccount
+	/** Mapping to add a certain role to a useraccount
+	 * 
+	 * @param role
+	 * @return link
+	 */
 	@RequestMapping(params = "save", value = "/editAccount", method = RequestMethod.POST)
 	public String addRole(@RequestParam("roles") String role) {
 		// Assumption that given input is valid
@@ -285,7 +309,11 @@ public class ManagerController {
 
 	// ------------------------ DELETE ROLE ------------------------ \\
 
-	// Mapping to delete a certain role from a useraccount
+	/** Mapping to delete a certain role from a useraccount
+	 * 
+	 * @param role
+	 * @return link
+	 */
 	@RequestMapping(params = "delete", value = "/editAccount", method = RequestMethod.POST)
 	public String deleteRole(@RequestParam("roles") String role) {
 		// Assumption that given input is valid
@@ -327,7 +355,10 @@ public class ManagerController {
 
 	// ------------------------ ACTIVATE ACCOUNT ------------------------ \\
 
-	// Mapping to activate a certain account
+	/** Mapping to activate a certain account
+	 * 
+	 * @return link
+	 */
 	@RequestMapping(params = "enable", value = "/editAccount", method = RequestMethod.POST)
 	public String enableAccount() {
 		// Assumption that given input is valid
@@ -351,7 +382,10 @@ public class ManagerController {
 
 	// ------------------------ DEACTIVATE ACCOUNT ------------------------ \\
 
-	// Mapping to deactivate a certain account
+	/** Mapping to deactivate a certain account
+	 * 
+	 * @return link
+	 */
 	@RequestMapping(params = "disable", value = "/editAccount", method = RequestMethod.POST)
 	public String disableAccount() {
 		// Assumption that given input is valid
@@ -383,7 +417,12 @@ public class ManagerController {
 
 	// ------------------------ EDIT ACCOUNT SWITCH ------------------------ \\
 
-	// Mapping to get the editAccount view
+	/** Mapping to get the editAccount view
+	 * 
+	 * @param userName
+	 * @param modelMap
+	 * @return link
+	 */
 	@RequestMapping("/switchToEditAccount")
 	public String editAccount(@RequestParam("userNameEdit") String userName,
 			ModelMap modelMap) {
@@ -406,7 +445,13 @@ public class ManagerController {
 
 	// ------------------------ EMPLOYEE DETAILS ------------------------ \\
 
-	// Mapping to edit lastname, firstname or email of a useraccount
+	/** Mapping to edit lastname, firstname or email of a useraccount
+	 * 
+	 * @param lastname
+	 * @param firstname
+	 * @param email
+	 * @return link
+	 */
 	@RequestMapping("/editEmployeeDetails")
 	public String editEmployeeDetails(
 			@RequestParam("editLastname") String lastname,
@@ -434,7 +479,12 @@ public class ManagerController {
 
 	// ------------------------ CHANGE PASSWORD ------------------------ \\
 
-	// Mapping to change the password of a single account
+	/** Mapping to change the password of a single account
+	 * 
+	 * @param password1
+	 * @param password2
+	 * @return link
+	 */
 	@RequestMapping("/changePassword")
 	public String changePassword(
 			@RequestParam("changePassword1") String password1,
@@ -464,7 +514,13 @@ public class ManagerController {
 
 	// ------------------------ ORDER MORE ------------------------ \\
 
-	// Check stock and order more food if necessary
+	/** Check stock and order more food if necessary
+	 * 
+	 * @param item
+	 * @param units
+	 * @return link
+	 */
+	
 	@RequestMapping("orderMore")
 	public String orderMore(@RequestParam("itemid") InventoryItem item,
 			@RequestParam("units") Long units) {

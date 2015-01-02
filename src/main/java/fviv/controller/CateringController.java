@@ -42,8 +42,6 @@ import java.util.Optional;
 @SessionAttributes("cart")
 public class CateringController {
 
-	// constructor is not a valid setter method or instance variable
-	// private Order order;
 	private String mode = "";
 	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
@@ -68,11 +66,20 @@ public class CateringController {
 
 	// --- --- --- --- --- --- ModelAttributes --- --- --- --- --- --- \\
 
+	/** Sets the order mode to MEALS or DRINKS in the UI
+	 * 
+	 * @return mode
+	 */
 	@ModelAttribute("ordermode")
 	public String ordermode() {
 		return mode;
 	}
 
+	/** Gets the cart attribute from current session
+	 * 
+	 * @param session
+	 * @return cart
+	 */
 	@ModelAttribute("cart")
 	public Cart initializeCart(HttpSession session) {
 		Cart cart = (Cart) session.getAttribute("cart");
@@ -84,6 +91,12 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
+	
+	/** Main mapping for catering functions. Adds the attributes from the menus repository.
+	 * 
+	 * @param modelMap
+	 * @return link
+	 */
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
 		modelMap.addAttribute("meals",
@@ -105,22 +118,35 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
+	/** Get the ordered meal and update the current order
+	 * 
+	 * @param modelMap
+	 * @param menu
+	 * @param cart
+	 * @param session
+	 * @param userAccount
+	 * @return link
+	 */
 	@RequestMapping("catering-menu/{mid}")
 	public String addMeal(ModelMap modelMap, @PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
 		Quantity quantity = inventory.findByProduct(menu).get().getQuantity();
-		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO)); // does
-																				// not
-																				// work
-																				// in
-																				// thymeleaf
+		
+		//should be catched by thymeleaf
+		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO));
 
 		cart.addOrUpdateItem(menu, Units.of(1));
 
 		return "redirect:/catering";
 	}
 
+	/** Method to cancel an order. Deletes products from cart.
+	 * 
+	 * @param session
+	 * @param cart
+	 * @return link
+	 */
 	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
 		// Cart cart = getCart(session);
@@ -128,6 +154,12 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
+	/** Method to confirm the currend order. Updates the FinanceRepository.
+	 * 
+	 * @param cart
+	 * @param userAccount
+	 * @return link
+	 */
 	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {

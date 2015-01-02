@@ -33,9 +33,19 @@ public class Menu extends Product {
 		
 	}
 	
+	/** Get the purchase price of the {@link Menu}.
+	 * 
+	 * @return Purchase price of {@link Menu}
+	 */
+	
 	public Money getPurchasePrice() {
 		return this.purchasePrice;
 	}
+	
+	/** Get the selling price of the {@link Menu}.
+	 * 
+	 * @return Selling price of {@link Menu}, Price of {@link Product}
+	 */
 	
 	public Money getSellingPrice() {
 		return this.sellingPrice;
