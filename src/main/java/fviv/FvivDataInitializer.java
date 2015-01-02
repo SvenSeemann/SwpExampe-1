@@ -9,14 +9,12 @@ import java.util.Locale;
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
-import fviv.model.CateringFinances;
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Finance;
+import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
-import fviv.model.RentFinances;
-import fviv.model.SalaryFinances;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
@@ -151,10 +149,10 @@ public class FvivDataInitializer implements DataInitializer {
 	private void initializeFinances(FinanceRepository financeRepository) {
 		
 		// Create expenses
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), "salary"));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40), "salary"));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), "rent"));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), "rent"));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), FinanceType.SALARY));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40), FinanceType.SALARY));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), FinanceType.RENT));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), FinanceType.RENT));
 		 
 	}
 }

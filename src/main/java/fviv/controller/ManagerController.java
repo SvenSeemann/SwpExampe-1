@@ -30,15 +30,13 @@ import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
-import fviv.model.CateringFinances;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Finance;
+import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.model.Registration;
-import fviv.model.RentFinances;
-import fviv.model.SalaryFinances;
 
 /**
  * @author Hendric Eckelt
@@ -97,12 +95,12 @@ public class ManagerController {
 		
 		// Fill the Finance lists
 		for(Finance finance : financeRepository.findAll()){
-			if(finance.getFinanceType().equals("salary") && finance.getReference() == Reference.EXPENSE)salaryExpense.add(finance);
-			if(finance.getFinanceType().equals("salary") && finance.getReference() == Reference.DEPOSIT)salaryDeposit.add(finance);
-			if(finance.getFinanceType().equals("catering") && finance.getReference() == Reference.EXPENSE)cateringExpense.add(finance);
-			if(finance.getFinanceType().equals("catering") && finance.getReference() == Reference.DEPOSIT)cateringDeposit.add(finance);
-			if(finance.getFinanceType().equals("rent") && finance.getReference() == Reference.EXPENSE)rentExpense.add(finance);
-			if(finance.getFinanceType().equals("rent") && finance.getReference() == Reference.DEPOSIT)rentDeposit.add(finance);		
+			if(finance.getFinanceType().equals(FinanceType.SALARY) && finance.getReference() == Reference.EXPENSE)salaryExpense.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.SALARY) && finance.getReference() == Reference.DEPOSIT)salaryDeposit.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.CATERING) && finance.getReference() == Reference.EXPENSE)cateringExpense.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.CATERING) && finance.getReference() == Reference.DEPOSIT)cateringDeposit.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.RENT) && finance.getReference() == Reference.EXPENSE)rentExpense.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.RENT) && finance.getReference() == Reference.DEPOSIT)rentDeposit.add(finance);		
 		}
 
 		// List of available roles for the account management
@@ -398,7 +396,7 @@ public class ManagerController {
 			@RequestParam("units") Long units) {
 		ProductIdentifier mid = item.getProduct().getIdentifier();
 		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
-				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units)), "catering"));
+				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units)), FinanceType.CATERING));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
 
