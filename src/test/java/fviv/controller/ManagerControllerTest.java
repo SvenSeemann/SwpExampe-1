@@ -38,6 +38,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 	EmployeeRepository employeeRepository;
 	@Autowired
 	UserAccountManager userAccountManager;
+	private BindingResult results;
 
 	protected void login(String userName, String password) {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(

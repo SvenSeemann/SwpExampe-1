@@ -3,7 +3,7 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
-import fviv.model.CateringFinances;
+import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.model.Finance;
@@ -49,20 +49,20 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
-	private final CateringFinances cateringFinances;
+	private final FinanceRepository financeRepository;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
-			CateringFinances cateringFinances) {
+			FinanceRepository financeRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
-		this.cateringFinances = cateringFinances;
+		this.financeRepository = financeRepository;
 
 	}
 
@@ -143,7 +143,7 @@ public class CateringController {
 					orderManager.completeOrder(order);
 					orderManager.save(order);
 					
-					cateringFinances.save(new Finance(Reference.DEPOSIT,
+					financeRepository.save(new Finance(Reference.DEPOSIT,
 							order.getTotalPrice(), FinanceType.CATERING));
 
 					cart.clear();

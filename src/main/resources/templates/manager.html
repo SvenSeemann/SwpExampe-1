@@ -93,7 +93,9 @@ $(function () {
 		<div id="content">
 			<div id="substance">
 				<div id="chooseManagerView" th:switch="${managermode}">
-					<!-- Employee case -->
+
+					<!-- EMPLOYEES -->
+
 					<div th:case="employees">
 						<table class="employeeTable">
 							<tr>
@@ -113,16 +115,20 @@ $(function () {
 						</table>
 						<div align="center">
 							<p>Mitarbeiter entfernen:</p>
+							<p th:if="${showErrors.equals('deleteEmployee')}"
+								style="color: #F00;">Ungültige ID</p>
 							<form th:action="@{/deleteEmployee}" method="post"
 								onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
-								<input type="text" placeholder="ID eingeben" name="employeeId"
-									id="deleteEmployeeText" ></input> <input type="submit"
+								<input type="number" placeholder="ID eingeben" name="employeeId"
+									id="deleteEmployeeText"></input> <input type="submit"
 									class="button_green" value="Löschen"></input>
 							</form>
 						</div>
 						<div align="center">
 							<p>Neuen Mitarbeiter hinzufügen:</p>
 							<!--Communicates with controller @RequestMapping("/newEmployee") -->
+							<p th:if="${showErrors.equals('newEmployee')}"
+								style="color: #F00;">Alle Felder müssen ausgefüllt sein</p>
 							<form th:action="@{/newEmployee}" method="post"
 								th:object="${registration}">
 								<input type="text" placeholder="Nachname" id="lastname"
@@ -137,7 +143,8 @@ $(function () {
 						</div>
 					</div>
 
-					<!-- Finance case -->
+					<!-- FINANCES -->
+
 					<div th:case="finances">
 						<div align="center">
 
@@ -149,7 +156,9 @@ $(function () {
 									<td th:text="${salary.amount}"></td>
 								</tr>
 								<tr>
-									<th>Total: <p th:text="${salExpTot}" id="salaryTotal" /></th>
+									<th>Total:
+										<p th:text="${salExpTot}" id="salaryTotal" />
+									</th>
 								</tr>
 							</table>
 
@@ -161,7 +170,9 @@ $(function () {
 									<td th:text="${item.amount}"></td>
 								</tr>
 								<tr>
-									<th>Total: <p th:text="${catExpTot}" /></th>
+									<th>Total:
+										<p th:text="${catExpTot}" />
+									</th>
 								</tr>
 							</table>
 
@@ -173,7 +184,9 @@ $(function () {
 									<td th:text="${catering.amount}"></td>
 								</tr>
 								<tr>
-									<th>Total: <p th:text="${catDepTot}" /></th>
+									<th>Total:
+										<p th:text="${catDepTot}" />
+									</th>
 								</tr>
 							</table>
 
@@ -185,7 +198,9 @@ $(function () {
 									<td th:text="${rent.amount}"></td>
 								</tr>
 								<tr>
-									<th>Total: <p th:text="${rentExpTot}" /></th>
+									<th>Total:
+										<p th:text="${rentExpTot}" />
+									</th>
 								</tr>
 							</table>
 
@@ -193,7 +208,8 @@ $(function () {
 						<div id="financesChart"></div>
 					</div>
 
-					<!-- Accounts case -->
+					<!-- ACCOUNTS -->
+
 					<div th:case="accounts">
 						<table class="accountTable">
 							<tr>
@@ -210,6 +226,8 @@ $(function () {
 						</table>
 						<div align="center">
 							<p>Account bearbeiten:</p>
+							<p th:if="${showErrors.equals('switchToEditAccount')}"
+								style="color: #F00;">Account existiert nicht</p>
 							<form action="/switchToEditAccount" method="post">
 								<input type="text" name="userNameEdit"
 									placeholder="Benutzername"></input> <input type="submit"
@@ -241,8 +259,18 @@ $(function () {
 							</table>
 						</div>
 						<div align="center">
+							<!-- Change roles of a single account -->
 							<form action="/editAccount" method="post">
 								<p>Berechtigung ändern:</p>
+								<p th:if="${showErrors.equals('deleteRoleManager')}"
+									style="color: #F00;">Die ROLE_MANAGER kann nicht vom
+									Account "manager" gelöscht werden</p>
+								<p th:if="${showErrors.equals('deleteRoleBoss')}"
+									style="color: #F00;">Die ROLE_BOSS kann nicht vom Account
+									"boss" gelöscht werden</p>
+								<p th:if="${showErrors.equals('deleteRoleCaterer')}"
+									style="color: #F00;">Die ROLE_CATERER kann nicht vom
+									Account "caterer" gelöscht werden</p>
 								<select name="roles">
 									<option th:each=" role : ${roles}" th:value="${role}"
 										th:text="${role.getName()}"></option>
@@ -250,12 +278,20 @@ $(function () {
 									value="Berechtigung Hinzufügen"></input> <input type="submit"
 									class="button_green" name="delete" value="Berechtigung Löschen"></input>
 								<br />
+
+								<!-- De-/Activate a single account -->
 								<p>Account aktivieren/deaktivieren:</p>
+								<p th:if="${showErrors.equals('disableImportantAccount')}"
+									style="color: #F00;">Dieser Account kann nicht deaktiviert
+									werden</p>
+
 								<input type="submit" class="button_green" name="enable"
 									value="Account aktivieren"></input> <input type="submit"
 									class="button_green" name="disable"
 									value="Account deaktivieren"></input>
 							</form>
+
+							<!-- Change user information of a single account -->
 							<p>Nutzerinformationen ändern:</p>
 							<form action="/editEmployeeDetails" method="post">
 								<input type="text" name="editLastname" placeholder="Nachname"></input>
@@ -265,7 +301,16 @@ $(function () {
 									type="submit" class="button_green" value="Speichern"
 									style="margin-top: 2px;"></input>
 							</form>
+
+							<!-- Change password of a single account -->
 							<p>Passwort ändern:</p>
+							<p th:if="${showErrors.equals('changePasswordEmpty')}"
+								style="color: #F00;">Passwörter dürfen nicht leer sein</p>
+							<p th:if="${showErrors.equals('changePasswordDifferentInput')}"
+								style="color: #F00;">Die eingegebenen Passwörter stimmen
+								nicht überein</p>
+							<p th:if="${showErrors.equals('changePasswordSuccessful')}"
+								style="color: #F00;">Passwort erfolgreich geändert</p>
 							<form action="/changePassword" method="post"
 								onsubmit="return confirm('Passwort wirklich ändern?');">
 								<input type="password" placeholder="Neues Passwort"
@@ -276,6 +321,8 @@ $(function () {
 							</form>
 						</div>
 					</div>
+
+					<!-- STOCK -->
 
 					<div th:case="checkStock">
 						<table>
@@ -313,6 +360,9 @@ $(function () {
 				</div>
 			</div>
 		</div>
+
+		<!-- MENU -->
+
 		<div id="menu">
 			<form action="/logout" method="post">
 				<input type="submit" class="slimButton" value="Logout"></input>
