@@ -1,0 +1,52 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+<div th:fragment="artist" id="artists">
+    <div style="display: block; clear: both"></div>
+    <table id="artists-table" style="float: left;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Preis</th>
+                <th>Techniker</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="single-artist">
+                <td class="artist-name"></td>
+                <td class="artist-genre"></td>
+                <td class="artist-price"></td>
+                <td class="artist-technician"></td>
+            </tr>
+        </tbody>
+    </table>
+    <table id="artists-genre-table" style="float: left;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Preis</th>
+                <th>Techniker</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <table id="artist-showcase" style="float: left;">
+        <tbody class="single-artist">
+            <tr><td>Name</td><td>:</td><td class="artist-name"></td></tr>
+            <tr><td>Genre</td><td>:</td><td class="artist-genre"></td></tr>
+            <tr><td>Preis</td><td>:</td><td class="artist-price"></td></tr>
+            <tr><td>Techniker</td><td>:</td><td class="artist-technician"></td></tr>
+        </tbody>
+    </table>
+    <script type="text/javascript" src="/resources/js/artists.js"></script>
+</div>
+</body>
+</html>
