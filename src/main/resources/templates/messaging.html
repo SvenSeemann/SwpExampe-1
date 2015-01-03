@@ -7,9 +7,9 @@
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-    <div th:fragment="messaging">
-        <div sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER')">
-            <div id="toggle-chat" class="button">Show Chat</div>
+    <div th:fragment="messaging" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER')">
+        <div id="toggle-chat" class="button">Show Chat</div>
+        <div  id="messaging-area">
 
             <table sec:authorize="hasRole('MESSAGE_RECEIVER')">
                 <thead>
