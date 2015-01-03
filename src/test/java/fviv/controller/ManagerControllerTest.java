@@ -21,6 +21,7 @@ import org.springframework.validation.DataBinder;
 
 import fviv.AbstractIntegrationTests;
 import fviv.model.Employee;
+import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
 import fviv.model.Registration;
 
@@ -86,10 +87,11 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		registration.setFirstname("Super");
 		registration.setEmail("Super.Testman@TestYourSoftware.de");
 		registration.setPhone("0351/TestEverything");
+		registration.setPassword("123");
 
 		DataBinder dataBinder = new DataBinder(registration);
 		BindingResult results = dataBinder.getBindingResult();
-		String returnedView = controller.newEmployee(registration, results);
+		String returnedView = controller.newEmployee(registration, results, "123");
 
 		// returnedView has to be manager
 		assertThat(returnedView, is("redirect:/manager"));
@@ -117,7 +119,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		userAccountManager.save(testUserAccount);
 		Employee testEmployee = new Employee(testUserAccount, "testman",
 				"super", "Super.Testman@TestYourSoftware.de",
-				"0351/TestEverything");
+				"0351/TestEverything", Departement.MANAGEMENT);
 		employeeRepository.save(testEmployee);
 
 		String returnedView = controller.deleteEmployee(testEmployee.getId());

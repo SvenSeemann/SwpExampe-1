@@ -10,6 +10,7 @@ import java.util.Locale;
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Employee;
+import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
 import fviv.model.Finance;
 import fviv.model.Finance.FinanceType;
@@ -119,15 +120,15 @@ public class FvivDataInitializer implements DataInitializer {
 				"123", employeeRole);
 
 		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill",
-				"Bill.Gates@Microsoft.com", "0190CallBill");
+				"Bill.Gates@Microsoft.com", "0190CallBill", Departement.MANAGEMENT);
 		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela",
-				"Angie@Bundestag.de", "0123456789");
+				"Angie@Bundestag.de", "0123456789", Departement.CLEANING);
 		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans",
-				"Hans.Wurst@fviv.de", "0351/777888");
+				"Hans.Wurst@fviv.de", "0351/777888", Departement.SECURITY);
 		Employee employee4 = new Employee(employeeAccount4, "White", "Walter",
-				"Walter.White@Kochkurse.de", "BetterCallSaul");
+				"Walter.White@Kochkurse.de", "BetterCallSaul", Departement.MANAGEMENT);
 		Employee employee5 = new Employee(employeeAccount5, "Müller", "Thomas",
-				"Thomas.Müller@Weltmeister.de", "20304050");
+				"Thomas.Müller@Weltmeister.de", "20304050", Departement.CATERING);
 
 		// Save to repository
 
