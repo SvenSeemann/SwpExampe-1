@@ -1,24 +1,41 @@
 package fviv.controller;
 
-import fviv.model.*;
+import static org.joda.money.CurrencyUnit.EUR;
+
+import java.util.LinkedList;
+
+import javax.validation.Valid;
+
+import org.joda.money.Money;
+import org.salespointframework.catalog.ProductIdentifier;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 
-import javax.validation.Valid;
-import java.util.LinkedList;
+import fviv.catering.model.MenusRepository;
+import fviv.model.EmployeeRepository;
+import fviv.model.Employee;
+import fviv.model.Finance;
+import fviv.model.Finance.FinanceType;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
+import fviv.model.Registration;
 
 /**
  * @author Hendric Eckelt
+ * @author Niklas Fallik
  */
 
 @PreAuthorize("hasRole('ROLE_MANAGER')")
@@ -26,30 +43,146 @@ import java.util.LinkedList;
 public class ManagerController {
 	private String mode = "startConfiguration";
 	private String editSingleAccount = "startConfiguration";
+	private String showErrors = "no";
 	private final EmployeeRepository employeeRepository;
-	private final ExpenseRepository expenseRepository;
+	private final MenusRepository menusRepository;
 	private final UserAccountManager userAccountManager;
+	private final Inventory<InventoryItem> inventory;
+	private final FinanceRepository financeRepository;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
-			ExpenseRepository expenseRepository,
-			UserAccountManager userAccountManager) {
+			MenusRepository menusRepository,
+			UserAccountManager userAccountManager,
+			Inventory<InventoryItem> inventory,
+			FinanceRepository financeRepository) {
+
 		this.employeeRepository = employeeRepository;
-		this.expenseRepository = expenseRepository;
+		this.menusRepository = menusRepository;
 		this.userAccountManager = userAccountManager;
+		this.inventory = inventory;
+		this.financeRepository = financeRepository;
 	}
 
-	// String managermode for th:switch to decide which div to display
+	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
+
+	/** String managermode for th:switch to decide which div to display
+	 * 
+	 * @return link
+	 */
 	@ModelAttribute("managermode")
 	public String managermode() {
 		return mode;
 	}
 
-	// Main mapping for the manager functions
-	@RequestMapping({ "/manager" })
+	/** Switch to show errors in form validation
+	 * 
+	 * @return link
+	 */
+	@ModelAttribute("showErrors")
+	public String showErrors() {
+		return showErrors;
+	}
+
+	// ------------------------ REQUESTMAPPING ------------------------ \\
+
+	/** Main mapping for the manager functions
+	 * 
+	 * @param modelMap
+	 * @return link
+	 */
+	@RequestMapping("/manager")
 	public String index(ModelMap modelMap) {
-		// Floats used as sum for each type of expense
-		float salaryTotal = 0, cateringTotal = 0, rentTotal = 0, deposit = 0;
+		// Money used as sum for each type of expense
+		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
+				.of(EUR, 0.00);
+		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
+				.of(EUR, 0.00);
+
+		// ------------------------ FINANCES ------------------------ \\
+
+		// Lists that contain Finances sorted by Type
+		LinkedList<Finance> salaryExpense = new LinkedList<Finance>();
+		LinkedList<Finance> salaryDeposit = new LinkedList<Finance>();
+		LinkedList<Finance> cateringExpense = new LinkedList<Finance>();
+		LinkedList<Finance> cateringDeposit = new LinkedList<Finance>();
+		LinkedList<Finance> rentExpense = new LinkedList<Finance>();
+		LinkedList<Finance> rentDeposit = new LinkedList<Finance>();
+		
+		// Fill the Finance lists
+		for(Finance finance : financeRepository.findAll()){
+			if(finance.getFinanceType().equals(FinanceType.SALARY) && finance.getReference() == Reference.EXPENSE)salaryExpense.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.SALARY) && finance.getReference() == Reference.DEPOSIT)salaryDeposit.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.CATERING) && finance.getReference() == Reference.EXPENSE)cateringExpense.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.CATERING) && finance.getReference() == Reference.DEPOSIT)cateringDeposit.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.RENT) && finance.getReference() == Reference.EXPENSE)rentExpense.add(finance);
+			if(finance.getFinanceType().equals(FinanceType.RENT) && finance.getReference() == Reference.DEPOSIT)rentDeposit.add(finance);		
+		}
+
+		// Fill the Finance lists
+		for (Finance finance : financeRepository.findAll()) {
+			if (finance.getFinanceType().equals("salary")
+					&& finance.getReference() == Reference.EXPENSE)
+				salaryExpense.add(finance);
+			if (finance.getFinanceType().equals("salary")
+					&& finance.getReference() == Reference.DEPOSIT)
+				salaryDeposit.add(finance);
+			if (finance.getFinanceType().equals("catering")
+					&& finance.getReference() == Reference.EXPENSE)
+				cateringExpense.add(finance);
+			if (finance.getFinanceType().equals("catering")
+					&& finance.getReference() == Reference.DEPOSIT)
+				cateringDeposit.add(finance);
+			if (finance.getFinanceType().equals("rent")
+					&& finance.getReference() == Reference.EXPENSE)
+				rentExpense.add(finance);
+			if (finance.getFinanceType().equals("rent")
+					&& finance.getReference() == Reference.DEPOSIT)
+				rentDeposit.add(finance);
+		}
+
+		// Calculate total amounts of each expense type
+		for (Finance salDep : salaryDeposit) {
+			salDepTot = salDepTot.plus(salDep.getAmount());
+		}
+
+		for (Finance catDep : cateringDeposit) {
+			catDepTot = catDepTot.plus(catDep.getAmount());
+		}
+
+		for (Finance catExp : cateringExpense) {
+			catExpTot = catExpTot.plus(catExp.getAmount());
+		}
+
+		for (Finance rentDep : rentDeposit) {
+			rentDepTot = rentDepTot.plus(rentDep.getAmount());
+		}
+
+		for (Finance salExp : salaryExpense) {
+			salExpTot = salExpTot.plus(salExp.getAmount());
+		}
+
+		for (Finance rentExp : rentExpense) {
+			rentExpTot = rentExpTot.plus(rentExp.getAmount());
+		}
+
+		// Add deposit and total amounts to modelMap
+		modelMap.addAttribute("salExpTot", salExpTot);
+		modelMap.addAttribute("catExpTot", catExpTot);
+		modelMap.addAttribute("rentExpTot", rentExpTot);
+		modelMap.addAttribute("salDepTot", salDepTot);
+		modelMap.addAttribute("catDepTot", catDepTot);
+		modelMap.addAttribute("rentDepTot", rentDepTot);
+
+		// Add finances by type to the modelMap
+		modelMap.addAttribute("salaryExpense", salaryExpense);
+		modelMap.addAttribute("salaryDeposit", salaryDeposit);
+		modelMap.addAttribute("cateringExpense", cateringExpense);
+		modelMap.addAttribute("cateringDeposit", cateringDeposit);
+		modelMap.addAttribute("rentExpense", rentExpense);
+		modelMap.addAttribute("rentDeposit", rentDeposit);
+
+		// ------------------------ ROLES ------------------------ \\
 
 		// List of available roles for the account management
 		LinkedList<Role> allRoles = new LinkedList<Role>();
@@ -72,54 +205,32 @@ public class ManagerController {
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
 		modelMap.addAttribute("registration", new Registration());
 
-		// Add finances by type to the modelMap
-		modelMap.addAttribute("salary",
-				expenseRepository.findByExpenseType("salary"));
-		modelMap.addAttribute("catering",
-				expenseRepository.findByExpenseType("catering"));
-		modelMap.addAttribute("rent",
-				expenseRepository.findByExpenseType("rent"));
+		// ------------------------ STOCK ------------------------ \\
 
-		// Calculate total amounts of each expense type
-		for (Expense exp : expenseRepository.findByExpenseType("salary")) {
-			salaryTotal += exp.getAmount();
-		}
-
-		for (Expense exp : expenseRepository.findByExpenseType("catering")) {
-			cateringTotal += exp.getAmount();
-		}
-
-		for (Expense exp : expenseRepository.findByExpenseType("rent")) {
-			rentTotal += exp.getAmount();
-		}
-
-		for (Expense exp : expenseRepository.findByExpenseType("deposit")) {
-			deposit += exp.getAmount();
-		}
-
-		// Add deposit and total amounts to modelMap
-		modelMap.addAttribute("deposit", deposit);
-		modelMap.addAttribute("salaryTotal", salaryTotal);
-		modelMap.addAttribute("cateringTotal", cateringTotal);
-		modelMap.addAttribute("rentTotal", rentTotal);
-
+		modelMap.addAttribute("inventory", this.inventory.findAll());
 		return "manager";
 	}
 
-	@RequestMapping("/Employees")
-	public String employees() {
-		mode = "employees";
-		return "redirect:/manager";
-	}
+	// ------------------------ NEW EMPLOYEE ------------------------ \\
 
-	// Mapping to add a new employee to the repository
+	/** Mapping to add a new employee to the repository
+	 * 
+	 * @param registration
+	 * @param results
+	 * @return link
+	 */
 	@RequestMapping("/newEmployee")
 	public String newEmployee(
 			@ModelAttribute(value = "registration") @Valid Registration registration,
 			BindingResult results) {
+		// Assumption that given input is valid
+		showErrors = "no";
+
 		// Redirect if entered registration information are not valid
-		if (results.hasErrors())
+		if (results.hasErrors()) {
+			showErrors = "newEmployee";
 			return "redirect:/manager";
+		}
 
 		// Create useraccount
 		final Role employeeRole = new Role("ROLE_EMPLOYEE");
@@ -138,11 +249,21 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to delete an employee from the repository
+	// ------------------------ DELETE EMPLOYEE ------------------------ \\
+
+	/** Mapping to delete an employee from the repository
+	 * 
+	 * @param employeeId
+	 * @return link
+	 */
 	@RequestMapping("/deleteEmployee")
 	public String deleteEmployee(@RequestParam("employeeId") long employeeId) {
+		// Assumption that the given input was valid
+		showErrors = "no";
+
 		// Redirect if employee doesn't exists
 		if (employeeRepository.findById(employeeId) == null) {
+			showErrors = "deleteEmployee";
 			return "redirect:/manager";
 		}
 
@@ -156,9 +277,17 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to add a certain role to a useraccount
+	// ------------------------ ADD ROLE ------------------------ \\
+
+	/** Mapping to add a certain role to a useraccount
+	 * 
+	 * @param role
+	 * @return link
+	 */
 	@RequestMapping(params = "save", value = "/editAccount", method = RequestMethod.POST)
 	public String addRole(@RequestParam("roles") String role) {
+		// Assumption that given input is valid
+		showErrors = "no";
 
 		// Define a role by the given string "role"
 		final Role addRole = new Role(role);
@@ -178,17 +307,31 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to delete a certain role from a useraccount
+	// ------------------------ DELETE ROLE ------------------------ \\
+
+	/** Mapping to delete a certain role from a useraccount
+	 * 
+	 * @param role
+	 * @return link
+	 */
 	@RequestMapping(params = "delete", value = "/editAccount", method = RequestMethod.POST)
 	public String deleteRole(@RequestParam("roles") String role) {
+		// Assumption that given input is valid
+		showErrors = "no";
 
 		// Ensure that manager, boss and caterer role cannot be deleted entirely
-		if (editSingleAccount.equals("manager") && role.equals("ROLE_MANAGER"))
+		if (editSingleAccount.equals("manager") && role.equals("ROLE_MANAGER")) {
+			showErrors = "deleteRoleManager";
 			return "redirect:/manager";
-		if (editSingleAccount.equals("boss") && role.equals("ROLE_BOSS"))
+		}
+		if (editSingleAccount.equals("boss") && role.equals("ROLE_BOSS")) {
+			showErrors = "deleteRoleBoss";
 			return "redirect:/manager";
-		if (editSingleAccount.equals("caterer") && role.equals("ROLE_CATERER"))
+		}
+		if (editSingleAccount.equals("caterer") && role.equals("ROLE_CATERER")) {
+			showErrors = "deleteRoleCaterer";
 			return "redirect:/manager";
+		}
 
 		// Define a role by the given string "role"
 		final Role deleteRole = new Role(role);
@@ -210,9 +353,16 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to activate a certain account
+	// ------------------------ ACTIVATE ACCOUNT ------------------------ \\
+
+	/** Mapping to activate a certain account
+	 * 
+	 * @return link
+	 */
 	@RequestMapping(params = "enable", value = "/editAccount", method = RequestMethod.POST)
 	public String enableAccount() {
+		// Assumption that given input is valid
+		showErrors = "no";
 
 		// Redirect if the useraccount doesn't exist or is already enabled
 		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
@@ -230,14 +380,29 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to deactivate a certain account
+	// ------------------------ DEACTIVATE ACCOUNT ------------------------ \\
+
+	/** Mapping to deactivate a certain account
+	 * 
+	 * @return link
+	 */
 	@RequestMapping(params = "disable", value = "/editAccount", method = RequestMethod.POST)
 	public String disableAccount() {
+		// Assumption that given input is valid
+		showErrors = "no";
 
 		// Redirect if the useraccount doesn't exist or is already disabled
 		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
 				|| !(userAccountManager.findByUsername(editSingleAccount).get()
 						.isEnabled())) {
+			return "redirect:/manager";
+		}
+
+		// Prevent to disable boss, manager and caterer
+		if (editSingleAccount.equals("manager")
+				|| editSingleAccount.equals("boss")
+				|| editSingleAccount.equals("caterer")) {
+			showErrors = "disableImportantAccount";
 			return "redirect:/manager";
 		}
 
@@ -250,15 +415,26 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to get the editAccount view
+	// ------------------------ EDIT ACCOUNT SWITCH ------------------------ \\
+
+	/** Mapping to get the editAccount view
+	 * 
+	 * @param userName
+	 * @param modelMap
+	 * @return link
+	 */
 	@RequestMapping("/switchToEditAccount")
 	public String editAccount(@RequestParam("userNameEdit") String userName,
 			ModelMap modelMap) {
+		// Assumption the given input is valid
+		showErrors = "no";
 
 		// Redirect if useraccount doesn't exist
 		if (userName == ""
-				|| !(userAccountManager.findByUsername(userName).isPresent()))
+				|| !(userAccountManager.findByUsername(userName).isPresent())) {
+			showErrors = "switchToEditAccount";
 			return "redirect:/manager";
+		}
 
 		// change mode for th:switch and change string to selected account
 		mode = "editAccount";
@@ -267,12 +443,23 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to edit lastname, firstname or email of a useraccount
+	// ------------------------ EMPLOYEE DETAILS ------------------------ \\
+
+	/** Mapping to edit lastname, firstname or email of a useraccount
+	 * 
+	 * @param lastname
+	 * @param firstname
+	 * @param email
+	 * @return link
+	 */
 	@RequestMapping("/editEmployeeDetails")
 	public String editEmployeeDetails(
 			@RequestParam("editLastname") String lastname,
 			@RequestParam("editFirstname") String firstname,
 			@RequestParam("editEmail") String email) {
+
+		// Assumption that given input is valid
+		showErrors = "no";
 
 		// Update user information
 		UserAccount userAccount = userAccountManager.findByUsername(
@@ -290,17 +477,30 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
-	// Mapping to change the password of a single account
+	// ------------------------ CHANGE PASSWORD ------------------------ \\
+
+	/** Mapping to change the password of a single account
+	 * 
+	 * @param password1
+	 * @param password2
+	 * @return link
+	 */
 	@RequestMapping("/changePassword")
 	public String changePassword(
 			@RequestParam("changePassword1") String password1,
 			@RequestParam("changePassword2") String password2) {
+		// Assumption that given input is valid
+		showErrors = "changePasswordSuccessful";
 
 		// Password must not be empty and both passwords must match
-		if (password1.equals("") || password2.equals(""))
+		if (password1.equals("") || password2.equals("")) {
+			showErrors = "changePasswordEmpty";
 			return "redirect:/manager";
-		if (!(password1.equals(password2)))
+		}
+		if (!(password1.equals(password2))) {
+			showErrors = "changePasswordDifferentInput";
 			return "redirect:/manager";
+		}
 
 		// Change the password and save the account
 		userAccountManager.changePassword(
@@ -312,21 +512,61 @@ public class ManagerController {
 		return "redirect:/manager";
 	}
 
+	// ------------------------ ORDER MORE ------------------------ \\
+
+	/** Check stock and order more food if necessary
+	 * 
+	 * @param item
+	 * @param units
+	 * @return link
+	 */
+	
+	@RequestMapping("orderMore")
+	public String orderMore(@RequestParam("itemid") InventoryItem item,
+			@RequestParam("units") Long units) {
+		ProductIdentifier mid = item.getProduct().getIdentifier();
+		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
+				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units)), FinanceType.CATERING));
+		item.increaseQuantity(Units.of(units));
+		inventory.save(item);
+
+		return "redirect:/manager";
+	}
+
+	// ------------------------ MODEMAPPING ------------------------ \\
+
+	@RequestMapping("/Employees")
+	public String employees() {
+		mode = "employees";
+		showErrors = "no";
+		return "redirect:/manager";
+	}
+
 	@RequestMapping("/Finances")
 	public String finances() {
 		mode = "finances";
+		showErrors = "no";
 		return "redirect:/manager";
 	}
 
 	@RequestMapping("/Accountmanagement")
 	public String newLogin() {
 		mode = "accounts";
+		showErrors = "no";
 		return "redirect:/manager";
 	}
 
 	@RequestMapping("/Terminal")
 	public String terminal() {
 		mode = "terminal";
+		showErrors = "no";
+		return "redirect:/manager";
+	}
+
+	@RequestMapping("/Stock")
+	public String stock() {
+		mode = "checkStock";
+		showErrors = "no";
 		return "redirect:/manager";
 	}
 }
