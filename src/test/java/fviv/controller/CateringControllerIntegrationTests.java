@@ -27,11 +27,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.ModelMap;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class CateringControllerIntegrationTests extends AbstractWebIntegrationTests {
 	
@@ -45,16 +42,16 @@ public class CateringControllerIntegrationTests extends AbstractWebIntegrationTe
 		SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authentication));
 	}
 	
-	@Test
-	public void sampleMvcIntegrationTest() throws Exception {
-		login("caterer", "123");
-
-		mvc.perform(get("/catering")). //
-			andExpect(status().isOk()).//
-			andExpect(model().attribute("meals", is(not(emptyIterable())))).
-			andExpect(model().attribute("drinks", is(not(emptyIterable()))));
-
-	}
+//	@Test
+//	public void sampleMvcIntegrationTest() throws Exception {
+//		login("caterer", "123");
+//
+//		mvc.perform(get("/catering")). //
+//			andExpect(status().isOk()).//
+//			andExpect(model().attribute("meals", is(not(emptyIterable())))).
+//			andExpect(model().attribute("drinks", is(not(emptyIterable()))));
+//
+//	}
 	
 	@Test
 	public void ControllerIntegrationTest() {
