@@ -96,4 +96,11 @@ public class Coords {
 	public void setFactor(float factor) {
 		this.factor = factor;
 	}
+	@Override
+	public String toString() {
+		return "[width=" + width + ", height=" + height + ", yPos="
+				+ yPos + ", xPos=" + xPos + ", type=" + type + ", name=" + name
+				+ "]";
+	}
+	
 }

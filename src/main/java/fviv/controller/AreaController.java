@@ -42,7 +42,6 @@ public class AreaController {
 		
 		return "planning";
 	}
-
 	/*@ModelAttribute("sizeArea")
 	public String sizeArea() {
 		Coords siize = planningRepository.findByName("Areal");

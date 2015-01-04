@@ -1,17 +1,19 @@
 package fviv.controller;
 
-import java.awt.List;
+import java.util.List;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fviv.areaPlanner.Coords;
+import fviv.areaPlanner.MList;
 import fviv.areaPlanner.PlanningRepository;
 import fviv.areaPlanner.Coords.Type;
 
@@ -50,46 +52,39 @@ public class PlanningAJAXController {
 			@RequestParam("height") int height,
 			@RequestParam("left") float left, @RequestParam("top") float top) {
 		if (planningRepository.findByName("Areal") != null) {
-			int i = 1;
-			while (planningRepository.findByName(name + i) != null) {
-				i++;
-			}
-			i = i + 1;
 			switch (typ) {
 			case "TOILET":
-				planningRepository.save(new Coords(Type.TOILET, (name + i),
+				planningRepository.save(new Coords(Type.TOILET, (name),
 						width, height, left, top));
 				break;
 			case "STAGE":
-				planningRepository.save(new Coords(Type.STAGE, (name + i),
+				planningRepository.save(new Coords(Type.STAGE, (name),
 						width, height, left, top));
 				break;
 			case "CATERING":
-				planningRepository.save(new Coords(Type.CATERING, (name + i),
+				planningRepository.save(new Coords(Type.CATERING, (name),
 						width, height, left, top));
 				break;
 			case "CAMPING":
-				planningRepository.save(new Coords(Type.CAMPING, (name + i),
+				planningRepository.save(new Coords(Type.CAMPING, (name),
 						width, height, left, top));
 			}
 		}
 		showMe();
-		//System.out.println(typ + ", " + name + ", " + width + ", " + height
-		//		+ ", " + left + ", " + top);
+		// System.out.println(typ + ", " + name + ", " + width + ", " + height
+		// + ", " + left + ", " + top);
 		return true;
 	}
-	public void showMe(){
+
+	public void showMe() {
 		Iterable<Coords> all = planningRepository.findAll();
 		Coords area = planningRepository.findByName("Areal");
 		System.out.println("weite: " + area.getWidth() + "hoehe: "
 				+ area.getHeight());
 	}
 	
-	
 	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> terminal() {
-		Iterable<Coords> response = new Iterable<Coords>;
-		
-		return response;
+	public Iterable<Coords> giveMeAllEntries(@RequestParam("request") String request) {
+		return planningRepository.findAll();
 	}
 }
