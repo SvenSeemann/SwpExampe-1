@@ -89,6 +89,14 @@
 			<artifactId>barbecue</artifactId>
 			<version>1.5-beta1</version>
 		</dependency>
+
+		<!-- JSON -->
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20141113</version>
+		</dependency>
 	</dependencies>
 
 	<build>

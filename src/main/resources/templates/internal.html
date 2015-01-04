@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -17,13 +17,8 @@
 			<a href="/catering">Catering Terminal</a>
 		</div>
 	</div>
-	
-	 <h1>Awesome overview</h1>
-    <div th:include="messaging :: message-list">
-    </div>
-    <div th:include="messaging :: message-form">
-    </div>
 
+	<div th:include="messaging :: messaging"></div>
 </body>
 
 </html>

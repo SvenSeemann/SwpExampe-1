@@ -114,4 +114,9 @@ public class MessagingController {
     public List<UserAccount> getReceivers(@LoggedIn Optional<UserAccount> user) {
         return user.isPresent() ? postOffice.getRecipients(user.get()) : new LinkedList<>();
     }
+
+    @RequestMapping(value = "messaging/get/me", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    public UserAccount getMe(@LoggedIn Optional<UserAccount> user) {
+        return user.isPresent() ? user.get() : null;
+    }
 }

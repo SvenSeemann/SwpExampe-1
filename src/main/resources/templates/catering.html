@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../resources/css/catering.css"/>
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
 
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title th:text="#{catering.title}">Catering</title>
 </head>
 
@@ -91,10 +92,6 @@
 				<button class="slimButton" type="submit"
 					th:text="#{catering.logout}" value="logout">Logout</button>
 			</form>
-			<form method="post" action="/chat">
-				<button class="slimButton" type="submit" value="chat"
-					th:text="#{catering.chat}">Chat</button>
-			</form>
 			<form method="post" action="/catering-meals">
 				<button class="boldButton" type="submit" value="catering-meals"
 					th:text="#{catering.meals}">Menu</button>
@@ -104,6 +101,7 @@
 					th:text="#{catering.drinks}">Menu</button>
 			</form>
 		</div>
+		<div th:include="messaging :: messaging"></div>
 	</div>
 </body>
 </html>

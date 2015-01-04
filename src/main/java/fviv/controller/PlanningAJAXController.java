@@ -1,6 +1,8 @@
 package fviv.controller;
 
+import java.awt.List;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,10 +87,9 @@ public class PlanningAJAXController {
 	
 	
 	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Map<String, Object> terminal() {
-
-		final Map<String, Object> response = new HashMap<String, Object>();
-		response.put("success", "true");
+	public Iterable<Coords> terminal() {
+		Iterable<Coords> response = new Iterable<Coords>;
+		
 		return response;
 	}
 }
