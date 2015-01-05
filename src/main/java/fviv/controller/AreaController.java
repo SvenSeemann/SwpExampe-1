@@ -33,16 +33,15 @@ public class AreaController {
 
 	@RequestMapping("/planning")
 	public String getHtml(Model modelMap) {
-		List<String> toiletStrings = new LinkedList<String>();
-		for(Coords toilet : planningRepository.findByType(Type.TOILET)){
-			toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
-		}
+		//List<String> toiletStrings = new LinkedList<String>();
+		//for(Coords toilet : planningRepository.findByType(Type.TOILET)){
+		//	toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
+		//}
 		modelMap.addAttribute("getCoords", planningRepository);
-		modelMap.addAttribute("toilets", toiletStrings );
+		//modelMap.addAttribute("toilets", toiletStrings );
 		
 		return "planning";
 	}
-
 	/*@ModelAttribute("sizeArea")
 	public String sizeArea() {
 		Coords siize = planningRepository.findByName("Areal");

@@ -108,7 +108,7 @@ class Messaging
           cache   : false,
           url     : if debug then '/messaging/test/get' else '/messaging/get',
           data    :
-            last  : if messages.array.length == 0 then new Date(1000, 0).toUTCString() else messages.array[messages.array.length - 1].dateReceived.toUTCString()
+            last  : if messages.array.length == 0 then new Date(1001, 0).toUTCString() else messages.array[messages.array.length - 1].dateReceived.toUTCString()
 
           success : (data) ->
             if data.length > 0

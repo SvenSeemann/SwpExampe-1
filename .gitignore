@@ -25,4 +25,5 @@ bin/
 # Binary Output
 target/
 
-
+# Markdown pdf output
+documents/documentation/pdf/
