@@ -1,9 +1,13 @@
 package fviv.festival;
 
-import javax.persistence.Entity;
+import static org.joda.money.CurrencyUnit.EUR;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.joda.money.Money;
+
 import java.util.Date;
 
 @Entity
@@ -19,6 +23,50 @@ public class Festival {
 	private String actors;
 	private int maxVisitors;
 	private long preisTag;
+	private Money managementSalaryPerDay;
+	private Money cateringSalaryPerDay;
+	private Money securitySalaryPerDay;
+	private Money cleaningSalaryPerDay;
+	private int quantManagement;
+	private int quantCatering;
+	private int quantSecurity;
+	private int quantCleaning;
+
+	public int getQuantManagement() {
+		return quantManagement;
+	}
+
+	public void setQuantManagement(int quantManagement) {
+		this.quantManagement = quantManagement;
+	}
+
+	public int getQuantCatering() {
+		return quantCatering;
+	}
+
+	public void setQuantCatering(int quantSalary) {
+		this.quantCatering = quantSalary;
+	}
+
+	public int getQuantSecurity() {
+		return quantSecurity;
+	}
+	
+	public int getRecommendedQuantSecurity() {
+		return (maxVisitors / 100);
+	}
+
+	public void setQuantSecurity(int quantSecurity) {
+		this.quantSecurity = quantSecurity;
+	}
+
+	public int getQuantCleaning() {
+		return quantCleaning;
+	}
+
+	public void setQuantCleaning(int quantCleaning) {
+		this.quantCleaning = quantCleaning;
+	}
 
 	@Deprecated
 	protected Festival() {
@@ -33,6 +81,14 @@ public class Festival {
 		this.actors = actors;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
+		this.managementSalaryPerDay = Money.of(EUR, 0.00);
+		this.cateringSalaryPerDay = Money.of(EUR, 0.00);
+		this.securitySalaryPerDay = Money.of(EUR, 0.00);
+		this.cleaningSalaryPerDay = Money.of(EUR, 0.00);
+		this.quantCleaning = 0;
+		this.quantManagement = 0;
+		this.quantSecurity = 0;
+		this.quantCatering = 0;
 
 	}
 	public long getId(){
@@ -94,6 +150,38 @@ public class Festival {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public Money getManagementSalaryPerDay() {
+		return managementSalaryPerDay;
+	}
+
+	public void setManagementSalaryPerDay(Money managementSalaryPerDay) {
+		this.managementSalaryPerDay = managementSalaryPerDay;
+	}
+
+	public Money getCateringSalaryPerDay() {
+		return cateringSalaryPerDay;
+	}
+
+	public void setCateringSalaryPerDay(Money cateringSalaryPerDay) {
+		this.cateringSalaryPerDay = cateringSalaryPerDay;
+	}
+
+	public Money getSecuritySalaryPerDay() {
+		return securitySalaryPerDay;
+	}
+
+	public void setSecuritySalaryPerDay(Money securitySalaryPerDay) {
+		this.securitySalaryPerDay = securitySalaryPerDay;
+	}
+
+	public Money getCleaningSalaryPerDay() {
+		return cleaningSalaryPerDay;
+	}
+
+	public void setCleaningSalaryPerDay(Money cleaningSalaryPerDay) {
+		this.cleaningSalaryPerDay = cleaningSalaryPerDay;
 	}
 
 
