@@ -56,3 +56,13 @@
 	width:200px;
 	height:170px;
 }
+
+#area{
+	background-color:#666;
+}
+
+.objekt{
+	background-color:#383839;
+	border:#09F medium solid;
+	position:absolute;
+}

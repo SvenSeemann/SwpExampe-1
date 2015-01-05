@@ -1,73 +1,91 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8" />
-<link href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css" />
+<link href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700"
+	rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/planning.css" />
 <script src="../resources/scripts/jquery-1.11.1.js"></script>
+<!--<script src="https://code.jquery.com/ui/jquery-ui-git.js"></script> -->
+<script type="text/javascript" src="../resources/scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="../resources/scripts/planning.js"></script>
 <title>Planer</title>
 </head>
 
-<body onLoad="draginit();">
-<div id="webseite">
-  <div id="header">
-    <div id="loggedAs">angemeldet als:</div>
-    <div id="title">Planning</div>
-    <div id="loginName">UserName</div>
-  </div>
-  <div id="content">
-    <div id="substance">
-      <div id="request">
-        <h3>Grö&szlig;e eingeben</h3>
-        <form action="/newArea" method="post" id="size" name="size">
-          <table>
-            <tr>
-              <td>Weite:</td>
-              <td><input type="number" name="width" size="30" />
-                m</td>
-            </tr>
-            <tr>
-              <td>Höhe:</td>
-              <td><input type="number" name="height" size="30" />
-                m</td>
-            </tr>
-            <tr>
-              <td colspan="2"><input type="submit" value="submit" class="button" />
-                <input type="reset" value="reset" class="button" onClick="reset();" /></td>
-            </tr>
-          </table>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div id="menu">
-    <button class="boldButton" onClick="newArea();">New Area</button>
-    <button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
-    <div class="objectMenu" id="stages">
-      <div class="chooseObject" onClick="cloneIt(this,0);">small Stage</div>
-      <div class="chooseObject" onClick="cloneIt(this,1);">medium Stage</div>
-      <div class="chooseObject" onClick="cloneIt(this,2);">big Stage</div>
-    </div>
-    <button class="boldButton" onClick="openSubMenu('toilet');">Toilets</button>
-    <div class="objectMenu" id="toilets">
-      <div class="chooseObject" onClick="cloneIt(this,3);">ToiToi</div>
-      <div class="chooseObject" onClick="cloneIt(this,4);">Behindertengerecht</div>
-      <div class="chooseObject" onClick="cloneIt(this,5);">Badcontainer</div>
-    </div>
-    <button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
-    <div class="objectMenu" id="catering">
-      <div class="chooseObject" onClick="cloneIt(this,5);">Bierwagen</div>
-    </div>
-    <button class="boldButton" onClick="openSubMenu('camping');">Camping</button>
-    <div class="objectMenu" id="camping">
-      <div class="chooseObject">small camping</div>
-      <div class="chooseObject">large camping</div>
-      <div class="chooseObject">camping city</div>
-    </div>
-  </div>
-  <div th:include="messaging :: messaging"></div>
-</div>
+<body>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs">angemeldet als:</div>
+			<div id="title">Planning</div>
+			<div id="loginName">UserName</div>
+		</div>
+		<div id="content">
+			<div id="substance">
+				<div id="context">
+					<ul>
+						<li>Bühne</li>
+						<li>weite:</li>
+						<li>hoehe:</li>
+						<li>top:</li>
+						<li>left:</li>
+						<!--<li class="contextButton">90°im Uhrzeigersinn drehen</li>
+						<li class="contextButton">90° gegen den Uhrzeigersinn drehen</li> -->
+						<li class="contextButton" id="loeschen">Objekt löschen</li>
+					</ul>
+				</div>
+				<div id="request">
+					<h3>Grö&szlig;e eingeben</h3>
+					<form action="/newArea" method="post" id="size" name="size">
+						<table>
+							<tr>
+								<td>Weite:</td>
+								<td><input type="number" name="width" size="30" /> m</td>
+							</tr>
+							<tr>
+								<td>Höhe:</td>
+								<td><input type="number" name="height" size="30" /> m</td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="submit" value="submit"
+									class="button" /> <input type="reset" value="reset"
+									class="button" onClick="breakIt();" /></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="menu">
+			<!-- <div th:include="messaging :: messaging"></div> -->
+			<button class="slimButton" onClick="saveIt();">Speichern</button>
+			<button class="boldButton" onClick="newArea();">New Area</button>
+			<button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
+			<div class="objectMenu" id="stages">
+				<div class="chooseObject" onClick="cloneIt(this,0, 'STAGE');">small
+					Stage</div>
+				<div class="chooseObject" onClick="cloneIt(this,1, 'STAGE');">medium
+					Stage</div>
+				<div class="chooseObject" onClick="cloneIt(this,2, 'STAGE');">big
+					Stage</div>
+			</div>
+			<button class="boldButton" onClick="openSubMenu('toilet');">Toilets</button>
+			<div class="objectMenu" id="toilets">
+				<div class="chooseObject" onClick="cloneIt(this,3, 'TOILET');">ToiToi</div>
+				<div class="chooseObject" onClick="cloneIt(this,4, 'TOILET');">Behindertengerecht</div>
+			</div>
+			<button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
+			<div class="objectMenu" id="catering">
+				<div class="chooseObject" onClick="cloneIt(this,5, 'CATERING');">Bierwagen</div>
+			</div>
+			<button class="boldButton" onClick="openSubMenu('camping');">Camping</button>
+			<div class="objectMenu" id="camping">
+				<div class="chooseObject">small camping</div>
+				<div class="chooseObject">large camping</div>
+				<div class="chooseObject">camping city</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
