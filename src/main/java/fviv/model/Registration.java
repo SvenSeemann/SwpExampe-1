@@ -19,6 +19,9 @@ public class Registration {
 	@NotEmpty(message = "{Registration.phone.NotEmpty}")
 	private String phone;
 	
+	@NotEmpty(message = "{Registration.password.NotEmpty}")
+	private String password;
+	
 	public String getLastname(){
 		return lastname;
 	}
@@ -49,5 +52,12 @@ public class Registration {
 	
 	public void setPhone(String phone){
 		this.phone = phone;
+	}
+	public String getPassword(){
+		return password;
+	}
+	
+	public void setPassword(String password){
+		this.password = password;
 	}
 }
