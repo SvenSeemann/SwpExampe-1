@@ -152,7 +152,7 @@
             cache: false,
             url: debug ? '/messaging/test/get' : '/messaging/get',
             data: {
-              last: messages.array.length === 0 ? new Date(1000, 0).toUTCString() : messages.array[messages.array.length - 1].dateReceived.toUTCString()
+              last: messages.array.length === 0 ? new Date(1001, 0).toUTCString() : messages.array[messages.array.length - 1].dateReceived.toUTCString()
             },
             success: function(data) {
               if (data.length > 0) {
