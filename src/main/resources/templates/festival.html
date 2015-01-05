@@ -8,6 +8,58 @@
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/festival.css" />
 <title>Festival erstellung</title>
+<script type="text/javascript">
+function validate() {
+	if (document.salform.salManagement.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.salform.salManagement.style.borderColor = "red";
+		document.salform.salManagement.focus();
+		return false;
+	}
+	if (document.salform.salCatering.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.salform.salCatering.style.borderColor = "red";
+		document.salform.salCatering.focus();
+		return false;
+	}
+	if (document.salform.salSecurity.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.salform.salSecurity.style.borderColor = "red";
+		document.salform.salSecurity.focus();
+		return false;
+	}
+	if (document.salform.salCleaning.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.salform.salCleaning.style.borderColor = "red";
+		document.salform.salCleaning.focus();
+		return false;
+	}
+	if (document.quantform.quantManagement.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.quantform.quantManagement.style.borderColor = "red";
+		document.quantform.quantManagement.focus();
+		return false;
+	}
+	if (document.quantform.quantCatering.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.quantform.quantCatering.style.borderColor = "red";
+		document.quantform.quantCatering.focus();
+		return false;
+	}
+	if (document.quantform.quantSecurity.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.quantform.quantSecurity.style.borderColor = "red";
+		document.quantform.quantSecurity.focus();
+		return false;
+	}
+	if (document.quantform.quantCleaning.value == "") {
+		alert("Bitte Wert eingeben!");
+		document.quantform.quantCleaning.style.borderColor = "red";
+		document.quantform.quantCleaning.focus();
+		return false;
+	}
+}
+</script>
 </head>
 <body>
 	<div id="webseite">
@@ -113,7 +165,7 @@
 					<div th:case="setSalary">
 
 						<p th:text="${selected.festivalName}" />
-						<form action="/setNewSalary" method="post">
+						<form name="salform" action="/setNewSalary" method="post" onsubmit="return validate()">
 							<table class="festivalTable">
 								<tr>
 									<td>Tagesgehalt für Managementangestellen</td>
@@ -121,7 +173,7 @@
 										<p th:text="${selected.managementSalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salManagement"
-										min="1.00" step="0.10" placeholder="0.00" /></td>
+										min="1.00" step="0.10" value="0.00" /></td>
 								</tr>
 								<tr>
 									<td>Tagesgehalt für Cateringangestellen</td>
@@ -129,7 +181,7 @@
 										<p th:text="${selected.cateringSalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salCatering"
-										min="1.00" step="0.10" placeholder="0.00" /></td>
+										min="1.00" step="0.10" value="0.00" /></td>
 								</tr>
 								<tr>
 									<td>Tagesgehalt für Securityangestellen</td>
@@ -137,7 +189,7 @@
 										<p th:text="${selected.securitySalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salSecurity"
-										min="1.00" step="0.10" placeholder="0.00" /></td>
+										min="1.00" step="0.10" value="0.00" /></td>
 								</tr>
 								<tr>
 									<td>Tagesgehalt für Cleaningangestellen</td>
@@ -145,7 +197,7 @@
 										<p th:text="${selected.cleaningSalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salCleaning"
-										min="1.00" step="0.10" placeholder="0.00" /></td>
+										min="1.00" step="0.10" value="0.00" /></td>
 								</tr>
 								<tr>
 									<td></td><td></td><td><input type="submit" class="button_green" value="Festlegen"
@@ -157,7 +209,7 @@
 					
 					<!-- case setQuantity -->
 					<div th:case="setQuantity">
-						<form action="/setNewQuant" method="post">
+						<form name="quantform" action="/setNewQuant" method="post" onsubmit="return validate()">
 							<table class="festivalTable">
 								<tr>
 									<td>Anzahl Manager</td>
@@ -165,7 +217,7 @@
 										<p th:text="${selected.quantManagement}" />
 									</td>
 									<td><input id="number" type="number" name="quantManagement"
-										min="1" step="1" placeholder="0" /></td>
+										min="1" step="1" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Anzahl Caterer:</td>
@@ -173,7 +225,7 @@
 										<p th:text="${selected.quantCatering}" />
 									</td>
 									<td><input id="number" type="number" name="quantCatering"
-										min="1" step="1" placeholder="0" /></td>
+										min="1" step="1" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Anzahl Securityangesteller</td>
@@ -183,7 +235,7 @@
 										<p th:text="${selected.RecommendedQuantSecurity}" />
 									</td>
 									<td><input id="number" type="number" name="quantSecurity"
-										min="1" step="1" placeholder="0" /></td>
+										min="1" step="1" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Anzahl Cleaningangestellter:</td>
@@ -191,7 +243,7 @@
 										<p th:text="${selected.quantCleaning}" />
 									</td>
 									<td><input id="number" type="number" name="quantCleaning"
-										min="1" step="1" placeholder="0" /></td>
+										min="1" step="1" value="0" /></td>
 								</tr>
 								<tr>
 									<td></td><td></td><td><input type="submit" class="button_green" value="Festlegen"
