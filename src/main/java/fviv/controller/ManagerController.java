@@ -25,6 +25,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.MenusRepository;
+import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
 import fviv.model.Finance;
@@ -66,7 +67,8 @@ public class ManagerController {
 
 	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
 
-	/** String managermode for th:switch to decide which div to display
+	/**
+	 * String managermode for th:switch to decide which div to display
 	 * 
 	 * @return link
 	 */
@@ -75,7 +77,8 @@ public class ManagerController {
 		return mode;
 	}
 
-	/** Switch to show errors in form validation
+	/**
+	 * Switch to show errors in form validation
 	 * 
 	 * @return link
 	 */
@@ -86,7 +89,8 @@ public class ManagerController {
 
 	// ------------------------ REQUESTMAPPING ------------------------ \\
 
-	/** Main mapping for the manager functions
+	/**
+	 * Main mapping for the manager functions
 	 * 
 	 * @param modelMap
 	 * @return link
@@ -108,39 +112,29 @@ public class ManagerController {
 		LinkedList<Finance> cateringDeposit = new LinkedList<Finance>();
 		LinkedList<Finance> rentExpense = new LinkedList<Finance>();
 		LinkedList<Finance> rentDeposit = new LinkedList<Finance>();
-		
-		// Fill the Finance lists
-		for(Finance finance : financeRepository.findAll()){
-			if(finance.getFinanceType().equals(FinanceType.SALARY) && finance.getReference() == Reference.EXPENSE)salaryExpense.add(finance);
-			if(finance.getFinanceType().equals(FinanceType.SALARY) && finance.getReference() == Reference.DEPOSIT)salaryDeposit.add(finance);
-			if(finance.getFinanceType().equals(FinanceType.CATERING) && finance.getReference() == Reference.EXPENSE)cateringExpense.add(finance);
-			if(finance.getFinanceType().equals(FinanceType.CATERING) && finance.getReference() == Reference.DEPOSIT)cateringDeposit.add(finance);
-			if(finance.getFinanceType().equals(FinanceType.RENT) && finance.getReference() == Reference.EXPENSE)rentExpense.add(finance);
-			if(finance.getFinanceType().equals(FinanceType.RENT) && finance.getReference() == Reference.DEPOSIT)rentDeposit.add(finance);		
-		}
 
 		// Fill the Finance lists
 		for (Finance finance : financeRepository.findAll()) {
-			if (finance.getFinanceType().equals("salary")
+			if (finance.getFinanceType().equals(FinanceType.SALARY)
 					&& finance.getReference() == Reference.EXPENSE)
 				salaryExpense.add(finance);
-			if (finance.getFinanceType().equals("salary")
+			if (finance.getFinanceType().equals(FinanceType.SALARY)
 					&& finance.getReference() == Reference.DEPOSIT)
 				salaryDeposit.add(finance);
-			if (finance.getFinanceType().equals("catering")
+			if (finance.getFinanceType().equals(FinanceType.CATERING)
 					&& finance.getReference() == Reference.EXPENSE)
 				cateringExpense.add(finance);
-			if (finance.getFinanceType().equals("catering")
+			if (finance.getFinanceType().equals(FinanceType.CATERING)
 					&& finance.getReference() == Reference.DEPOSIT)
 				cateringDeposit.add(finance);
-			if (finance.getFinanceType().equals("rent")
+			if (finance.getFinanceType().equals(FinanceType.RENT)
 					&& finance.getReference() == Reference.EXPENSE)
 				rentExpense.add(finance);
-			if (finance.getFinanceType().equals("rent")
+			if (finance.getFinanceType().equals(FinanceType.RENT)
 					&& finance.getReference() == Reference.DEPOSIT)
 				rentDeposit.add(finance);
 		}
-
+		
 		// Calculate total amounts of each expense type
 		for (Finance salDep : salaryDeposit) {
 			salDepTot = salDepTot.plus(salDep.getAmount());
@@ -213,7 +207,8 @@ public class ManagerController {
 
 	// ------------------------ NEW EMPLOYEE ------------------------ \\
 
-	/** Mapping to add a new employee to the repository
+	/**
+	 * Mapping to add a new employee to the repository
 	 * 
 	 * @param registration
 	 * @param results
@@ -222,7 +217,7 @@ public class ManagerController {
 	@RequestMapping("/newEmployee")
 	public String newEmployee(
 			@ModelAttribute(value = "registration") @Valid Registration registration,
-			BindingResult results) {
+			BindingResult results, @RequestParam("departement") String departementAsString) {
 		// Assumption that given input is valid
 		showErrors = "no";
 
@@ -231,16 +226,39 @@ public class ManagerController {
 			showErrors = "newEmployee";
 			return "redirect:/manager";
 		}
+				
+		Departement departement = Departement.NULL;
+		if (departementAsString.equals("management")) { 
+			departement = Departement.MANAGEMENT;
+		}
+		if (departementAsString.equals("catering")) { 
+			departement = Departement.CATERING;
+		}
+		if (departementAsString.equals("security")) { 
+			departement = Departement.SECURITY;
+		}
+		if (departementAsString.equals("cleaning")) {
+			departement = Departement.CLEANING;
+		}
 
 		// Create useraccount
-		final Role employeeRole = new Role("ROLE_EMPLOYEE");
+		Role employeeRole;
+		if (departement == Departement.MANAGEMENT) {
+			employeeRole = new Role("ROLE_MANAGER");
+		}
+		if (departement == Departement.CATERING) {
+			employeeRole = new Role("ROLE_CATERER");
+		} else {
+			employeeRole = new Role("ROLE_EMPLOYEE");
+		}
+			
 		UserAccount employeeAccount = userAccountManager.create(
-				registration.getLastname(), "123", employeeRole);
-
+				registration.getFirstname() + "." + registration.getLastname(), registration.getPassword() , employeeRole);
+		
 		// Create employee
 		Employee employee = new Employee(employeeAccount,
 				registration.getLastname(), registration.getFirstname(),
-				registration.getEmail(), registration.getPhone());
+				registration.getEmail(), registration.getPhone(), departement);
 
 		// Add employee and useraccount to the specific repositories
 		userAccountManager.save(employeeAccount);
@@ -251,7 +269,8 @@ public class ManagerController {
 
 	// ------------------------ DELETE EMPLOYEE ------------------------ \\
 
-	/** Mapping to delete an employee from the repository
+	/**
+	 * Mapping to delete an employee from the repository
 	 * 
 	 * @param employeeId
 	 * @return link
@@ -279,7 +298,8 @@ public class ManagerController {
 
 	// ------------------------ ADD ROLE ------------------------ \\
 
-	/** Mapping to add a certain role to a useraccount
+	/**
+	 * Mapping to add a certain role to a useraccount
 	 * 
 	 * @param role
 	 * @return link
@@ -309,7 +329,8 @@ public class ManagerController {
 
 	// ------------------------ DELETE ROLE ------------------------ \\
 
-	/** Mapping to delete a certain role from a useraccount
+	/**
+	 * Mapping to delete a certain role from a useraccount
 	 * 
 	 * @param role
 	 * @return link
@@ -355,7 +376,8 @@ public class ManagerController {
 
 	// ------------------------ ACTIVATE ACCOUNT ------------------------ \\
 
-	/** Mapping to activate a certain account
+	/**
+	 * Mapping to activate a certain account
 	 * 
 	 * @return link
 	 */
@@ -382,7 +404,8 @@ public class ManagerController {
 
 	// ------------------------ DEACTIVATE ACCOUNT ------------------------ \\
 
-	/** Mapping to deactivate a certain account
+	/**
+	 * Mapping to deactivate a certain account
 	 * 
 	 * @return link
 	 */
@@ -417,7 +440,8 @@ public class ManagerController {
 
 	// ------------------------ EDIT ACCOUNT SWITCH ------------------------ \\
 
-	/** Mapping to get the editAccount view
+	/**
+	 * Mapping to get the editAccount view
 	 * 
 	 * @param userName
 	 * @param modelMap
@@ -445,7 +469,8 @@ public class ManagerController {
 
 	// ------------------------ EMPLOYEE DETAILS ------------------------ \\
 
-	/** Mapping to edit lastname, firstname or email of a useraccount
+	/**
+	 * Mapping to edit lastname, firstname or email of a useraccount
 	 * 
 	 * @param lastname
 	 * @param firstname
@@ -479,7 +504,8 @@ public class ManagerController {
 
 	// ------------------------ CHANGE PASSWORD ------------------------ \\
 
-	/** Mapping to change the password of a single account
+	/**
+	 * Mapping to change the password of a single account
 	 * 
 	 * @param password1
 	 * @param password2
@@ -514,19 +540,21 @@ public class ManagerController {
 
 	// ------------------------ ORDER MORE ------------------------ \\
 
-	/** Check stock and order more food if necessary
+	/**
+	 * Check stock and order more food if necessary
 	 * 
 	 * @param item
 	 * @param units
 	 * @return link
 	 */
-	
+
 	@RequestMapping("orderMore")
 	public String orderMore(@RequestParam("itemid") InventoryItem item,
 			@RequestParam("units") Long units) {
 		ProductIdentifier mid = item.getProduct().getIdentifier();
 		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
-				.findByProductIdentifier(mid).getPurchasePrice().multipliedBy(units)), FinanceType.CATERING));
+				.findByProductIdentifier(mid).getPurchasePrice()
+				.multipliedBy(units)), FinanceType.CATERING));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
 

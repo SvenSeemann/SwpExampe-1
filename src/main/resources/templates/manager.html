@@ -102,6 +102,7 @@ $(function () {
 								<th>ID</th>
 								<th>Nachname</th>
 								<th>Vorname</th>
+								<th>Abteilung</th>
 								<th>Email-Adresse</th>
 								<th>Telefonnummer</th>
 							</tr>
@@ -109,6 +110,7 @@ $(function () {
 								<td th:text="${employee.id}"></td>
 								<td th:text="${employee.userAccount.lastname}"></td>
 								<td th:text="${employee.userAccount.firstname}"></td>
+								<td th:text="${employee.departement}"></td>
 								<td th:text="${employee.userAccount.email}"></td>
 								<td th:text="${employee.phone}"></td>
 							</tr>
@@ -137,8 +139,15 @@ $(function () {
 								<br /> <input type="text" placeholder="E-mail Adresse"
 									id="email" th:field="*{email}"></input> <br /> <input
 									type="text" placeholder="Telefonnummer" id="phone"
-									th:field="*{phone}"></input> <br /> <input type="submit"
-									value="Speichern" class="button_green" style="margin-top: 3px"></input>
+									th:field="*{phone}"></input> <br /> <input type="password"
+									placeholder="Password" id="password" th:field="*{password}"></input>
+								<br /> <select name="departement">
+									<option th:value="management">Management</option>
+									<option th:value="catering">Catering</option>
+									<option th:value="security">Security</option>
+									<option th:value="cleaning">Cleaning</option>
+								</select> <br /> <input type="submit" value="Speichern"
+									class="button_green" style="margin-top: 3px"></input>
 							</form>
 						</div>
 					</div>
@@ -387,6 +396,5 @@ $(function () {
 			</form>
 		</div>
 	</div>
-	<div th:include="messaging :: messaging"></div>
 </body>
 </html>
