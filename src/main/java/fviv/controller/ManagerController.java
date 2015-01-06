@@ -308,7 +308,9 @@ public class ManagerController {
 	public String addRole(@RequestParam("roles") String role) {
 		// Assumption that given input is valid
 		showErrors = "no";
-
+		
+		UserAccount userAccount = userAccountManager.findByUsername(editSingleAccount).get();
+		
 		// Define a role by the given string "role"
 		final Role addRole = new Role(role);
 
@@ -319,11 +321,10 @@ public class ManagerController {
 						.hasRole(addRole)) {
 			return "redirect:/manager";
 		}
-
+		
 		// Add role to the useraccount and save it
-		userAccountManager.findByUsername(editSingleAccount).get().add(addRole);
-		userAccountManager.save(userAccountManager.findByUsername(
-				editSingleAccount).get());
+		userAccount.add(addRole);
+		userAccountManager.save(userAccount);
 		return "redirect:/manager";
 	}
 
@@ -356,6 +357,7 @@ public class ManagerController {
 
 		// Define a role by the given string "role"
 		final Role deleteRole = new Role(role);
+		UserAccount userAccount = userAccountManager.findByUsername(editSingleAccount).get();
 
 		// Redirect if the useraccount doesn't exist or doesn't have the role
 		// attached
@@ -366,10 +368,8 @@ public class ManagerController {
 		}
 
 		// Delete role from the useraccount and save it
-		userAccountManager.findByUsername(editSingleAccount).get()
-				.remove(deleteRole);
-		userAccountManager.save(userAccountManager.findByUsername(
-				editSingleAccount).get());
+		userAccount.remove(deleteRole);
+		userAccountManager.save(userAccount);
 
 		return "redirect:/manager";
 	}
