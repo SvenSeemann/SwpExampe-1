@@ -19,6 +19,21 @@ var objectList = new Array();
 // ...........................
 var factor;
 
+$(document).ready(function() {
+	event.preventDefault();
+	$.ajax({
+		url : "/getValues",
+		type : "POST",
+		data : {
+			request : "true"
+		},
+		success : function(data) {
+			console.log(data);
+		}
+	});
+
+});
+
 function newArea() {
 	document.getElementById('request').style.display = "block";
 }

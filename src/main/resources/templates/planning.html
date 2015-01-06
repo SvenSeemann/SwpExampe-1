@@ -17,9 +17,9 @@
 <body>
 	<div id="webseite">
 		<div id="header">
-			<div id="loggedAs">angemeldet als:</div>
+			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
 			<div id="title">Planning</div>
-			<div id="loginName">UserName</div>
+			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
 		</div>
 		<div id="content">
 			<div id="substance">
@@ -58,6 +58,10 @@
 			</div>
 		</div>
 		<div id="menu">
+			<form method="post" action="/logout">
+				<button class="slimButton" type="submit"
+					th:text="#{catering.logout}" value="logout">Facepalm</button>
+			</form>
 			<!-- <div th:include="messaging :: messaging"></div> -->
 			<button class="slimButton" onClick="saveIt();">Speichern</button>
 			<button class="boldButton" onClick="newArea();">New Area</button>

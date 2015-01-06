@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,19 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fviv.areaPlanner.Coords;
 import fviv.areaPlanner.MList;
+import fviv.areaPlanner.Objekt;
 import fviv.areaPlanner.PlanningRepository;
+import fviv.areaPlanner.ObjectRepository;
 import fviv.areaPlanner.Coords.Type;
 
 @RestController
 public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
-
+	
+	private ObjectRepository objectRepository;
 	private PlanningRepository planningRepository;
 
 	@Autowired
-	public PlanningAJAXController(PlanningRepository planningRepository) {
+	public PlanningAJAXController(PlanningRepository planningRepository, ObjectRepository objectRepository) {
 		super();
 		this.planningRepository = planningRepository;
+		this.objectRepository = objectRepository;
 	}
 
 	@RequestMapping(value = "/newArea", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
@@ -70,17 +75,11 @@ public class PlanningAJAXController {
 						width, height, left, top));
 			}
 		}
-		showMe();
-		// System.out.println(typ + ", " + name + ", " + width + ", " + height
-		// + ", " + left + ", " + top);
 		return true;
 	}
-
-	public void showMe() {
-		Iterable<Coords> all = planningRepository.findAll();
-		Coords area = planningRepository.findByName("Areal");
-		System.out.println("weite: " + area.getWidth() + "hoehe: "
-				+ area.getHeight());
+	@RequestMapping(value = "/getValues", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+	public Iterable<Objekt> giveMeValuesOfObjects(@RequestParam("request") String request){
+		return objectRepository.findAll();
 	}
 	
 	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)

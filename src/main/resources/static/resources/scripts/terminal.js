@@ -11,7 +11,8 @@ function terminalRequest(event) {
 			request : "true"
 		},
 		datatype: "json",
-		success : function(data) {
+		success : function(d
+				ata) {
 			factor = data[0].factor;
 			buildArea(data[0]);
 			buildObjects(data);
