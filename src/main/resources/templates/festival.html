@@ -9,56 +9,60 @@
 <link rel="stylesheet" href="../resources/css/festival.css" />
 <title>Festival erstellung</title>
 <script type="text/javascript">
-function validate() {
-	if (document.salform.salManagement.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.salform.salManagement.style.borderColor = "red";
-		document.salform.salManagement.focus();
-		return false;
+	function validateSal() {
+		if (document.salform.salManagement.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.salform.salManagement.style.borderColor = "red";
+			document.salform.salManagement.focus();
+			return false;
+		}
+		if (document.salform.salCatering.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.salform.salCatering.style.borderColor = "red";
+			document.salform.salCatering.focus();
+			return false;
+		}
+		if (document.salform.salSecurity.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.salform.salSecurity.style.borderColor = "red";
+			document.salform.salSecurity.focus();
+			return false;
+		}
+		if (document.salform.salCleaning.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.salform.salCleaning.style.borderColor = "red";
+			document.salform.salCleaning.focus();
+			return false;
+		}
 	}
-	if (document.salform.salCatering.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.salform.salCatering.style.borderColor = "red";
-		document.salform.salCatering.focus();
-		return false;
+
+	function validateQuant() {
+		if (document.quantform.quantManagement.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.quantform.quantManagement.style.borderColor = "red";
+			document.quantform.quantManagement.focus();
+			return false;
+		}
+		if (document.quantform.quantCatering.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.quantform.quantCatering.style.borderColor = "red";
+			document.quantform.quantCatering.focus();
+			return false;
+		}
+		if (document.quantform.quantSecurity.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.quantform.quantSecurity.style.borderColor = "red";
+			document.quantform.quantSecurity.focus();
+			return false;
+		}
+		if (document.quantform.quantCleaning.value == "") {
+			alert("Bitte Wert eingeben!");
+			document.quantform.quantCleaning.style.borderColor = "red";
+			document.quantform.quantCleaning.focus();
+			return false;
+		}
+		return true;
 	}
-	if (document.salform.salSecurity.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.salform.salSecurity.style.borderColor = "red";
-		document.salform.salSecurity.focus();
-		return false;
-	}
-	if (document.salform.salCleaning.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.salform.salCleaning.style.borderColor = "red";
-		document.salform.salCleaning.focus();
-		return false;
-	}
-	if (document.quantform.quantManagement.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.quantform.quantManagement.style.borderColor = "red";
-		document.quantform.quantManagement.focus();
-		return false;
-	}
-	if (document.quantform.quantCatering.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.quantform.quantCatering.style.borderColor = "red";
-		document.quantform.quantCatering.focus();
-		return false;
-	}
-	if (document.quantform.quantSecurity.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.quantform.quantSecurity.style.borderColor = "red";
-		document.quantform.quantSecurity.focus();
-		return false;
-	}
-	if (document.quantform.quantCleaning.value == "") {
-		alert("Bitte Wert eingeben!");
-		document.quantform.quantCleaning.style.borderColor = "red";
-		document.quantform.quantCleaning.focus();
-		return false;
-	}
-}
 </script>
 </head>
 <body>
@@ -133,7 +137,7 @@ function validate() {
 					<!-- case setup-employees -->
 					<div th:case="setup-employees">
 						<table class="festivalTable">
-						Festival auswählen:
+							Festival auswählen:
 							<tr>
 								<th>ID</th>
 								<th>Festival Name</th>
@@ -165,7 +169,8 @@ function validate() {
 					<div th:case="setSalary">
 
 						<p th:text="${selected.festivalName}" />
-						<form name="salform" action="/setNewSalary" method="post" onsubmit="return validate()">
+						<form name="salform" action="/setNewSalary" method="post"
+							onsubmit="return validateSal()">
 							<table class="festivalTable">
 								<tr>
 									<td>Tagesgehalt für Managementangestellen</td>
@@ -200,24 +205,27 @@ function validate() {
 										min="1.00" step="0.10" value="0.00" /></td>
 								</tr>
 								<tr>
-									<td></td><td></td><td><input type="submit" class="button_green" value="Festlegen"
-										style="margin-top: 2px;" /></td>
+									<td></td>
+									<td></td>
+									<td><input type="submit" class="button_green"
+										value="Festlegen" style="margin-top: 2px;" /></td>
 								</tr>
 							</table>
 						</form>
 					</div>
-					
+
 					<!-- case setQuantity -->
 					<div th:case="setQuantity">
-						<form name="quantform" action="/setNewQuant" method="post" onsubmit="return validate()">
+						<form name="quantform" action="/setNewQuant" method="post"
+							onsubmit="return validateQuant()">
 							<table class="festivalTable">
 								<tr>
 									<td>Anzahl Manager</td>
 									<td>Bisher:
 										<p th:text="${selected.quantManagement}" />
 									</td>
-									<td><input id="number" type="number" name="quantManagement"
-										min="1" step="1" value="0" /></td>
+									<td><input id="number" type="number"
+										name="quantManagement" min="1" step="1" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Anzahl Caterer:</td>
@@ -230,8 +238,7 @@ function validate() {
 								<tr>
 									<td>Anzahl Securityangesteller</td>
 									<td>Bisher:
-										<p th:text="${selected.quantSecurity}" />
-										Empfohlen:
+										<p th:text="${selected.quantSecurity}" /> Empfohlen:
 										<p th:text="${selected.RecommendedQuantSecurity}" />
 									</td>
 									<td><input id="number" type="number" name="quantSecurity"
@@ -246,8 +253,10 @@ function validate() {
 										min="1" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td></td><td></td><td><input type="submit" class="button_green" value="Festlegen"
-										style="margin-top: 2px;" /></td>
+									<td></td>
+									<td></td>
+									<td><input type="submit" class="button_green"
+										value="Festlegen" style="margin-top: 2px;" /></td>
 								</tr>
 							</table>
 						</form>

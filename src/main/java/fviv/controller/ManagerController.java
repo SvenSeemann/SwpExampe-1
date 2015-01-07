@@ -249,17 +249,21 @@ public class ManagerController {
 			return "redirect:/manager";
 		}
 		
+		System.out.println(departementAsString);
+		
 		Departement departement = Departement.NULL;
-		if (departementAsString == "management") { 
+		if (departementAsString.equalsIgnoreCase("management")) { 
 			departement = Departement.MANAGEMENT;
+			System.out.println(departement);
 		}
-		if (departementAsString == "catering") { 
+		
+		if (departementAsString.equalsIgnoreCase("catering")) { 
 			departement = Departement.CATERING;
 		}
-		if (departementAsString == "security") { 
+		if (departementAsString.equalsIgnoreCase("security")) { 
 			departement = Departement.SECURITY;
 		}
-		if (departementAsString == "cleaning") {
+		if (departementAsString.equalsIgnoreCase("cleaning")) {
 			departement = Departement.CLEANING;
 		}
 
