@@ -8,6 +8,8 @@ import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.model.Finance;
 
+import org.salespointframework.catalog.Product;
+import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Cart;
@@ -66,7 +68,8 @@ public class CateringController {
 
 	// --- --- --- --- --- --- ModelAttributes --- --- --- --- --- --- \\
 
-	/** Sets the order mode to MEALS or DRINKS in the UI
+	/**
+	 * Sets the order mode to MEALS or DRINKS in the UI
 	 * 
 	 * @return mode
 	 */
@@ -75,7 +78,8 @@ public class CateringController {
 		return mode;
 	}
 
-	/** Gets the cart attribute from current session
+	/**
+	 * Gets the cart attribute from current session
 	 * 
 	 * @param session
 	 * @return cart
@@ -91,14 +95,26 @@ public class CateringController {
 	}
 
 	// --- --- --- --- --- --- RequestMapping --- --- --- --- --- --- \\
-	
-	/** Main mapping for catering functions. Adds the attributes from the menus repository.
+
+	/**
+	 * Main mapping for catering functions. Adds the attributes from the menus
+	 * repository.
 	 * 
 	 * @param modelMap
 	 * @return link
 	 */
 	@RequestMapping("/catering")
 	public String catering(ModelMap modelMap) {
+		for (InventoryItem item : inventory.findAll()) {
+			if (item.getQuantity().equals(Units.ZERO)) {
+				menusRepository.findByProductIdentifier(
+						item.getProduct().getId()).setOrderable(false);
+			} else {
+				menusRepository.findByProductIdentifier(
+						item.getProduct().getId()).setOrderable(true);
+			}
+		}
+
 		modelMap.addAttribute("meals",
 				this.menusRepository.findByType(Type.MEAL));
 		modelMap.addAttribute("drinks",
@@ -118,7 +134,8 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
-	/** Get the ordered meal and update the current order
+	/**
+	 * Get the ordered meal and update the current order
 	 * 
 	 * @param modelMap
 	 * @param menu
@@ -131,17 +148,26 @@ public class CateringController {
 	public String addMeal(ModelMap modelMap, @PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
-		Quantity quantity = inventory.findByProduct(menu).get().getQuantity();
-		
-		//should be catched by thymeleaf
-		modelMap.addAttribute("orderable", quantity.isGreaterThan(Units.ZERO));
+		// Quantity quantity =
+		// inventory.findByProduct(menu).get().getQuantity();
+
+		// should be catched by thymeleaf
+		// modelMap.addAttribute("orderable",
+		// quantity.isGreaterThan(Units.ZERO));
 
 		cart.addOrUpdateItem(menu, Units.of(1));
+		//TODO quantity von product in cart darf nicht größer sein als quantity von product in inventory
+		/*Product product = (cart.getItem(menu.getName())).get().getProduct();
+		if (inventory.findByProduct(product).get().getQuantity().isLessThan(cart.getItem(menu.getName()).get().getQuantity())) {
+			menu.setOrderable(false);
+			menusRepository.save(menu);
+		}*/
 
 		return "redirect:/catering";
 	}
 
-	/** Method to cancel an order. Deletes products from cart.
+	/**
+	 * Method to cancel an order. Deletes products from cart.
 	 * 
 	 * @param session
 	 * @param cart
@@ -154,7 +180,8 @@ public class CateringController {
 		return "redirect:/catering";
 	}
 
-	/** Method to confirm the currend order. Updates the FinanceRepository.
+	/**
+	 * Method to confirm the currend order. Updates the FinanceRepository.
 	 * 
 	 * @param cart
 	 * @param userAccount
@@ -174,9 +201,9 @@ public class CateringController {
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
 					orderManager.save(order);
-					
-					financeRepository.save(new Finance(Reference.DEPOSIT,
-							order.getTotalPrice(), FinanceType.CATERING));
+
+					financeRepository.save(new Finance(Reference.DEPOSIT, order
+							.getTotalPrice(), FinanceType.CATERING));
 
 					cart.clear();
 
