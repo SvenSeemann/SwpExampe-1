@@ -7,7 +7,7 @@
 
     ATR.prototype.templates = {
       make_artist_field: function(name, id, genre, price, technician) {
-        var field;
+        var field, _button;
         field = this.artist_field.clone();
         field.find('.artist-name').text(name);
         field.find('.artist-genre').text(genre.name);
@@ -17,6 +17,26 @@
         });
         field.find('.artist-technician').text(technician);
         field.find('.artist-price').text(price);
+        _button = field.find('button.book');
+        _button.on('click', function() {
+          return $.ajax({
+            url: '/booking/book/artist',
+            type: 'POST',
+            data: {
+              id: id,
+              name: name,
+              genre: genre.id,
+              price: price === null ? 0 : price
+            },
+            success: function(data) {
+              if (data) {
+                return $(_button).text('Booked');
+              } else {
+                return $(_button).text('Is already Booked');
+              }
+            }
+          });
+        });
         return field;
       },
       make_table_row: function(name, id, genre, price, technician) {

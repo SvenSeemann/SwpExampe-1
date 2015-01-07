@@ -9,6 +9,21 @@ class ATR
 
       field.find('.artist-technician').text(technician)
       field.find('.artist-price').text(price)
+      _button = field.find('button.book')
+      _button.on 'click', -> $.ajax(
+        url : '/booking/book/artist'
+        type : 'POST'
+        data :
+          id : id
+          name : name
+          genre : genre.id
+          price : if price is null then 0 else price
+        success : (data) ->
+          if data
+            $(_button).text 'Booked'
+          else
+            $(_button).text 'Is already Booked'
+      )
       field
     make_table_row : (name, id, genre, price, technician) ->
       row = @table_row.clone()
