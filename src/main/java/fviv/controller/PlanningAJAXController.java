@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fviv.areaPlanner.Coords;
-import fviv.areaPlanner.MList;
 import fviv.areaPlanner.PlanningRepository;
 import fviv.areaPlanner.Coords.Type;
 

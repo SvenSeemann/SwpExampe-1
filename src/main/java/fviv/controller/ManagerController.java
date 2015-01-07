@@ -134,29 +134,7 @@ public class ManagerController {
 					&& finance.getReference() == Reference.DEPOSIT)
 				rentDeposit.add(finance);
 		}
-
-		// Fill the Finance lists
-		for (Finance finance : financeRepository.findAll()) {
-			if (finance.getFinanceType().equals("salary")
-					&& finance.getReference() == Reference.EXPENSE)
-				salaryExpense.add(finance);
-			if (finance.getFinanceType().equals("salary")
-					&& finance.getReference() == Reference.DEPOSIT)
-				salaryDeposit.add(finance);
-			if (finance.getFinanceType().equals("catering")
-					&& finance.getReference() == Reference.EXPENSE)
-				cateringExpense.add(finance);
-			if (finance.getFinanceType().equals("catering")
-					&& finance.getReference() == Reference.DEPOSIT)
-				cateringDeposit.add(finance);
-			if (finance.getFinanceType().equals("rent")
-					&& finance.getReference() == Reference.EXPENSE)
-				rentExpense.add(finance);
-			if (finance.getFinanceType().equals("rent")
-					&& finance.getReference() == Reference.DEPOSIT)
-				rentDeposit.add(finance);
-		}
-
+		
 		// Calculate total amounts of each expense type
 		for (Finance salDep : salaryDeposit) {
 			salDepTot = salDepTot.plus(salDep.getAmount());
@@ -249,14 +227,10 @@ public class ManagerController {
 			return "redirect:/manager";
 		}
 		
-		System.out.println(departementAsString);
-		
 		Departement departement = Departement.NULL;
 		if (departementAsString.equalsIgnoreCase("management")) { 
 			departement = Departement.MANAGEMENT;
-			System.out.println(departement);
-		}
-		
+		}		
 		if (departementAsString.equalsIgnoreCase("catering")) { 
 			departement = Departement.CATERING;
 		}
