@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author justusadam
 */
@@ -24,7 +27,7 @@ public class Booking {
         this.artistsRepository = artistsRepository;
     }
 
-    @RequestMapping(value = "/booking/book/artist", method = RequestMethod.POST, headers = Headers.AJAX)
+    @RequestMapping(value = "/booking/artists/book", method = RequestMethod.POST, headers = Headers.AJAX)
     public boolean bookNew(
             @RequestParam("id") long artistId,
             @RequestParam("name") String name,
@@ -40,6 +43,14 @@ public class Booking {
         } else {
             return false;
         }
+    }
+
+    @RequestMapping(value = "/booking/artists/booked", method = RequestMethod.POST, headers = Headers.AJAX)
+    public List<Artist> booked(){
+        Iterable<Artist> artists = artistsRepository.findAll();
+        LinkedList<Artist> out = new LinkedList<>();
+        for (Artist artist : artists) out.add(artist);
+        return out;
     }
 
 }

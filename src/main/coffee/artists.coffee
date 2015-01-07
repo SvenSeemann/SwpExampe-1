@@ -11,7 +11,7 @@ class ATR
       field.find('.artist-price').text(price)
       _button = field.find('button.book')
       _button.on 'click', -> $.ajax(
-        url : '/booking/book/artist'
+        url : '/booking/artists/book'
         type : 'POST'
         data :
           id : id
@@ -38,6 +38,13 @@ class ATR
       row.children('.artist-technician').text(technician)
       row.children('.artist-price').text(price)
       row
+
+    make_booked_artist : (name, id) ->
+      item = @artist_item.clone()
+      item.text name
+      item.data 'id', id
+      item
+
     make_genre_table_row : (name, id, price, technician) ->
       row = @table_row.clone()
       row.data('id', id)
@@ -55,6 +62,12 @@ class ATR
     artist_field = $('#artist-showcase').find('.single-artist')
     @templates.artist_field = artist_field.clone()
     artist_field.remove()
+    artist_item = $('#booked-artists').find('.single-artist')
+    @templates.artist_item = artist_item.clone()
+    artist_item.remove()
+    button = $('#reload-booked')
+    button.on 'click', ->
+      window.atr.reload_booked(button)
 
   baseurl = 'http://178.238.237.25:8081/ArtistServiceRails/'
 
@@ -64,6 +77,7 @@ class ATR
     by_genre_id : (id) -> @genre + '/' + id
     all : baseurl + 'artist'
     artist_by_id : (id) -> @all + '/' + id
+    booked : '/booking/artists/booked'
 
   request : (url, callback) ->
     $.ajax(
@@ -89,6 +103,24 @@ class ATR
           )
       return
     )
+
+  init_booked : (callback = -> ) ->
+    $.ajax
+      type : 'POST'
+      url : @urls.booked
+      success : (data) =>
+        list = $('#booked-artists')
+        list.empty()
+        for artist in data
+          list.append @templates.make_booked_artist(artist.name, artist.id)
+        callback()
+        return
+
+
+  reload_booked : (button) ->
+    button.text 'LOADING'
+    window.atr.init_booked ->
+      button.text 'Reload Booked'
 
   fill_genre_table : (id) ->
     @request @urls.by_genre_id(id), (data) =>
@@ -118,5 +150,6 @@ class ATR
 $(document).ready( ->
   window.atr = new ATR() unless window.atr?
   window.atr.init_all_artists()
+  window.atr.init_booked()
   return
 )
