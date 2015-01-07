@@ -23,18 +23,6 @@
 		</div>
 		<div id="content">
 			<div id="substance">
-				<div id="context">
-					<ul>
-						<li>Bühne</li>
-						<li>weite:</li>
-						<li>hoehe:</li>
-						<li>top:</li>
-						<li>left:</li>
-						<!--<li class="contextButton">90°im Uhrzeigersinn drehen</li>
-						<li class="contextButton">90° gegen den Uhrzeigersinn drehen</li> -->
-						<li class="contextButton" id="loeschen">Objekt löschen</li>
-					</ul>
-				</div>
 				<div id="request">
 					<h3>Grö&szlig;e eingeben</h3>
 					<form action="/newArea" method="post" id="size" name="size">
@@ -67,21 +55,24 @@
 			<button class="boldButton" onClick="newArea();">New Area</button>
 			<button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
 			<div class="objectMenu" id="stages">
-				<div class="chooseObject" onClick="cloneIt(this,0, 'STAGE');">small
+				<div class="chooseObject" onClick="buildObject(this,0, 'STAGE');">small
 					Stage</div>
-				<div class="chooseObject" onClick="cloneIt(this,1, 'STAGE');">medium
+				<div class="chooseObject" onClick="buildObject(this,1, 'STAGE');">medium
 					Stage</div>
-				<div class="chooseObject" onClick="cloneIt(this,2, 'STAGE');">big
+				<div class="chooseObject" onClick="buildObject(this,2, 'STAGE');">big
 					Stage</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('toilet');">Toilets</button>
 			<div class="objectMenu" id="toilets">
-				<div class="chooseObject" onClick="cloneIt(this,3, 'TOILET');">ToiToi</div>
-				<div class="chooseObject" onClick="cloneIt(this,4, 'TOILET');">Behindertengerecht</div>
+				<div class="chooseObject" onClick="buildObject(this,3, 'TOILET');">ToiToi</div>
+				<div class="chooseObject" onClick="buildObject(this,4, 'TOILET');">Behindertengerecht</div>
+				<div class="chooseObject" onClick="buildObject(this,5, 'CATERING');">BadContainer</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
 			<div class="objectMenu" id="catering">
-				<div class="chooseObject" onClick="cloneIt(this,5, 'CATERING');">Bierwagen</div>
+				<div class="chooseObject" onClick="buildObject(this,6, 'CATERING');">Bierwagen</div>
+				<div class="chooseObject" onClick="buildObject(this,7, 'CATERING');">Essplätze</div>
+				<div class="chooseObject" onClick="buildObject(this,8, 'CATERING');">Mülleimer</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('camping');">Camping</button>
 			<div class="objectMenu" id="camping">
