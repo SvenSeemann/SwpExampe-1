@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fviv.areaPlanner.Coords;
+import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.MList;
-import fviv.areaPlanner.PlanningRepository;
+import fviv.areaPlanner.AreaItemsRepository;
 
 
 @Controller
 public class TerminalController {
-	private PlanningRepository planningRepository;
+	private AreaItemsRepository planningRepository;
 	
 	@Autowired
-	public TerminalController(PlanningRepository planningRepository) {
+	public TerminalController(AreaItemsRepository planningRepository) {
 		this.planningRepository = planningRepository;
 	}
 

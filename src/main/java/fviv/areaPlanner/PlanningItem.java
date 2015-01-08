@@ -6,6 +6,14 @@ import javax.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
+/**
+ * 
+ * @author Maximilian Schwarze
+ * 
+ * provided in the FVIV Area planner to set up a new festival area
+ *
+ */
+
 @Entity
 public class PlanningItem {
 	@javax.persistence.Id

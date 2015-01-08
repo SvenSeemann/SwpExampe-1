@@ -13,30 +13,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fviv.areaPlanner.Coords;
+import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.MList;
 import fviv.areaPlanner.PlanningItem;
-import fviv.areaPlanner.PlanningRepository;
-import fviv.areaPlanner.ItemsForPlanerRepository;
-import fviv.areaPlanner.Coords.Type;
+import fviv.areaPlanner.AreaItemsRepository;
+import fviv.areaPlanner.PlanningItemsRepository;
+import fviv.areaPlanner.AreaItem.Type;
 
 @RestController
 public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 
-	private ItemsForPlanerRepository itemsForPlanerRepository;
-	private PlanningRepository planningRepository;
+	private PlanningItemsRepository itemsForPlanerRepository;
+	private AreaItemsRepository planningRepository;
 
 	@Autowired
-	public PlanningAJAXController(PlanningRepository planningRepository,
-			ItemsForPlanerRepository itemsForPlanerRepository) {
+	public PlanningAJAXController(AreaItemsRepository planningRepository,
+			PlanningItemsRepository itemsForPlanerRepository) {
 		super();
 		this.planningRepository = planningRepository;
 		this.itemsForPlanerRepository = itemsForPlanerRepository;
 	}
 
 	@RequestMapping(value = "/isThereAnything", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> rebuildPlaner(
+	public Iterable<AreaItem> rebuildPlaner(
 			@RequestParam("request") String request) {
 		if (planningRepository.findAll() != null) {
 			return planningRepository.findAll();
@@ -49,20 +49,20 @@ public class PlanningAJAXController {
 	public boolean newAreal(@RequestParam("width") int width,
 			@RequestParam("height") int height,
 			@RequestParam("faktor") float factor) {
-		Coords area = planningRepository.findByName("Areal");
+		AreaItem area = planningRepository.findByName("Areal");
 		if (area == null) {
-			planningRepository.save(new Coords(Type.AREA, "Areal", width,
+			planningRepository.save(new AreaItem(Type.AREA, "Areal", width,
 					height, 0, 0, factor));
 		} else {
 			planningRepository.deleteAll();
-			planningRepository.save(new Coords(Type.AREA, "Areal", width,
+			planningRepository.save(new AreaItem(Type.AREA, "Areal", width,
 					height, 0, 0, factor));
 		}
 		return true;
 	}
 
 	@RequestMapping(value = "/newObject", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> newObject(@RequestParam("typ") String typ,
+	public Iterable<AreaItem> newObject(@RequestParam("typ") String typ,
 			@RequestParam("name") String name,
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
@@ -72,19 +72,19 @@ public class PlanningAJAXController {
 			System.out.println("wtf");
 			switch (typ) {
 			case "TOILET":
-				planningRepository.save(new Coords(Type.TOILET, (name), width,
+				planningRepository.save(new AreaItem(Type.TOILET, (name), width,
 						height, left, top));
 				break;
 			case "STAGE":
-				planningRepository.save(new Coords(Type.STAGE, (name), width,
+				planningRepository.save(new AreaItem(Type.STAGE, (name), width,
 						height, left, top));
 				break;
 			case "CATERING":
-				planningRepository.save(new Coords(Type.CATERING, (name),
+				planningRepository.save(new AreaItem(Type.CATERING, (name),
 						width, height, left, top));
 				break;
 			case "CAMPING":
-				planningRepository.save(new Coords(Type.CAMPING, (name), width,
+				planningRepository.save(new AreaItem(Type.CAMPING, (name), width,
 						height, left, top));
 			}
 			return planningRepository.findAll();
@@ -100,7 +100,7 @@ public class PlanningAJAXController {
 	}
 
 	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> giveMeAllEntries(
+	public Iterable<AreaItem> giveMeAllEntries(
 			@RequestParam("request") String request) {
 		return planningRepository.findAll();
 	}

@@ -6,9 +6,16 @@ import javax.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
+/**
+ * 
+ * @author Maximilian Schwarze
+ *
+ * Item of the area plan of the current festival
+ *
+ */
 
 @Entity
-public class Coords {
+public class AreaItem {
 	
 	public enum Type {
 		TOILET, AREA, STAGE, CATERING, CAMPING
@@ -25,11 +32,11 @@ public class Coords {
 	private Type type;
 	private String name;
 	private float factor;
-	public Coords(){
+	public AreaItem(){
 		
 	}
 	@Autowired 
-	public Coords(Type type, String name, int width, int height, float xPos, float yPos) {
+	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
@@ -39,7 +46,7 @@ public class Coords {
 	}
 	
 	@Autowired
-	public Coords(Type type, String name, int width, int height, float xPos, float yPos, float factor) {
+	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, float factor) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;

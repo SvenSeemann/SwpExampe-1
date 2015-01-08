@@ -43,7 +43,7 @@ public class CreateController {
 
 	@RequestMapping({ "/festival" })
 	public String index(ModelMap modelMap) {
-		mode = "festival";
+		//mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
 		return "festival";
@@ -82,7 +82,26 @@ public class CreateController {
 		mode = "setup-employees";
 		return "redirect:/festival";
 	}
+	
+	@RequestMapping(value = "/festival/create", method = RequestMethod.POST)
+	public String createFestival() {
+		mode = "festival";
+		return "redirect:/festival";
+	}
+	
+	@RequestMapping(value = "/festival/areaplan", method = RequestMethod.POST)
+	public String areaplan() {
+		mode = "areaplan";
+		return "redirect:/festival";
+	}
+	
+	@RequestMapping(value = "/setup/area", method = RequestMethod.POST)
+	public String setUpArea(@RequestParam("festivalId") long festivalId) {
+		//hier auf max planner zugreifen
+		return "/planning/" + festivalId;
+	}
 
+	
 	
 	@RequestMapping("/setNewSalary")
 	public String setNewSalary(

@@ -12,10 +12,10 @@ import fviv.areaPlanner.PlanningItem;
 
 @Component
 public class PlanningItemDataInitializer implements DataInitializer {
-	private final ItemsForPlanerRepository itemsRepository;
+	private final PlanningItemsRepository itemsRepository;
 
 	@Autowired
-	public PlanningItemDataInitializer(ItemsForPlanerRepository itemsRepository) {
+	public PlanningItemDataInitializer(PlanningItemsRepository itemsRepository) {
 		this.itemsRepository = itemsRepository;
 	}
 
@@ -24,7 +24,7 @@ public class PlanningItemDataInitializer implements DataInitializer {
 		initializeObjects(itemsRepository);
 	}
 
-	private void initializeObjects(ItemsForPlanerRepository itemsRepository) {
+	private void initializeObjects(PlanningItemsRepository itemsRepository) {
 		// new Objekt(width, height, cost)
 		itemsRepository.save(new PlanningItem("kleine Buehne", 10, 5, 200.25f));
 		itemsRepository.save(new PlanningItem("mittlere Buehne", 20, 10, 200.25f));

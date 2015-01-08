@@ -1,6 +1,6 @@
 package fviv.areaPlanner;
 
-import fviv.areaPlanner.Coords.Type;
+import fviv.areaPlanner.AreaItem.Type;
 
 public class MList {
 

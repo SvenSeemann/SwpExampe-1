@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fviv.areaPlanner.*;
-import fviv.areaPlanner.Coords.Type;
+import fviv.areaPlanner.AreaItem.Type;
+import fviv.festival.Festival;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @PreAuthorize("hasRole('ROLE_BOSS')")
 @Controller
 public class AreaController {
-	private PlanningRepository planningRepository;
+	private AreaItemsRepository planningRepository;
 
 	private String htmlHelper(int width, int height, int left, int top){
 		return "width:" + width + "px;" + "height:"
@@ -32,11 +34,24 @@ public class AreaController {
 	}
 	
 	@Autowired
-	public AreaController(PlanningRepository planningRepository) {
+	public AreaController(AreaItemsRepository planningRepository) {
 		this.planningRepository = planningRepository;
 	}
 
-	@RequestMapping("/planning")
+	@RequestMapping("/planning/{fid}")
+	public String getHtml(Model modelMap, @PathVariable Festival festival) {
+		//List<String> toiletStrings = new LinkedList<String>();
+		//for(Coords toilet : planningRepository.findByType(Type.TOILET)){
+		//	toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
+		//}
+		modelMap.addAttribute("getCoords", planningRepository);
+		//modelMap.addAttribute("toilets", toiletStrings );
+		
+		return "redirect:/planning";
+	}
+	
+	
+	/*@RequestMapping("/planning")
 	public String getHtml(Model modelMap) {
 		//List<String> toiletStrings = new LinkedList<String>();
 		//for(Coords toilet : planningRepository.findByType(Type.TOILET)){
@@ -46,7 +61,11 @@ public class AreaController {
 		//modelMap.addAttribute("toilets", toiletStrings );
 		
 		return "planning";
-	}
+	}*/
+	
+	
+	
+	
 	/*@ModelAttribute("sizeArea")
 	public String sizeArea() {
 		Coords siize = planningRepository.findByName("Areal");
