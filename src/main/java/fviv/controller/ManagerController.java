@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
@@ -557,6 +558,11 @@ public class ManagerController {
 				.multipliedBy(units)), FinanceType.CATERING));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
+		
+		// Menu is orderable again, because its quantity is >0
+		Menu menu = menusRepository.findByProductIdentifier(item.getProduct().getId());
+		menu.setOrderable(true);
+		menusRepository.save(menu);
 
 		return "redirect:/manager";
 	}

@@ -9,17 +9,15 @@ import fviv.model.FinanceRepository;
 import fviv.model.Finance;
 
 import org.salespointframework.catalog.Product;
-import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.order.Cart;
+import org.salespointframework.order.CartItem;
 import org.salespointframework.order.Order;
 import org.salespointframework.order.OrderManager;
 import org.salespointframework.payment.Cash;
-import org.salespointframework.quantity.Quantity;
 import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +31,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.LinkedList;
 import java.util.Optional;
 
 /**
@@ -45,22 +44,20 @@ import java.util.Optional;
 public class CateringController {
 
 	private String mode = "";
+	private LinkedList<CartItem> currentCartItems = new LinkedList<CartItem>();
 	private final MenusRepository menusRepository;
 	private final OrderManager<Order> orderManager;
-	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
-			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
 			FinanceRepository financeRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
-		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.financeRepository = financeRepository;
 
@@ -109,9 +106,6 @@ public class CateringController {
 			if (item.getQuantity().equals(Units.ZERO)) {
 				menusRepository.findByProductIdentifier(
 						item.getProduct().getId()).setOrderable(false);
-			} else {
-				menusRepository.findByProductIdentifier(
-						item.getProduct().getId()).setOrderable(true);
 			}
 		}
 
@@ -155,13 +149,25 @@ public class CateringController {
 		// modelMap.addAttribute("orderable",
 		// quantity.isGreaterThan(Units.ZERO));
 
-		cart.addOrUpdateItem(menu, Units.of(1));
-		//TODO quantity von product in cart darf nicht größer sein als quantity von product in inventory
-		/*Product product = (cart.getItem(menu.getName())).get().getProduct();
-		if (inventory.findByProduct(product).get().getQuantity().isLessThan(cart.getItem(menu.getName()).get().getQuantity())) {
+		CartItem cartItem = cart.addOrUpdateItem(menu, Units.of(1));
+
+		// List to keep track of the items in the cart
+		// Because there is no option to get all items in the cart?
+		if (!(currentCartItems.contains(cartItem)))
+			currentCartItems.add(cartItem);
+
+		// quantity von product in cart darf nicht größer sein als quantity von
+		// product in inventory
+
+		Product product = cartItem.getProduct();
+		if (cartItem
+				.getQuantity()
+				.getAmount()
+				.equals(inventory.findByProduct(product).get().getQuantity()
+						.getAmount())) {
 			menu.setOrderable(false);
 			menusRepository.save(menu);
-		}*/
+		}
 
 		return "redirect:/catering";
 	}
@@ -176,6 +182,16 @@ public class CateringController {
 	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
 		// Cart cart = getCart(session);
+
+		// Revert menus to orderable in case of cancel
+		for (CartItem cartItem : currentCartItems) {
+			Menu menu = menusRepository.findByProductIdentifier(cartItem
+					.getProduct().getId());
+			menu.setOrderable(true);
+			menusRepository.save(menu);
+		}
+
+		currentCartItems.clear();
 		cart.clear();
 		return "redirect:/catering";
 	}
@@ -205,6 +221,7 @@ public class CateringController {
 					financeRepository.save(new Finance(Reference.DEPOSIT, order
 							.getTotalPrice(), FinanceType.CATERING));
 
+					currentCartItems.clear();
 					cart.clear();
 
 					return "redirect:/catering";
