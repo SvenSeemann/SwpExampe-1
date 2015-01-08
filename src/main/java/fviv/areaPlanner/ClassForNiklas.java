@@ -1,6 +1,5 @@
 package fviv.areaPlanner;
 
-// Unbedingt umbenennen, mir fiel kein besserer name und ich wollte die Klasse weder Penis, noch Fuck noch sonst irgendwas dummes nennen
 public class ClassForNiklas {
 	public String name;
 	private Iterable<Coords> elements;

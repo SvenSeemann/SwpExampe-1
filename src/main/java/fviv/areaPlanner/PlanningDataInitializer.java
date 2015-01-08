@@ -1,4 +1,4 @@
-package fviv.areaPlanner;
+/*package fviv.areaPlanner;
 
 
 import static org.joda.money.CurrencyUnit.*;
@@ -34,3 +34,4 @@ public class PlanningDataInitializer implements DataInitializer {
 		//planningRepository.save(new Coords(width, height, xPos, yPos));
 	}
 }
+*/

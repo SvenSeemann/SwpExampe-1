@@ -1,4 +1,3 @@
-// created by Maximilian Schwarze
 package fviv.controller;
 
 import java.util.LinkedList;
@@ -16,6 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * @author Maximilian Schwarze
+ */
 
 @PreAuthorize("hasRole('ROLE_BOSS')")
 @Controller

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fviv.areaPlanner.Coords;
 import fviv.areaPlanner.MList;
-import fviv.areaPlanner.Planningitems;
+import fviv.areaPlanner.PlanningItem;
 import fviv.areaPlanner.PlanningRepository;
 import fviv.areaPlanner.ItemsForPlanerRepository;
 import fviv.areaPlanner.Coords.Type;
@@ -94,7 +94,7 @@ public class PlanningAJAXController {
 	}
 
 	@RequestMapping(value = "/getValues", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Planningitems> giveMeValuesOfObjects(
+	public Iterable<PlanningItem> giveMeValuesOfObjects(
 			@RequestParam("request") String request) {
 		return itemsForPlanerRepository.findAll();
 	}
