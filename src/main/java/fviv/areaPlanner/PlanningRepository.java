@@ -1,9 +1,6 @@
 package fviv.areaPlanner;
 
 import fviv.areaPlanner.Coords.Type;
-
-import org.springframework.data.repository.CrudRepository;
-import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PlanningRepository extends CrudRepository<Coords, String> {

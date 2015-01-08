@@ -12,6 +12,7 @@ function terminalRequest(event) {
 		},
 		datatype: "json",
 		success : function(data) {
+			console.log(data);
 			factor = data[0].factor;
 			buildArea(data[0]);
 			buildObjects(data);

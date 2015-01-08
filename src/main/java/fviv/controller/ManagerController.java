@@ -226,18 +226,18 @@ public class ManagerController {
 			showErrors = "newEmployee";
 			return "redirect:/manager";
 		}
-				
+		
 		Departement departement = Departement.NULL;
-		if (departementAsString.equals("management")) { 
+		if (departementAsString.equalsIgnoreCase("management")) { 
 			departement = Departement.MANAGEMENT;
-		}
-		if (departementAsString.equals("catering")) { 
+		}		
+		if (departementAsString.equalsIgnoreCase("catering")) { 
 			departement = Departement.CATERING;
 		}
-		if (departementAsString.equals("security")) { 
+		if (departementAsString.equalsIgnoreCase("security")) { 
 			departement = Departement.SECURITY;
 		}
-		if (departementAsString.equals("cleaning")) {
+		if (departementAsString.equalsIgnoreCase("cleaning")) {
 			departement = Departement.CLEANING;
 		}
 
