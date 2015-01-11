@@ -1,7 +1,7 @@
 package fviv.controller;
 
-import fviv.booking.Artist;
-import fviv.booking.ArtistsRepository;
+import fviv.model.Artist;
+import fviv.model.ArtistsRepository;
 import fviv.util.http.Headers;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
