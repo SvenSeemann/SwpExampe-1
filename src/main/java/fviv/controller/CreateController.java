@@ -4,9 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,14 +24,11 @@ import fviv.festival.Festival;
 public class CreateController {
 	private final FestivalRepository festivalRepository;
 	private String mode = "festival";
-	private final UserAccountManager userAccountManager;
 
 
 	@Autowired
-	public CreateController(FestivalRepository festivalRepository, UserAccountManager userAccountManager) {
+	public CreateController(FestivalRepository festivalRepository) {
 		this.festivalRepository = festivalRepository;
-		this.userAccountManager = userAccountManager;
-
 	}
 
 	@RequestMapping({ "/festival" })
@@ -64,7 +59,7 @@ public class CreateController {
 			@RequestParam("location") String location,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
-		DateFormat format = new SimpleDateFormat("d MMMM, yyyy", Locale.GERMAN);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateStart = format.parse(startDate);
 		Date dateEnd = format.parse(endDate);
 		

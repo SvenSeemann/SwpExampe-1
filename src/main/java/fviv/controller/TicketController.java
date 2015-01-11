@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -40,15 +39,12 @@ public class TicketController {
 	private static long ticketid;
 	private String mode = "ticket";
 	private static Festival festival;
-	private final UserAccountManager userAccountManager;
 
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
-			FestivalRepository festivalRepository,
-			UserAccountManager userAccountManager) {
+			FestivalRepository festivalRepository) {
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
-		this.userAccountManager = userAccountManager;
 	}
 
 	@ModelAttribute("ticketmode")
@@ -88,13 +84,13 @@ public class TicketController {
 			return "ticket";
 		}
 		if (ticketkontrolle.getChecked() == true) {
-			modelMap.addAttribute("forhtml", "" + id + "already checked in!");
+			modelMap.addAttribute("forhtml", id + "already checked in!");
 			ticketRepository.save(ticketkontrolle);
 
 			return "ticket";
 		} else {
 			ticketkontrolle.setChecked(true);
-			modelMap.addAttribute("forhtml", "" + id + "now checked in");
+			modelMap.addAttribute("forhtml", id + "now checked in");
 			ticketRepository.save(ticketkontrolle);
 
 			return "ticket";
@@ -104,9 +100,14 @@ public class TicketController {
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
 	public String newTicket(@RequestParam("ticketart") boolean ticketart,
 			@RequestParam("festivalId") String id,
-			@RequestParam("numbers") int anzahl) throws IOException,
+			@RequestParam("numbers") String numbers) throws IOException,
 			BarcodeException {
-
+		int anzahl;
+ if (numbers == ""){
+	 anzahl = 1;
+ } else {
+		 anzahl = Integer.parseInt(numbers);
+		 }
 		Long longId = Long.parseLong(id);
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket

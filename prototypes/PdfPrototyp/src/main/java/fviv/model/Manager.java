@@ -100,7 +100,7 @@ public class Manager {
 
 	public static void barcodegen() throws IOException, BarcodeException {
 		// get a Barcode from the BarcodeFactory
-		Barcode barcode = BarcodeFactory.createCode128B("string here"); // hier
+		Barcode barcode = BarcodeFactory.createPost("string here"); // hier
 																		// der
 																		// code
 																		// später

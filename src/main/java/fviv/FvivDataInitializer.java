@@ -11,6 +11,8 @@ import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Expense;
 import fviv.model.ExpenseRepository;
+import fviv.stagePlanner.StagePlanner;
+import fviv.stagePlanner.StageRepository;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
@@ -32,13 +34,15 @@ public class FvivDataInitializer implements DataInitializer {
 	private final ExpenseRepository expenseRepository;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
+	private final StageRepository stageRepository;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
 			ExpenseRepository expenseRepository,
 			TicketRepository ticketRepository, 
-			FestivalRepository festivalRepository) {
+			FestivalRepository festivalRepository, 
+			StageRepository stageRepository) {
 
 		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
@@ -47,6 +51,7 @@ public class FvivDataInitializer implements DataInitializer {
 		this.expenseRepository = expenseRepository;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
+		this.stageRepository = stageRepository;
 	}
 
 	@Override
@@ -54,6 +59,7 @@ public class FvivDataInitializer implements DataInitializer {
 		initializeUsers(userAccountManager, employeeRepository);
 		initializeExpenses(expenseRepository);
 		initializeTickets(ticketRepository);
+		initializeStages(stageRepository);
 		try {
 			initializeFestivals(festivalRepository);
 		} catch (ParseException e) {
@@ -65,15 +71,20 @@ public class FvivDataInitializer implements DataInitializer {
 			throws ParseException {
 		DateFormat format = new SimpleDateFormat("d, MMMM, yyyy", Locale.GERMAN);
 		Date date1 = format.parse("2, Januar, 2010");
-		Date date2 = format.parse("4, März, 2012");
+		Date date2 = format.parse("5, Januar, 2010");
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
 				"Avicii, Linkin Park", 500000, (long) 55.0);
-		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
+		Festival festival2 = new Festival(date2, date1, "Rock am Ring", "Berlin in deiner Mom",
 				"Netflix", 69999 , (long) 12.0);
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
 
+	}
+	
+	private void initializeStages(StageRepository stageRepository){
+		StagePlanner stage1 = new StagePlanner(1, 1, 1,"pups");
+		stageRepository.save(stage1);
 	}
 
 	private void initializeTickets(TicketRepository ticketRepository) {
