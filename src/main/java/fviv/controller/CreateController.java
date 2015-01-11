@@ -5,7 +5,10 @@ import static org.joda.money.CurrencyUnit.EUR;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -119,9 +122,10 @@ public class CreateController {
 			@RequestParam("location") String location,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date dateStart = format.parse(startDate);
-		Date dateEnd = format.parse(endDate);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+		
+		LocalDate dateStart = LocalDate.parse(startDate, formatter);
+		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
 				location, actors, (int) maxVisitors, (long) preisTag);

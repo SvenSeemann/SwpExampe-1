@@ -31,6 +31,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
@@ -94,8 +96,10 @@ public class FvivDataInitializer implements DataInitializer {
 	}
 
 	private void initializeTickets(TicketRepository ticketRepository) {
-		Ticket ticket1 = new Ticket(true, false, "Wonderland");
-		Ticket ticke2 = new Ticket(false, true, "Rock am Ring");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+		LocalDate date = LocalDate.parse("2005-12-30", formatter);
+		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
+		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
 	}

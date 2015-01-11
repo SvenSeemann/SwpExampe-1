@@ -15,6 +15,8 @@ import com.lowagie.text.pdf.PdfStamper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -96,28 +98,51 @@ public class TicketController {
 			return "ticket";
 		}
 	}
+@RequestMapping(value ="/loadfestivalTicket", method = RequestMethod.POST)
+public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") long id){
+	Festival loadingfestival = festivalRepository.findById(id);
+	
 
+	modelMap.addAttribute("ticketdates", id + "already checked in!");
+	return "ticket";
+
+}
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
 	public String newTicket(@RequestParam("ticketart") boolean ticketart,
 			@RequestParam("festivalId") String id,
-			@RequestParam("numbers") String numbers) throws IOException,
+			@RequestParam("numbers") String numbers,
+			@RequestParam("tagesdate") String tagesdate) throws IOException,
 			BarcodeException {
 		int anzahl;
- if (numbers == ""){
-	 anzahl = 1;
- } else {
-		 anzahl = Integer.parseInt(numbers);
-		 }
+		if (numbers == "") {
+			anzahl = 1;
+		} else {
+			anzahl = Integer.parseInt(numbers);
+		}
 		Long longId = Long.parseLong(id);
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket
 			festival = festivalRepository.findById(longId);
 			String festivalname = festival.getFestivalName();
 			long preistag = festival.getPreisTag();
+			LocalDate date = null;
+			if (ticketart == true) {
+				DateTimeFormatter formatter = DateTimeFormatter
+						.ofPattern("yyyy-mm-dd");
+			 date = LocalDate.parse(tagesdate, formatter);
+			} 
+			
 
-			Ticket ticket = new Ticket(ticketart, false, festivalname); // Eins
-																		// ist
-																		// gleich
+			Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
+			// ist
+			// gleich
 			// Tagesticket //
 			// Null
 			// ist gleich
