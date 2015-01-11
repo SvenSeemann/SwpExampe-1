@@ -66,9 +66,8 @@ public class PlanningAJAXController {
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
 			@RequestParam("left") float left, @RequestParam("top") float top) {
-		System.out.println(areaItems.findByName("Areal"));
-		if (areaItems.findByName("Areal") != null) {
-			System.out.println("wtf");
+
+		if (planningItems.findByName("Areal") != null) {		//evtl areaItems
 			switch (typ) {
 			case "TOILET":
 				areaItems.save(new AreaItem(Type.TOILET, (name), width,

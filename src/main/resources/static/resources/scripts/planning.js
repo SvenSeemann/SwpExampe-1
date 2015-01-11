@@ -119,7 +119,6 @@ function areaRequest(event, form) {
 	event.preventDefault();
 	areaWidth = document.size.width.value;
 	areaHeight = document.size.height.value;
-	alert(areaWidth + "," + areaHeight);
 	buildArea(areaWidth, areaHeight);
 }
 $(document).ready(function() {
@@ -135,10 +134,12 @@ function breakIt() {
 function buildArea(width, height) {
 	var parent = document.getElementById("substance");
 	var area = document.createElement("div");
+	areaWidth = width;
+	areaHeight = height;
 	area.setAttribute("id", "area");
 
 	parent.appendChild(area);
-	$('#area').text("weite: " + width + "m <br> Höhe: " + height + "m");
+	$('#area').text("Breite: " + width + "m,  Höhe: " + height + "m");
 	factor = 835 / width;
 	height = height * factor;
 
@@ -148,85 +149,49 @@ function buildArea(width, height) {
 	});
 
 }
-
+function buildCamping() {
+	var frame = document.createElement("div");
+	frame = $(frame);
+	frame.attr("id", "request");
+}
 function buildObject(element, type, name) {
-	switch (type) {
-	case 0:
-		var title = objectValues[0][0];
-		var width = objectValues[0][1];
-		var height = objectValues[0][2];
-		break;
-	case 1:
-		var title = objectValues[1][0];
-		var width = objectValues[1][1];
-		var height = objectValues[1][2];
-		break;
-	case 2:
-		var title = objectValues[2][0];
-		var width = objectValues[2][1];
-		var height = objectValues[2][2];
-		break;
-	case 3:
-		var title = objectValues[3][0];
-		var width = objectValues[3][1];
-		var height = objectValues[3][2];
-		break;
-	case 4:
-		var title = objectValues[4][0];
-		var width = objectValues[4][1];
-		var height = objectValues[4][2];
-		break;
-	case 5:
-		var title = objectValues[5][0];
-		var width = objectValues[5][1];
-		var height = objectValues[5][2];
-		break;
-	case 6:
-		var title = objectValues[6][0];
-		var width = objectValues[6][1];
-		var height = objectValues[6][2];
-		break;
-	case 7:
-		var title = objectValues[7][0];
-		var width = objectValues[7][1];
-		var width = objectValues[7][2];
-		break;
-	case 8:
-		var title = objectValues[8][0];
-		var width = objectValues[8][1];
-		var width = objectValues[8][2];
-		break;
-
-	}
-	if ($('#area').width() <= (width * factor)
-			|| $('#area').height() <= (height * factor)) {
-		alert("Objekt zu gross. Bitte nehmen sie ein anderes.");
-		return false;
+	if (type == 9) {
+		buildCamping();
 	} else {
-		var newElem = document.createElement("div");
-		newElem = $(newElem);
-		newElem.appendTo('#area');
-		newElem.removeAttr('onClick');
-		newElem.attr("class", "objekt");
-		newElem.attr("name", name);
-		newElem.attr("oncontextmenu", ("contextMenu(this)"));
-		newElem.attr("onmouseup", "validateIt(this)");
-		newElem.css({
-			'width' : (width * factor),
-			'height' : (height * factor)
-		});
-		newElem.text(title);
-
-		$(function() {
-			$(".objekt").draggable({
-				containment : "#area",
-				snap : true,
-				snapMode : "outer",
-				snapTolerance : "8"
+		var title = objectValues[type][0];
+		var width = objectValues[type][1];
+		var height = objectValues[type][2];
+		if ($('#area').width() <= (width * factor)
+				|| $('#area').height() <= (height * factor)) {
+			alert("Objekt zu gross. Bitte nehmen sie ein anderes.");
+			return false;
+		} else {
+			var newElem = document.createElement("div");
+			newElem = $(newElem);
+			newElem.appendTo('#area');
+			newElem.removeAttr('onClick');
+			newElem.attr("class", "objekt");
+			newElem.attr("name", name);
+			newElem.attr("oncontextmenu", ("contextMenu(this)"));
+			newElem.attr("onmouseup", "validateIt(this)");
+			newElem.css({
+				'width' : (width * factor),
+				'height' : (height * factor)
 			});
-		});
-		objectList.push(new Array(newElem.attr('name'), newElem.text(), width,
-				height, newElem.position().left, newElem.position().top));
+			newElem.text(title);
+
+			$(function() {
+				$(".objekt").draggable({
+					containment : "#area",
+					snap : true,
+					snapMode : "outer",
+					snapTolerance : "8"
+				});
+			});
+			objectList.push(new Array(newElem.attr('name'), newElem.text(),
+					width, height, newElem.position().left,
+					newElem.position().top));
+		}
 	}
 }
 
@@ -246,6 +211,7 @@ function validateIt(element) {
 
 function saveIt() {
 	$(document).ready(function() {
+		console.log(areaWidth, areaHeight);
 		$.ajax({
 			url : "/newArea",
 			type : "POST",
@@ -277,6 +243,7 @@ function saveIt() {
 		});
 	});
 }
+<<<<<<< HEAD
 
 function saveToFestival() {
 	$(document).ready(function() {
@@ -312,6 +279,23 @@ function saveToFestival() {
 	});
 }
 
+=======
+function turnObject(element) {
+	var parent = $(".contextButton").parents('.objekt');
+	var a = $(parent);
+	var my_index = a.parent().children().index(a);
+	console.log(my_index);
+	console.log(objectList[my_index]);
+	width = objectList[my_index][2];
+	height = objectList[my_index][3];
+	objectList[my_index][2] = height;
+	objectList[my_index][3] = width;
+	parent.css({
+		'width' : objectList[my_index][2],
+		'height' : objectList[my_index][3]
+	});
+}
+>>>>>>> master
 function deleteObject(index) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
@@ -334,27 +318,32 @@ function contextMenu(element) {
 
 	var name = document.createElement("li");
 	$(name).text("Name: " + objectList[a][1]);
+	$(name).attr("id", "use_a_line");
 	$(name).appendTo(list);
 	var weite = document.createElement("li");
-	$(weite).text("Breite: " + objectList[a][2]);
+	$(weite).text("Breite: " + objectList[a][2] + "m");
 	$(weite).appendTo(list);
 	var hoehe = document.createElement("li");
-	$(hoehe).text("Höhe: " + objectList[a][3]);
+	$(hoehe).text("Höhe: " + objectList[a][3] + "m");
+	$(hoehe).attr("id", "use_a_line");
 	$(hoehe).appendTo(list);
-	var top = document.createElement("li");
-	$(top).text("Y-Achse: " + objectList[a][5]);
-	$(top).appendTo(list);
-	var left = document.createElement("li");
-	$(left).text("x-Achse: " + objectList[a][4]);
-	$(left).appendTo(list);
-	// var turnCCW = document.createElement("li");
-	// var leftACW = document.createElement("li");
+	var turnCCW = document.createElement("li");
+	var turnACW = document.createElement("li");
 	var loeschen = document.createElement("li");
 	loeschen = $(loeschen);
+	turnCCW = $(turnCCW);
+	turnACW = $(turnACW);
 	loeschen.attr("class", "contextButton");
-	loeschen.attr("id", "loeschen");
+	turnCCW.attr("class", "contextButton");
+	turnACW.attr("class", "contextButton");
 	loeschen.text("Objekt löschen");
+	turnCCW.text("90° im Uhrzeigersinn");
+	turnACW.text("90° gegen Uhrzeigersinn");
 	loeschen.attr("onClick", "deleteObject(this)");
+	turnCCW.attr("onClick", "turnObject(this)");
+	turnACW.attr("onClick", "turnObject(this)");
+	turnCCW.appendTo(list);
+	turnACW.appendTo(list);
 	loeschen.appendTo(list);
 	menu = $(menu);
 	$(list).appendTo(menu);
