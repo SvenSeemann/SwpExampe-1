@@ -23,23 +23,22 @@ import fviv.areaPlanner.AreaItem.Type;
 @RestController
 public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
-
-	private PlanningItemsRepository itemsForPlanerRepository;
-	private AreaItemsRepository planningRepository;
+	private PlanningItemsRepository planningItems;
+	private AreaItemsRepository areaItems;
 
 	@Autowired
-	public PlanningAJAXController(AreaItemsRepository planningRepository,
+	public PlanningAJAXController(AreaItemsRepository areaItems,
 			PlanningItemsRepository itemsForPlanerRepository) {
 		super();
-		this.planningRepository = planningRepository;
-		this.itemsForPlanerRepository = itemsForPlanerRepository;
+		this.areaItems = areaItems;
+		this.planningItems = itemsForPlanerRepository;
 	}
 
 	@RequestMapping(value = "/isThereAnything", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public Iterable<AreaItem> rebuildPlaner(
 			@RequestParam("request") String request) {
-		if (planningRepository.findAll() != null) {
-			return planningRepository.findAll();
+		if (areaItems.findAll() != null) {
+			return areaItems.findAll();
 		} else {
 			return null;
 		}
@@ -49,13 +48,13 @@ public class PlanningAJAXController {
 	public boolean newAreal(@RequestParam("width") int width,
 			@RequestParam("height") int height,
 			@RequestParam("faktor") float factor) {
-		AreaItem area = planningRepository.findByName("Areal");
+		AreaItem area = areaItems.findByName("Areal");
 		if (area == null) {
-			planningRepository.save(new AreaItem(Type.AREA, "Areal", width,
+			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
 					height, 0, 0, factor));
 		} else {
-			planningRepository.deleteAll();
-			planningRepository.save(new AreaItem(Type.AREA, "Areal", width,
+			areaItems.deleteAll();
+			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
 					height, 0, 0, factor));
 		}
 		return true;
@@ -67,27 +66,27 @@ public class PlanningAJAXController {
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
 			@RequestParam("left") float left, @RequestParam("top") float top) {
-		System.out.println(planningRepository.findByName("Areal"));
-		if (planningRepository.findByName("Areal") != null) {
+		System.out.println(areaItems.findByName("Areal"));
+		if (areaItems.findByName("Areal") != null) {
 			System.out.println("wtf");
 			switch (typ) {
 			case "TOILET":
-				planningRepository.save(new AreaItem(Type.TOILET, (name), width,
+				areaItems.save(new AreaItem(Type.TOILET, (name), width,
 						height, left, top));
 				break;
 			case "STAGE":
-				planningRepository.save(new AreaItem(Type.STAGE, (name), width,
+				areaItems.save(new AreaItem(Type.STAGE, (name), width,
 						height, left, top));
 				break;
 			case "CATERING":
-				planningRepository.save(new AreaItem(Type.CATERING, (name),
+				areaItems.save(new AreaItem(Type.CATERING, (name),
 						width, height, left, top));
 				break;
 			case "CAMPING":
-				planningRepository.save(new AreaItem(Type.CAMPING, (name), width,
+				areaItems.save(new AreaItem(Type.CAMPING, (name), width,
 						height, left, top));
 			}
-			return planningRepository.findAll();
+			return areaItems.findAll();
 		} else {
 			return null;
 		}
@@ -96,12 +95,12 @@ public class PlanningAJAXController {
 	@RequestMapping(value = "/getValues", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public Iterable<PlanningItem> giveMeValuesOfObjects(
 			@RequestParam("request") String request) {
-		return itemsForPlanerRepository.findAll();
+		return planningItems.findAll();
 	}
 
 	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public Iterable<AreaItem> giveMeAllEntries(
 			@RequestParam("request") String request) {
-		return planningRepository.findAll();
+		return areaItems.findAll();
 	}
 }

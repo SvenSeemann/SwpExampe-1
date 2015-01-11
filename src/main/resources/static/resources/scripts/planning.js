@@ -278,6 +278,40 @@ function saveIt() {
 	});
 }
 
+function saveToFestival() {
+	$(document).ready(function() {
+		$.ajax({
+			url : "/setup/area/newArea",
+			type : "POST",
+			data : {
+				width : areaWidth,
+				height : areaHeight,
+				faktor : factor
+			},
+			success : function() {
+				for (i = 0; i < objectList.length; i++) {
+					$.ajax({
+						url : "/setup/area/newObject",
+						type : "post",
+						data : {
+							typ : objectList[i][0],
+							name : objectList[i][1],
+							width : objectList[i][2],
+							height : objectList[i][3],
+							left : objectList[i][4],
+							top : objectList[i][5]
+						},
+						success : function(data) {
+							console.log(data);
+						}
+					});
+				}
+
+			}
+		});
+	});
+}
+
 function deleteObject(index) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);

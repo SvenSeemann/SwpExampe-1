@@ -38,8 +38,8 @@ public class AreaController {
 		this.planningRepository = planningRepository;
 	}
 
-	@RequestMapping("/planning/{fid}")
-	public String getHtml(Model modelMap, @PathVariable Festival festival) {
+	@RequestMapping("/planning")
+	public String getHtml(Model modelMap) {
 		//List<String> toiletStrings = new LinkedList<String>();
 		//for(Coords toilet : planningRepository.findByType(Type.TOILET)){
 		//	toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
