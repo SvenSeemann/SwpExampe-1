@@ -35,7 +35,6 @@
 	left: 35%;
 	color: #fff;
 	display: none;
-	cursor: pointer;
 	position: absolute;
 	z-index: 100000;
 }
@@ -78,38 +77,44 @@
 	height:0px;
 	background-color:#666;
 }
-.object{
+.objekt{
 	position:absolute;
 	cursor:move;
 	border: #f9731c medium solid;
 	background-color: #383839;
+	font-size:100%;
 }
-/*
-#smallStage{
+
+#context{
 	position:absolute;
-	cursor:move;
+	padding-right:10px;
+	width:200px;
+	height:auto;
+	background-color:#999;
+	z-index:100000000000;
+	color:#FFF;
+	box-shadow:2px 2px 10px #000; 
 }
-#mediumStage{
-	position:absolute;
-	cursor:move;
+#context ul{
+	list-style:none;
+	margin-left:-10px;
+	padding-left:20px;
+	cursor:default;
 }
-#bigStage{
-	position:absolute;
-	cursor:move;
+#context ul li{
+	height:30px;
+	margin:0px;
+	margin-bottom:2px;
 }
-#standardToilet{
-	position:absolute;
-	cursor:move;
+
+#use_a_line{
+	border-bottom:solid thin #666;
 }
-#handicaped{
-	position:absolute;
-	cursor:move;
+.contextButton{
+	cursor:pointer;
 }
-#bathcontainer{
-	position:absolute;
-	cursor:move;
+.contextButton:hover{
+	background-color:#0C0;
+	color:#fff;
+	cursor:pointer;
 }
-#standardCatering{
-	position:absolute;
-	cursor:move;
-}*/

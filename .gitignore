@@ -20,8 +20,10 @@ hs_err_pid*
 .settings/
 .metadata/
 .springBeans
+bin/
 
 # Binary Output
 target/
 
-
+# Markdown pdf output
+documents/documentation/pdf/

@@ -14,7 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Employee{
+	public static enum Departement {
+		MANAGEMENT, CATERING, SECURITY, CLEANING, NULL;
+	}
+	
 	private String phone;
+	private Departement departement;
 	
 	@Id
 	@GeneratedValue
@@ -27,12 +32,13 @@ public class Employee{
 	protected Employee(){}
 	
 	@Autowired
-	public Employee(UserAccount userAccount, String lastname, String firstname, String email, String phone){
+	public Employee(UserAccount userAccount, String lastname, String firstname, String email, String phone, Departement departement){
 		this.userAccount = userAccount;
 		userAccount.setLastname(lastname);
 		userAccount.setFirstname(firstname);
 		userAccount.setEmail(email);
 		this.phone = phone;
+		this.departement = departement;
 	}
 	
 	public UserAccount getUserAccount(){
@@ -49,5 +55,13 @@ public class Employee{
 	
 	public long getId(){
 		return id;
+	}
+	
+	public void setDepartement(Departement d) {
+		this.departement = d;
+	}
+	
+	public Departement getDepartement() {
+		return departement;
 	}
 }

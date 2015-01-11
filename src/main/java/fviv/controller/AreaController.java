@@ -8,6 +8,7 @@ import fviv.areaPlanner.*;
 import fviv.areaPlanner.Coords.Type;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@PreAuthorize("hasRole('ROLE_BOSS')")
 @Controller
 public class AreaController {
 	private PlanningRepository planningRepository;
@@ -33,16 +35,15 @@ public class AreaController {
 
 	@RequestMapping("/planning")
 	public String getHtml(Model modelMap) {
-		List<String> toiletStrings = new LinkedList<String>();
-		for(Coords toilet : planningRepository.findByType(Type.TOILET)){
-			toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
-		}
+		//List<String> toiletStrings = new LinkedList<String>();
+		//for(Coords toilet : planningRepository.findByType(Type.TOILET)){
+		//	toiletStrings.add(htmlHelper(toilet.getWidth(), toilet.getHeight(), toilet.getxPos(),toilet.getyPos()));
+		//}
 		modelMap.addAttribute("getCoords", planningRepository);
-		modelMap.addAttribute("toilets", toiletStrings );
+		//modelMap.addAttribute("toilets", toiletStrings );
 		
 		return "planning";
 	}
-
 	/*@ModelAttribute("sizeArea")
 	public String sizeArea() {
 		Coords siize = planningRepository.findByName("Areal");

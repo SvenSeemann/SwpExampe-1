@@ -1,5 +1,6 @@
 package fviv;
 
+import org.neo4j.graphdb.GraphDatabaseService;
 import org.salespointframework.Salespoint;
 import org.salespointframework.SalespointSecurityConfiguration;
 import org.salespointframework.SalespointWebConfiguration;
@@ -15,6 +16,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
+import org.springframework.data.neo4j.config.Neo4jConfiguration;
+import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 
 @Configuration
 @EnableAutoConfiguration

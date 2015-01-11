@@ -1,10 +1,12 @@
-<!doctype html>
-<html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="utf-8">
-<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="styles/standard.css"/>
-<link rel="stylesheet" href="styles/terminal.css"/>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/terminal.css" />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../resources/scripts/terminal.js"></script>
 <title>terminal</title>
 </head>
 
@@ -15,7 +17,7 @@
   </div>
   <div id="content">
     <div id="substance">
-      <div class="day">
+     <!-- <div class="day">
         <div class="dayHeadline">Headline</div>
         <div class="dayContent">
           <table>
@@ -113,13 +115,14 @@
             </tr>
           </table>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div id="menu">
     <button class="boldButton">Lageplan</button>
     <button class="boldButton">Programm</button>
   </div>
+  <!-- -<div th:include="messaging :: messaging"></div> -->
 </div>
 </body>
 </html>
