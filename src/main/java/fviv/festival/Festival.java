@@ -8,7 +8,7 @@ import javax.persistence.Id;
 
 import org.joda.money.Money;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Festival {

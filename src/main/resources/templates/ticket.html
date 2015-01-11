@@ -25,6 +25,7 @@
 					<div id="substance">
 
 						<form th:action="@{/loadfestivalTicket}" method="post">
+						<fieldset>
 								<label class="label" for="festivalId"> Festival
 									ausw&auml;hlen: </label><select name="festivalId" size="1">
 										<option th:each=" festival : ${festivallist}"
@@ -34,18 +35,32 @@
 								<input
 									type="submit" 
 									value="Festival laden" />
+									</fieldset>
 							</form>
-							<form th:action="@{/loadfestivalTicket}" method="post">	
-							
+							<form th:action="@{/newTicket}" method="post">	
+							<fieldset>
 								 <label class="label" for="ticketart"> Ticketart
-									ausw&auml;hlen:</label>   <input
+									ausw&auml;hlen:</label> <br/>  <input
 									type="radio" name="ticketart" value="false" checked="checked"/>3-Tagesticket <br /> 
 									<input type="radio" name="ticketart"
-									value="true"  />Tagesticket <br /><label
+									value="true"  />Tagesticket <br />
+									<label class="label"> Festivaltag ausw&auml;hlen</label>
+									<select name="hilfsDate" size="1">
+									<option th:each=" hilfsDate : ${ticketdates}"
+											th:text="${hilfsDate}"
+											th:value="${hilfsDate}"></option>
+											
+									
+								</select><br />
+									
+									
+									
+									<label
 									class="label" for="numbers"> <input type="text"
 									name="numbers" size="40" placeholder="Anzahl" /></label> <input
 									type="submit" onclick="alert('Ticket/s wird/werden erstellt')"
 									value="Ticket erstellen" />
+									</fieldset>
 						
 						</form>
 

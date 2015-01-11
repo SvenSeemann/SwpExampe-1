@@ -1,5 +1,6 @@
 package fviv.messaging;
 
+import fviv.user.Roles;
 import fviv.user.UserRepository;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
@@ -30,16 +31,6 @@ public class PostOffice {
      */
     private final MessageRepository repo;
 
-    /**
-     * Reference to the role a user needs to have in order to send messages.
-     */
-    public static final Role senderRole = new Role("MESSAGE_SENDER");
-
-    /**
-     * Reference to the role a user needs to have in order to receive messages.
-     */
-    public static final Role receiverRole = new Role("MESSAGE_RECEIVER");
-
     @Deprecated
     private static final ZoneId gmt = ZoneId.of("GMT");
 
@@ -52,7 +43,7 @@ public class PostOffice {
     /**
      * Get the entire contents of a users Inbox/all Messages sent to user
      *
-     * <p>This method will throw an exception if the user does not own the {@link #senderRole} thus removing the role
+     * <p>This method will throw an exception if the user does not own the {@link fviv.user.Roles#sender} thus removing the role
      * from a user that previously owned said role will result in the user being unable to retrieve any messages</p>
      *
      * @throws java.lang.SecurityException if user is not allowed to receive Messages.
@@ -139,25 +130,25 @@ public class PostOffice {
     /**
      * Helper Method to check if the user can send messages.
      *
-     * <p>Convenience method wrapping {@link #hasRole} with {@link #senderRole}</p>
+     * <p>Convenience method wrapping {@link #hasRole} with {@link fviv.user.Roles#sender}</p>
      *
      * @param user user in question
      * @return boolean indicating whether the user can send messages
      */
     public boolean canSend(UserAccount user) {
-        return hasRole(user, senderRole);
+        return hasRole(user, Roles.sender) || hasRole(user, Roles.boss);
     }
 
     /**
      * Helper Method to check if the user can receive messages.
      *
-     * <p>Convenience method wrapping {@link #hasRole} with {@link #receiverRole}</p>
+     * <p>Convenience method wrapping {@link #hasRole} with {@link fviv.user.Roles#receiver}</p>
      *
      * @param user user in question
      * @return boolean indicating whether the user can receive messages
      */
     public boolean canReceive(UserAccount user) {
-        return hasRole(user, receiverRole);
+        return hasRole(user, Roles.receiver) || hasRole(user, Roles.boss) ;
     }
 
     /**
@@ -171,7 +162,7 @@ public class PostOffice {
         if (!canSend(requestingUser)) throw new SecurityException();
         List<UserAccount> acc = new LinkedList<>();
 
-        for (UserAccount user : users.findAll())  if (user.hasRole(receiverRole)) acc.add(user);
+        for (UserAccount user : users.findAll())  if (user.hasRole(Roles.receiver) || user.hasRole(Roles.boss)) acc.add(user);
 
         return acc;
     }

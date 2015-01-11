@@ -2,12 +2,9 @@ package fviv.controller;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +119,7 @@ public class CreateController {
 			@RequestParam("location") String location,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		
 		LocalDate dateStart = LocalDate.parse(startDate, formatter);
 		LocalDate dateEnd = LocalDate.parse(endDate, formatter);

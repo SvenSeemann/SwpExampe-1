@@ -17,7 +17,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -98,35 +101,45 @@ public class TicketController {
 			return "ticket";
 		}
 	}
-@RequestMapping(value ="/loadfestivalTicket", method = RequestMethod.POST)
-public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") long id){
-	Festival loadingfestival = festivalRepository.findById(id);
-	
 
-	modelMap.addAttribute("ticketdates", id + "already checked in!");
-	return "ticket";
+	@RequestMapping(value = "/loadfestivalTicket", method = RequestMethod.POST)
+	public String loadingFestival(ModelMap modelMap,
+			@RequestParam("festivalId") long id) {
+		Festival loadingfestival = festivalRepository.findById(id);
+		LocalDate startDate = loadingfestival.getStartDatum();
+		LocalDate endDate = loadingfestival.getEndDatum();
+		DateTime startDatum = DateTime.parse(startDate.toString());
+		ticketid = id;
+		DateTime endDatum = DateTime.parse(endDate.toString());
+		String[] dateArray;
+		int days = Days.daysBetween(startDatum, endDatum).getDays();
+		dateArray = new String[days];
+		LocalDate hilfsDate = startDate;
 
-}
-	
-	
-	
-	
-	
-	
-	
+		for (int i = 0; i < days; i++) {
+			dateArray[i] = hilfsDate.toString();
+			hilfsDate = hilfsDate.plusDays(1);
+		}
+		modelMap.addAttribute("ticketdates", dateArray);
+		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+
+		return "ticket";
+
+	}
+
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
 	public String newTicket(@RequestParam("ticketart") boolean ticketart,
-			@RequestParam("festivalId") String id,
 			@RequestParam("numbers") String numbers,
-			@RequestParam("tagesdate") String tagesdate) throws IOException,
+			@RequestParam("hilfsDate") String tagesdate) throws IOException,
 			BarcodeException {
+		long id = ticketid;
 		int anzahl;
 		if (numbers == "") {
 			anzahl = 1;
 		} else {
 			anzahl = Integer.parseInt(numbers);
 		}
-		Long longId = Long.parseLong(id);
+		Long longId = id;
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket
 			festival = festivalRepository.findById(longId);
@@ -135,28 +148,22 @@ public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") lon
 			LocalDate date = null;
 			if (ticketart == true) {
 				DateTimeFormatter formatter = DateTimeFormatter
-						.ofPattern("yyyy-mm-dd");
-			 date = LocalDate.parse(tagesdate, formatter);
-			} 
-			
+						.ofPattern("yyyy-LL-dd");
+				date = LocalDate.parse(tagesdate, formatter);
+			}
 
 			Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
-			// ist
-			// gleich
-			// Tagesticket //
-			// Null
-			// ist gleich
-			// 3Tagesticket
+	
 			if (ticketart == true) {
 				ticketRepository.save(ticket);
 				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag, ticketart);
+				pdfvorlagebearbeiten(preistag, ticketart, date);
 				barcodegen();
 				addbarcode();
 			} else {
 				ticketRepository.save(ticket);
 				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag * 7 / 3, ticketart);
+				pdfvorlagebearbeiten(preistag * 7 / 3, ticketart, date);
 				barcodegen();
 				addbarcode();
 
@@ -168,9 +175,9 @@ public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") lon
 	// true = tagesticket
 	// false == 3tagesticket
 
-	public static String ticketarthelper(boolean ticketart) {
+	public static String ticketarthelper(boolean ticketart, LocalDate date) {
 		if (ticketart == true) {
-			return "Tagesticket";
+			return "Tagesticket am " + date;
 		} else
 			return "3-Tagesticket";
 	}
@@ -198,7 +205,7 @@ public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") lon
 	}
 
 	public static void pdfvorlagebearbeiten(float ticketkosten,
-			boolean ticketart) throws IOException, BarcodeException {
+			boolean ticketart, LocalDate date) throws IOException, BarcodeException {
 		String price = "" + ticketkosten + "Euro";
 		try {
 
@@ -214,16 +221,16 @@ public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") lon
 
 			// (4) Felder bearbeiten
 
-			acroFields.setField("ticketart", ticketarthelper(ticketart));
+			acroFields.setField("ticketart", ticketarthelper(ticketart, date));
 			acroFields.setField("eventname", festival.getFestivalName());
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
 			acroFields.setField("actors", festival.getActors());
 			acroFields.setField("adressofvenue", festival.getLocation());
-			acroFields.setField("date", festival.getStartDatum() + "");
+			acroFields.setField("date", datumshelper(date));
 			acroFields.setField("price", price);
 			acroFields.setField("eventnamesmall", festival.getFestivalName());
-			acroFields.setField("datesmall", festival.getStartDatum() + "");
+			acroFields.setField("datesmall", datumshelper(date) );
 
 			// (5) Dokumente schließen
 			stamper.close();
@@ -239,6 +246,14 @@ public String loadingFestival(ModelMap modelMap, @RequestParam("festivalId") lon
 		addbarcode();
 	}
 
+	public static String datumshelper( LocalDate date){
+		if (date == null){
+			return festival.getStartDatum() + "";
+		}
+		
+		return date.toString();
+	}
+	
 	public static void barcodegen() throws IOException, BarcodeException {
 		// get a Barcode from the BarcodeFactory
 		Barcode barcode = BarcodeFactory.createCode128B(festival

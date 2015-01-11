@@ -2,18 +2,13 @@ package fviv;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Employee;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
-import fviv.stagePlanner.StagePlanner;
-import fviv.stagePlanner.StageRepository;
 import fviv.model.Finance;
 import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
@@ -30,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -41,7 +35,6 @@ public class FvivDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
-	private final StageRepository stageRepository;
 	private final FinanceRepository financeRepository;
 
 	@Autowired
@@ -49,7 +42,6 @@ public class FvivDataInitializer implements DataInitializer {
 			UserAccountManager userAccountManager,
 			TicketRepository ticketRepository, 
 			FestivalRepository festivalRepository, 
-			StageRepository stageRepository,
 			FinanceRepository financeRepository) {
 		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
@@ -57,7 +49,6 @@ public class FvivDataInitializer implements DataInitializer {
 		this.userAccountManager = userAccountManager;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
-		this.stageRepository = stageRepository;
 		this.financeRepository = financeRepository;
 	}
 
@@ -66,7 +57,6 @@ public class FvivDataInitializer implements DataInitializer {
 		initializeUsers(userAccountManager, employeeRepository);
 		initializeFinances(financeRepository);
 		initializeTickets(ticketRepository);
-		initializeStages(stageRepository);
 		try {
 			initializeFestivals(festivalRepository);
 		} catch (ParseException e) {
@@ -76,9 +66,9 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeFestivals(FestivalRepository festivalRepository2)
 			throws ParseException {
-		DateFormat format = new SimpleDateFormat("d, MMMM, yyyy", Locale.GERMAN);
-		Date date1 = format.parse("2, Januar, 2010");
-		Date date2 = format.parse("5, Januar, 2010");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
+		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
 				"Avicii, Linkin Park", 500000, (long) 55.0);
@@ -89,14 +79,10 @@ public class FvivDataInitializer implements DataInitializer {
 		festivalRepository.save(festival2);
 
 	}
-	
-	private void initializeStages(StageRepository stageRepository){
-		StagePlanner stage1 = new StagePlanner(1, 1, 1,"pups");
-		stageRepository.save(stage1);
-	}
 
-	private void initializeTickets(TicketRepository ticketRepository) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+
+	private void initializeTickets(TicketRepository ticketRepository)  {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date = LocalDate.parse("2005-12-30", formatter);
 		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
 		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
