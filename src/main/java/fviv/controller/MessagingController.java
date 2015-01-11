@@ -3,6 +3,7 @@ package fviv.controller;
 import fviv.messaging.Message;
 import fviv.messaging.PostOffice;
 import fviv.messaging.SendMessageForm;
+import fviv.user.Roles;
 import fviv.util.time.JavaScriptDateTimeFormatters;
 import fviv.util.http.Headers;
 import org.salespointframework.useraccount.UserAccount;
@@ -39,7 +40,7 @@ public class MessagingController {
     @Autowired
     public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
         this.postOffice = postOffice;
-        this.testUser = userManager.create("bob", "passwd", PostOffice.receiverRole, PostOffice.senderRole);
+        this.testUser = userManager.create("bob", "passwd", Roles.receiver, Roles.sender);
         testUser.setFirstname("Bob");
         testUser.setLastname("Barker");
         userManager.save(testUser);
