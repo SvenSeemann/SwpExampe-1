@@ -39,7 +39,6 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 	EmployeeRepository employeeRepository;
 	@Autowired
 	UserAccountManager userAccountManager;
-	private BindingResult results;
 
 	protected void login(String userName, String password) {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -130,5 +129,52 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		// TestEmployee must have been removed from the repository
 		assertThat(employeeRepository.findByPhone("0351/TestEverything"),
 				is(iterableWithSize(0)));
+	}
+	
+	@Test
+	public void ManagerControllerAddRoleTest(){
+		login("manager", "123");
+		ModelMap modelMap = new ModelMap();
+		Role managerRole = new Role("ROLE_MANAGER");
+		Role employeeRole = new Role("ROLE_EMPLOYEE");
+		
+		// Create a test account
+		UserAccount testAccount = userAccountManager.create("testAccountAddRole", "123", employeeRole);
+		userAccountManager.save(testAccount);
+		
+		// Switch to edit mode for the test account and add the manager role
+		controller.editAccount("testAccountAddRole", modelMap);
+		String returnedView = controller.addRole("ROLE_MANAGER");
+		
+		// returnedView has to be manager
+		assertThat(returnedView, is("redirect:/manager"));
+		
+		// testAccount must have both roles assigned
+		assertThat(userAccountManager.findByUsername("testAccountAddRole").get().hasRole(managerRole), is(true));
+		assertThat(userAccountManager.findByUsername("testAccountAddRole").get().hasRole(employeeRole), is(true));
+	}
+	
+	@Test
+	public void ManagerControllerDeleteRoleTest(){
+		login("manager", "123");
+		ModelMap modelMap = new ModelMap();
+		Role managerRole = new Role("ROLE_MANAGER");
+		
+		// Create a test account
+		UserAccount testAccount = userAccountManager.create("testAccountDeleteRole", "123", managerRole);
+		userAccountManager.save(testAccount);
+		
+		// Test if manager role is attached
+		assertThat(userAccountManager.findByUsername("testAccountDeleteRole").get().hasRole(managerRole), is(true));
+		
+		// Switch to edit mode for the test account and delete the manager role
+		controller.editAccount("testAccountDeleteRole", modelMap);
+		String returnedView = controller.deleteRole("ROLE_MANAGER");
+		
+		// returnedView has to be manager
+		assertThat(returnedView, is("redirect:/manager"));
+		
+		// Test if manager role got deleted
+		assertThat(userAccountManager.findByUsername("testAccountDeleteRole").get().hasRole(managerRole), is(false));
 	}
 }

@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
@@ -134,29 +135,7 @@ public class ManagerController {
 					&& finance.getReference() == Reference.DEPOSIT)
 				rentDeposit.add(finance);
 		}
-
-		// Fill the Finance lists
-		for (Finance finance : financeRepository.findAll()) {
-			if (finance.getFinanceType().equals("salary")
-					&& finance.getReference() == Reference.EXPENSE)
-				salaryExpense.add(finance);
-			if (finance.getFinanceType().equals("salary")
-					&& finance.getReference() == Reference.DEPOSIT)
-				salaryDeposit.add(finance);
-			if (finance.getFinanceType().equals("catering")
-					&& finance.getReference() == Reference.EXPENSE)
-				cateringExpense.add(finance);
-			if (finance.getFinanceType().equals("catering")
-					&& finance.getReference() == Reference.DEPOSIT)
-				cateringDeposit.add(finance);
-			if (finance.getFinanceType().equals("rent")
-					&& finance.getReference() == Reference.EXPENSE)
-				rentExpense.add(finance);
-			if (finance.getFinanceType().equals("rent")
-					&& finance.getReference() == Reference.DEPOSIT)
-				rentDeposit.add(finance);
-		}
-
+		
 		// Calculate total amounts of each expense type
 		for (Finance salDep : salaryDeposit) {
 			salDepTot = salDepTot.plus(salDep.getAmount());
@@ -250,16 +229,16 @@ public class ManagerController {
 		}
 		
 		Departement departement = Departement.NULL;
-		if (departementAsString == "management") { 
+		if (departementAsString.equalsIgnoreCase("management")) { 
 			departement = Departement.MANAGEMENT;
-		}
-		if (departementAsString == "catering") { 
+		}		
+		if (departementAsString.equalsIgnoreCase("catering")) { 
 			departement = Departement.CATERING;
 		}
-		if (departementAsString == "security") { 
+		if (departementAsString.equalsIgnoreCase("security")) { 
 			departement = Departement.SECURITY;
 		}
-		if (departementAsString == "cleaning") {
+		if (departementAsString.equalsIgnoreCase("cleaning")) {
 			departement = Departement.CLEANING;
 		}
 
@@ -330,7 +309,9 @@ public class ManagerController {
 	public String addRole(@RequestParam("roles") String role) {
 		// Assumption that given input is valid
 		showErrors = "no";
-
+		
+		UserAccount userAccount = userAccountManager.findByUsername(editSingleAccount).get();
+		
 		// Define a role by the given string "role"
 		final Role addRole = new Role(role);
 
@@ -341,11 +322,10 @@ public class ManagerController {
 						.hasRole(addRole)) {
 			return "redirect:/manager";
 		}
-
+		
 		// Add role to the useraccount and save it
-		userAccountManager.findByUsername(editSingleAccount).get().add(addRole);
-		userAccountManager.save(userAccountManager.findByUsername(
-				editSingleAccount).get());
+		userAccount.add(addRole);
+		userAccountManager.save(userAccount);
 		return "redirect:/manager";
 	}
 
@@ -378,6 +358,7 @@ public class ManagerController {
 
 		// Define a role by the given string "role"
 		final Role deleteRole = new Role(role);
+		UserAccount userAccount = userAccountManager.findByUsername(editSingleAccount).get();
 
 		// Redirect if the useraccount doesn't exist or doesn't have the role
 		// attached
@@ -388,10 +369,8 @@ public class ManagerController {
 		}
 
 		// Delete role from the useraccount and save it
-		userAccountManager.findByUsername(editSingleAccount).get()
-				.remove(deleteRole);
-		userAccountManager.save(userAccountManager.findByUsername(
-				editSingleAccount).get());
+		userAccount.remove(deleteRole);
+		userAccountManager.save(userAccount);
 
 		return "redirect:/manager";
 	}
@@ -579,6 +558,11 @@ public class ManagerController {
 				.multipliedBy(units)), FinanceType.CATERING));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
+		
+		// Menu is orderable again, because its quantity is >0
+		Menu menu = menusRepository.findByProductIdentifier(item.getProduct().getId());
+		menu.setOrderable(true);
+		menusRepository.save(menu);
 
 		return "redirect:/manager";
 	}

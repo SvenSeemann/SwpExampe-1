@@ -65,7 +65,7 @@
 				<div th:case="meals">
 					<a th:each="meal : ${meals}"
 						th:href="@{'/catering-menu/' + ${meal.identifier}}">
-						<div class="field">
+						<div th:class= "${meal.orderable} ? field : fieldgrey" >
 							<p th:text="${meal.name}"></p>
 							<p th:text="${meal.price}"></p>
 						</div>
@@ -75,7 +75,7 @@
 				<div th:case="drinks">
 					<a th:each="drink : ${drinks}"
 						th:href="@{'/catering-menu/' + ${drink.identifier}}">
-						<div class="field">
+						<div th:class= "${drink.orderable} ? field : fieldgrey" >
 							<p th:text="${drink.name}"></p>
 							<p th:text="${drink.price}"></p>
 						</div>

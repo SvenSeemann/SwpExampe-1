@@ -38,12 +38,7 @@ public class Finance {
 	@Autowired
 	public Finance(Reference reference, Money amount, FinanceType financeType) {
 		this.reference = reference;
-		this.amount = amount;
-		
-		  /*if(financeType != "salary" && financeType != "rent" && financeType !=
-		  "catering"){ throw new
-		  IllegalArgumentException("only salary, rent or catering allowed"); }*/
-		
+		this.amount = amount;		
 		this.financeType = financeType;
 	}
 

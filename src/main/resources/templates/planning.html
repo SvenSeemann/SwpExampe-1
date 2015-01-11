@@ -17,24 +17,12 @@
 <body>
 	<div id="webseite">
 		<div id="header">
-			<div id="loggedAs">angemeldet als:</div>
+			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
 			<div id="title">Planning</div>
-			<div id="loginName">UserName</div>
+			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
 		</div>
 		<div id="content">
 			<div id="substance">
-				<div id="context">
-					<ul>
-						<li>Bühne</li>
-						<li>weite:</li>
-						<li>hoehe:</li>
-						<li>top:</li>
-						<li>left:</li>
-						<!--<li class="contextButton">90°im Uhrzeigersinn drehen</li>
-						<li class="contextButton">90° gegen den Uhrzeigersinn drehen</li> -->
-						<li class="contextButton" id="loeschen">Objekt löschen</li>
-					</ul>
-				</div>
 				<div id="request">
 					<h3>Grö&szlig;e eingeben</h3>
 					<form action="/newArea" method="post" id="size" name="size">
@@ -58,33 +46,35 @@
 			</div>
 		</div>
 		<div id="menu">
+			<form method="post" action="/logout">
+				<button class="slimButton" type="submit"
+					th:text="#{catering.logout}" value="logout">Facepalm</button>
+			</form>
 			<!-- <div th:include="messaging :: messaging"></div> -->
 			<button class="slimButton" onClick="saveIt();">Speichern</button>
-			<button class="boldButton" onClick="newArea();">New Area</button>
-			<button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
+			<button class="boldButton" onClick="newArea();">Neues Areal</button>
+			<button class="boldButton" onClick="openSubMenu('stage');">Bühnen</button>
 			<div class="objectMenu" id="stages">
-				<div class="chooseObject" onClick="cloneIt(this,0, 'STAGE');">small
-					Stage</div>
-				<div class="chooseObject" onClick="cloneIt(this,1, 'STAGE');">medium
-					Stage</div>
-				<div class="chooseObject" onClick="cloneIt(this,2, 'STAGE');">big
-					Stage</div>
+				<div class="chooseObject" onClick="buildObject(this,0, 'STAGE');">kleine
+					Bühne</div>
+				<div class="chooseObject" onClick="buildObject(this,1, 'STAGE');">mittlere
+					Bühne</div>
+				<div class="chooseObject" onClick="buildObject(this,2, 'STAGE');">große
+					Bühne</div>
 			</div>
-			<button class="boldButton" onClick="openSubMenu('toilet');">Toilets</button>
+			<button class="boldButton" onClick="openSubMenu('toilet');">Toiletten</button>
 			<div class="objectMenu" id="toilets">
-				<div class="chooseObject" onClick="cloneIt(this,3, 'TOILET');">ToiToi</div>
-				<div class="chooseObject" onClick="cloneIt(this,4, 'TOILET');">Behindertengerecht</div>
+				<div class="chooseObject" onClick="buildObject(this,3, 'TOILET');">ToiToi</div>
+				<div class="chooseObject" onClick="buildObject(this,4, 'TOILET');">Behindertengerecht</div>
+				<div class="chooseObject" onClick="buildObject(this,5, 'CATERING');">BadContainer</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
 			<div class="objectMenu" id="catering">
-				<div class="chooseObject" onClick="cloneIt(this,5, 'CATERING');">Bierwagen</div>
+				<div class="chooseObject" onClick="buildObject(this,6, 'CATERING');">Bierwagen</div>
+				<div class="chooseObject" onClick="buildObject(this,7, 'CATERING');">Essplätze</div>
+				<div class="chooseObject" onClick="buildObject(this,8, 'CATERING');">Mülleimer</div>
 			</div>
-			<button class="boldButton" onClick="openSubMenu('camping');">Camping</button>
-			<div class="objectMenu" id="camping">
-				<div class="chooseObject">small camping</div>
-				<div class="chooseObject">large camping</div>
-				<div class="chooseObject">camping city</div>
-			</div>
+			<button class="boldButton" onClick="buildObject(this,9,'CAMPING');">Campingareal</button>
 		</div>
 	</div>
 </body>

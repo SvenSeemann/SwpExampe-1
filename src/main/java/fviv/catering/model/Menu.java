@@ -19,6 +19,7 @@ public class Menu extends Product {
 	}
 	
 	@SuppressWarnings("unused")
+	private Boolean orderable;
 	private Type type;
 	private Money purchasePrice;
 	private Money sellingPrice;
@@ -33,11 +34,14 @@ public class Menu extends Product {
 		
 	}
 	
+
+	@Deprecated
+	public Menu () {};
+	
 	/** Get the purchase price of the {@link Menu}.
 	 * 
 	 * @return Purchase price of {@link Menu}
 	 */
-	
 	public Money getPurchasePrice() {
 		return this.purchasePrice;
 	}
@@ -46,12 +50,18 @@ public class Menu extends Product {
 	 * 
 	 * @return Selling price of {@link Menu}, Price of {@link Product}
 	 */
-	
 	public Money getSellingPrice() {
 		return this.sellingPrice;
 	}
-	
-	@Deprecated
-	public Menu () {};
 
+
+	public Boolean getOrderable() {
+		return orderable;
+	}
+
+
+	public void setOrderable(Boolean orderable) {
+		this.orderable = orderable;
+	}
+	
 }
