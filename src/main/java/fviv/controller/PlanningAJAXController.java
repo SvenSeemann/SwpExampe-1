@@ -67,9 +67,7 @@ public class PlanningAJAXController {
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
 			@RequestParam("left") float left, @RequestParam("top") float top) {
-		System.out.println(planningRepository.findByName("Areal"));
 		if (planningRepository.findByName("Areal") != null) {
-			System.out.println("wtf");
 			switch (typ) {
 			case "TOILET":
 				planningRepository.save(new Coords(Type.TOILET, (name), width,
