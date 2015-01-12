@@ -95,10 +95,12 @@ public class PlanningAJAXController {
 		return planningItems.findAll();
 	}
 
-	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+	@RequestMapping(value = "/terminal/show/area/{fid}", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public Iterable<AreaItem> giveMeAllEntries(
 			@RequestParam("request") String request,
 			@PathVariable("fid") long festivalId) {
+		System.out.println(festivalId);
+		System.out.println(areaItems.findByFestivalId(festivalId));
 		return areaItems.findByFestivalId(festivalId);
 	}
 }

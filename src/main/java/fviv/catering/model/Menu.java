@@ -1,6 +1,7 @@
 package fviv.catering.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 
 import org.joda.money.Money;
 import org.salespointframework.catalog.Product;

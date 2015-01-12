@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +20,12 @@ import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.FestivalRepository;
 
-@PreAuthorize("hasRole('ROLE_GUEST')")
+
 @Controller
 public class TerminalController {
 	private AreaItemsRepository areaItems;
 	private FestivalRepository festivalRepository;
+	private long fid;
 	
 	@Autowired
 	public TerminalController(AreaItemsRepository areaItems, FestivalRepository festivalRepository) {
@@ -31,10 +33,22 @@ public class TerminalController {
 		this.festivalRepository = festivalRepository;
 	}
 
+	@ModelAttribute("festivalId")
+	public String festivalId() {
+		return "" + fid;
+	}
+	
 	@RequestMapping("/terminal")
-	public String giveMeATermial(Model modelMap, @LoggedIn UserAccount userAccount) {
-		long festivalId = festivalRepository.findByUserAccount(userAccount).getId();
-		modelMap.addAttribute("irgendwas", areaItems.findByFestivalId(festivalId));
+	public String giveMeATermial(Model model) {
+		model.addAttribute("festivals", festivalRepository.findAll());
+	//	model.addAttribute("irgendwas", areaItems.findByFestivalId(festivalId));
 		return "terminal";
+	}
+	
+	@RequestMapping(value = "/terminal/show/area/{festivalId}", method = RequestMethod.POST)
+	public String showArea(Model model, @PathVariable("festivalId") long festivalId) {
+		model.addAttribute("irgendwas", areaItems.findByFestivalId(festivalId));
+		fid = festivalId;
+		return "redirect:/terminal";
 	}
 }
