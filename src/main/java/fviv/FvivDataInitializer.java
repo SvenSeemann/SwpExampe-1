@@ -74,9 +74,9 @@ public class FvivDataInitializer implements DataInitializer {
 		Date date2 = format.parse("4, März, 2012");
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
-				"Avicii, Linkin Park", 500000, (long) 55.0);
+				"Avicii, Linkin Park", 500000, (long) 55.0, userAccountManager.findByUsername("manager").get());
 		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
-				"Netflix", 69999 , (long) 12.0);
+				"Netflix", 69999 , (long) 12.0, userAccountManager.findByUsername("manager").get());
 
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
@@ -99,8 +99,14 @@ public class FvivDataInitializer implements DataInitializer {
 		final Role employeeRole = new Role("ROLE_EMPLOYEE");
 
 		UserAccount boss = userAccountManager.create("boss", "123", bossRole);
+		boss.setEmail("Boss@Fviv.de");
+		boss.setFirstname("Der");
+		boss.setLastname("Boss");
 		UserAccount manager = userAccountManager.create("manager", "123",
 				managerRole);
+		manager.setEmail("Manager@Fviv.de");
+		manager.setFirstname("Der");
+		manager.setLastname("Manager");
 		UserAccount caterer = userAccountManager.create("caterer", "123",
 				catererRole);
 		userAccountManager.save(boss);

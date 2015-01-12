@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.joda.money.Money;
+import org.salespointframework.useraccount.UserAccount;
 
 import java.util.Date;
 
@@ -31,6 +32,7 @@ public class Festival {
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
+	private UserAccount manager;
 
 	public int getQuantManagement() {
 		return quantManagement;
@@ -73,7 +75,7 @@ public class Festival {
 	}
 
 	public Festival(Date startDatum, Date endDatum, String festivalName, String location,
-			String actors, int maxVisitors, long preisTag) {
+			String actors, int maxVisitors, long preisTag, UserAccount manager) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
@@ -89,7 +91,7 @@ public class Festival {
 		this.quantManagement = 0;
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
-
+		this.manager = manager;
 	}
 	public long getId(){
 		return id;
@@ -183,6 +185,9 @@ public class Festival {
 	public void setCleaningSalaryPerDay(Money cleaningSalaryPerDay) {
 		this.cleaningSalaryPerDay = cleaningSalaryPerDay;
 	}
-
+	
+	public UserAccount getManager(){
+		return manager;
+	}
 
 }

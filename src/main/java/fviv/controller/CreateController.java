@@ -6,14 +6,16 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 
 import org.joda.money.Money;
+import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,8 @@ public class CreateController {
 	private String mode = "festival";
 	private final UserAccountManager userAccountManager;
 	private Festival selected;
-
+	private LinkedList<String> managerAccounts = new LinkedList<String>();
+	
 	@Autowired
 	public CreateController(FestivalRepository festivalRepository,
 			UserAccountManager userAccountManager) {
@@ -45,6 +48,12 @@ public class CreateController {
 	public String index(ModelMap modelMap) {
 		mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+		
+		managerAccounts.clear();
+		for(UserAccount userAccount : userAccountManager.findAll()){
+			if(userAccount.hasRole(new Role("ROLE_MANAGER")))managerAccounts.add(userAccount.getIdentifier().toString());
+		}
+		modelMap.addAttribute("managerAccounts", managerAccounts);
 
 		return "festival";
 	}
@@ -125,14 +134,15 @@ public class CreateController {
 			@RequestParam("actors") String actors,
 			@RequestParam("maxVisitors") int maxVisitors,
 			@RequestParam("location") String location,
-			@RequestParam("preisTag") long preisTag) throws ParseException {
-
+			@RequestParam("preisTag") long preisTag,
+			@RequestParam("selectManager") String manager) throws ParseException {
+		
 		DateFormat format = new SimpleDateFormat("d MMMM, yyyy", Locale.GERMAN);
 		Date dateStart = format.parse(startDate);
 		Date dateEnd = format.parse(endDate);
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				location, actors, (int) maxVisitors, (long) preisTag);
+				location, actors, (int) maxVisitors, (long) preisTag, userAccountManager.findByUsername("manager").get());
 
 		festivalRepository.save(festival);
 		return "redirect:/festival";

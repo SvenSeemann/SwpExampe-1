@@ -99,8 +99,12 @@
 									placeholder="Festivalkapazität"></input>Festivalkapazität
 								</label> <br /> <label class="label" for="preisTag"> <input
 									type="text" name="preisTag" size="40"
-									placeholder="Kosten Tageskarte"></input>Kosten Tageskarte
-								</label> <br /> <input type="submit"
+									placeholder="Kosten Tageskarte"></input>Kosten Tageskarte <br /></label><label
+									class="label" for="selectManager">Manager zuordnen</label> <select
+									name="selectManager">
+									<option th:each=" account : ${managerAccounts}"
+										th:value="${account}" th:text="${account}"></option>
+								</select> <br /> <input type="submit"
 									onclick="alert('Festival wird erstellt')"
 									value="Festival erstellen" />
 							</fieldset>
