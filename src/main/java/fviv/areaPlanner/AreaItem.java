@@ -25,6 +25,7 @@ public class AreaItem {
 	@javax.persistence.Id
 	@GeneratedValue
 	private long id;
+	private long festivalId;
 	private int width;
 	private int height;
 	private float yPos;
@@ -36,23 +37,25 @@ public class AreaItem {
 		
 	}
 	@Autowired 
-	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos) {
+	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, long festivalId) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
+		this.festivalId = festivalId;
 	}
 	
 	@Autowired
-	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, float factor) {
+	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, float factor, long festivalId) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
+		this.festivalId = festivalId;
 		this.setFactor(factor);
 	}
 	public long getId(){

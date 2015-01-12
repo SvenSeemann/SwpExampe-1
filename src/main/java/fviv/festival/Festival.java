@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
+import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
 import fviv.areaPlanner.AreaItem;
@@ -37,7 +38,9 @@ public class Festival {
 	private int quantSecurity;
 	private int quantCleaning;
 	
-	private AreaItemsRepository area;
+	@OneToOne
+	private UserAccount userAccount;
+	
 
 	@Deprecated
 	protected Festival() {
@@ -192,12 +195,13 @@ public class Festival {
 		this.quantCleaning = quantCleaning;
 	}
 
-	public AreaItemsRepository getArea() {
-		return  area;
+	public UserAccount getUserAccount() {
+		return userAccount;
 	}
 
-	public void setArea(AreaItemsRepository area) {
-		this.area = area;
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
+	
 	
 }

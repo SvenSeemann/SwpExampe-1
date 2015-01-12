@@ -1,20 +1,13 @@
 package fviv.controller;
 
-import java.util.List;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fviv.areaPlanner.AreaItem;
-import fviv.areaPlanner.MList;
 import fviv.areaPlanner.PlanningItem;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.areaPlanner.PlanningItemsRepository;
@@ -36,9 +29,10 @@ public class PlanningAJAXController {
 
 	@RequestMapping(value = "/isThereAnything", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public Iterable<AreaItem> rebuildPlaner(
-			@RequestParam("request") String request) {
-		if (areaItems.findAll() != null) {
-			return areaItems.findAll();
+			@RequestParam("request") String request,
+			@RequestParam("festival") long festivalId) {
+		if (areaItems.findByFestivalId(festivalId) != null) {
+			return areaItems.findByFestivalId(festivalId);
 		} else {
 			return null;
 		}
@@ -47,16 +41,18 @@ public class PlanningAJAXController {
 	@RequestMapping(value = "/newArea", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public boolean newAreal(@RequestParam("width") int width,
 			@RequestParam("height") int height,
-			@RequestParam("faktor") float factor) {
+			@RequestParam("faktor") float factor,
+			@RequestParam("festival") long festivalId) {
 		AreaItem area = areaItems.findByName("Areal");
 		if (area == null) {
 			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
-					height, 0, 0, factor));
+					height, 0, 0, factor, festivalId));
 		} else {
 			areaItems.deleteAll();
 			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
-					height, 0, 0, factor));
+					height, 0, 0, factor, festivalId));
 		}
+		
 		return true;
 	}
 
@@ -65,27 +61,29 @@ public class PlanningAJAXController {
 			@RequestParam("name") String name,
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
-			@RequestParam("left") float left, @RequestParam("top") float top) {
+			@RequestParam("left") float left,
+			@RequestParam("top") float top,
+			@RequestParam("festival") long festivalId) {
 
-		if (planningItems.findByName("Areal") != null) {		//evtl areaItems
+		if (areaItems.findByName("Areal") != null) {
 			switch (typ) {
 			case "TOILET":
 				areaItems.save(new AreaItem(Type.TOILET, (name), width,
-						height, left, top));
+						height, left, top, festivalId));
 				break;
 			case "STAGE":
 				areaItems.save(new AreaItem(Type.STAGE, (name), width,
-						height, left, top));
+						height, left, top, festivalId));
 				break;
 			case "CATERING":
 				areaItems.save(new AreaItem(Type.CATERING, (name),
-						width, height, left, top));
+						width, height, left, top, festivalId));
 				break;
 			case "CAMPING":
 				areaItems.save(new AreaItem(Type.CAMPING, (name), width,
-						height, left, top));
+						height, left, top, festivalId));
 			}
-			return areaItems.findAll();
+			return areaItems.findByFestivalId(festivalId);
 		} else {
 			return null;
 		}
@@ -99,7 +97,8 @@ public class PlanningAJAXController {
 
 	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public Iterable<AreaItem> giveMeAllEntries(
-			@RequestParam("request") String request) {
-		return areaItems.findAll();
+			@RequestParam("request") String request,
+			@PathVariable("fid") long festivalId) {
+		return areaItems.findByFestivalId(festivalId);
 	}
 }

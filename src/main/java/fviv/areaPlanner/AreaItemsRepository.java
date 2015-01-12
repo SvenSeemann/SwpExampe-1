@@ -7,4 +7,5 @@ public interface AreaItemsRepository extends CrudRepository<AreaItem, String> {
 
 	AreaItem findByName(String name);
 	Iterable < AreaItem > findByType(Type type);
+	Iterable <AreaItem> findByFestivalId(long festivalId);
 }

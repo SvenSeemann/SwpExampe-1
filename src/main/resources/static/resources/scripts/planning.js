@@ -45,7 +45,8 @@ $(document).ready(
 				url : "/isThereAnything",
 				type : "POST",
 				data : {
-					request : "doYouHave?"
+					request : "doYouHave?",
+				    festival : $("#festival-id").text()
 				},
 				success : function(data) {
 					console.log(data);
@@ -218,7 +219,8 @@ function saveIt() {
 			data : {
 				width : areaWidth,
 				height : areaHeight,
-				faktor : factor
+				faktor : factor,
+				festival : $("#festival-id").text()
 			},
 			success : function() {
 				for (i = 0; i < objectList.length; i++) {
@@ -231,7 +233,8 @@ function saveIt() {
 							width : objectList[i][2],
 							height : objectList[i][3],
 							left : objectList[i][4],
-							top : objectList[i][5]
+							top : objectList[i][5],
+							festival : $("#festival-id").text()
 						},
 						success : function(data) {
 							console.log(data);
@@ -243,9 +246,8 @@ function saveIt() {
 		});
 	});
 }
-<<<<<<< HEAD
 
-function saveToFestival() {
+/*function saveToFestival() {
 	$(document).ready(function() {
 		$.ajax({
 			url : "/setup/area/newArea",
@@ -277,9 +279,8 @@ function saveToFestival() {
 			}
 		});
 	});
-}
+}*/
 
-=======
 function turnObject(element) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
@@ -295,7 +296,6 @@ function turnObject(element) {
 		'height' : objectList[my_index][3]
 	});
 }
->>>>>>> master
 function deleteObject(index) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
