@@ -8,8 +8,8 @@
 </head>
 <body>
     <div th:fragment="messaging">
+        <div id="toggle-chat" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')" class="button">Show Chat</div>
         <div id="messaging-area" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')">
-            <div id="toggle-chat" class="button">Show Chat</div>
 
             <table sec:authorize="hasAnyRole('MESSAGE_RECEIVER', 'ROLE_BOSS')">
                 <thead>

@@ -237,12 +237,8 @@
         }
       };
       refresh_receivers = function() {
-        return user.ensure_role(sender_role, function(res) {
-          if (res) {
-            return get_receivers(function(data) {
-              return receivers.add_all(data);
-            });
-          }
+        return get_receivers(function(data) {
+          return receivers.add_all(data);
         });
       };
       get_receivers = function(callback) {

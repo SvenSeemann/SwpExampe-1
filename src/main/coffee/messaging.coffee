@@ -166,10 +166,8 @@ class Messaging
         false
 
     refresh_receivers = ->
-      user.ensure_role(sender_role, (res) ->
-        if res
-          get_receivers (data) -> receivers.add_all data
-      )
+      get_receivers (data) -> receivers.add_all data
+
 
     get_receivers = (callback) ->
       $.ajax(
