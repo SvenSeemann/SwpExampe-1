@@ -22,8 +22,8 @@
 				<div th:case="meals">
 					<div id="title" th:text="#{catering.meals}">meals</div>
 				</div>
-				<div th:case="drinks" th:text="#{catering.drinks}">
-					<div id="title">drinks</div>
+				<div th:case="drinks">
+					<div  th:text="#{catering.drinks}" id="title">drinks</div>
 				</div>
 				<div th:case="*">
 					<div id="title">TERMINAL</div>
@@ -100,8 +100,8 @@
 				<button class="boldButton" type="submit" value="catering-drinks"
 					th:text="#{catering.drinks}">Menu</button>
 			</form>
+			<div th:include="messaging :: messaging"></div>
 		</div>
-		<div th:include="messaging :: messaging"></div>
 	</div>
 </body>
 </html>

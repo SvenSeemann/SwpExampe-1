@@ -3,7 +3,9 @@ package fviv.controller;
 import fviv.messaging.Message;
 import fviv.messaging.PostOffice;
 import fviv.messaging.SendMessageForm;
+import fviv.user.Roles;
 import fviv.util.time.JavaScriptDateTimeFormatters;
+import fviv.util.http.Headers;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.salespointframework.useraccount.web.LoggedIn;
@@ -25,11 +27,6 @@ import java.util.Optional;
 public class MessagingController {
 
     /**
-     * Header marking an incoming request as being sent by ajax
-     */
-    private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
-
-    /**
      * Internal handler object for all transactions concerning messages.
      */
     private PostOffice postOffice;
@@ -43,7 +40,7 @@ public class MessagingController {
     @Autowired
     public MessagingController(PostOffice postOffice, UserAccountManager userManager) {
         this.postOffice = postOffice;
-        this.testUser = userManager.create("bob", "passwd", PostOffice.receiverRole, PostOffice.senderRole);
+        this.testUser = userManager.create("bob", "passwd", Roles.receiver, Roles.sender);
         testUser.setFirstname("Bob");
         testUser.setLastname("Barker");
         userManager.save(testUser);
@@ -57,7 +54,7 @@ public class MessagingController {
      * @param bindingResult result of trying to bind the incoming form to the MessageForm object
      * @return boolean indicating whether the message was successfully sent
      */
-    @RequestMapping(value = "/messaging/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/messaging/send", method = RequestMethod.POST, headers = Headers.AJAX)
     public boolean send(@LoggedIn Optional<UserAccount> user, @ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult) {
 //        System.out.println("wrong method");
         return !bindingResult.hasErrors() && user.isPresent() && postOffice.sendMessage(user.get(), messageForm.getRecipient(), messageForm.getMessage());
@@ -65,7 +62,7 @@ public class MessagingController {
     }
 
     @Deprecated
-    @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/messaging/test/send", method = RequestMethod.POST, headers = Headers.AJAX)
     public Object send(@ModelAttribute("sendMessageForm") @Validated SendMessageForm messageForm, BindingResult bindingResult) {
         System.out.println("got message " + messageForm.getMessage() );
 
@@ -80,8 +77,9 @@ public class MessagingController {
      * @param date The earliest date from which to get the messages
      * @return List of Messages, empty if user is unauthorized
      */
-    @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = Headers.AJAX)
     public List<Message> getMessages(@LoggedIn Optional<UserAccount> user, @RequestParam("last") String date){
+        System.out.println(date);
         return user.isPresent() ?
                 postOffice.getMessages(
                         user.get(), ZonedDateTime.parse(date, JavaScriptDateTimeFormatters.javaScriptUTCDateTimeFormat)
@@ -90,7 +88,7 @@ public class MessagingController {
     }
 
     @Deprecated
-    @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/messaging/test/get", method = RequestMethod.POST, headers = Headers.AJAX)
     public List<Message> getTestMessages(@RequestParam("last") String date){
         ZonedDateTime dateTime = ZonedDateTime.parse(date, JavaScriptDateTimeFormatters.javaScriptUTCDateTimeFormat);
         System.out.println("messages requested " + date);
@@ -99,7 +97,7 @@ public class MessagingController {
     }
 
     @Deprecated
-    @RequestMapping(value = "/messaging/test/get/receivers", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/messaging/test/get/receivers", method = RequestMethod.POST, headers = Headers.AJAX)
     public List<UserAccount> getTestReceivers() {
         return postOffice.getRecipients(testUser);
     }
@@ -110,12 +108,12 @@ public class MessagingController {
      * @param user logged in user issuing the request
      * @return List of Recipients, empty if user is unauthorized
      */
-    @RequestMapping(value = "/messaging/get/receivers", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "/messaging/get/receivers", method = RequestMethod.POST, headers = Headers.AJAX)
     public List<UserAccount> getReceivers(@LoggedIn Optional<UserAccount> user) {
         return user.isPresent() ? postOffice.getRecipients(user.get()) : new LinkedList<>();
     }
 
-    @RequestMapping(value = "messaging/get/me", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+    @RequestMapping(value = "messaging/get/me", method = RequestMethod.POST, headers = Headers.AJAX)
     public UserAccount getMe(@LoggedIn Optional<UserAccount> user) {
         return user.isPresent() ? user.get() : null;
     }

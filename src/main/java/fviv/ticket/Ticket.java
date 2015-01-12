@@ -1,4 +1,6 @@
 package fviv.ticket;
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,7 +11,7 @@ public class Ticket {
 	private boolean ticketArt;
 	private boolean checked;
 	private String festivalName;
-
+	private LocalDate togestticketdate;
 	
 	@Id
 	@GeneratedValue
@@ -21,9 +23,10 @@ public class Ticket {
 	 }
 	 
 	 @Autowired
-	public Ticket(boolean ticketArt, boolean checked, String festivalName ){
+	public Ticket(boolean ticketArt, boolean checked, String festivalName, LocalDate tagesticketdate){
 		this.ticketArt = ticketArt;
 		this.checked = checked;
+		this.setTogestticketdate(tagesticketdate);
 		this.setFestivalName(festivalName);
 	}
 	public long getId(){
@@ -48,6 +51,14 @@ public class Ticket {
 
 	public void setFestivalName(String festivalName) {
 		this.festivalName = festivalName;
+	}
+
+	public LocalDate getTogestticketdate() {
+		return togestticketdate;
+	}
+
+	public void setTogestticketdate(LocalDate togestticketdate) {
+		this.togestticketdate = togestticketdate;
 	}
 	
 }

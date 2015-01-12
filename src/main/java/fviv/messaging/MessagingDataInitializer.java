@@ -1,5 +1,6 @@
 package fviv.messaging;
 
+import fviv.user.Roles;
 import fviv.user.UserRepository;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.useraccount.Role;
@@ -32,14 +33,14 @@ public class MessagingDataInitializer implements DataInitializer {
         String password = "123";
 
         List<UserAccount> users = new LinkedList<>();
-        users.add(create_user("jeremy", password, "Jeremy", "Kyle", PostOffice.receiverRole));
-        users.add(create_user("john", password, "John", "Doe", PostOffice.senderRole));
+        users.add(create_user("jeremy", password, "Jeremy", "Kyle", Roles.receiver));
+        users.add(create_user("john", password, "John", "Doe", Roles.sender));
         users.add(create_user("james", password, "James", "de Franco"));
-        users.add(create_user("derp", password, "Derp", "McDerpson", PostOffice.receiverRole, PostOffice.senderRole));
-        users.add(create_user("lilly", password, "Lilly", "Evans", PostOffice.senderRole));
-        users.add(create_user("steve", password, "Steve", "Jobs", PostOffice.receiverRole, PostOffice.senderRole));
-        users.add(create_user("stefan", password, "Stefan", "Gumhold", PostOffice.receiverRole));
-        users.add(create_user("gerhard", password, "Gerhard", "Weber", PostOffice.senderRole));
+        users.add(create_user("derp", password, "Derp", "McDerpson", Roles.receiver, Roles.sender));
+        users.add(create_user("lilly", password, "Lilly", "Evans", Roles.sender));
+        users.add(create_user("steve", password, "Steve", "Jobs", Roles.receiver, Roles.sender));
+        users.add(create_user("stefan", password, "Stefan", "Gumhold", Roles.receiver));
+        users.add(create_user("gerhard", password, "Gerhard", "Weber", Roles.sender));
 
         users.forEach(userAccountManager::save);
     }
