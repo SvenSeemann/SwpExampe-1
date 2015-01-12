@@ -1,5 +1,10 @@
 package fviv;
 
+import static org.joda.money.CurrencyUnit.EUR;
+
+import java.text.ParseException;
+
+
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.*;
@@ -18,14 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Locale;
 
-import static org.joda.money.CurrencyUnit.EUR;
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
@@ -41,13 +42,13 @@ public class FvivDataInitializer implements DataInitializer {
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
+
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
 			FinanceRepository financeRepository,
 			ArtistsRepository artistsRepository,
 			EventsRepository eventsRepository) {
-
-		Assert.notNull(employeeRepository,
+			Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
@@ -73,13 +74,13 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeFestivals()
 			throws ParseException {
-		DateFormat format = new SimpleDateFormat("d, MMMM, yyyy", Locale.GERMAN);
-		Date date1 = format.parse("2, Januar, 2010");
-		Date date2 = format.parse("4, März, 2012");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
+		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
 				"Avicii, Linkin Park", 500000, (long) 55.0);
-		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
+		Festival festival2 = new Festival(date2, date1, "Rock am Ring", "Berlin in deiner Mom",
 				"Netflix", 69999 , (long) 12.0);
 
 		festivalRepository.save(festival1);
@@ -87,9 +88,12 @@ public class FvivDataInitializer implements DataInitializer {
 
 	}
 
-	private void initializeTickets() {
-		Ticket ticket1 = new Ticket(true, false, "Wonderland");
-		Ticket ticke2 = new Ticket(false, true, "Rock am Ring");
+
+	private void initializeTickets()  {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		LocalDate date = LocalDate.parse("2005-12-30", formatter);
+		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
+		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
 	}
