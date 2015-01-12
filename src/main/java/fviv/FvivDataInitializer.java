@@ -83,9 +83,19 @@ public class FvivDataInitializer implements DataInitializer {
 		Festival festival2 = new Festival(date2, date1, "Rock am Ring", "Berlin in deiner Mom",
 				"Netflix", 69999 , (long) 12.0);
 
+		
+		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", new Role("ROLE_GUEST"));
+		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", new Role("ROLE_GUEST"));
+		
+		festival1.setUserAccount(festivalAccount1);
+		festival2.setUserAccount(festivalAccount2);
+		
+		userAccountManager.save(festivalAccount1);
+		userAccountManager.save(festivalAccount2);
+			
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
-
+	
 	}
 
 

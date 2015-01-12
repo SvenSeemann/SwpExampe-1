@@ -1,5 +1,7 @@
 package fviv.catering.model;
 
+import java.util.LinkedList;
+
 import org.salespointframework.catalog.ProductIdentifier;
 import org.springframework.data.repository.CrudRepository;
 

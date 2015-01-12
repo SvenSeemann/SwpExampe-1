@@ -45,7 +45,8 @@ $(document).ready(
 				url : "/isThereAnything",
 				type : "POST",
 				data : {
-					request : "doYouHave?"
+					request : "doYouHave?",
+				    festival : $("#festival-id").text()
 				},
 				success : function(data) {
 					console.log(data);
@@ -218,12 +219,48 @@ function saveIt() {
 			data : {
 				width : areaWidth,
 				height : areaHeight,
-				faktor : factor
+				faktor : factor,
+				festival : $("#festival-id").text()
 			},
 			success : function() {
 				for (i = 0; i < objectList.length; i++) {
 					$.ajax({
 						url : "/newObject",
+						type : "post",
+						data : {
+							typ : objectList[i][0],
+							name : objectList[i][1],
+							width : objectList[i][2],
+							height : objectList[i][3],
+							left : objectList[i][4],
+							top : objectList[i][5],
+							festival : $("#festival-id").text()
+						},
+						success : function(data) {
+							console.log(data);
+						}
+					});
+				}
+
+			}
+		});
+	});
+}
+
+/*function saveToFestival() {
+	$(document).ready(function() {
+		$.ajax({
+			url : "/setup/area/newArea",
+			type : "POST",
+			data : {
+				width : areaWidth,
+				height : areaHeight,
+				faktor : factor
+			},
+			success : function() {
+				for (i = 0; i < objectList.length; i++) {
+					$.ajax({
+						url : "/setup/area/newObject",
 						type : "post",
 						data : {
 							typ : objectList[i][0],
@@ -242,7 +279,8 @@ function saveIt() {
 			}
 		});
 	});
-}
+}*/
+
 function turnObject(element) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
@@ -254,8 +292,8 @@ function turnObject(element) {
 	objectList[my_index][2] = height;
 	objectList[my_index][3] = width;
 	parent.css({
-		'width' : objectList[my_index][2],
-		'height' : objectList[my_index][3]
+		'width' : objectList[my_index][2] * factor,
+		'height' : objectList[my_index][3] * factor
 	});
 }
 function deleteObject(index) {

@@ -1,115 +1,125 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
-
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-    <div th:fragment="messaging">
-        <div id="toggle-chat" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')" class="button">Show Chat</div>
-        <div id="messaging-area" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')">
 
-            <table sec:authorize="hasAnyRole('MESSAGE_RECEIVER', 'ROLE_BOSS')">
-                <thead>
-                    <tr>
-                        <th>Sender</th>
-                        <th>Date received</th>
-                        <th style="font-weight: normal;"><i>separator</i></th>
-                        <th>Message content</th>
-                    </tr>
-                </thead>
-                <tbody id="messages">
-
-                </tbody>
-            </table>
-            <div sec:authorize="hasAnyRole('MESSAGE_SENDER', 'ROLE_BOSS')">
-                <div id="recipients"></div>
-                <div id="message-forms"></div>
-                <button id="refresh-messages">Refresh Messages</button>
-                <button id="refresh-receivers">Refresh Receivers</button>
-            </div>
-            <div id="messaging-templates" style="display: none;">
-                <table>
-                    <tr class="single-message">
-                        <td class="message-sender">testcontent</td>
-                        <td class="message-date">lala</td>
-                        <td class="message-separator" style="text-align: center;">:</td>
-                        <td class="message-message">Messages here</td>
-                    </tr>
-                </table>
-                <form class="message-form" action="/messaging/send" method="post">
-                    <input class="recipient" type="hidden" name="recipient" />
-                    <label for="message-content">Your Message</label>
-                    <textarea name="message" id="message-content"></textarea>
-                    <button type="Submit" value="submit">Submit</button>
-                </form>
-                <div class="receiver">
-                    <span class="firstname"></span>
-                    <span class="lastname"></span>
-                </div>
-            </div>
-            <script type="text/javascript" src="/resources/js/messaging.js"></script>
-        </div>
-    </div>
+	<div th:fragment="messaging">
+		<link rel="stylesheet" type="text/css"
+			href="../resources/css/messaging.css" />
+		<button id="toggle-chat" class="slimButton" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')">Show Chat</button>
+		<div id="messaging-area" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')">
 
 
-    <!--
+			<div class="left-Content">
+				<table sec:authorize="hasAnyRole('MESSAGE_RECEIVER', 'ROLE_BOSS')">
+					<thead>
+						<tr>
+							<th>Sender</th>
+							<th>Date received</th>
+							<th style="font-weight: normal;"><i>separator</i></th>
+							<th>Message content</th>
+						</tr>
+					</thead>
+					<tbody id="messages">
+
+					</tbody>
+				</table>
+				<button id="refresh-messages" class="chat-button">Refresh
+					Messages</button>
+				<button id="refresh-receivers" class="chat-button">Refresh
+					Receivers</button>
+				<div id="message-forms"></div>
+			</div>
+			<div sec:authorize="hasAnyRole('MESSAGE_SENDER', 'ROLE_BOSS')">
+				<div class="right-Content">
+					<div id="recipients"></div>
+				</div>
+			</div>
+			<div id="messaging-templates" style="display: none;">
+				<table>
+					<tr class="single-message">
+						<td class="message-sender">testcontent</td>
+						<td class="message-date">lala</td>
+						<td class="message-separator" style="text-align: center;">:</td>
+						<td class="message-message">Messages here</td>
+					</tr>
+				</table>
+				<form class="message-form" action="/messaging/send" method="post">
+					<input class="recipient" type="hidden" name="recipient" /> <label
+						for="message-content">Your Message </label>
+					<textarea name="message" id="message-content" cols="80" rows="5"></textarea>
+					<button type="Submit" value="submit" class="chat-button">Submit</button>
+
+
+				</form>
+				<div class="receiver">
+					<span class="firstname"></span> <span class="lastname"></span>
+				</div>
+			</div>
+			<script type="text/javascript" src="/resources/js/messaging.js"></script>
+		</div>
+	</div>
+
+
+	<!--
     This is the raw messaging area structure
     you can modify it as you like, as long as sec:authorize, classes and id remain the same.
     -->
-    <div>
-        <h3>Hello and welcome ... dude, TO THE MESSAGING!!!</h3>
-        <table sec:authorize="hasAnyRole('MESSAGE_RECEIVER', 'ROLE_BOSS')">
-            <thead>
-            <tr>
-                <th>Sender</th>
-                <th>Date received</th>
-                <th style="font-weight: normal;"><i>separator</i></th>
-                <th>Message content</th>
-            </tr>
-            </thead>
-            <tbody id="messages">
+	<div>
+		<h3>Hello and welcome ... dude, TO THE MESSAGING!!!</h3>
+		<table sec:authorize="hasAnyRole('MESSAGE_RECEIVER', 'ROLE_BOSS')">
+			<thead>
+				<tr>
+					<th>Sender</th>
+					<th>Date received</th>
+					<th style="font-weight: normal;"><i>separator</i></th>
+					<th>Message content</th>
+				</tr>
+			</thead>
+			<tbody id="messages">
 
-            </tbody>
-        </table>
-        <div sec:authorize="hasAnyRole('MESSAGE_SENDER', 'ROLE_BOSS')">
-            <div id="recipients"></div>
-            <div id="message-forms"></div>
-            <button id="refresh-messages">Refresh Messages</button>
-            <button id="refresh-receivers">Refresh Receivers</button>
-        </div>
-        <script type="text/javascript" src="/resources/js/messaging.js"></script>
-    </div>
+			</tbody>
+		</table>
+		<div sec:authorize="hasAnyRole('MESSAGE_SENDER', 'ROLE_BOSS')">
+			<div id="recipients"></div>
+			<div id="message-forms"></div>
+			<button id="refresh-messages">Refresh Messages</button>
+			<button id="refresh-receivers">Refresh Receivers</button>
+		</div>
+		<script type="text/javascript" src="/resources/js/messaging.js"></script>
+	</div>
 
-    <!--
+	<!--
     These are the raw messaging templates
     add these to your template and modify them as you like to get the desired style
     make sure the classes and id's remain the same, since the javascript fills the template by classes.
     -->
-    <div id="messaging-templates" style="display: none;">
-        <table>
-            <tr class="single-message">
-                <td class="message-sender">testcontent</td>
-                <td class="message-date">lala</td>
-                <td class="message-separator" style="text-align: center;">:</td>
-                <td class="message-message">Messages here</td>
-            </tr>
-        </table>
-        <form class="message-form" action="/messaging/send" method="post">
-            <input class="recipient" type="hidden" name="recipient" />
-            <label for="message-content">Your Message</label>
-            <textarea name="message" id="message-content"></textarea>
-            <button type="Submit" value="submit">Submit</button>
-        </form>
-        <div class="receiver">
-            <span class="firstname"></span>
-            <span class="lastname"></span>
-        </div>
-    </div>
+	<div id="messaging-templates" style="display: none;">
+		<table>
+			<tr class="single-message">
+				<td class="message-sender">testcontent</td>
+				<td class="message-date">lala</td>
+				<td class="message-separator" style="text-align: center;">:</td>
+				<td class="message-message">Messages here</td>
+			</tr>
+		</table>
+		<form class="message-form" action="/messaging/send" method="post">
+			<input class="recipient" type="hidden" name="recipient" /> <label
+				for="message-content">Your Message</label>
+			<textarea name="message" id="message-content"></textarea>
+			<button type="Submit" value="submit">Submit</button>
+		</form>
+		<div class="receiver">
+			<span class="firstname"></span> <span class="lastname"></span>
+		</div>
+	</div>
 
-    <!-- templates end -->
+	<!-- templates end -->
 
 </body>
 </html>
