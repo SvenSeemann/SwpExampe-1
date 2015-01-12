@@ -24,11 +24,11 @@
 }
 fieldset{
 	width:240px;
-	height:150px;
+	height:auto;
 	border: #0c3 medium solid;
 	margin:auto;
 	margin-top:40px;
-	padding:50px 30px;
+	padding:30px 30px;
 }
 
 

@@ -17,7 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -108,9 +107,9 @@ public class TicketController {
 		Festival loadingfestival = festivalRepository.findById(id);
 		LocalDate startDate = loadingfestival.getStartDatum();
 		LocalDate endDate = loadingfestival.getEndDatum();
-		DateTime startDatum = DateTime.parse(startDate.toString());
+		DateTime startDatum = DateTime.parse(startDate.toString()); //hadtobedone
 		ticketid = id;
-		DateTime endDatum = DateTime.parse(endDate.toString());
+		DateTime endDatum = DateTime.parse(endDate.toString()); //hadtobedone
 		String[] dateArray;
 		int days = Days.daysBetween(startDatum, endDatum).getDays();
 		dateArray = new String[days];
@@ -194,10 +193,10 @@ public class TicketController {
 				return "ticket";
 			} else {
 				if (ticketnummer > 0) {
-					return "redirect:/ticket" + festival.getFestivalName()
+					return "redirect:/" + festival.getFestivalName()
 							+ ticketnummer + ".pdf";
 				} else
-					return "redirect:/ticket" + festival.getFestivalName()
+					return "redirect:/" + festival.getFestivalName()
 							+ ticketnummer + ".pdf";
 			}
 		}
