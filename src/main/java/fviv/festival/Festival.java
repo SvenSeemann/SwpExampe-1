@@ -5,14 +5,20 @@ import static org.joda.money.CurrencyUnit.EUR;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
+import org.salespointframework.useraccount.UserAccount;
+import org.springframework.data.repository.CrudRepository;
+
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.AreaItemsRepository;
 
 import java.time.LocalDate;
 
 @Entity
 public class Festival {
-
+	
 	@Id
 	@GeneratedValue
 	private long id;
@@ -31,42 +37,10 @@ public class Festival {
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
-
-	public int getQuantManagement() {
-		return quantManagement;
-	}
-
-	public void setQuantManagement(int quantManagement) {
-		this.quantManagement = quantManagement;
-	}
-
-	public int getQuantCatering() {
-		return quantCatering;
-	}
-
-	public void setQuantCatering(int quantSalary) {
-		this.quantCatering = quantSalary;
-	}
-
-	public int getQuantSecurity() {
-		return quantSecurity;
-	}
 	
-	public int getRecommendedQuantSecurity() {
-		return (maxVisitors / 100);
-	}
-
-	public void setQuantSecurity(int quantSecurity) {
-		this.quantSecurity = quantSecurity;
-	}
-
-	public int getQuantCleaning() {
-		return quantCleaning;
-	}
-
-	public void setQuantCleaning(int quantCleaning) {
-		this.quantCleaning = quantCleaning;
-	}
+	@OneToOne
+	private UserAccount userAccount;
+	
 
 	@Deprecated
 	protected Festival() {
@@ -89,6 +63,7 @@ public class Festival {
 		this.quantManagement = 0;
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
+		//this.area = null;
 
 	}
 	public long getId(){
@@ -184,5 +159,49 @@ public class Festival {
 		this.cleaningSalaryPerDay = cleaningSalaryPerDay;
 	}
 
+	public int getQuantManagement() {
+		return quantManagement;
+	}
 
+	public void setQuantManagement(int quantManagement) {
+		this.quantManagement = quantManagement;
+	}
+
+	public int getQuantCatering() {
+		return quantCatering;
+	}
+
+	public void setQuantCatering(int quantSalary) {
+		this.quantCatering = quantSalary;
+	}
+
+	public int getQuantSecurity() {
+		return quantSecurity;
+	}
+	
+	public int getRecommendedQuantSecurity() {
+		return (maxVisitors / 100);
+	}
+
+	public void setQuantSecurity(int quantSecurity) {
+		this.quantSecurity = quantSecurity;
+	}
+
+	public int getQuantCleaning() {
+		return quantCleaning;
+	}
+
+	public void setQuantCleaning(int quantCleaning) {
+		this.quantCleaning = quantCleaning;
+	}
+
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
+	
+	
 }

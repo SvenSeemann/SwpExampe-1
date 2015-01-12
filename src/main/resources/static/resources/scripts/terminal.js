@@ -5,15 +5,15 @@ var factor;
 function terminalRequest(event) {
 	event.preventDefault();
 	$.ajax({
-		url : "/terminal",
+		url : "/terminal/show/area/" + $("#festival-id").text(),
 		type : "post",
 		data : {
 			request : "true"
 		},
 		datatype : "json",
 		success : function(data) {
+			console.log(data);
 			if (data.length >= 1) {
-				console.log(data);
 				factor = data[0].factor;
 				buildArea(data[0]);
 				buildObjects(data);
