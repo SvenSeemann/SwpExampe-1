@@ -14,7 +14,7 @@ import org.springframework.data.repository.CrudRepository;
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Festival {
@@ -22,8 +22,8 @@ public class Festival {
 	@Id
 	@GeneratedValue
 	private long id;
-	private Date startDatum;
-	private Date endDatum;
+	private LocalDate startDatum;
+	private LocalDate endDatum;
 	private String festivalName;
 	private String location;
 	private String actors;
@@ -46,7 +46,7 @@ public class Festival {
 	protected Festival() {
 	}
 
-	public Festival(Date startDatum, Date endDatum, String festivalName, String location,
+	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, String location,
 			String actors, int maxVisitors, long preisTag) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
@@ -70,20 +70,20 @@ public class Festival {
 		return id;
 	}
 
-	public Date getStartDatum() {
+	public LocalDate getStartDatum() {
 		return startDatum;
 	}
 
-	public void setStartDatum(Date startDatum) {
+	public void setStartDatum(LocalDate startDatum) {
 		
 		this.startDatum = startDatum;
 	}
 
-	public Date getEndDatum() {
+	public LocalDate getEndDatum() {
 		return endDatum;
 	}
 
-	public void setEndDatum(Date endDatum) {
+	public void setEndDatum(LocalDate endDatum) {
 		this.endDatum = endDatum;
 	}
 

@@ -7,7 +7,7 @@
 
     ATR.prototype.templates = {
       make_artist_field: function(name, id, genre, price, technician) {
-        var field;
+        var field, _button;
         field = this.artist_field.clone();
         field.find('.artist-name').text(name);
         field.find('.artist-genre').text(genre.name);
@@ -17,6 +17,26 @@
         });
         field.find('.artist-technician').text(technician);
         field.find('.artist-price').text(price);
+        _button = field.find('button.book');
+        _button.on('click', function() {
+          return $.ajax({
+            url: '/booking/artists/book',
+            type: 'POST',
+            data: {
+              id: id,
+              name: name,
+              genre: genre.id,
+              price: price === null ? 0 : price
+            },
+            success: function(data) {
+              if (data) {
+                return $(_button).text('Booked');
+              } else {
+                return $(_button).text('Is already Booked');
+              }
+            }
+          });
+        });
         return field;
       },
       make_table_row: function(name, id, genre, price, technician) {
@@ -36,6 +56,13 @@
         row.children('.artist-price').text(price);
         return row;
       },
+      make_booked_artist: function(name, id) {
+        var item;
+        item = this.artist_item.clone();
+        item.text(name);
+        item.data('id', id);
+        return item;
+      },
       make_genre_table_row: function(name, id, price, technician) {
         var row;
         row = this.table_row.clone();
@@ -52,13 +79,20 @@
     };
 
     function ATR() {
-      var artist_field, table_row;
+      var artist_field, artist_item, button, table_row;
       table_row = $('#artists-table').find('.single-artist');
       this.templates.table_row = table_row.clone();
       table_row.remove();
       artist_field = $('#artist-showcase').find('.single-artist');
       this.templates.artist_field = artist_field.clone();
       artist_field.remove();
+      artist_item = $('#booked-artists').find('.single-artist');
+      this.templates.artist_item = artist_item.clone();
+      artist_item.remove();
+      button = $('#reload-booked');
+      button.on('click', function() {
+        return window.atr.reload_booked(button);
+      });
     }
 
     baseurl = 'http://178.238.237.25:8081/ArtistServiceRails/';
@@ -72,7 +106,8 @@
       all: baseurl + 'artist',
       artist_by_id: function(id) {
         return this.all + '/' + id;
-      }
+      },
+      booked: '/booking/artists/booked'
     };
 
     ATR.prototype.request = function(url, callback) {
@@ -101,6 +136,35 @@
           }
         };
       })(this));
+    };
+
+    ATR.prototype.init_booked = function(callback) {
+      if (callback == null) {
+        callback = function() {};
+      }
+      return $.ajax({
+        type: 'POST',
+        url: this.urls.booked,
+        success: (function(_this) {
+          return function(data) {
+            var artist, list, _i, _len;
+            list = $('#booked-artists');
+            list.empty();
+            for (_i = 0, _len = data.length; _i < _len; _i++) {
+              artist = data[_i];
+              list.append(_this.templates.make_booked_artist(artist.name, artist.id));
+            }
+            callback();
+          };
+        })(this)
+      });
+    };
+
+    ATR.prototype.reload_booked = function(button) {
+      button.text('LOADING');
+      return window.atr.init_booked(function() {
+        return button.text('Reload Booked');
+      });
     };
 
     ATR.prototype.fill_genre_table = function(id) {
@@ -138,6 +202,7 @@
       window.atr = new ATR();
     }
     window.atr.init_all_artists();
+    window.atr.init_booked();
   });
 
 }).call(this);

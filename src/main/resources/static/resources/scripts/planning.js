@@ -292,8 +292,8 @@ function turnObject(element) {
 	objectList[my_index][2] = height;
 	objectList[my_index][3] = width;
 	parent.css({
-		'width' : objectList[my_index][2],
-		'height' : objectList[my_index][3]
+		'width' : objectList[my_index][2] * factor,
+		'height' : objectList[my_index][3] * factor
 	});
 }
 function deleteObject(index) {
