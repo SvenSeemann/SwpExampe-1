@@ -7,54 +7,6 @@ class Messaging
     @templates = templates.clone()
     templates.remove()
 
-    sender_role = 'MESSAGE_SENDER'
-    receiver_role = 'MESSAGE_RECEIVER'
-
-    user =
-      initialize : (callback = ->) ->
-        if @is_initializing
-          @queue.push(callback())
-        else
-          @is_initializing = true
-          @queue.push(callback)
-          $.ajax(
-            type: 'post',
-            cache: false,
-            url: '/messaging/get/me',
-            success: (data) =>
-              @is_initialized = true
-              @is_initializing = false
-              @data = data
-              for call in @queue
-                call()
-          )
-      queue : []
-      is_initialized : false
-      is_initializing : false
-      data : null
-      is_authenticated : ->
-        @is_initialized && @data?
-      has_role : (role) ->
-        if !@is_authenticated()
-          return false
-        else
-          for r in @data.roles
-            if r.name is role
-              return true
-          return false
-      ensure_role : (role, callback) ->
-        if @is_initialized
-          if @has_role(role)
-            callback(true)
-          else
-            callback(false)
-        else
-          @initialize(-> @ensure_role(role, callback))
-      can_send : (callback) ->
-        @ensure_role(sender_role, (res) -> res)
-      can_receive : ->
-        @ensure_role(receiver_role, (res) -> res)
-
 
     date_from_received = (date) ->
       new Date(
@@ -102,19 +54,18 @@ class Messaging
       return
 
     check_messages = ->
-      user.ensure_role receiver_role, ->
-        $.ajax(
-          type    : "POST",
-          cache   : false,
-          url     : if debug then '/messaging/test/get' else '/messaging/get',
-          data    :
-            last  : if messages.array.length == 0 then new Date(1001, 0).toUTCString() else messages.array[messages.array.length - 1].dateReceived.toUTCString()
+      $.ajax(
+        type    : "POST",
+        cache   : false,
+        url     : if debug then '/messaging/test/get' else '/messaging/get',
+        data    :
+          last  : if messages.array.length == 0 then new Date(1001, 0).toUTCString() else messages.array[messages.array.length - 1].dateReceived.toUTCString()
 
-          success : (data) ->
-            if data.length > 0
-              messages.thing.children('.highlight').removeClass 'highlight'
-              add_messages data
-        )
+        success : (data) ->
+          if data.length > 0
+            messages.thing.children('.highlight').removeClass 'highlight'
+            add_messages data
+      )
 
 
     send_message = (e, form) ->
@@ -202,9 +153,9 @@ class Messaging
 
     $('#toggle-chat').on 'click', -> toggle_chat()
 
-    user.initialize ->
-      refresh_receivers()
-      check_messages()
+
+    refresh_receivers()
+    check_messages()
 
     hide_chat()
 
