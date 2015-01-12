@@ -24,25 +24,42 @@
 				<div id="content">
 					<div id="substance">
 
-						<form th:action="@{/newTicket}" method="post">
+						<form th:action="@{/loadfestivalTicket}" method="post">
 							<fieldset>
 								<label class="label" for="festivalId"> Festival
-									ausw&auml;hlen: <select name="festivalId" size="1">
-										<option th:each=" festival : ${festivallist}"
-											th:text="${festival.id} + ${festival.festivalName}"
-											th:value="${festival.id}"></option>
-								</select><br />
-								</label> <label class="label" for="ticketart"> Ticketart
-									ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
-									value="true" checked="checked" />Tagesticket <br /> <input
-									type="radio" name="ticketart" value="false" />3-Tagesticket <label
-									class="label" for="numbers"> <input type="text"
-									name="numbers" size="40" placeholder="Anzahl" /></label> <input
-									type="submit" onclick="alert('Ticket(s) wurde(n) erstellt')"
-									value="Ticket erstellen" />
+									ausw&auml;hlen: </label><select name="festivalId" size="1">
+									<option th:each=" festival : ${festivallist}"
+										th:text="${festival.id} + ${festival.festivalName}"
+										th:value="${festival.id}"></option>
+								</select><br /> <input type="submit" value="Festival laden" />
 							</fieldset>
 						</form>
+						<form th:action="@{/newTicket}" method="post">
+							<fieldset>
+								<label class="label" for="ticketart"> Ticketart
+									ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
+									value="false" checked="checked" />3-Tagesticket <br /> <input
+									type="radio" name="ticketart" value="true" />Tagesticket <br />
+								<label class="label"> Festivaltag ausw&auml;hlen</label> <select
+									name="hilfsDate" size="1">
+									<option th:each=" hilfsDate : ${ticketdates}"
+										th:text="${hilfsDate}" th:value="${hilfsDate}"></option>
 
+
+								</select><br /> <label class="label" for="numbers"> <input
+									type="text" name="numbers" size="40" placeholder="Anzahl" /></label> <input
+									type="submit" onclick="alert('Ticket/s wird/werden erstellt')"
+									value="Ticket erstellen" />
+							</fieldset>
+
+						</form>
+						<form th:action="@{/ticketDrucken}" method="post" target="_blank">
+						<fieldset>
+							<label class="label" for="ticketnummer">Ticket Drucken</label>
+							<input type="text" name="ticketnummer" placeholder="Ticket ID drucken" />
+							<input type="submit" value="Ticket drucken" />
+							</fieldset>
+						</form>
 					</div>
 				</div>
 
@@ -51,15 +68,9 @@
 						<button class="slimButton" type="submit"
 							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<form method="post" action="/chat">
-						<button class="slimButton" type="submit" value="chat"
-							th:text="#{catering.chat}">Chat</button>
-					</form>
-					<form th:action="@{/ticketDrucken}" method="post" target="_blank">
-						<label class="label" for="ticketnummer"> <input
-							type="text" name="ticketnummer" size="26"
-							placeholder="Ticket ID drucken" /></label>
-						<button class="boldButton">Ticket Drucken</button>
+					<div th:include="messaging :: messaging"></div>
+					<form th:action="@{/ticket}" method="post">
+						<button class="boldButton" type="submit">Ticket Pr&uuml;fen</button>
 					</form>
 					<form th:action="@{/ticketPruefen}" method="post">
 						<button class="boldButton">Ticket Pr&uuml;fen</button>
@@ -103,10 +114,7 @@
 						<button class="slimButton" type="submit"
 							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<form method="post" action="/chat">
-						<button class="slimButton" type="submit" value="chat"
-							th:text="#{catering.chat}">Chat</button>
-					</form>
+					<div th:include="messaging :: messaging"></div>
 					<form th:action="@{/changeMode}" method="post">
 						<button class="boldButton">Ticket Drucken</button>
 					</form>
@@ -117,6 +125,6 @@
 			</div>
 		</div>
 	</div>
-	<div th:include="messaging :: messaging"></div>
+	
 </body>
 </html>

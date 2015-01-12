@@ -2,18 +2,14 @@ package fviv.controller;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.joda.money.Money;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +26,11 @@ import fviv.festival.Festival;
 public class CreateController {
 	private final FestivalRepository festivalRepository;
 	private String mode = "festival";
-	private final UserAccountManager userAccountManager;
 	private Festival selected;
 
 	@Autowired
-	public CreateController(FestivalRepository festivalRepository,
-			UserAccountManager userAccountManager) {
+	public CreateController(FestivalRepository festivalRepository) {
 		this.festivalRepository = festivalRepository;
-		this.userAccountManager = userAccountManager;
-
 	}
 
 	@RequestMapping({ "/festival" })
@@ -127,9 +119,10 @@ public class CreateController {
 			@RequestParam("location") String location,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
-		DateFormat format = new SimpleDateFormat("d MMMM, yyyy", Locale.GERMAN);
-		Date dateStart = format.parse(startDate);
-		Date dateEnd = format.parse(endDate);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		
+		LocalDate dateStart = LocalDate.parse(startDate, formatter);
+		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
 				location, actors, (int) maxVisitors, (long) preisTag);
