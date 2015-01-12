@@ -32,7 +32,11 @@ public class CreateController {
 	public CreateController(FestivalRepository festivalRepository) {
 		this.festivalRepository = festivalRepository;
 	}
-
+/**
+ * index method and Modelmapping of the festivallist
+ * @param modelMap
+ * @return
+ */
 	@RequestMapping({ "/festival" })
 	public String index(ModelMap modelMap) {
 		mode = "festival";
@@ -109,6 +113,18 @@ public class CreateController {
 		return mode;
 	}
 
+	/**
+	 * Creating Festival from the inputs of the site
+	 * @param festivalName
+	 * @param startDate
+	 * @param endDate
+	 * @param actors
+	 * @param maxVisitors
+	 * @param location
+	 * @param preisTag
+	 * @return
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/newFestival", method = RequestMethod.POST)
 	public String newFestival(
 			@RequestParam("festivalName") String festivalName,
