@@ -1,4 +1,4 @@
-package fviv.booking;
+package fviv.model;
 
 import org.joda.money.Money;
 
