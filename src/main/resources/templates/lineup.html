@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../resources/css/indexcss.css" />
+    <link href='http://fonts.googleapis.com/css?family=Oxygen'
+          rel='stylesheet' type='text/css' />
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <title th:text="#{home.title}">FVIV Festivalmanager</title>
+    <style type="text/css">
+        .formsegement {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+
+<div id="content">
+    <div>
+        <table>
+            <tbody>
+            <tr th:each="artist : ${bookedArtists}">
+                <td th:text="${artist.id}"></td>
+                <td th:text="${artist.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+            <tr th:each="festival : ${festivals}">
+                <td th:text="${festival.id}"></td>
+                <td th:text="${festival.festivalName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form action="/booking/artist/schedule" method="POST">
+        <div class="formsegement"><label for="artist">Artist ID</label><input id="artist" name="artist" type="number" /></div>
+
+        <div class="formsegement"><label for="festival">Festival</label><input id="festival" name="festival" type="number" /></div>
+
+        <div class="formsegement"><label for="startDay">Tag</label><input id="startDay" name="startDay" type="number" /></div>
+        <div class="formsegement"><label for="startMonth">Monat</label><input id="startMonth" name="startMonth" type="number" /></div>
+        <div class="formsegement"><label for="startYear">Jahr</label><input id="startYear" name="startYear" type="number" /></div>
+        <div class="formsegement"><label for="startHour">Stunde</label><input id="startHour" name="startHour" type="number" /></div>
+        <div class="formsegement"><label for="startMinute">Minute</label><input id="startMinute" name="startMinute" type="number" /></div>
+
+        <div class="formsegement"><label for="duration">Dauer</label><input id="duration" name="duration" type="number" /></div>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+<div th:include="messaging :: messaging"></div>
+<div th:include="artists :: artists"></div>
+
+</body>
+</html>
