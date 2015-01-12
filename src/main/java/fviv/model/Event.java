@@ -24,9 +24,15 @@ public class Event {
     @Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
     private LocalDateTime end;
 
+    /**
+     * An artist associated with the event.
+     */
     @ManyToOne
     private Artist artist;
 
+    /**
+     * The festival for which this event is supposed to happen.
+     */
     @ManyToOne
     private Festival festival;
 

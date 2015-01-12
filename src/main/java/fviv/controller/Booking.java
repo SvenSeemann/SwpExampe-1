@@ -34,9 +34,6 @@ public class Booking {
             @RequestParam("price") long price,
             @RequestParam("genre") long genre){
         Artist artist = artistsRepository.findOne(artistId);
-        System.out.println(artist);
-        System.out.println(price);
-        System.out.println(artistId);
         if (artist == null) {
             artistsRepository.save(new Artist(artistId, Money.of(CurrencyUnit.EUR, price), name, genre));
             return true;
