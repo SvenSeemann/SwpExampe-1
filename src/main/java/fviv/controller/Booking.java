@@ -1,7 +1,7 @@
 package fviv.controller;
 
-import fviv.booking.Artist;
-import fviv.booking.ArtistsRepository;
+import fviv.model.Artist;
+import fviv.model.ArtistsRepository;
 import fviv.util.http.Headers;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
@@ -34,9 +34,6 @@ public class Booking {
             @RequestParam("price") long price,
             @RequestParam("genre") long genre){
         Artist artist = artistsRepository.findOne(artistId);
-        System.out.println(artist);
-        System.out.println(price);
-        System.out.println(artistId);
         if (artist == null) {
             artistsRepository.save(new Artist(artistId, Money.of(CurrencyUnit.EUR, price), name, genre));
             return true;

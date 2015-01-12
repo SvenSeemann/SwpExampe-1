@@ -2,23 +2,18 @@ package fviv;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
+
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
-import fviv.model.Employee;
+import fviv.model.*;
 import fviv.model.Employee.Departement;
-import fviv.model.EmployeeRepository;
-import fviv.model.Finance;
 import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
-import fviv.model.FinanceRepository;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
-
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.salespointframework.useraccount.Role;
@@ -28,7 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
@@ -38,44 +36,51 @@ public class FvivDataInitializer implements DataInitializer {
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
 	private final FinanceRepository financeRepository;
+	private final EventsRepository eventsRepository;
+	private final ArtistsRepository artistsRepository;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
+
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
-			FinanceRepository financeRepository) {
-
-		Assert.notNull(employeeRepository,
+			FinanceRepository financeRepository,
+			ArtistsRepository artistsRepository,
+			EventsRepository eventsRepository) {
+			Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
 		this.financeRepository = financeRepository;
+		this.artistsRepository = artistsRepository;
+		this.eventsRepository = eventsRepository;
 	}
 
 	@Override
 	public void initialize() {
-		initializeUsers(userAccountManager, employeeRepository);
-		initializeFinances(financeRepository);
-		initializeTickets(ticketRepository);
+		initializeUsers();
+		initializeFinances();
+		initializeTickets();
 		try {
-			initializeFestivals(festivalRepository);
+			initializeFestivals();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		initializeLineup();
 	}
 
-	private void initializeFestivals(FestivalRepository festivalRepository2)
+	private void initializeFestivals()
 			throws ParseException {
-		DateFormat format = new SimpleDateFormat("d, MMMM, yyyy", Locale.GERMAN);
-		Date date1 = format.parse("2, Januar, 2010");
-		Date date2 = format.parse("4, März, 2012");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
+		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
 				"Avicii, Linkin Park", 500000, (long) 55.0);
-		Festival festival2 = new Festival(date1, date2, "Rock am Ring", "Berlin in deiner Mom",
+		Festival festival2 = new Festival(date2, date1, "Rock am Ring", "Berlin in deiner Mom",
 				"Netflix", 69999 , (long) 12.0);
 
 		festivalRepository.save(festival1);
@@ -83,15 +88,17 @@ public class FvivDataInitializer implements DataInitializer {
 
 	}
 
-	private void initializeTickets(TicketRepository ticketRepository) {
-		Ticket ticket1 = new Ticket(true, false, "Wonderland");
-		Ticket ticke2 = new Ticket(false, true, "Rock am Ring");
+
+	private void initializeTickets()  {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		LocalDate date = LocalDate.parse("2005-12-30", formatter);
+		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
+		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
 	}
 
-	private void initializeUsers(UserAccountManager userAccountManager,
-			EmployeeRepository employeeRepository) {
+	private void initializeUsers() {
 
 		final Role bossRole = new Role("ROLE_BOSS");
 		final Role managerRole = new Role("ROLE_MANAGER");
@@ -147,7 +154,7 @@ public class FvivDataInitializer implements DataInitializer {
 	}
 
 
-	private void initializeFinances(FinanceRepository financeRepository) {
+	private void initializeFinances() {
 		
 		// Create expenses
 		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), FinanceType.SALARY));
@@ -155,5 +162,22 @@ public class FvivDataInitializer implements DataInitializer {
 		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), FinanceType.RENT));
 		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), FinanceType.RENT));
 		 
+	}
+
+	private void initializeLineup() {
+		Artist artist = new Artist(100000, Money.of(CurrencyUnit.EUR, 20), "Dude", 20000);
+		Artist artist2 = new Artist(1000000, Money.of(CurrencyUnit.EUR, 20), "Dudette", 20000);
+
+		artistsRepository.save(artist);
+		artistsRepository.save(artist2);
+
+		Festival festival = festivalRepository.findById(1);
+		Festival festival2 = festivalRepository.findById(2);
+
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival));
+
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival));
 	}
 }

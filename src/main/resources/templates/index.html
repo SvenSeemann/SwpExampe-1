@@ -14,7 +14,14 @@
 <!--  Festival Plan -->
 
 <body>
-
+<!-- delete when finish -->
+	<form method="post" action="/logout">
+				<button class="slimButton" type="submit"
+					th:text="#{catering.logout}" value="logout">Logout</button>
+			</form>
+<!-- delete when finish -->
+			
+			
 	<div id="content">
 			<form action="/catering" method="post">
 				<input type="submit" value="Catering Terminal" class="slimButton"></input>
@@ -32,6 +39,9 @@
 				<input type="submit" value="Festival Terminal" class="slimButton"></input>
 			</form>
 			<div th:include="messaging :: messaging"></div>
+			<form action="/stage" method="post">
+				<input type="submit" value="Bühnen Terminal" class="slimButton"></input>
+			</form>
 	</div>
 	<div th:include="artists :: artists"></div>
 
