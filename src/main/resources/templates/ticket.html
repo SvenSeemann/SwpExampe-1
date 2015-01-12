@@ -103,10 +103,7 @@
 						<button class="slimButton" type="submit"
 							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<form method="post" action="/chat">
-						<button class="slimButton" type="submit" value="chat"
-							th:text="#{catering.chat}">Chat</button>
-					</form>
+						<div th:include="messaging :: messaging"></div>
 					<form th:action="@{/changeMode}" method="post">
 						<button class="boldButton">Ticket Drucken</button>
 					</form>
@@ -117,6 +114,5 @@
 			</div>
 		</div>
 	</div>
-	<div th:include="messaging :: messaging"></div>
 </body>
 </html>
