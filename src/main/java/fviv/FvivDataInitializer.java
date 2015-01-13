@@ -91,11 +91,30 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeTickets()  {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
-		LocalDate date = LocalDate.parse("2005-12-30", formatter);
+		LocalDate date = LocalDate.parse("2014-12-30", formatter);
+		LocalDate date1 = LocalDate.parse("2014-12-31", formatter);
+//true(tages), already checked in
 		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
+		Ticket ticket3 = new Ticket(true, true, "Wonderland", date1);
+		Ticket ticket4 = new Ticket(true, true, "Wonderland", date);
+		Ticket ticket5 = new Ticket(true, true, "Wonderland", date);
+		Ticket ticket6 = new Ticket(true, true, "Wonderland", date);
+		Ticket ticket7 = new Ticket(false, true, "Wonderland", null);
+		Ticket ticket8 = new Ticket(true, false, "Wonderland", date);
+
 		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
+		
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
+		ticketRepository.save(ticket3);
+		ticketRepository.save(ticket4);
+		ticketRepository.save(ticket5);
+		ticketRepository.save(ticket6);
+		ticketRepository.save(ticket7);
+		ticketRepository.save(ticket8);
+
+
+
 	}
 
 	private void initializeUsers() {
