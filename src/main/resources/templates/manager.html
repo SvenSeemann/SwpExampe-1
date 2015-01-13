@@ -407,7 +407,7 @@ $(function () {
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
 			<form>
-				<button class="slimButton">Chat</button>
+				<div th:include="messaging :: messaging"></div>
 			</form>
 			<form method="post" action="/Terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>

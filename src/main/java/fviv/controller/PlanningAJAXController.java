@@ -1,45 +1,38 @@
 package fviv.controller;
 
-import java.util.List;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fviv.areaPlanner.Coords;
-import fviv.areaPlanner.MList;
-import fviv.areaPlanner.Planningitems;
-import fviv.areaPlanner.PlanningRepository;
-import fviv.areaPlanner.ItemsForPlanerRepository;
-import fviv.areaPlanner.Coords.Type;
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.PlanningItem;
+import fviv.areaPlanner.AreaItemsRepository;
+import fviv.areaPlanner.PlanningItemsRepository;
+import fviv.areaPlanner.AreaItem.Type;
 
 @RestController
 public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
-
-	private ItemsForPlanerRepository itemsForPlanerRepository;
-	private PlanningRepository planningRepository;
+	private PlanningItemsRepository planningItems;
+	private AreaItemsRepository areaItems;
 
 	@Autowired
-	public PlanningAJAXController(PlanningRepository planningRepository,
-			ItemsForPlanerRepository itemsForPlanerRepository) {
+	public PlanningAJAXController(AreaItemsRepository areaItems,
+			PlanningItemsRepository itemsForPlanerRepository) {
 		super();
-		this.planningRepository = planningRepository;
-		this.itemsForPlanerRepository = itemsForPlanerRepository;
+		this.areaItems = areaItems;
+		this.planningItems = itemsForPlanerRepository;
 	}
 
 	@RequestMapping(value = "/isThereAnything", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> rebuildPlaner(
-			@RequestParam("request") String request) {
-		if (planningRepository.findAll() != null) {
-			return planningRepository.findAll();
+	public Iterable<AreaItem> rebuildPlaner(
+			@RequestParam("request") String request,
+			@RequestParam("festival") long festivalId) {
+		if (areaItems.findByFestivalId(festivalId) != null) {
+			return areaItems.findByFestivalId(festivalId);
 		} else {
 			return null;
 		}
@@ -48,58 +41,66 @@ public class PlanningAJAXController {
 	@RequestMapping(value = "/newArea", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
 	public boolean newAreal(@RequestParam("width") int width,
 			@RequestParam("height") int height,
-			@RequestParam("faktor") float factor) {
-		Coords area = planningRepository.findByName("Areal");
+			@RequestParam("faktor") float factor,
+			@RequestParam("festival") long festivalId) {
+		AreaItem area = areaItems.findByName("Areal");
 		if (area == null) {
-			planningRepository.save(new Coords(Type.AREA, "Areal", width,
-					height, 0, 0, factor));
+			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
+					height, 0, 0, factor, festivalId));
 		} else {
-			planningRepository.deleteAll();
-			planningRepository.save(new Coords(Type.AREA, "Areal", width,
-					height, 0, 0, factor));
+			areaItems.deleteAll();
+			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
+					height, 0, 0, factor, festivalId));
 		}
+		
 		return true;
 	}
 
 	@RequestMapping(value = "/newObject", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> newObject(@RequestParam("typ") String typ,
+	public Iterable<AreaItem> newObject(@RequestParam("typ") String typ,
 			@RequestParam("name") String name,
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
-			@RequestParam("left") float left, @RequestParam("top") float top) {
-		if (planningRepository.findByName("Areal") != null) {
+			@RequestParam("left") float left,
+			@RequestParam("top") float top,
+			@RequestParam("festival") long festivalId) {
+
+		if (areaItems.findByName("Areal") != null) {
 			switch (typ) {
 			case "TOILET":
-				planningRepository.save(new Coords(Type.TOILET, (name), width,
-						height, left, top));
+				areaItems.save(new AreaItem(Type.TOILET, (name), width,
+						height, left, top, festivalId));
 				break;
 			case "STAGE":
-				planningRepository.save(new Coords(Type.STAGE, (name), width,
-						height, left, top));
+				areaItems.save(new AreaItem(Type.STAGE, (name), width,
+						height, left, top, festivalId));
 				break;
 			case "CATERING":
-				planningRepository.save(new Coords(Type.CATERING, (name),
-						width, height, left, top));
+				areaItems.save(new AreaItem(Type.CATERING, (name),
+						width, height, left, top, festivalId));
 				break;
 			case "CAMPING":
-				planningRepository.save(new Coords(Type.CAMPING, (name), width,
-						height, left, top));
+				areaItems.save(new AreaItem(Type.CAMPING, (name), width,
+						height, left, top, festivalId));
 			}
-			return planningRepository.findAll();
+			return areaItems.findByFestivalId(festivalId);
 		} else {
 			return null;
 		}
 	}
 
 	@RequestMapping(value = "/getValues", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Planningitems> giveMeValuesOfObjects(
+	public Iterable<PlanningItem> giveMeValuesOfObjects(
 			@RequestParam("request") String request) {
-		return itemsForPlanerRepository.findAll();
+		return planningItems.findAll();
 	}
 
-	@RequestMapping(value = "/terminal", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
-	public Iterable<Coords> giveMeAllEntries(
-			@RequestParam("request") String request) {
-		return planningRepository.findAll();
+	@RequestMapping(value = "/terminal/show/area/{fid}", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
+	public Iterable<AreaItem> giveMeAllEntries(
+			@RequestParam("request") String request,
+			@PathVariable("fid") long festivalId) {
+		System.out.println(festivalId);
+		System.out.println(areaItems.findByFestivalId(festivalId));
+		return areaItems.findByFestivalId(festivalId);
 	}
 }

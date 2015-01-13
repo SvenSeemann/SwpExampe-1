@@ -6,8 +6,16 @@ import javax.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
+/**
+ * 
+ * @author Maximilian Schwarze
+ * 
+ * provided in the FVIV Area planner to set up a new festival area
+ *
+ */
+
 @Entity
-public class Planningitems {
+public class PlanningItem {
 	@javax.persistence.Id
 	@GeneratedValue
 	long id;
@@ -17,12 +25,12 @@ public class Planningitems {
 	int height;
 	float rentCost;
 
-	public Planningitems(){
+	public PlanningItem(){
 		
 	}
 	
 	@Autowired
-	public Planningitems(String name, int width, int height, float rentCost) {
+	public PlanningItem(String name, int width, int height, float rentCost) {
 		//super();
 		this.name = name;
 		this.width = width;

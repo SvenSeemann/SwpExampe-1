@@ -14,8 +14,15 @@
 <div id="webseite">
   <div id="header">
     <div id="title">terminal</div>
+    <div th:each="festival : ${festivals}">
+    	<form method="post" th:action="'/terminal/show/area/' + ${festival.Id}">
+				<button class="slimButton" type="submit"
+					th:text="${festival.festivalName}" value="festival" />
+			</form>
+    </div>
   </div>
   <div id="content">
+  <div id="festival-id" th:text="${festivalId}" style="display:none;"></div>
     <div id="substance">
      <!-- <div class="day">
         <div class="dayHeadline">Headline</div>

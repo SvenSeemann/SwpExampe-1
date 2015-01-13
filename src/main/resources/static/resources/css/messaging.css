@@ -1,0 +1,68 @@
+#toggle-chat:active {
+	border: #ff0 solid medium !important;
+}
+
+#messaging-area {
+	width: 795px;
+	height: auto;
+	margin-top: -40px;
+	margin-left: -850px;
+	padding: 20px;
+	position: absolute;
+	z-index: 1000;
+	border: #ff0 solid 3px;
+	background-color:#383839;
+}
+
+#messaging-area table {	
+	width: 100%;
+}
+
+#messaging-area td {
+	margin: 2px;
+}
+
+.left-Content {
+	width: 610px;
+	position: relative;
+	float: left;
+}
+
+.right-Content {
+	width: 130px;
+	float: right;
+	margin-right: 10px;	
+	padding-left:20px;
+	border-left:#ff0 dashed thin;
+}
+
+.receiver {
+	width: 130px;
+	height: 20px;
+	margin-top: 2px;
+	padding: 5px 10px 5px 10px;
+	position: relative;
+	cursor: pointer;
+	background-color: #ff0;
+	color: #383839;
+	position: relative;
+}
+#message-forms{
+	clear: both;
+	border-top:#ff0 dashed thin;
+	padding-top:5px;
+	margin-top: 5px;
+}
+#message-forms input{
+	
+}
+.chat-button {
+	width: 130px !important;
+	height: 20px !important;
+	margin-top: 2px;
+	padding: 2px 1px 2px 1px;
+	background-color: #ff0;
+	border: none;
+	color: #383839;
+	cursor:pointer;
+}
