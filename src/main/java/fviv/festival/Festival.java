@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.joda.money.Money;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.time.LocalDate;
 
@@ -19,7 +21,7 @@ public class Festival {
 	private LocalDate startDatum;
 	private LocalDate endDatum;
 	private String festivalName;
-	private String location;
+	private long locationId;
 	private String actors;
 	private int maxVisitors;
 	private long preisTag;
@@ -72,12 +74,13 @@ public class Festival {
 	protected Festival() {
 	}
 
-	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, String location,
+	@Autowired
+	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
 			String actors, int maxVisitors, long preisTag) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
-		this.location = location;
+		this.locationId = locationId;
 		this.actors = actors;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
@@ -144,12 +147,12 @@ public class Festival {
 		this.preisTag = preisTag;
 	}
 
-	public String getLocation() {
-		return location;
+	public long getLocationId() {
+		return locationId;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocationId(long locationId) {
+		this.locationId = locationId;
 	}
 
 	public Money getManagementSalaryPerDay() {

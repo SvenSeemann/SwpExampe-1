@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fviv.festival.FestivalRepository;
 import fviv.festival.Festival;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
 
 // by niko // festivalerstellungscontroller
 
@@ -25,15 +27,17 @@ import fviv.festival.Festival;
 @PreAuthorize("hasRole('ROLE_BOSS')")
 public class CreateController {
 	private final FestivalRepository festivalRepository;
+	private final LocationRepository locationRepository;
 	private String mode = "festival";
 	private Festival selected;
 
 	@Autowired
-	public CreateController(FestivalRepository festivalRepository) {
+	public CreateController(FestivalRepository festivalRepository, LocationRepository locationrepository) {
 		this.festivalRepository = festivalRepository;
+		this.locationRepository = locationrepository;
 	}
 /**
- * index method and Modelmapping of the festivallist
+ * index method and Modelmapping of the festivallist and locationlist
  * @param modelMap
  * @return
  */
@@ -41,7 +45,7 @@ public class CreateController {
 	public String index(ModelMap modelMap) {
 		mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-
+		modelMap.addAttribute("locationlist", locationRepository.findAll());
 		return "festival";
 	}
 
@@ -132,16 +136,16 @@ public class CreateController {
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
 			@RequestParam("maxVisitors") int maxVisitors,
-			@RequestParam("location") String location,
+			@RequestParam("locationId") long locationId,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		
 		LocalDate dateStart = LocalDate.parse(startDate, formatter);
 		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
-
+		
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				location, actors, (int) maxVisitors, (long) preisTag);
+				locationId, actors, (int) maxVisitors, (long) preisTag);
 
 		festivalRepository.save(festival);
 		return "redirect:/festival";

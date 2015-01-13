@@ -23,7 +23,6 @@ public class Ticket {
 	protected Ticket() {
 
 	}
-
 	@Autowired
 	public Ticket(boolean ticketArt, boolean checked, String festivalName,
 			LocalDate tagesticketdate) {
@@ -40,7 +39,10 @@ public class Ticket {
 	public void setTicketArt(boolean ticketArt) {
 		this.ticketArt = ticketArt;
 	}
-
+/**
+ * eins gleich tagesticket false gleich 3tagesticket
+ * @return
+ */
 	public boolean getticketArt() {
 		return ticketArt; // Eins (true) ist gleich Tagesticket // Null (false)
 							// ist gleich 3Tagesticket

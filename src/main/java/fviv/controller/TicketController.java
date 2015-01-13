@@ -267,7 +267,7 @@ public class TicketController {
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
 			acroFields.setField("actors", festival.getActors());
-			acroFields.setField("adressofvenue", festival.getLocation());
+			acroFields.setField("adressofvenue", "asdf");
 			acroFields.setField("date", datumshelper(date));
 			acroFields.setField("price", price);
 			acroFields.setField("eventnamesmall", festival.getFestivalName());

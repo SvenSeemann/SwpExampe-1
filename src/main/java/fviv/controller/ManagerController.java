@@ -5,7 +5,6 @@ import static org.joda.money.CurrencyUnit.EUR;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -115,7 +114,6 @@ public class ManagerController {
 	 * @param tagesdate
 	 * @return
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping("/getBesucher")
 	public String getBesucher(ModelMap modelMap,
 			@RequestParam("hilfsDate") String tagesdate) {
@@ -128,10 +126,10 @@ public class ManagerController {
 		List<Ticket> datumlist = ticketRepository.findByTagesticketdate(datum);
 		List<Ticket> datum2list = ticketRepository.findByTagesticketdate(null);
 
-		Collection<Ticket> listone = new ArrayList(festivalnamelist);
-		Collection<Ticket> listtwo = new ArrayList(checkedlist);
-		Collection<Ticket> listthree = new ArrayList(datumlist);
-		Collection<Ticket> listfourth = new ArrayList(datum2list);
+		Collection<Ticket> listone = new ArrayList<Ticket>(festivalnamelist);
+		Collection<Ticket> listtwo = new ArrayList<Ticket>(checkedlist);
+		Collection<Ticket> listthree = new ArrayList<Ticket>(datumlist);
+		Collection<Ticket> listfourth = new ArrayList<Ticket>(datum2list);
 
 		listone.retainAll(listtwo);
 
