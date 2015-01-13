@@ -21,4 +21,6 @@ public abstract class Roles {
     public static final Role boss = new Role("ROLE_BOSS");
 
     public static final Role employee = new Role("ROLE_EMPLOYEE");
+    
+    public static final Role leader = new Role("ROLE_LEADER");
 }

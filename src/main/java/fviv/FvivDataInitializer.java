@@ -4,7 +4,6 @@ import static org.joda.money.CurrencyUnit.EUR;
 
 import java.text.ParseException;
 
-
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.*;
@@ -13,6 +12,8 @@ import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
+import fviv.user.Roles;
+
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
@@ -120,10 +121,13 @@ public class FvivDataInitializer implements DataInitializer {
 				managerRole);
 		UserAccount caterer = userAccountManager.create("caterer", "123",
 				catererRole);
+		UserAccount leader = userAccountManager.create("leader", "123", Roles.leader);
+		
 		userAccountManager.save(boss);
 		userAccountManager.save(manager);
 		userAccountManager.save(caterer);
-
+		userAccountManager.save(leader);
+		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
 				"123", employeeRole);
