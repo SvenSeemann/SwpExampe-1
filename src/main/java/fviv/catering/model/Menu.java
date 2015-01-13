@@ -20,15 +20,16 @@ public class Menu extends Product {
 	}
 	
 	@SuppressWarnings("unused")
+	private long festivalId;
 	private Boolean orderable;
 	private Type type;
 	private Money purchasePrice;
 	private Money sellingPrice;
 	
 	@Autowired
-	public Menu(String name, Money purchasePrice, Money sellingPrice, Type type) {
-		
+	public Menu(long festivalId, String name, Money purchasePrice, Money sellingPrice, Type type) {
 		super(name, sellingPrice, Units.METRIC);
+		this.festivalId = festivalId;
 		this.type = type;
 		this.purchasePrice = purchasePrice;
 		this.sellingPrice = sellingPrice;

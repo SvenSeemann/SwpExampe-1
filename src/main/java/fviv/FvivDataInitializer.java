@@ -87,8 +87,8 @@ public class FvivDataInitializer implements DataInitializer {
 		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", new Role("ROLE_GUEST"));
 		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", new Role("ROLE_GUEST"));
 		
-		festival1.setUserAccount(festivalAccount1);
-		festival2.setUserAccount(festivalAccount2);
+	//	festival1.setUserAccount(festivalAccount1);
+	//	festival2.setUserAccount(festivalAccount2);
 		
 		userAccountManager.save(festivalAccount1);
 		userAccountManager.save(festivalAccount2);

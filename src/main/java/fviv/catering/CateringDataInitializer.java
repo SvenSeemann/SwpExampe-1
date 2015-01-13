@@ -49,24 +49,26 @@ public class CateringDataInitializer implements DataInitializer {
 
 	private void initializeMenus(MenusRepository menusRepository,
 			Inventory<InventoryItem> inventory) {
-
-		Menu Meal1 = new Menu("Pommes Frites", Money.of(EUR, 0.50), Money.of(EUR, 2.50), Type.MEAL);
-		Menu Meal2 = new Menu("Pommes Spezial", Money.of(EUR, 0.70), Money.of(EUR, 3.50), Type.MEAL);
-		Menu Meal3 = new Menu("Bratwurst", Money.of(EUR, 0.20), Money.of(EUR, 2.00), Type.MEAL);
-		Menu Meal4 = new Menu("Currywurst", Money.of(EUR, 0.50), Money.of(EUR, 3.00), Type.MEAL);
-		Menu Meal5 = new Menu("Currywurst mit Pommes", Money.of(EUR, 1.00), Money.of(EUR, 4.50),
+		
+		// with long festivalId
+		
+		Menu Meal1 = new Menu(1, "Pommes Frites", Money.of(EUR, 0.50), Money.of(EUR, 2.50), Type.MEAL);
+		Menu Meal2 = new Menu(1, "Pommes Spezial", Money.of(EUR, 0.70), Money.of(EUR, 3.50), Type.MEAL);
+		Menu Meal3 = new Menu(1, "Bratwurst", Money.of(EUR, 0.20), Money.of(EUR, 2.00), Type.MEAL);
+		Menu Meal4 = new Menu(1, "Currywurst", Money.of(EUR, 0.50), Money.of(EUR, 3.00), Type.MEAL);
+		Menu Meal5 = new Menu(1, "Currywurst mit Pommes", Money.of(EUR, 1.00), Money.of(EUR, 4.50),
 				Type.MEAL);
-		Menu Meal6 = new Menu("Stück Pizza", Money.of(EUR, 0.40), Money.of(EUR, 2.50), Type.MEAL);
-		Menu Meal7 = new Menu("Vanilleeis", Money.of(EUR, 0.20), Money.of(EUR, 1.00), Type.MEAL);
-		Menu Meal8 = new Menu("Schokoeis", Money.of(EUR, 0.20), Money.of(EUR, 1.00), Type.MEAL);
+		Menu Meal6 = new Menu(1, "Stück Pizza", Money.of(EUR, 0.40), Money.of(EUR, 2.50), Type.MEAL);
+		Menu Meal7 = new Menu(1, "Vanilleeis", Money.of(EUR, 0.20), Money.of(EUR, 1.00), Type.MEAL);
+		Menu Meal8 = new Menu(1, "Schokoeis", Money.of(EUR, 0.20), Money.of(EUR, 1.00), Type.MEAL);
 
 		// --- Getränke --- \\
 
-		Menu Drink1 = new Menu("Pils", Money.of(EUR, 0.50), Money.of(EUR, 2.50), Type.DRINK);
-		Menu Drink2 = new Menu("Alt", Money.of(EUR, 0.60), Money.of(EUR, 3.00), Type.DRINK);
-		Menu Drink3 = new Menu("Alkoholfrei", Money.of(EUR, 0.50), Money.of(EUR, 3.00), Type.DRINK);
-		Menu Drink4 = new Menu("Softdrink", Money.of(EUR, 0.50), Money.of(EUR, 2.20), Type.DRINK);
-		Menu Drink5 = new Menu("Wein", Money.of(EUR, 0.70), Money.of(EUR, 4.00), Type.DRINK);
+		Menu Drink1 = new Menu(1, "Pils", Money.of(EUR, 0.50), Money.of(EUR, 2.50), Type.DRINK);
+		Menu Drink2 = new Menu(1, "Alt", Money.of(EUR, 0.60), Money.of(EUR, 3.00), Type.DRINK);
+		Menu Drink3 = new Menu(1, "Alkoholfrei", Money.of(EUR, 0.50), Money.of(EUR, 3.00), Type.DRINK);
+		Menu Drink4 = new Menu(1, "Softdrink", Money.of(EUR, 0.50), Money.of(EUR, 2.20), Type.DRINK);
+		Menu Drink5 = new Menu(1, "Wein", Money.of(EUR, 0.70), Money.of(EUR, 4.00), Type.DRINK);
 
 		menusRepository.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5,
 				Meal6, Meal7, Meal8, Drink1, Drink2, Drink3, Drink4, Drink5));
