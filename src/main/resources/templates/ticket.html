@@ -66,9 +66,7 @@
 				<div id="menu">
 					<form method="post" action="/logout">
 						<button class="slimButton" type="submit"
-							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<div th:include="messaging :: messaging"></div>
 					<form th:action="@{/ticket}" method="post">
 						<button class="boldButton" type="submit">Ticket Pr&uuml;fen</button>
 					</form>
@@ -112,9 +110,7 @@
 				<div id="menu">
 					<form method="post" action="/logout">
 						<button class="slimButton" type="submit"
-							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<div th:include="messaging :: messaging"></div>
 					<form th:action="@{/changeMode}" method="post">
 						<button class="boldButton">Ticket Drucken</button>
 					</form>

@@ -104,11 +104,11 @@ public class FvivDataInitializer implements DataInitializer {
 	}
 	private void initializeLocations()
 			 {
-		Location location1 = new Location("Wunderland", 400, 300, 20000, "aasdf");
-		Location location2 = new Location("Rock am Ring", 200, 500, 50000, "aasdf");
-		Location location3 = new Location("Festival ist toll", 2000, 3000, 10000, "aasdf");
-		Location location4 = new Location("Namen sind unwichtig", 1000, 1400, 9000, "aasdf");
-		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf");
+		Location location1 = new Location("Wunderland", 400, 300, 20000, "TU DRESDEN INF ");
+		Location location2 = new Location("Rock am Ring", 200, 500, 50000, "Spenerstraße");
+		Location location3 = new Location("Festival ist toll", 2000, 3000, 10000, "Das ist eine Adresse");
+		Location location4 = new Location("Namen sind unwichtig", 1000, 1400, 9000, "Saint Petersburger Straße 21 Klingelnummer 161");
+		Location location5 = new Location("Boom", 5000, 3000, 5, "Festival bei Niklas");
 		locationRepository.save(location1);
 		locationRepository.save(location2);
 		locationRepository.save(location3);

@@ -26,6 +26,7 @@ import org.springframework.ui.ModelMap;
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
+import fviv.location.Location;
 import fviv.location.LocationRepository;
 import fviv.ticket.TicketRepository;
 import fviv.ticket.Ticket;
@@ -47,7 +48,7 @@ public class TicketController {
 	private static long ticketid;
 	private String mode = "ticket";
 	private static Festival festival;
-
+	private static Location location;
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
 			FestivalRepository festivalRepository, 
@@ -173,6 +174,7 @@ public class TicketController {
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket
 			festival = festivalRepository.findById(longId);
+			location = locationRepository.findById(festival.getLocationId());
 			String festivalname = festival.getFestivalName();
 			long preistag = festival.getPreisTag();
 			LocalDate date = null;
@@ -272,8 +274,8 @@ public class TicketController {
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
 			acroFields.setField("actors", festival.getActors());
-			festival.getLocationId();
-			acroFields.setField("adressofvenue", "asdf");
+			
+			acroFields.setField("adressofvenue", location.getAdresse());
 			acroFields.setField("date", datumshelper(date));
 			acroFields.setField("price", price);
 			acroFields.setField("eventnamesmall", festival.getFestivalName());
@@ -361,6 +363,10 @@ public class TicketController {
 
 	public static void setTicketid(long ticketid) {
 		TicketController.ticketid = ticketid;
+	}
+
+	public LocationRepository getLocationRepository() {
+		return locationRepository;
 	}
 
 }

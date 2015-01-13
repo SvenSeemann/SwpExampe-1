@@ -9,12 +9,13 @@ import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
 
 import java.time.LocalDate;
 
@@ -29,7 +30,6 @@ public class Festival {
 	private String festivalName;
 	private long locationId;
 	private String actors;
-	private int maxVisitors;
 	private long preisTag;
 	private Money managementSalaryPerDay;
 	private Money cateringSalaryPerDay;
@@ -39,7 +39,6 @@ public class Festival {
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
-	
 	@OneToOne
 	private UserAccount userAccount;
 	
@@ -50,13 +49,12 @@ public class Festival {
 
 	@Autowired
 	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
-			String actors, int maxVisitors, long preisTag) {
+			String actors, long preisTag) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
 		this.locationId = locationId;
 		this.actors = actors;
-		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
 		this.managementSalaryPerDay = Money.of(EUR, 0.00);
 		this.cateringSalaryPerDay = Money.of(EUR, 0.00);
@@ -98,9 +96,7 @@ public class Festival {
 		this.festivalName = festivalName;
 	}
 
-	public int getMaxVisitors() {
-		return maxVisitors;
-	}
+	
 
 	public void setMaxVisitors(int maxVisitors) {
 		this.maxVisitors = maxVisitors;
