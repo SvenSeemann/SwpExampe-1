@@ -46,7 +46,7 @@ $(document).ready(
 				type : "POST",
 				data : {
 					request : "doYouHave?",
-				    festival : $("#festival-id").text()
+					festival : $("#festival-id").text()
 				},
 				success : function(data) {
 					console.log(data);
@@ -153,11 +153,135 @@ function buildArea(width, height) {
 function buildCamping() {
 	var frame = document.createElement("div");
 	frame = $(frame);
-	frame.attr("id", "request");
+	frame.attr("class", "requestAll");
+	frame.append("<h3>Grö&szlig;e eingeben</h3>");
+	var form = document.createElement("form");
+	form = $(form);
+	form.attr("name", "formul");
+	form.attr("id", "formul");
+	form.appendTo(frame);
+	var table = document.createElement("table");
+	table = $(table);
+	table.appendTo(form);
+	table
+			.append("<tr><td>Weite:</td><td><input type='number' name='width' size='30' /> m</td></tr>");
+	table
+			.append("<tr><td>Höhe:</td><td><input type='number' name='height' size='30' /> m</td></tr>");
+	table
+			.append("<tr><td colspan='2'><input type='submit' value='submit'class='button'/><input type='reset' id='delete' value='reset'class='button' /></td></tr>")
+	frame.appendTo("#substance");
+	$('#delete').on("click", function() {
+		frame.remove();
+	});
+	$(form).submit(
+			function(event) {
+				event.preventDefault();
+				var width = document.formul.width.value;
+				var height = document.formul.height.value;
+				if ($('#area').width() <= (width * factor)
+						|| $('#area').height() <= (height * factor)) {
+					alert("Objekt zu gross. Bitte nehmen sie ein anderes.");
+					return false;
+				} else {
+					var newElem = document.createElement("div");
+					newElem = $(newElem);
+					newElem.appendTo('#area');
+					newElem.removeAttr('onClick');
+					newElem.attr("class", "objekt");
+					newElem.attr("name", "CAMPING");
+					newElem.attr("oncontextmenu", ("contextMenu(this)"));
+					newElem.attr("onmouseup", "validateIt(this)");
+					newElem.css({
+						'width' : (width * factor),
+						'height' : (height * factor)
+					});
+					newElem.text("Campingplatz");
+
+					$(function() {
+						$(".objekt").draggable({
+							containment : "#area",
+							snap : true,
+							snapMode : "outer",
+							snapTolerance : "8"
+						});
+					});
+					objectList.push(new Array(newElem.attr('name'), newElem
+							.text(), width, height, newElem.position().left,
+							newElem.position().top));
+					frame.remove();
+				}
+			});
+
+}
+function buildBlocked() {
+	var frame = document.createElement("div");
+	frame = $(frame);
+	frame.attr("class", "requestAll");
+	frame.append("<h3>Grö&szlig;e eingeben</h3>");
+	var form = document.createElement("form");
+	form = $(form);
+	form.attr("name", "formul");
+	form.attr("id", "formul");
+	form.appendTo(frame);
+	var table = document.createElement("table");
+	table = $(table);
+	table.appendTo(form);
+	table
+			.append("<tr><td>Weite:</td><td><input type='number' name='width' size='30' /> m</td></tr>");
+	table
+			.append("<tr><td>Höhe:</td><td><input type='number' name='height' size='30' /> m</td></tr>");
+	table
+			.append("<tr><td colspan='2'><input type='submit' value='submit'class='button'/><input type='reset' id='delete' value='reset'class='button' /></td></tr>")
+	frame.appendTo("#substance");
+	$('#delete').on("click", function() {
+		frame.remove();
+	});
+	$(form).submit(
+			function(event) {
+				event.preventDefault();
+				var width = document.formul.width.value;
+				var height = document.formul.height.value;
+				if ($('#area').width() <= (width * factor)
+						|| $('#area').height() <= (height * factor)) {
+					alert("Objekt zu gross. Bitte nehmen sie ein anderes.");
+					return false;
+				} else {
+					var newElem = document.createElement("div");
+					newElem = $(newElem);
+					newElem.appendTo('#area');
+					newElem.removeAttr('onClick');
+					newElem.attr("class", "objekt");
+					newElem.attr("name", "BLOCKED");
+					newElem.attr("oncontextmenu", ("contextMenu(this)"));
+					newElem.attr("onmouseup", "validateIt(this)");
+					newElem.css({
+						'width' : (width * factor),
+						'height' : (height * factor)
+					});
+					newElem.text("Gesperrtes Areal");
+
+					$(function() {
+						$(".objekt").draggable({
+							containment : "#area",
+							snap : true,
+							snapMode : "outer",
+							snapTolerance : "8"
+						});
+					});
+					objectList.push(new Array(newElem.attr('name'), newElem
+							.text(), width, height, newElem.position().left,
+							newElem.position().top));
+					frame.remove();
+				}
+			});
+
 }
 function buildObject(element, type, name) {
-	if (type == 9) {
+	console.log(type);
+	if (type == 10) {
 		buildCamping();
+	} else if (type == 3) {
+		buildBlocked();
 	} else {
 		var title = objectValues[type][0];
 		var width = objectValues[type][1];
@@ -195,7 +319,6 @@ function buildObject(element, type, name) {
 		}
 	}
 }
-
 function validateIt(element) {
 	var element = $(element);
 	var index = element.parent().children().index(element);
@@ -246,40 +369,6 @@ function saveIt() {
 		});
 	});
 }
-
-/*function saveToFestival() {
-	$(document).ready(function() {
-		$.ajax({
-			url : "/setup/area/newArea",
-			type : "POST",
-			data : {
-				width : areaWidth,
-				height : areaHeight,
-				faktor : factor
-			},
-			success : function() {
-				for (i = 0; i < objectList.length; i++) {
-					$.ajax({
-						url : "/setup/area/newObject",
-						type : "post",
-						data : {
-							typ : objectList[i][0],
-							name : objectList[i][1],
-							width : objectList[i][2],
-							height : objectList[i][3],
-							left : objectList[i][4],
-							top : objectList[i][5]
-						},
-						success : function(data) {
-							console.log(data);
-						}
-					});
-				}
-
-			}
-		});
-	});
-}*/
 
 function turnObject(element) {
 	var parent = $(".contextButton").parents('.objekt');

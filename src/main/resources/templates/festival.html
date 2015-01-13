@@ -76,7 +76,7 @@
 		<div id="content">
 			<div id="substance">
 				<div id="chooseFestivalview" th:switch="${festivalmode}">
-				
+
 					<!-- FestivalCase -->
 					<div th:case="festival">
 						<form th:action="@{/newFestival}" method="post">
@@ -87,11 +87,9 @@
 								</label> <br /> <label class="label" for="location"> <input
 									type="text" name="location" size="40" placeholder="Adresse"></input>Adresse
 								</label> <br /> <label class="label" for="startDate"> <input
-									type="date" name="startDate" size="40"
-									placeholder="yyyy-MM-dd"></input>Startdatum
+									type="date" name="startDate" size="40" placeholder="yyyy-MM-dd"></input>Startdatum
 								</label> <br /> <label class="label" for="endDate"> <input
-									type="date" name="endDate" size="40"
-									placeholder="yyyy-MM-dd"></input>EndDatum
+									type="date" name="endDate" size="40" placeholder="yyyy-MM-dd"></input>EndDatum
 								</label> <br /> <label class="label" for="actors"> <input
 									type="text" name="actors" size="40" placeholder="Künstler"></input>Künstler
 								</label> <br /> <label class="label" for="maxVisitors"> <input
@@ -133,7 +131,7 @@
 							</tr>
 						</table>
 					</div>
-					
+
 					<!-- case areaplan -->
 					<div th:case="areaplan">
 						<table class="festivalTable">
@@ -284,11 +282,10 @@
 							</table>
 						</form>
 					</div>
-					
+
 					<!-- Default Case -->
-					<div th:case="*">
-					Neues Festival erstellen, klicken Sie auf Festivals erstellen, um zu beginnen.
-					</div>
+					<div th:case="*">Neues Festival erstellen, klicken Sie auf
+						Festivals erstellen, um zu beginnen.</div>
 
 
 				</div>
@@ -299,10 +296,7 @@
 				<button class="slimButton" type="submit"
 					th:text="#{catering.logout}" value="logout">Logout</button>
 			</form>
-			<form method="post" action="/chat">
-				<button class="slimButton" type="submit" value="chat"
-					th:text="#{catering.chat}">Chat</button>
-			</form>
+			<!-- <div th:include="messaging :: messaging"></div>-->
 			<form th:action="@{/festival/create}" method="post">
 				<button class="boldButton">Festival erstellen</button>
 			</form>
@@ -315,9 +309,7 @@
 			<form th:action="@{/setup-employees}" method="post">
 				<button class="boldButton">Mitarbeiter bearbeiten</button>
 			</form>
-
 		</div>
-		<div th:include="messaging :: messaging"></div>
 	</div>
 </body>
 </html>
