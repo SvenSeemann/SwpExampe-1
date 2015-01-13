@@ -31,8 +31,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import fviv.areaPlanner.AreaItemsRepository;
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
+
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Employee.Departement;
@@ -176,7 +178,8 @@ public class ManagerController {
 	 * @param modelMap
 	 * @return link
 	 */
-	@RequestMapping("/manager")
+
+	@RequestMapping("/management")
 	public String index(ModelMap modelMap) {
 		// Money used as sum for each type of expense
 		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
@@ -308,7 +311,7 @@ public class ManagerController {
 		// Redirect if entered registration information are not valid
 		if (results.hasErrors()) {
 			showErrors = "newEmployee";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		Departement departement = Departement.NULL;
@@ -349,7 +352,7 @@ public class ManagerController {
 		userAccountManager.save(employeeAccount);
 		employeeRepository.save(employee);
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ DELETE EMPLOYEE ------------------------ \\
@@ -368,7 +371,7 @@ public class ManagerController {
 		// Redirect if employee doesn't exists
 		if (employeeRepository.findById(employeeId) == null) {
 			showErrors = "deleteEmployee";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Get employee, disable his account and delete him from the repository
@@ -378,7 +381,7 @@ public class ManagerController {
 		userAccountManager.save(deleteThisEmployee.getUserAccount());
 		employeeRepository.delete(deleteThisEmployee);
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ ADD ROLE ------------------------ \\
@@ -405,13 +408,13 @@ public class ManagerController {
 		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
 				|| userAccountManager.findByUsername(editSingleAccount).get()
 						.hasRole(addRole)) {
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Add role to the useraccount and save it
 		userAccount.add(addRole);
 		userAccountManager.save(userAccount);
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ DELETE ROLE ------------------------ \\
@@ -430,15 +433,15 @@ public class ManagerController {
 		// Ensure that manager, boss and caterer role cannot be deleted entirely
 		if (editSingleAccount.equals("manager") && role.equals("ROLE_MANAGER")) {
 			showErrors = "deleteRoleManager";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 		if (editSingleAccount.equals("boss") && role.equals("ROLE_BOSS")) {
 			showErrors = "deleteRoleBoss";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 		if (editSingleAccount.equals("caterer") && role.equals("ROLE_CATERER")) {
 			showErrors = "deleteRoleCaterer";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Define a role by the given string "role"
@@ -451,14 +454,14 @@ public class ManagerController {
 		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
 				|| !(userAccountManager.findByUsername(editSingleAccount).get()
 						.hasRole(deleteRole))) {
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Delete role from the useraccount and save it
 		userAccount.remove(deleteRole);
 		userAccountManager.save(userAccount);
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ ACTIVATE ACCOUNT ------------------------ \\
@@ -477,7 +480,7 @@ public class ManagerController {
 		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
 				|| userAccountManager.findByUsername(editSingleAccount).get()
 						.isEnabled()) {
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Enable useraccount and save it
@@ -486,7 +489,7 @@ public class ManagerController {
 		userAccountManager.save(userAccountManager.findByUsername(
 				editSingleAccount).get());
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ DEACTIVATE ACCOUNT ------------------------ \\
@@ -505,7 +508,7 @@ public class ManagerController {
 		if (!(userAccountManager.findByUsername(editSingleAccount).isPresent())
 				|| !(userAccountManager.findByUsername(editSingleAccount).get()
 						.isEnabled())) {
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Prevent to disable boss, manager and caterer
@@ -522,7 +525,7 @@ public class ManagerController {
 		userAccountManager.save(userAccountManager.findByUsername(
 				editSingleAccount).get());
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ EDIT ACCOUNT SWITCH ------------------------ \\
@@ -544,14 +547,14 @@ public class ManagerController {
 		if (userName == ""
 				|| !(userAccountManager.findByUsername(userName).isPresent())) {
 			showErrors = "switchToEditAccount";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// change mode for th:switch and change string to selected account
 		mode = "editAccount";
 		editSingleAccount = userName;
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ EMPLOYEE DETAILS ------------------------ \\
@@ -586,7 +589,7 @@ public class ManagerController {
 		// Save account
 		userAccountManager.save(userAccount);
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ CHANGE PASSWORD ------------------------ \\
@@ -608,11 +611,11 @@ public class ManagerController {
 		// Password must not be empty and both passwords must match
 		if (password1.equals("") || password2.equals("")) {
 			showErrors = "changePasswordEmpty";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 		if (!(password1.equals(password2))) {
 			showErrors = "changePasswordDifferentInput";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Change the password and save the account
@@ -622,37 +625,10 @@ public class ManagerController {
 		userAccountManager.save(userAccountManager.findByUsername(
 				editSingleAccount).get());
 
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
-	// ------------------------ ORDER MORE ------------------------ \\
 
-	/**
-	 * Check stock and order more food if necessary
-	 * 
-	 * @param item
-	 * @param units
-	 * @return link
-	 */
-
-	@RequestMapping("orderMore")
-	public String orderMore(@RequestParam("itemid") InventoryItem item,
-			@RequestParam("units") Long units) {
-		ProductIdentifier mid = item.getProduct().getIdentifier();
-		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
-				.findByProductIdentifier(mid).getPurchasePrice()
-				.multipliedBy(units)), FinanceType.CATERING));
-		item.increaseQuantity(Units.of(units));
-		inventory.save(item);
-
-		// Menu is orderable again, because its quantity is >0
-		Menu menu = menusRepository.findByProductIdentifier(item.getProduct()
-				.getId());
-		menu.setOrderable(true);
-		menusRepository.save(menu);
-
-		return "redirect:/manager";
-	}
 
 	// ------------------------ MODEMAPPING ------------------------ \\
 
@@ -660,40 +636,34 @@ public class ManagerController {
 	public String employees() {
 		mode = "employees";
 		showErrors = "no";
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
-
-	@RequestMapping("/Finances")
+	
+	@RequestMapping("/management/finances")
 	public String finances() {
 		mode = "finances";
 		showErrors = "no";
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	@RequestMapping("/Accountmanagement")
 	public String newLogin() {
 		mode = "accounts";
 		showErrors = "no";
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
-	@RequestMapping("/Terminal")
+	@RequestMapping("/management/terminal")
 	public String terminal() {
 		mode = "terminal";
 		showErrors = "no";
-		return "redirect:/manager";
-	}
-
-	@RequestMapping("/Stock")
-	public String stock() {
-		mode = "checkStock";
-		showErrors = "no";
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 
 	@RequestMapping("/Besucher")
 	public String besucher() {
 		mode = "checkBesucher";
+		showErrors = "no";
 		return "redirect:/manager";
 	}
 }

@@ -3,14 +3,14 @@ package fviv.controller;
 import static org.joda.money.CurrencyUnit.EUR;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 
 import org.joda.money.Money;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -38,8 +38,9 @@ public class CreateController {
 	private final LocationRepository locationRepository;
 	private String mode = "festival";
 	private Festival selected;
-	private AreaItemsRepository areaItems;
 	private UserAccountManager userAccountManager;
+	private LinkedList<String> managerAccounts = new LinkedList<String>();	
+	private AreaItemsRepository areaItems;
 
 	@Autowired
 	public CreateController(FestivalRepository festivalRepository, LocationRepository locationrepository,UserAccountManager userAccountManager) {
@@ -58,6 +59,12 @@ public class CreateController {
 	public String index(ModelMap modelMap) {
 		//mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+
+		managerAccounts.clear();
+		for(UserAccount userAccount : userAccountManager.findAll()){
+			if(userAccount.hasRole(new Role("ROLE_MANAGER")))managerAccounts.add(userAccount.getIdentifier().toString());
+		}
+		modelMap.addAttribute("managerAccounts", managerAccounts);
 		modelMap.addAttribute("locationlist", locationRepository.findAll());
 		return "festival";
 	}
@@ -177,9 +184,9 @@ public class CreateController {
 			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
-			@RequestParam("maxVisitors") int maxVisitors,
-			@RequestParam("locationId") long locationId,
-			@RequestParam("preisTag") long preisTag) throws ParseException {
+			@RequestParam("preisTag") long preisTag,
+			@RequestParam("selectManager") String manager,
+			@RequestParam("locationId") long locationId) throws ParseException {
 
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
@@ -189,16 +196,10 @@ public class CreateController {
 
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				locationId, actors, (int) maxVisitors, (long) preisTag);
+				locationId, actors, (int) locationRepository.findById(locationId).getMaxVisitors(), (long) preisTag, manager);
 	
 		festivalRepository.save(festival);
-		
-		UserAccount festivalAccount = userAccountManager.create("festival" + festival.getId(), "123", new Role("ROLE_GUEST"));
-		
-		userAccountManager.save(festivalAccount);
-		festival.setUserAccount(festivalAccount);
-		festivalRepository.save(festival);
-		
+				
 		return "redirect:/festival";
 
 	}

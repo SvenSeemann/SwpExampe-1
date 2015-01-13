@@ -1,0 +1,2016 @@
+[33mcommit 0d8c3110908898b9836d3eaec6c7e13a39514a18[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Jan 7 19:11:14 2015 +0100
+
+    buggy grey buttons catering
+
+[33mcommit 026c22d60ac295f93e86a8d33562cc40200ef68c[m
+Merge: 386a78e e7ddbe4
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Jan 7 18:17:11 2015 +0100
+
+    Merge branch 'master' into max
+
+[33mcommit e7ddbe4f1db17eca4ef6afcd9f422ca19d1b3f05[m
+Merge: f2d6db8 8ad7f57
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Jan 7 18:16:56 2015 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager
+
+[33mcommit 386a78e737015d0ca9d09c0e18b26cc087b45b23[m
+Merge: d2602c2 8ad7f57
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Jan 7 18:15:08 2015 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager into max
+
+[33mcommit d2602c2475c3579e393d3ff839d2866ba8ca8cd6[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Jan 7 18:14:31 2015 +0100
+
+    Hey Guys, some things have been created. the Contextmenu works better and my sourcecode is worser than ever :D have a nice evening :)
+
+[33mcommit 8ad7f57756ced64e42c5a011e70dd11d56960714[m
+Merge: b3d93d9 7f6bbaf
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Jan 7 13:52:47 2015 +0100
+
+    manual merging #23
+
+[33mcommit b3d93d9ceab4231effb3d43bc743aa2a433b2c0e[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Jan 7 13:50:33 2015 +0100
+
+    bugfix bitches
+
+[33mcommit f2d6db8f0f19333e521d15a64bbb66562294b22a[m
+Merge: c49e20f 7f6bbaf
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Tue Jan 6 17:09:17 2015 +0100
+
+    -
+
+[33mcommit c49e20f411ec5315f8019540cca370cb790b0a86[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Tue Jan 6 17:01:33 2015 +0100
+
+    small changes
+
+[33mcommit 7f6bbaf8ca8f40dbf107401092b880edfe34633e[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Tue Jan 6 15:19:07 2015 +0100
+
+    bugfix employee departement
+
+[33mcommit 69d5af5249bd7fdeebe991429dacaa395d2557d1[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Tue Jan 6 00:17:32 2015 +0100
+
+    validation of inputs concerning quantity of employees buggy
+
+[33mcommit a4c14b1c6abf721c5d793be1cc08049f5b7865a2[m
+Merge: 3f492f6 0086bcb
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Jan 5 19:49:19 2015 +0100
+
+    Merge branch 'master' into finances
+
+[33mcommit 3f492f6d0aba7b34f44a0121e90dd581fdb167f2[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Jan 5 19:48:54 2015 +0100
+
+    issue #70
+
+[33mcommit 0086bcb20dfa0e2fbe8b34ffff8f9a0374328269[m
+Merge: a4c8b11 34be745
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 17:04:06 2015 +0100
+
+    Merge branch 'master' of github.com:JustusAdam/swt-festivalmanager
+
+[33mcommit a4c8b114c73c05b63bb70d16a48bc028dced6807[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 17:03:48 2015 +0100
+
+    more developer documentation
+
+[33mcommit 34be745522d301359d712834376f1f6e5216242f[m
+Merge: bd496ce 9cbdaf9
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Jan 5 16:27:00 2015 +0100
+
+    Merge branch 'master' of https://www.github.com/justusadam/swt-festivalmanager
+
+[33mcommit 9cbdaf9a68fc91f39fd06b3f7b6f4535c934fac6[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 16:01:32 2015 +0100
+
+    cross tested with other browsers, fixed an error where chrome creates a different datetime string than safari. Mesaging should now work on "all" browsers
+
+[33mcommit 37f49ae0ee4e6dca4f11480b5624d676c3f2ef44[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 15:11:24 2015 +0100
+
+    more doku
+
+[33mcommit 6b889871e50fb62ccb836cb71c99d91c7c1324ef[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 12:29:45 2015 +0100
+
+    working on iuser doku
+
+[33mcommit 9500cec606942787524d7e77f361cd96fa6803a6[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 11:20:10 2015 +0100
+
+    added directory for pdf output
+
+[33mcommit 8810503f11a59253ea281e8c03120f3e52c8a830[m
+Merge: 6c428e9 0778380
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 11:03:10 2015 +0100
+
+    Merge branch 'master' of github.com:JustusAdam/swt-festivalmanager into justus
+
+[33mcommit 6c428e99bb0332d66ae17ebf16d004919c33baaf[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Jan 5 11:02:51 2015 +0100
+
+    added documentation files, fixed index
+
+[33mcommit 07783800db611aa2b5f0260b9b6d70ebe19c39d7[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Mon Jan 5 00:52:41 2015 +0100
+
+    a small step for the humanity, but a big one for me- the terminal runs so far with the area-plan :)
+
+[33mcommit 9ae1355cc3c643bc42efa07544865e30f1350095[m
+Merge: d647de8 16c67ec
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Sun Jan 4 11:56:33 2015 +0100
+
+    grows
+
+[33mcommit bd496ce82c1743af2c1e541e5eb5bef18c05e711[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Sat Jan 3 19:51:59 2015 +0100
+
+    newEmployee enhancement
+
+[33mcommit 47de3c1fd819286ed7b83dd09d70a64e67c1ccbc[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 16:08:50 2015 +0100
+
+    weihnachtsgruß artists overview added
+
+[33mcommit 16c67ecfc545835e63b4936ada4c3c91cbdca25b[m
+Merge: e17631f dbb31d6
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 13:27:42 2015 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit e17631f21780f1acb3f811540c97d8fbc4c8240a[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 13:24:59 2015 +0100
+
+    fixed messaging toggle
+
+[33mcommit dbb31d653502315823201efa25a87ed51b6241bd[m
+Merge: e3fe5e0 ed11450
+Author: Justus Adam <development@justusadam.com>
+Date:   Sat Jan 3 13:08:56 2015 +0100
+
+    Merge pull request #68 from JustusAdam/justus
+    
+    Merging Justus
+
+[33mcommit ed11450c72736cf47e0723351da9f4dc82bb1332[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 13:03:14 2015 +0100
+
+    commented out a test that i cant fix
+
+[33mcommit 5fff358e38d14bbc6a462ba454f3351563a54a0e[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 12:58:56 2015 +0100
+
+    added messaging to templates
+
+[33mcommit 74ffdbcff7e9a68951bd960817ce73bb7e35aaba[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 12:56:47 2015 +0100
+
+    fixed errors caused by merging
+
+[33mcommit e3fe5e06a553f2bee73ef2ff2f61072d59346d76[m
+Merge: 4db3d0e 38792f9
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 12:40:26 2015 +0100
+
+    Merge remote-tracking branch 'github/master' into justus
+    
+    Conflicts:
+    	src/main/java/fviv/controller/ManagerController.java
+    	src/main/resources/templates/manager.html
+    	src/main/resources/templates/messaging.html
+    	src/main/resources/templates/ticket.html
+    	src/main/resources/templates/ticketpruefen.html
+
+[33mcommit 4db3d0ebe836adc00a3779ee32eca52cdc61a9be[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Jan 3 12:37:53 2015 +0100
+
+    added json to pom
+
+[33mcommit d647de84cae589c7db1497949b243ee1059b27aa[m
+Merge: 211c89b 38792f9
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Fri Jan 2 23:48:03 2015 +0100
+
+    Merge branch 'master' into max
+
+[33mcommit 211c89be3a1463ff9e1d42e8cf92956e36f702fd[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Fri Jan 2 23:46:31 2015 +0100
+
+    it grows
+
+[33mcommit 38792f9aaf466c960d3600c9e01e43d9f87a7e78[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Fri Jan 2 15:51:22 2015 +0100
+
+    added some javadoc
+
+[33mcommit 6e69c1c1e08fc0fee607577fc7422a08ee0242c1[m
+Merge: 6cc6fa5 7423788
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Fri Jan 2 15:02:40 2015 +0100
+
+    finances almost done
+
+[33mcommit 6cc6fa5279afeef798239321c7da72c20b84e1f5[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Fri Jan 2 14:51:41 2015 +0100
+
+    finances
+
+[33mcommit 7423788f9e3d2337ecc53fae2406e3ef39d82cbf[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Tue Dec 30 14:48:43 2014 +0100
+
+    error messages added #userFriendly
+
+[33mcommit 0c55606affb8fc58993d92a2937f2be7f40eda2c[m
+Merge: 355701c 2b0a5c8
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 29 23:39:00 2014 +0100
+
+    manual merge
+
+[33mcommit 355701c21e585d69aa44d3aa06ff2c96a7ce78c8[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 29 23:36:32 2014 +0100
+
+    commit
+
+[33mcommit 2b0a5c83cbe50884c471d7d5afb07ca75f800898[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 28 18:59:22 2014 +0100
+
+    bugfix finances
+
+[33mcommit c1ef8a6bf4de0fa3d301efb504616d5d82df48e9[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 28 18:55:00 2014 +0100
+
+    fixed bug in finances
+
+[33mcommit b5bc3fbdd320177ebf0abf63ea59147c839b46a4[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Sun Dec 28 15:07:06 2014 +0100
+
+    small things changed, no working :)
+
+[33mcommit 2a9e2ec4552e5c217a7bce876605a046bb54934a[m
+Merge: a3842bd 0bdc368
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 28 14:08:12 2014 +0100
+
+    merge commit
+
+[33mcommit a3842bda3c40bd64cae3d36d789db92066894054[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 28 14:01:30 2014 +0100
+
+    expense update
+
+[33mcommit 0bdc3687421290f99b719e45a7e77abf0ff1ee36[m
+Merge: e9270cf d9c2253
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Fri Dec 26 12:01:10 2014 +0100
+
+    merged FvivDataInitializer, finance stats working with bug
+
+[33mcommit e9270cf8fc17249a43b03d5c4a732424dd8aa673[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Fri Dec 26 11:57:32 2014 +0100
+
+    stats
+
+[33mcommit c67a578f82aa97270cec0dde5fac5e1cc4282c22[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Thu Dec 25 17:02:37 2014 +0100
+
+    initialized
+
+[33mcommit d9c225313c050f039f64ef065632edabe2ea36b7[m
+Merge: f6828c5 77c4762
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Mon Dec 22 20:36:28 2014 +0100
+
+    Merge pull request #64 from JustusAdam/nikolai
+    
+    ticket done und festival/boss work to do together with hendric
+
+[33mcommit 77c4762e9929fb3e8874f10d44b736c2bf1b8822[m
+Merge: 84d719f f6828c5
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Mon Dec 22 18:57:53 2014 +0100
+
+    erge
+
+[33mcommit 84d719fcef7ea9366b834bb4b54dbf6d84de9525[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Mon Dec 22 17:25:03 2014 +0100
+
+    nothing big listet all possible tickets for ticket pruefen
+
+[33mcommit 00f33cb1b054cc47cdffb4f05fe5d95063699752[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Mon Dec 22 16:56:19 2014 +0100
+
+    no idea, why the mapping does not work.
+
+[33mcommit f34a935c6687a534198de728107e9e03901444d6[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 22 12:52:43 2014 +0100
+
+    fixed one of the tests
+
+[33mcommit afa3881e60165b24733772051b09088c3a553082[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Mon Dec 22 12:22:22 2014 +0100
+
+    soo, eine Anbindung an die DB wurde zwar hergestellt, aber es gibt noch nen error 400. Vlt. hat ja wer zu viel langweile und kann sich das mal ansehen. Zur Zeit werden die Objekte ungeprueft an die DB uebergeben. auch eigentlich geloeschte Objekten werden noch uebergeben- ich weiss schon wie iches loesen will, hab da bisher nur noch syntaxprobleme.
+
+[33mcommit 630452afc7c8bf53ed80de571c844266977b8698[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 22 09:16:22 2014 +0100
+
+    null
+
+[33mcommit 59d2a1b520fdef391b5b769c0d158fde687aa2be[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 22 01:19:54 2014 +0100
+
+    foucking around with finances
+
+[33mcommit 1dd8c830035bb86fe200c4afed6a019d98947ffd[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 22 00:12:14 2014 +0100
+
+    expenses
+
+[33mcommit 6d34d6731cb4b9e47e3c53a9f81fee2564846e33[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Sun Dec 21 21:50:52 2014 +0100
+
+    festival anziegen implementiert, datumsanziege überarbeiten, logout und login hinzugefühgt
+
+[33mcommit 765efba09f465aa0b406565bc3b9e1be1689db0d[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Sun Dec 21 13:44:41 2014 +0100
+
+    MenusToBeDisplayedInstock
+
+[33mcommit 1edfb9e178c40752e30f29f9b838ddcf8e53b49d[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Sun Dec 21 11:55:48 2014 +0100
+
+    planner grows
+
+[33mcommit 0d48f1c23ea021c525d81586b6963e03d693d2ea[m
+Merge: 23674ca a3bfe88
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Dec 19 17:41:57 2014 +0100
+
+    merged
+
+[33mcommit e4b325596c722fa2a6e8a54708e33c7eb7a94d47[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Thu Dec 18 21:48:31 2014 +0100
+
+    Soo, auch zu grosse Objekte werden nicht mehr gesetzt.
+
+[33mcommit 9d9850339804cb9aa981441705c583950c5c2784[m
+Merge: cf94925 f6828c5
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Thu Dec 18 20:24:51 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager into max
+
+[33mcommit cf94925162d22fd89f9316050ef88eb0a3805ff1[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Thu Dec 18 20:24:01 2014 +0100
+
+    Drag and drop läuft fast perfekt- nur noch validierung der Objekte untereinander :)
+
+[33mcommit 7b78ec03a3afb3d6e8bf86a3b82c25d730e43582[m
+Merge: eeb2933 f6828c5
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Thu Dec 18 16:25:55 2014 +0100
+
+    Merge branch 'master' into stock
+
+[33mcommit eeb29330c8446227bb7e7667e195ca76e66b91c5[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Thu Dec 18 16:24:33 2014 +0100
+
+    added stock to manager
+
+[33mcommit f6828c5637e21620074bb4e7064b27eb718d5f54[m
+Merge: 778c12b 1ee9d30
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Dec 18 14:04:33 2014 +0100
+
+    Merge pull request #56 from JustusAdam/nikolai
+    
+    nikos teil kinda
+
+[33mcommit 1ee9d30f7b874980ffbebe2718ed445757c6bbf4[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Thu Dec 18 13:52:32 2014 +0100
+
+    festivalerstellung und ticket dings
+
+[33mcommit b707e6264ae34ababf4b4a30a282700db0e25609[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Thu Dec 18 13:39:33 2014 +0100
+
+    spaces
+
+[33mcommit fa72aaaccf412329d5a5235c4d46b944affe79cf[m
+Merge: a604edc 778c12b
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Wed Dec 17 22:20:34 2014 +0100
+
+    merged i think
+
+[33mcommit a604edc3bf8d24f682a2256294bf672096fafc2f[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Wed Dec 17 22:09:46 2014 +0100
+
+    asdf
+
+[33mcommit a3c9638eeef5c859fe563a3520878850aa320f17[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Wed Dec 17 21:58:55 2014 +0100
+
+    verschönerung
+
+[33mcommit a64dbf42002885be04f0bd19f43b9b9a3f5e1f61[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 21:52:51 2014 +0100
+
+    removed inventory from cateringController
+
+[33mcommit 5f3f60aa32d899d9a0f99fa024947668385bb37c[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 15:41:09 2014 +0100
+
+    second manual merge of CateringController m)
+
+[33mcommit 0d92f6927b0e6938eb075cdc69c2b894ff5b7900[m
+Merge: 8b7edba 778c12b
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 15:37:50 2014 +0100
+
+    manual merging of CateringController
+
+[33mcommit 778c12bfb8081e8aafba1a5519a78f5d7ad3a918[m
+Merge: f192dcc a3bfe88
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 17 15:35:16 2014 +0100
+
+    Merge pull request #55 from JustusAdam/hendric
+    
+    account management done
+
+[33mcommit a3bfe8886ccb61da47cc502437bb13861efaf3d8[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 17 15:32:16 2014 +0100
+
+    account management done
+
+[33mcommit f192dcc24f810320978f462e50da07351f64b4da[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 15:28:21 2014 +0100
+
+    redirect: idex.html after logout
+
+[33mcommit 8b7edba0801035246fdd17dfd0e2a6c9e90e52e9[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 15:09:02 2014 +0100
+
+    MenusToBeRemovedRepository removed, redundant
+
+[33mcommit 23674caa1b46ed7f015ace6b4ba5943b51472dfa[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 17 13:31:23 2014 +0100
+
+    template editing
+
+[33mcommit 9ea15beb9bb262333f6f5a8bb57dfb698ebe3bf8[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 17 13:05:14 2014 +0100
+
+    adding permission management to javascript
+
+[33mcommit b902b0ff9ec22104f36b44740c8e905d7cbe8e87[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Dec 17 11:03:48 2014 +0100
+
+    all is actually up-to-date
+
+[33mcommit 418bad0578e6b2dd76cc6f0f04596ff3d9051967[m
+Merge: eb96ccc cd03d02
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 17 10:35:52 2014 +0100
+
+    Merge commit 'fetch_head' into justus
+    
+    Conflicts:
+    	src/main/resources/templates/index.html
+
+[33mcommit 1e08b0e7979d3b420147d9652b6d5ae8f7b61c38[m
+Merge: abb6d3d cd03d02
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Dec 17 10:34:47 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager into max
+
+[33mcommit abb6d3d8a2e18bfe82a76b82d6143f8bf9f9915a[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Wed Dec 17 10:34:13 2014 +0100
+
+    fortschritte ersichtlich
+
+[33mcommit eb96cccd7d1f1d3b04e3f6bcde06b875a2c53e45[m
+Merge: e06c0ac 59e67e0
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 17 10:30:55 2014 +0100
+
+    manual merging of master
+
+[33mcommit cd03d02bd955153c84b252547790f5034fdb0f35[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 10:26:37 2014 +0100
+
+    manual merge was vergessen
+
+[33mcommit e06c0ac5e6f4993cbd434bf0bd16a33c9027a3d0[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 17 10:25:55 2014 +0100
+
+    added messaging to templates
+
+[33mcommit 59e67e0aa163c0ce41f91f43e18379fdcfa78e3c[m
+Merge: 0218b37 199df49
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 10:25:06 2014 +0100
+
+    manual merge
+
+[33mcommit 2084aa3380d6487eb547203eec8778053d0ba737[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 17 10:16:55 2014 +0100
+
+    added toggle button
+
+[33mcommit 199df493a758356db697ab69fe9475ccd6bf286b[m
+Merge: 7554cc0 49acbcb
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 17 10:14:44 2014 +0100
+
+    Merge pull request #53 from JustusAdam/hendric
+    
+    Hendric
+
+[33mcommit 49acbcbf38cea3ede19facde3733f54ff5d62448[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 17 10:11:37 2014 +0100
+
+    index added
+
+[33mcommit 923dc2721e4b90206a1856104c7dfb910dd0d3ef[m
+Merge: faf8255 7554cc0
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 17 09:56:29 2014 +0100
+
+    Merge branch 'master' into hendric
+
+[33mcommit 0218b376eb3a26b56b8d92348b565aad8de20d29[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 08:40:59 2014 +0100
+
+    salespoint version test
+
+[33mcommit 8e02fd9b17c52c83a6dc57090ed45691b0604bac[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 08:39:36 2014 +0100
+
+    salespoint version test
+
+[33mcommit 9845de52c844ed2a86ec6cf20ab8bb2bacd14080[m
+Merge: f5cbe63 7554cc0
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 08:32:44 2014 +0100
+
+    manual merging
+
+[33mcommit 7cc80ea0b194565a9d97c62648249e69236635d7[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 17 08:24:13 2014 +0100
+
+    Iinventory check
+
+[33mcommit 89213f9ebf7101f108647d354ebc4a809931be4e[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Tue Dec 16 20:50:16 2014 +0100
+
+    festivalerstellungs dateien geadded mostly empty though
+
+[33mcommit 7554cc01110f92d31505a943f23bc1763153faed[m
+Merge: ebb1298 43686c3
+Author: Justus Adam <development@justusadam.com>
+Date:   Tue Dec 16 18:03:04 2014 +0100
+
+    Merge pull request #52 from JustusAdam/justus
+    
+    Performed important template changes
+
+[33mcommit 43686c31ad45d73d9ab7df3a22e2dfab037d6d86[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 16 17:56:38 2014 +0100
+
+    changed template to deactivate debug/testing mode
+
+[33mcommit faf82551489ec3489a25f80d7462e6f31e5a23a1[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Tue Dec 16 16:27:25 2014 +0100
+
+    added serious testing
+
+[33mcommit 7e75d5b74694db2a44313050f1f9a37420c91ff4[m
+Merge: 242c8e5 ebb1298
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 16 12:01:27 2014 +0100
+
+    Merge branch 'master' of github.com:JustusAdam/swt-festivalmanager into justus
+
+[33mcommit 242c8e51a1aa7fc101f53e67aaa08b14c51f89cd[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 16 11:57:25 2014 +0100
+
+    template changes
+
+[33mcommit f5cbe63df55c1bd8d7c2c433749fc61fba5c89e0[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Tue Dec 16 09:49:46 2014 +0100
+
+    catering
+
+[33mcommit ebb1298de101e0728dea999fcbb7bf83253be070[m
+Merge: 77d2739 09e467e
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Dec 15 23:03:51 2014 +0100
+
+    Merge pull request #49 from JustusAdam/hendric
+    
+    accountmanagement greatly improved, small style upgrade
+
+[33mcommit 79c5a54c20db99e09f6aac3b8b636f0d98397c90[m
+Merge: 09e467e 77d2739
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Dec 15 22:54:27 2014 +0100
+
+    Merge branch 'master' into hendric
+
+[33mcommit 09e467e88f8c15cfa743941e312df550275f8f02[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Dec 15 22:49:33 2014 +0100
+
+    accountmanagement greatly improved, small style upgrade
+
+[33mcommit c7f63c24891c0c1cd63e1336417eecd905fcc007[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 20:50:21 2014 +0100
+
+    some JavaDoc added
+
+[33mcommit 69a50b08c954211e2ca31d978f540f0c5c3af108[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 19:08:12 2014 +0100
+
+    removing some unnecessary parentheses
+
+[33mcommit ca4ab5af5b59c88b2d7c6670fc1a8910986c7746[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 17:06:02 2014 +0100
+
+    added automatic template removal at page creation
+
+[33mcommit 77d27398e98110a9c3327a2d57565c9acc4e9dea[m
+Merge: 5e7b785 d00b41d
+Author: Justus Adam <development@justusadam.com>
+Date:   Mon Dec 15 17:03:19 2014 +0100
+
+    Merge pull request #47 from JustusAdam/justus
+    
+    Fancy new messaging features
+
+[33mcommit d00b41db0ec42e96b047dd92bc10e146de4c3b89[m
+Merge: f20b17f 5e7b785
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 15:56:50 2014 +0100
+
+    manual merge of master
+
+[33mcommit f20b17faf1717e24d5740fb69e5be2cf28415401[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 15:52:33 2014 +0100
+
+    fixing non-test templates to new structure
+
+[33mcommit 5e7b7855e494a97c61fd44edef592aa494a110a1[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 15 15:52:08 2014 +0100
+
+    junit fix
+
+[33mcommit d81a9f09cd8524ea3a8e1424ce5b83110643454e[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 15 15:45:19 2014 +0100
+
+    internal
+
+[33mcommit c0e52f827b5c3485667b98276717ba6b41c9cd26[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 15:39:17 2014 +0100
+
+    fixed minor bugs in messaging controller, script and templates
+
+[33mcommit eb9368f8abe642ebe6a9a6b0b63fc775a6a0c476[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 14:19:15 2014 +0100
+
+    fixed the CoffeeScript
+
+[33mcommit 6e1b06a2038636797c15f6c62993b256f07ad885[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 15 12:20:16 2014 +0100
+
+    ismirejal irgendwas mit html
+
+[33mcommit c191de202e76ed915e95a8cac27dd453a77c4a66[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 15 11:58:42 2014 +0100
+
+    rewrote messaging in coffeescript
+
+[33mcommit 89ac71f1cc24002327ef2aa840150a5fb1b23a04[m
+Merge: 24aac11 d1b0d28
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Mon Dec 15 11:12:24 2014 +0100
+
+    conflicte behoben
+
+[33mcommit 24aac1110ad5122319ee1e5919aa90c41371cf43[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Mon Dec 15 11:04:58 2014 +0100
+
+    niklas ist ein arsch
+
+[33mcommit 436953536f942031bd28f3348f49c5c70dbb81ba[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Mon Dec 15 10:54:10 2014 +0100
+
+    git geht wieder und der planer macht fortschritte
+
+[33mcommit d1b0d2820d15cd76e09398c7c3b842c0d172b954[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 15 10:41:20 2014 +0100
+
+    added @author to test
+
+[33mcommit d4df713ae8f34e304b8e3b36aad61b7af9730db3[m
+Merge: 7999813 565dbcc
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 15 10:39:45 2014 +0100
+
+    manual merging AbstractWebIntegrationTests.java
+
+[33mcommit 2b22845816d489668d77092e1f0825389dd6347b[m
+Merge: 00e0579 565dbcc
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Mon Dec 15 10:34:21 2014 +0100
+
+    dfs
+
+[33mcommit 79998134c99f89708da75346bf9008c35e1f6ee7[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 15 10:31:41 2014 +0100
+
+    now with successfull junit tests
+
+[33mcommit 565dbcc3bac727778bad9c5ccbcdfaf71bf06a68[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 14 20:53:42 2014 +0100
+
+    tests fixed
+
+[33mcommit d3285bb51c51846e9b37586a695958306a44c61f[m
+Merge: 416ce55 a095cb8
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 14 18:12:30 2014 +0100
+
+    Merge branch 'master' into hendric
+
+[33mcommit 416ce55fca0c547df36b3066bde1d68384069310[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 14 18:07:54 2014 +0100
+
+    working on account management + unit testing
+
+[33mcommit 656900adb3db78be662c837eb42b54888f1d436c[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 14 14:18:21 2014 +0100
+
+    working on account management
+
+[33mcommit a095cb8aaf7077f67e6f4f54d90d104c18e31995[m
+Merge: 1a77b35 d70c14c
+Author: Justus Adam <development@justusadam.com>
+Date:   Sun Dec 14 13:05:13 2014 +0100
+
+    Merge pull request #40 from JustusAdam/justus
+    
+    Messaging with AJAX added
+
+[33mcommit f8658354971a8ae7465d26d0fa05ad1f17376905[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Dec 14 11:33:59 2014 +0100
+
+    working on acccountManagement
+
+[33mcommit d70c14c8d9d1bd9e56a0d04e484d7abd53acde53[m
+Merge: e72601d 1a77b35
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Dec 13 17:36:07 2014 +0100
+
+    Merge branch 'master' of github.com:JustusAdam/swt-festivalmanager into justus
+
+[33mcommit bb8298325cb54bed657a97f8fe284ad7017f9931[m
+Merge: 8399940 1a77b35
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Sat Dec 13 16:38:36 2014 +0100
+
+    manual merge, FvivDataInitializer
+
+[33mcommit 0c5970f15f55be2fe029e10232f24c2a0594da44[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Sat Dec 13 16:29:37 2014 +0100
+
+    there is noc commend needed
+
+[33mcommit c272f1475a4ffde7b93cce066a915228965c4940[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Dec 13 16:19:09 2014 +0100
+
+    removed bin
+
+[33mcommit 985ef5ccb9015b7d246d778399e4d15846378028[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Dec 13 16:17:50 2014 +0100
+
+    remove target
+
+[33mcommit 8399940ad4bafa80908f6739d17020dc94a5d554[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Sat Dec 13 16:13:23 2014 +0100
+
+    added more  or less usefull tests
+
+[33mcommit 00e0579859d6d5d9b4fd0e29f0182bb301029e4f[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Sat Dec 13 15:44:00 2014 +0100
+
+    fucking git adds
+
+[33mcommit c5431e7efb377bc8842ebb268580b970b1eb20f9[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Sat Dec 13 15:39:55 2014 +0100
+
+    ticket dings fertig
+
+[33mcommit 206d1d493bf90627f2779a21199fc094e30fa454[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Sat Dec 13 14:53:03 2014 +0100
+
+    first junit test
+
+[33mcommit d7d80c9946e25ddb6ac075bec24a1c18e583a432[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 23:45:39 2014 +0100
+
+    was vergessen
+
+[33mcommit 679013a67e30b671eeb6d098e22c6d58a33458e7[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 23:43:57 2014 +0100
+
+    pdf so gut wie fertig nur noch anzahl
+
+[33mcommit e72601d5881604827cca98d61926c7fd16fc8073[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Dec 12 23:31:53 2014 +0100
+
+    integration with login, js namespace for messaging, script positioning save
+
+[33mcommit 6c38d745f334b826bdbf464d485453fab9f042aa[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Fri Dec 12 18:23:48 2014 +0100
+
+    it does not work, but there is an progress
+
+[33mcommit 1a77b352ba6679c701adeb0733e76fd691064f25[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Fri Dec 12 17:34:45 2014 +0100
+
+    manager structure changed and style added
+
+[33mcommit 2bde2f8918270c49dd13517a1ac617494bc932f7[m
+Merge: 3a19252 d72b077
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Fri Dec 12 16:44:44 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager
+
+[33mcommit e8856ad8ef953445ff194409232ea00a0aca9e78[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Dec 12 16:25:09 2014 +0100
+
+    Added DataInitializer
+
+[33mcommit 266877a2c76d81bf3d7e8a58b0b63073ab2f3de0[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 15:58:44 2014 +0100
+
+    forgot to add
+
+[33mcommit 35c78e70aeb9cb6615d4f9ee068ec0cd8a6385e3[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Dec 12 15:57:54 2014 +0100
+
+    made recipients more dynamic
+
+[33mcommit cb944445821c564ae5241ed52dd927ac50359bb1[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 15:54:22 2014 +0100
+
+    work
+
+[33mcommit cd016b4a1657f58c0d3438511e58e2d8c74e72d8[m
+Merge: 6efdb67 d72b077
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 15:52:24 2014 +0100
+
+    Merge branch 'master' into nikolai
+
+[33mcommit d72b0770f908ec60a990aafe23ea79780f05f75d[m
+Merge: 3ec9c83 1f4603a
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 15:50:32 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager
+
+[33mcommit 6efdb675f1f12c7d5aed87269c7af9e219f63b96[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 15:44:26 2014 +0100
+
+    arbeiten undso
+
+[33mcommit 3a192525cb9dd160a7ebf4a67295687fcbba0917[m
+Merge: 3ec9c83 1f4603a
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Fri Dec 12 14:58:56 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager
+
+[33mcommit 1f4603a7f26828bb5c11c9cc050eeb29b97a5afb[m
+Merge: cb8e7e6 47e17e3
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Fri Dec 12 14:00:02 2014 +0100
+
+    Merge pull request #35 from JustusAdam/max
+    
+    alle Templates liegen jetzt im src
+
+[33mcommit 47e17e395c7a992a4f55c2f769c1d1ed1dc765f8[m
+Author: MaxSchwarze <max.schwarze@outlook.com>
+Date:   Fri Dec 12 13:55:30 2014 +0100
+
+    alle Templates liegen jetzt im src
+
+[33mcommit 9f677e5485e4bde092bb0e45376f8ffe861bcc55[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Fri Dec 12 13:29:59 2014 +0100
+
+    duplicate for loop removed from CateringDataInitializer
+
+[33mcommit b675cb83a82e55910fc91fac2e9765e0bf1dc6ed[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Dec 12 12:00:12 2014 +0100
+
+    trying different date formats
+
+[33mcommit 369f658a807cd352224d006cdc4f3e3941ae3996[m
+Author: Nikolai Kostka <nikolai.kostka@online.de>
+Date:   Fri Dec 12 11:39:01 2014 +0100
+
+    update master
+
+[33mcommit a34a7d6948bb26278aa33767a156872b6c3f618c[m
+Merge: 5dac5bc 3ec9c83
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Dec 12 10:43:53 2014 +0100
+
+    Merge branch 'master' of github.com:JustusAdam/swt-festivalmanager into justus
+
+[33mcommit 3ec9c83c3fffeed3d889756c227dab2bb8585d71[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Thu Dec 11 22:26:10 2014 +0100
+
+    less code in dataInitializer
+
+[33mcommit 5dac5bc32d2fde9e4e4ccc75ef58053f925dd578[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 11 21:44:43 2014 +0100
+
+    messaging works with ajax, client side optimization not finished yet
+
+[33mcommit 0eef3214ca1737628647376bebe98e6980e2eacf[m
+Merge: 26aaffb cb8e7e6
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 11 19:14:05 2014 +0100
+
+    manually merged master
+
+[33mcommit 26aaffb215005fa9dbe3c0eff7e821a3b9192d2e[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 11 18:04:02 2014 +0100
+
+    incremental commit
+
+[33mcommit 565445462ff68513bb9fdd1efceeafeab0db4405[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 11 12:25:14 2014 +0100
+
+    optimized ajax requests
+
+[33mcommit 20866784a7a1f7862b7afa0557e1cea50960d869[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 11 10:49:06 2014 +0100
+
+    success, it wörks and its biutiful
+
+[33mcommit a395795691ee92bc929e7068f375f949e3029775[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 11 09:01:01 2014 +0100
+
+    more javascript and controller
+
+[33mcommit e0156810b13e124f2af1498450e512fb34be48bf[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 10 23:46:19 2014 +0100
+
+    more javascript and controller
+
+[33mcommit f837760f269f644e04090c0c6d34dab6241fa744[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 10 22:51:24 2014 +0100
+
+    implementing ajax
+
+[33mcommit e6079c2f08d7b55de4979d8b2816303e36f136bb[m
+Merge: 9e90c17 cb8e7e6
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 17:20:16 2014 +0100
+
+    Merge branch 'master' into niklas
+
+[33mcommit cb8e7e69d8a071cda821b2bba86fea565ce903a7[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 10 17:18:28 2014 +0100
+
+    manager functions added
+
+[33mcommit 9e90c17a70befdd84f9c2802574e5153b8a6fad5[m
+Merge: b18a060 bc11b1b
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 17:18:04 2014 +0100
+
+    employeeRepository still missing
+
+[33mcommit b18a060937b13e3172eca3a7268e25a62acbc357[m
+Merge: ca72b0e 48b98ef
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 17:10:45 2014 +0100
+
+    merge conflict hendric
+
+[33mcommit ca72b0effd45c2fc75476d2987bcbf91b78378db[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 17:05:20 2014 +0100
+
+    sth
+
+[33mcommit bc11b1b36b3ff543859a1020b0d5b636dc68df98[m
+Merge: bd1ae5c 41b1b6c
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 10 17:02:50 2014 +0100
+
+    merge conflict
+
+[33mcommit bd1ae5cb3b87421ae02ee755811d971c297f8bc9[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 10 17:00:27 2014 +0100
+
+    manager working
+
+[33mcommit 41b1b6cecb777c4f2f4fcb25ddfd6848cb975769[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 15:40:51 2014 +0100
+
+    fixed Controller and index.html
+
+[33mcommit b9007bfa908675275cdd5f27361e01fab97c4868[m
+Merge: 199b501 058631c
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 10 15:02:47 2014 +0100
+
+    manual merging
+
+[33mcommit 707f172bc1c52c8c5f22de4a81b1f02a971764e7[m
+Merge: d5b766a d2608ca
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 14:59:44 2014 +0100
+
+    manual merging of cateringcontroller
+
+[33mcommit d2608ca0ee0a0117b2dab3cea688175323c1fb83[m
+Merge: 26a0a43 058631c
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 14:55:42 2014 +0100
+
+    manual merge of index.html
+
+[33mcommit 199b5018db27140c1495e9c113b971db3662aab1[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 10 14:49:45 2014 +0100
+
+    minor updates
+
+[33mcommit 26a0a4343653440b111124b95ca77de4ae75d5e1[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 14:48:03 2014 +0100
+
+    index
+
+[33mcommit d5b766a7112c787f76821a29adb181ba3aa75917[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Wed Dec 10 14:46:06 2014 +0100
+
+    post
+
+[33mcommit 058631ca0e43fb3dbf123b2741dcc6a0c79fbcc0[m
+Merge: b53c41d a1d7f54
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Tue Dec 9 22:39:31 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager
+
+[33mcommit b53c41dd474bb9e3501185d47b0b69bb4c755d18[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Tue Dec 9 22:38:45 2014 +0100
+
+    index.html liegt im dokumente-Ordner mit drin
+
+[33mcommit a1d7f5433fd2d88ce9f66f4896600e54897642f9[m
+Merge: 0779636 7d5ed7f
+Author: Justus Adam <development@justusadam.com>
+Date:   Tue Dec 9 22:37:07 2014 +0100
+
+    Merge pull request #24 from JustusAdam/justus
+    
+    Merging stuctural changes
+
+[33mcommit 7d5ed7f95e46e1c3a8eaf001827d0740958be8db[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 22:31:39 2014 +0100
+
+    renamed messaging controller
+
+[33mcommit f18bbf23f59b50b24ad1c359f6a22f4575905ea5[m
+Merge: 7f50693 0779636
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 22:20:48 2014 +0100
+
+    merged branch master
+
+[33mcommit 18086f8b1a92321a6f9a2e61e9dae8df21afa9f8[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Tue Dec 9 22:05:20 2014 +0100
+
+    changed ordermodechange to post-buttons
+
+[33mcommit 7f506932afa0529f1f3fe71fac62ad8dc71ad346[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 21:40:15 2014 +0100
+
+    using UserAccount
+
+[33mcommit 07796364d8ac0684ac543861a8021ea1d46ba3db[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Tue Dec 9 18:39:58 2014 +0100
+
+    sachen
+
+[33mcommit 5b079de60dc86d322fd11cdee3fe0084888fd933[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 15:50:22 2014 +0100
+
+    this is absolute horseshit
+
+[33mcommit e63515e234055d2f599f46d74020253652b91849[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 15:31:16 2014 +0100
+
+    fixing stuff
+
+[33mcommit 3e8a87e4dd1c2e101e523a8eb3ed91bb53ec02de[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 13:42:38 2014 +0100
+
+    skeleton for ajax and templates, more helper methods
+
+[33mcommit 645be24fea39c3be8bb4bfd717311cdc98539974[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Dec 9 12:53:27 2014 +0100
+
+    first raw messaging skeleton
+
+[33mcommit a81dff2a0c1e45c1a331762ab5c14cba4eaa64e8[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 21:06:59 2014 +0100
+
+    removed requestmapping /
+
+[33mcommit 48b98efc5738c11e6bfe60015bf581664aeff710[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Dec 8 19:55:44 2014 +0100
+
+    +manager functions (lots of errors)
+
+[33mcommit 39e9ace0be15cfdbc8421fb0909f0a4fb08d178e[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Dec 8 19:41:36 2014 +0100
+
+    manager functions added - still lots of errors
+
+[33mcommit 09422eb17d829486b38775a4f6f031cae27ff1c9[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Dec 8 19:35:05 2014 +0100
+
+    manager functions added - still lots of errors
+
+[33mcommit 081a8069847fa20f446b6846c23ac8c3b015c52e[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 17:46:24 2014 +0100
+
+    /
+
+[33mcommit 970b890e4d480744e91827c7278f074154e59e6a[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 17:00:47 2014 +0100
+
+    added account description
+
+[33mcommit 1e6478e93309ff144bbf9af1ce31791d70a76890[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 16:37:29 2014 +0100
+
+    removed a comment
+
+[33mcommit 360effec9643335c59600ddebf7ff1fc9995d5f9[m
+Merge: b7b2a36 3810570
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 12:46:09 2014 +0100
+
+    Merge branch 'master' of https://www.github.com/justusadam/swt-festivalmanager
+
+[33mcommit b7b2a36f891c2918717652c851247ff70c2fd52d[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 12:45:28 2014 +0100
+
+    login changed
+
+[33mcommit 38105707f574accf714add638e0c1c3d404ecb4f[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Dec 8 11:16:49 2014 +0100
+
+    removed prototype, sources have moved
+
+[33mcommit 7b6425006c42dba218f159816840a7948d030f7f[m
+Author: Niklas Fallik <n.fallik@googlemail.com>
+Date:   Mon Dec 8 10:45:48 2014 +0100
+
+    login
+
+[33mcommit fb3781ac88cf04655467551645eba6efdb678e38[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Sun Dec 7 20:19:55 2014 +0100
+
+    fixed an css problem
+
+[33mcommit 817b80a39c7484362e4cec3b112422319fe02bc2[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Sat Dec 6 18:12:40 2014 +0100
+
+    edited messages.properties, added Total Price, replaced meals- and drinksRepository by menusRepository and added a type to Menu class
+
+[33mcommit ca8ecb47b4494c3513aebaccf7027a70a4488d50[m
+Author: Justus Adam <development@justusadam.com>
+Date:   Thu Dec 4 08:35:54 2014 +0100
+
+    Update README.md
+    
+    Added build status icon
+
+[33mcommit b095f8e3b5926a010b924326faf31828bc2ac0e6[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 4 08:29:29 2014 +0100
+
+    new directory structure, copied catering prototype as skeleton for final product
+
+[33mcommit 0eccea47cd6aaca72a0af6e53031ba62f64e401b[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 4 08:12:44 2014 +0100
+
+    travis does not like tabs
+
+[33mcommit 6c6ac9fc0b812b9fde487f61dc62fe2478e571be[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Dec 4 08:11:32 2014 +0100
+
+    adding continuous integration with travis
+
+[33mcommit 44e87906269156a053ac21ccbd5f101488b5e543[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Wed Dec 3 18:28:13 2014 +0100
+
+    Prototype ist working- not perfect, but functional :)
+
+[33mcommit 6ed95cb9d64d0b73ac31547cc2e2acb97facd9b0[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 3 18:11:15 2014 +0100
+
+    css changes
+
+[33mcommit 29c303e5d1b77634841f5c9542ab30ba61c47bdc[m
+Merge: 773c611 ef005b5
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 3 18:06:32 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit 773c611abed10a447c378f0e4a2a39039dfb5493[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 3 18:05:48 2014 +0100
+
+    css changes
+
+[33mcommit ef005b57ca4f962081b37ead55f1741e2acdaf35[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Dec 3 17:30:55 2014 +0100
+
+    managerPrototype delete method
+
+[33mcommit fd26116024a02837fad7c551b70635006fc67198[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Dec 3 17:28:24 2014 +0100
+
+    fix accessing cart amount
+
+[33mcommit 5c3046ba7f6445ba9bfcddfeeb0e92f7ca6e2983[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Wed Dec 3 15:03:16 2014 +0100
+
+    up to date but nothing is happened
+
+[33mcommit 9b7f6147e337267e0f2d9df2307061a670443809[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Wed Dec 3 15:02:22 2014 +0100
+
+    NoSuchMethodError
+
+[33mcommit 4293436976546498b15cf5a065fafaea3636049d[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Wed Dec 3 11:38:36 2014 +0100
+
+    soo der Prototyp kann jetzt schon fast was, wenn ich nicht so ne komische Fehlermeldung von wegen requestmethod 'get' not supported bekommen wuerde.
+
+[33mcommit 388a5a89c62c1019980b556f70ed41df7f3fdadd[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Tue Dec 2 20:53:04 2014 +0100
+
+    typo
+
+[33mcommit 610ed78efc665d238f6b2460e22d7a3f5876f20b[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Tue Dec 2 20:19:06 2014 +0100
+
+    prototyp
+
+[33mcommit 0cf1beaa613d933809072ebadb5d438304b40833[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Tue Dec 2 20:17:49 2014 +0100
+
+    work
+
+[33mcommit 6e4691f251dcd88f3eebf01268ea87e821f71952[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Tue Dec 2 18:34:47 2014 +0100
+
+    mein Prototyp macht Fortschritte
+
+[33mcommit fbfe2dee043cc60db4053c42d35af5c64dd049d3[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Tue Dec 2 18:08:30 2014 +0100
+
+    bufgix
+
+[33mcommit 38fa5569be3d22b03a193e70ef798fb579b0e4f5[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Tue Dec 2 17:18:03 2014 +0100
+
+    added login to CateringPrototype
+
+[33mcommit 1908b85217b5fd2661175a45ee98fce064142422[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Mon Dec 1 22:36:09 2014 +0100
+
+    shitty adds vergessen
+
+[33mcommit 0de9dc9802a556c85cf9ae7f220cab0c25f0f4da[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Mon Dec 1 13:53:58 2014 +0100
+
+    pdf prototyp update + mit manager integriert
+
+[33mcommit c936c0c4889de9ba753994ee0a1c3dda4c897480[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sun Nov 30 15:48:10 2014 +0100
+
+    added main project as clone of Messaging
+
+[33mcommit 3878766ace2de2e28ec08568aaa9dcf7d561f695[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Fri Nov 28 20:01:53 2014 +0100
+
+    added basket.commit
+
+[33mcommit 83f3bc2d415ec43e85e629b87cb892782a1255ef[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Fri Nov 28 19:55:33 2014 +0100
+
+    changed salespoint class 'cart' to salespoint class 'basket' in OrderController.java
+
+[33mcommit 3d242fb4a86f38eeabc68bbc7e2c35963297b5ec[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Nov 27 21:09:48 2014 +0100
+
+    pflichtenheft nun mit salespointklassen
+
+[33mcommit bf847d162764ed110415348857120ef0d8189d12[m
+Merge: e6d77fd 3646e09
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 27 20:05:29 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit e6d77fd24853ef07868fb57416b75c6b652b6171[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 27 20:01:38 2014 +0100
+
+    made it all wor again using the database
+
+[33mcommit 3646e09e92e0dfc317acc7e011823172eaf12106[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Thu Nov 27 17:31:45 2014 +0100
+
+    Salespoint Klassen hinzugefügt
+
+[33mcommit 5fa5d831c2ff365bcb6346bb7ccc8d7c2b925022[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Nov 27 17:19:50 2014 +0100
+
+    pflichtenheft nun auch im git avaible
+
+[33mcommit 27ee5c93e3070a33e4de3601c1ba96a4b2635372[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Nov 27 17:17:53 2014 +0100
+
+    undo
+
+[33mcommit d581276772a008f7ee142363634f16b62f68ec14[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Nov 27 17:12:42 2014 +0100
+
+    undo
+
+[33mcommit e33e1d97ec6ceb441f7a4de770ea073db14f24ad[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Nov 27 16:36:30 2014 +0100
+
+    added pdf prototyps
+
+[33mcommit f84658938efa74c92411fdd6f64d2ae48d66a65a[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Thu Nov 27 16:32:58 2014 +0100
+
+    readme brauchen bild für barcode erstellung ebenso wie barbecue lib.
+
+[33mcommit 6e7142183f3ad550d7ec15d97551eadb1d77d86d[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Thu Nov 27 14:42:03 2014 +0100
+
+    Soo mein upgedateter Kram, duefte jetzt auch was in die Datenbank legen
+
+[33mcommit 915f5b058ce5ade504ef49c51dc63e80b3f95839[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Wed Nov 26 19:57:20 2014 +0100
+
+    sauber aber immer noch mit NullPointer
+
+[33mcommit 2cf09ef735233886aa6d2908e1120ffec0a83901[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Wed Nov 26 16:43:12 2014 +0100
+
+    immer noch NullPointer
+
+[33mcommit 03a4aac30d91b9c95bb7c7b347cd8ee5c2eb71a1[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Wed Nov 26 14:45:27 2014 +0100
+
+    jetzt vollständig..
+
+[33mcommit 1e5bb5d9e4ae4dcb5f70cc1fe2b49c34b03a9b76[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Nov 26 11:49:35 2014 +0100
+
+    addEmployee implemented
+
+[33mcommit cdcd510263f6bc89e25bea677ed32087b6d118f7[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Wed Nov 26 07:47:22 2014 +0100
+
+    NullPointerException in CateringDataInitializer.java
+
+[33mcommit af609d26d71a979540182cfe07af5e10933904b7[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Tue Nov 25 13:33:48 2014 +0100
+
+    soo, hab zwar nicht sehr viel mehr zum laufen gebracht, aber hier ist der aktuelle mist
+
+[33mcommit ea7ca071e1764686de7aebd77f3c86e6fad626ea[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Tue Nov 25 12:42:12 2014 +0100
+
+    ManagerPrototype update
+
+[33mcommit a7db5dbb29ecae4e4f71b85396de67476681eb92[m
+Author: HendricEckelt <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Tue Nov 25 12:38:10 2014 +0100
+
+    ManagerPrototype update
+
+[33mcommit 6fb79b1822cdff5ffbb81c46ac33f98e6331c4f0[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Nov 25 12:19:02 2014 +0100
+
+    embedding database
+
+[33mcommit 42b667166b35c2e4253adb1778aa61f3aff779ef[m
+Merge: 19146e8 18801fa
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Nov 25 12:15:30 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit 18801fa2652882b1a994d36e6d6a5ac9767e7707[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Tue Nov 25 09:54:00 2014 +0100
+
+    Some Exceptions ...141 more
+
+[33mcommit 19146e8b2c823b34f96155666166d2bab6645cf3[m
+Merge: 5c7afb0 b6eaec8
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 24 23:36:13 2014 +0100
+
+    Merge branch 'master' of github.com:JustusAdam/swt-festivalmanager
+
+[33mcommit 5c7afb0a675beaf8a277dcc2b7696ea840942a26[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 24 23:35:23 2014 +0100
+
+    embedding database
+
+[33mcommit b6eaec837d2b1c27dd2e00e27df78c74554044e4[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Mon Nov 24 20:51:40 2014 +0100
+
+    Soo hier ist jetzt auch mein angefangener Prototyp
+
+[33mcommit f416e24cd5c0b1ad7948a955331cdd690ac8174f[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 24 17:35:55 2014 +0100
+
+    made css stuff work, prettifying
+
+[33mcommit c699a2247d457819d25ca0c71d607d79406b5499[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 24 09:30:48 2014 +0100
+
+    removing IDE files and images, they do not belong here
+
+[33mcommit 92d12e04dc804e6a617b11daf3a2d70c4f0b3684[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 24 08:57:29 2014 +0100
+
+    rollback and removed project files
+
+[33mcommit 58c93a6a4d4771eb3fc956eb09d9f3f1c06696c7[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Sun Nov 23 15:06:23 2014 +0100
+
+    Prototyp kann zählen
+
+[33mcommit 23a58dff7a881a4a988ecd4d2c61ff431329ba03[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sat Nov 22 23:46:09 2014 +0100
+
+    ManagerPrototype - added style.css
+
+[33mcommit 90c2f354fa9eb068c917ea8e8f8437e73f5e1828[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Nov 22 23:37:06 2014 +0100
+
+    fun animations
+
+[33mcommit 8f726275b5394b5c3926f8a6cf9aa5dd7ded8aef[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Nov 22 22:15:24 2014 +0100
+
+    MOAR featurezz
+
+[33mcommit 4a1267a1c355f87d6783d369afb3894d9e6877eb[m
+Merge: 4deddb4 8d32ede
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Nov 22 19:16:12 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit 4deddb420a323f80d0e5588d46da991969b5d70e[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Nov 22 19:15:57 2014 +0100
+
+    making things prettier, using different (easier) converter
+
+[33mcommit 8d32ede4ad74dfddb9ae1c3782672b54640e1f5d[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sat Nov 22 17:45:04 2014 +0100
+
+    ManagerPrototype - checkFinances working
+
+[33mcommit 0bb574e9fe3d46de10e6d3eaecfa3158db60f74e[m
+Merge: 77cf6ef 10d3970
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sat Nov 22 15:18:04 2014 +0100
+
+    ManagerPrototype - check employee working
+
+[33mcommit d4dcd58b08f2e3c5ee4c1a845792ba4f0ae62bbe[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sat Nov 22 12:46:41 2014 +0100
+
+    making things prettier
+
+[33mcommit 77cf6eff48a52049a85d909426061d93864fad38[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sat Nov 22 12:29:44 2014 +0100
+
+    ManagerPrototype - check employee working
+
+[33mcommit 10d3970989bf3c3e63ca6c4c65fd6517b23ba017[m
+Author: NikolaiKostka <nikolai.kostka@online.de>
+Date:   Sat Nov 22 10:48:06 2014 +0100
+
+    prototyp zum pdf erstellen
+
+[33mcommit 65410713bc59143c79b5dcd64b064cacc1d457cd[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sat Nov 22 01:08:31 2014 +0100
+
+    ManagerPrototype - working on check employee method
+
+[33mcommit 1c99549222206170f40ccb5107dda184ff8c8103[m
+Author: Maxx_dd <geigenmaxe@gmx.de>
+Date:   Fri Nov 21 14:45:15 2014 +0100
+
+    Immerhin schonmal der Anfang des Planer-Prototypen. Laeuft aber leider noch ueberhaupt nicht
+
+[33mcommit 3caf8d5db82ed85d3589b24ceb0352c6559053f7[m
+Merge: 9548f02 1d24f33
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Nov 21 13:37:25 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit 9548f02bf20311d515fc174901cd2a442bd076db[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Nov 21 13:36:24 2014 +0100
+
+    using more syntactic sugar
+
+[33mcommit e61d68f5d97ba449b20c3d6e5ab256d32e4454a1[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Nov 21 13:15:11 2014 +0100
+
+    trying to work out how to access database
+
+[33mcommit 1d24f3300ac03be3b5142944537b401b4ffbc89c[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Fri Nov 21 11:18:39 2014 +0100
+
+    ManagerPrototype aktuell (not working)
+
+[33mcommit 1c535d87abff476689316328ee007c7c70700193[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Fri Nov 21 00:12:03 2014 +0100
+
+    abstracting for future persistence
+
+[33mcommit 5ef2427713f12da8b8ef1f800bf9ea28d52f1492[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 22:17:56 2014 +0100
+
+    added one more test class, preparing for persistent storage
+
+[33mcommit ed5f5f6ac7d1eb959d23bb637621727042fe10df[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 20:15:46 2014 +0100
+
+    added support for classes that both receive and send
+
+[33mcommit b617bedc23af73acf06ba6af390fddb2e8fcd92f[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 18:20:48 2014 +0100
+
+    fixed it
+
+[33mcommit 894e3830c13ece02cd4f62d52e4e374cc6ab706f[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 17:34:31 2014 +0100
+
+    fixed server
+
+[33mcommit df44022aaa1cf85424f3b74d0502ca3c53872a26[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 13:55:44 2014 +0100
+
+    added checking for type of person
+
+[33mcommit d8dc77309fedc43f27bf7e4abe5c4d672bb4941c[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Thu Nov 20 13:39:53 2014 +0100
+
+    ManagerPrototype update
+
+[33mcommit dba98089e9658fc37be969c7b755d0803673d229[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 12:59:18 2014 +0100
+
+    fixing test interface
+
+[33mcommit e0afc8a74df95642a88a9df24483d29d1fd6a620[m
+Merge: 0ee61d5 4db8231
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 12:05:39 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit 0ee61d51682d6c9fe7bcecfdc888c6b2244b91b8[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 12:05:11 2014 +0100
+
+    fixing test interface
+
+[33mcommit c08dc12885618989e67ba23330cf6c4f19b5b2a3[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Thu Nov 20 00:04:39 2014 +0100
+
+    starting on a test web interface
+
+[33mcommit 18bc98d8bb66b3f95560fb7d7091a502bb6c0b7a[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 23:30:05 2014 +0100
+
+    better base classes
+
+[33mcommit 4db8231f055556bba170a175a1daa90856d6aca8[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Nov 19 19:27:19 2014 +0100
+
+    ManagerPrototype added - no functions implemented yet
+
+[33mcommit 0da412937c2b739ed4e24e2055a53a69aa235e22[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 18:33:05 2014 +0100
+
+    removed some warnings
+
+[33mcommit 98d6e134e4664879ef71acb121549624ede9624b[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 17:51:29 2014 +0100
+
+    added receiving date
+
+[33mcommit 8c4ff0d1756887e6b153c80b99fc31fd6c7f8c62[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 17:44:30 2014 +0100
+
+    added 'read' boolean and fetching new messages
+
+[33mcommit 0064e83d46be0b7958007dd139bf0e74beb52d07[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 17:30:54 2014 +0100
+
+    added check for new messages
+
+[33mcommit a3188d7a652b152cab2028e5a4e70ea2340767e1[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 16:16:04 2014 +0100
+
+    added comments
+
+[33mcommit 2590fd327c693275c9cabd92ae899154fbf28286[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 16:12:22 2014 +0100
+
+    added exception for non existent user
+
+[33mcommit dfc046a66037117287b7b04ffa199bd765c264d3[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 16:04:16 2014 +0100
+
+    added inbox
+
+[33mcommit 6ed4b372477784cb5f16b764fa1021c658921364[m
+Merge: 5ff0e7c b9eb4ac
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 11:28:23 2014 +0100
+
+    Merge remote-tracking branch 'github/master'
+
+[33mcommit 5ff0e7c35176b0f9ef1ac629260c108ac71ae0ed[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Wed Nov 19 11:27:02 2014 +0100
+
+    extending prototype
+
+[33mcommit f6206b9645e628ba1177029d186666c1502aa8e1[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Tue Nov 18 23:45:16 2014 +0100
+
+    basic messaging prototype
+
+[33mcommit b9eb4ac99fd85c1f7f200974faa6ea2c603bfe79[m
+Merge: bf94ade d6096b6
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Mon Nov 17 16:39:49 2014 +0100
+
+    Merge branch 'master' of https://github.com/JustusAdam/swt-festivalmanager
+
+[33mcommit bf94ade861deecf59c955c6627c2611cd0e75db7[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Mon Nov 17 16:10:17 2014 +0100
+
+    CateringPrototype now with some @Annotations..
+
+[33mcommit d6096b62ce7746382883d81177b0647518d26fb7[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 17 12:01:43 2014 +0100
+
+    removed target, it war still tehre
+
+[33mcommit 903a041c87d8b8209ee9768835a4058d0be45d9d[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Mon Nov 17 10:28:08 2014 +0100
+
+    added CateringPrototype
+
+[33mcommit 8469931eeba2492e9a374b0a15db78a907642a91[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Mon Nov 17 10:26:40 2014 +0100
+
+    added targetfolder
+
+[33mcommit 232dacdea9bd50253ed6fa5940b0ae93c567b53c[m
+Author: Fallik <niklas.fallik@mail.zih.tu-dresden.de>
+Date:   Thu Nov 6 23:16:26 2014 +0100
+
+    test
+
+[33mcommit 98a9e62e3d2b91a4a1f88271448eba2563e77e85[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Mon Nov 3 10:02:22 2014 +0100
+
+    minor changes
+
+[33mcommit 7c57cec9617a92915bccb15354da42d5d956d84d[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sun Nov 2 16:52:40 2014 +0100
+
+    extending people and workplaces
+
+[33mcommit 30d6e46e6161022d749f12564bad5cb3997fb19a[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sun Nov 2 16:35:37 2014 +0100
+
+    added subdiagram for people
+
+[33mcommit 6dd4907a258f1c4ab1882b0a4540fffc04664fb9[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sun Nov 2 15:55:54 2014 +0100
+
+    modify xml
+
+[33mcommit cce8655f27ccb55b75e2c3a8a03b8aaf1ee417bc[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sun Nov 2 15:55:15 2014 +0100
+
+    extending Planungsabteilung
+
+[33mcommit 519404a45d5835f0b3e82df4578021d2bd2d3dce[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Sun Nov 2 14:31:19 2014 +0100
+
+    Use-Case und Sequenz XML hinzugefügt
+
+[33mcommit 14be13708e9ad6b08e1e75e01536456134d96bd3[m
+Author: JustusAdam <development@justusadam.com>
+Date:   Sun Nov 2 12:24:56 2014 +0100
+
+    extending planungsabteilung
+
+[33mcommit d1508fd8c0eb25b88aad93ef5f11b280121f4db9[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Wed Oct 29 10:19:18 2014 +0100
+
+    Sequenzdiagramm hinzugefügt
+
+[33mcommit a754326ad782662a773224b2b92303751a7381b9[m
+Author: Hendric <Hendric.Eckelt@mailbox.tu-dresden.de>
+Date:   Mon Oct 27 19:40:37 2014 +0100
+
+    UML hinzugefügt
+
+[33mcommit 2e50ad0a421da014dc1e1d8b479ebf50aa8ffddd[m
+Author: Justus Adam <justusadam@wf1005.dip.tu-dresden.de>
+Date:   Wed Oct 15 13:25:09 2014 +0200
+
+    added readme and gitignore

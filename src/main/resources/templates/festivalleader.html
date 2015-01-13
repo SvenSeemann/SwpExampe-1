@@ -1,0 +1,184 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Author: Hendric Eckelt -->
+
+<head>
+<meta charset="utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/manager.css" />
+<title>Manager</title>
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script th:inline="Javascript">
+$(function () { 
+	
+	var cateringExpTotal = [[${catExpTot.getAmountMajorLong()}]];
+	var cateringDepTotal = [[${catDepTot.getAmountMajorLong()}]];
+	
+	var balance = cateringDepTotal - cateringExpTotal;
+	
+    $('#financesChart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'FVIV Finanzen'
+        },
+        xAxis: {
+        	categories: ['Gesamt']
+        },
+        yAxis: {
+            title: {
+                text: 'Ausgaben in €'
+            }
+        },
+        series: [{
+        	name: 'Balance',
+        	data: [balance]
+    	},{		
+            name: 'Einnahmen: Catering',
+            data: [cateringDepTotal]
+        },{
+        	name: 'Ausgaben: Catering',
+        	data: [cateringExpTotal]
+        }]
+    });
+});
+</script>
+
+</head>
+
+<body>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs">angemeldet als:</div>
+			<div th:switch="${managermode}">
+				<div th:case="employees">
+					<div id="title">MITARBEITER</div>
+				</div>
+				<div th:case="finances">
+					<div id="title">FINANZEN</div>
+				</div>
+				<div th:case="accounts">
+					<div id="title">ACCOUNTS</div>
+				</div>
+				<div th:case="*">
+					<div id="title">TERMINAL</div>
+				</div>
+			</div>
+			<div id="loginName" th:text="${#authentication?.name}"></div>
+		</div>
+		<div id="content">
+			<div id="substance">
+				<div id="chooseManagerView" th:switch="${leadermode}">
+
+					
+
+					<!-- FINANCES -->
+
+					<div th:case="finances">
+						<div align="center">
+
+			
+
+							<table class="cateringTable">
+								<tr>
+									<th>Catering Ausgaben Betrag:</th>
+								</tr>
+								<tr th:each=" item : ${cateringExpense}">
+									<td th:text="${item.amount}"></td>
+								</tr>
+								<tr>
+									<th>Total:
+										<p th:text="${catExpTot}" />
+									</th>
+								</tr>
+							</table>
+
+							<table class="cateringTable">
+								<tr>
+									<th>Catering Einnahmen Betrag:</th>
+								</tr>
+								<tr th:each=" catering : ${cateringDeposit}">
+									<td th:text="${catering.amount}"></td>
+								</tr>
+								<tr>
+									<th>Total:
+										<p th:text="${catDepTot}" />
+									</th>
+								</tr>
+							</table>
+
+							
+
+						</div>
+						<div id="financesChart"></div>
+					</div>
+
+					<!-- STOCK -->
+
+					<div th:case="checkStock">
+						<table>
+							<tr>
+								<td>Menu</td>
+								<td>Quantity</td>
+								<td>Purchase price</td>
+								<td>Selling price</td>
+								<td>Get more</td>
+							</tr>
+							<tr th:each="item : ${inventory}">
+								<td th:text="${item.product.name}" />
+								<td th:text="${item.quantity}" />
+								<td th:text="${item.product.purchasePrice}" />
+								<td th:text="${item.product.sellingPrice}" />
+								<td>
+									<form action="/orderMore" method="post">
+										<input type="hidden" name="itemid" value="0"
+											th:value="${item.identifier}" /> <input id="number"
+											type="number" name="units" min="1" max="50" step="1"
+											placeholder="0" /> <input type="submit" class="button_green"
+											value="Order!" style="margin-top: 2px;" />
+									</form>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<!-- Standard case -->
+					<div th:case="*">
+						<img src="../resources/img/FVIVgmbh.png"
+							style="width: 100%; height: 150px;"></img>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- MENU -->
+
+		<div id="menu">
+			<form action="/logout" method="post">
+				<input type="submit" class="slimButton" value="Logout"></input>
+			</form>
+			<form>
+				<div th:include="messaging :: messaging"></div>
+			</form>
+			<form method="post" action="/Terminal">
+				<input type="submit" class="boldButton" value="Terminal"></input>
+			</form>
+			<form method="post" action="/Finances">
+				<input type="submit" class="boldButton" value="Finanzen"></input>
+			</form>
+			<form method="post" action="/Stock">
+				<input type="submit" class="boldButton" value="Stock"></input>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
