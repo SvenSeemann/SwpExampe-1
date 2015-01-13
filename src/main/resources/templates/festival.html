@@ -81,21 +81,22 @@
 					<div th:case="festival">
 						<form th:action="@{/newFestival}" method="post">
 							<fieldset>
+							<label class="label" for="locationId"> Location
+									ausw&auml;hlen: </label><select name="festivalId" size="1">
+									<option th:each=" location : ${locationlist}"
+										th:text="${location.id} + ${location.name}"
+										th:value="${location.id}"></option>
+								</select><br />
 								<label class="label" for="festivalName"> <input
 									type="text" name="festivalName" size="40"
 									placeholder="festivalname"></input>Festivalname
-								</label> <br /> <label class="label" for="location"> <input
-									type="text" name="location" size="40" placeholder="Adresse"></input>Adresse
-								</label> <br /> <label class="label" for="startDate"> <input
+								</label> <br />  <label class="label" for="startDate"> <input
 									type="date" name="startDate" size="40" placeholder="yyyy-MM-dd"></input>Startdatum
 								</label> <br /> <label class="label" for="endDate"> <input
 									type="date" name="endDate" size="40" placeholder="yyyy-MM-dd"></input>EndDatum
 								</label> <br /> <label class="label" for="actors"> <input
 									type="text" name="actors" size="40" placeholder="Künstler"></input>Künstler
-								</label> <br /> <label class="label" for="maxVisitors"> <input
-									type="text" name="maxVisitors" size="40"
-									placeholder="Festivalkapazität"></input>Festivalkapazität
-								</label> <br /> <label class="label" for="preisTag"> <input
+								</label> <br />  <label class="label" for="preisTag"> <input
 									type="text" name="preisTag" size="40"
 									placeholder="Kosten Tageskarte"></input>Kosten Tageskarte
 								</label> <br /> <input type="submit"
@@ -113,7 +114,7 @@
 								<th>StartDatum</th>
 								<th>EndDatum</th>
 								<th>Festival Name</th>
-								<th>Adresse</th>
+								<!-- <th>Adresse</th> -->
 								<th>Künstler</th>
 								<th>Maximale Besucher</th>
 								<th>Kosten TagesKarte</th>
@@ -124,7 +125,7 @@
 								<td th:text="${festival.startDatum}"></td>
 								<td th:text="${festival.endDatum}"></td>
 								<td th:text="${festival.festivalName}"></td>
-								<td th:text="${festival.location}"></td>
+								<!-- <td th:text="${festival.location}"></td> -->
 								<td th:text="${festival.actors}"></td>
 								<td th:text="${festival.maxVisitors}"></td>
 								<td th:text="${festival.preisTag}"></td>
