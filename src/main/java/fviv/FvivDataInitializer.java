@@ -93,8 +93,8 @@ public class FvivDataInitializer implements DataInitializer {
 		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", new Role("ROLE_GUEST"));
 		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", new Role("ROLE_GUEST"));
 		
-		festival1.setUserAccount(festivalAccount1);
-		festival2.setUserAccount(festivalAccount2);
+	//	festival1.setUserAccount(festivalAccount1);
+	//	festival2.setUserAccount(festivalAccount2);
 		
 		userAccountManager.save(festivalAccount1);
 		userAccountManager.save(festivalAccount2);
@@ -169,14 +169,18 @@ public class FvivDataInitializer implements DataInitializer {
 		manager.add(Roles.sender);
 		UserAccount caterer = userAccountManager.create("caterer", "123",
 				catererRole);
+
 		caterer.setFirstname("Der");
 		caterer.setLastname("Caterer");
 		caterer.add(Roles.receiver);
 		caterer.add(Roles.sender);
+		UserAccount leader = userAccountManager.create("leader", "123", Roles.leader);
+
 		userAccountManager.save(boss);
 		userAccountManager.save(manager);
 		userAccountManager.save(caterer);
-
+		userAccountManager.save(leader);
+		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
 				"123", employeeRole);

@@ -197,14 +197,6 @@ public class Festival {
 	public void setQuantCleaning(int quantCleaning) {
 		this.quantCleaning = quantCleaning;
 	}
-
-	public UserAccount getUserAccount() {
-		return userAccount;
-	}
-
-	public void setUserAccount(UserAccount userAccount) {
-		this.userAccount = userAccount;
-	}
 	
 	
 }

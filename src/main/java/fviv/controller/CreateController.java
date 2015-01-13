@@ -196,7 +196,7 @@ public class CreateController {
 		UserAccount festivalAccount = userAccountManager.create("festival" + festival.getId(), "123", new Role("ROLE_GUEST"));
 		
 		userAccountManager.save(festivalAccount);
-		festival.setUserAccount(festivalAccount);
+		//festival.setUserAccount(festivalAccount);
 		festivalRepository.save(festival);
 		
 		return "redirect:/festival";
