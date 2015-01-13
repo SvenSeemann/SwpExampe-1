@@ -25,6 +25,8 @@ import fviv.areaPlanner.AreaItem.Type;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.FestivalRepository;
 import fviv.festival.Festival;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
 
 // by niko // festivalerstellungscontroller
 
@@ -33,22 +35,30 @@ import fviv.festival.Festival;
 public class CreateController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 	private final FestivalRepository festivalRepository;
+	private final LocationRepository locationRepository;
 	private String mode = "festival";
 	private Festival selected;
 	private AreaItemsRepository areaItems;
 	private UserAccountManager userAccountManager;
 
 	@Autowired
-	public CreateController(FestivalRepository festivalRepository, UserAccountManager userAccountManager) {
+	public CreateController(FestivalRepository festivalRepository, LocationRepository locationrepository,UserAccountManager userAccountManager) {
 		this.festivalRepository = festivalRepository;
+		this.locationRepository = locationrepository;
 		this.userAccountManager = userAccountManager;
-	}
 
+
+	}
+/**
+ * index method and Modelmapping of the festivallist and locationlist
+ * @param modelMap
+ * @return
+ */
 	@RequestMapping({ "/festival" })
 	public String index(ModelMap modelMap) {
 		//mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-
+		modelMap.addAttribute("locationlist", locationRepository.findAll());
 		return "festival";
 	}
 
@@ -149,6 +159,18 @@ public class CreateController {
 		return mode;
 	}
 
+	/**
+	 * Creating Festival from the inputs of the site
+	 * @param festivalName
+	 * @param startDate
+	 * @param endDate
+	 * @param actors
+	 * @param maxVisitors
+	 * @param location
+	 * @param preisTag
+	 * @return
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/newFestival", method = RequestMethod.POST)
 	public String newFestival(
 			@RequestParam("festivalName") String festivalName,
@@ -156,7 +178,7 @@ public class CreateController {
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
 			@RequestParam("maxVisitors") int maxVisitors,
-			@RequestParam("location") String location,
+			@RequestParam("locationId") long locationId,
 			@RequestParam("preisTag") long preisTag) throws ParseException {
 
 
@@ -167,7 +189,7 @@ public class CreateController {
 
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				location, actors, (int) maxVisitors, (long) preisTag);
+				locationId, actors, (int) maxVisitors, (long) preisTag);
 	
 		festivalRepository.save(festival);
 		
