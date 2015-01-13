@@ -7,6 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.joda.money.Money;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.salespointframework.useraccount.UserAccount;
+import org.springframework.data.repository.CrudRepository;
+
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.AreaItemsRepository;
+
 import java.time.LocalDate;
 
 @Entity
@@ -18,7 +26,7 @@ public class Festival {
 	private LocalDate startDatum;
 	private LocalDate endDatum;
 	private String festivalName;
-	private String location;
+	private long locationId;
 	private String actors;
 	private int maxVisitors;
 	private long preisTag;
@@ -60,10 +68,6 @@ public class Festival {
 		this.quantSecurity = quantSecurity;
 	}
 
-	public int getQuantCleaning() {
-		return quantCleaning;
-	}
-
 	public void setQuantCleaning(int quantCleaning) {
 		this.quantCleaning = quantCleaning;
 	}
@@ -72,14 +76,13 @@ public class Festival {
 	protected Festival() {
 	}
 
-	public Festival(LocalDate startDatum, LocalDate endDatum,
-			String festivalName, String location, String actors,
-			int maxVisitors, long preisTag, String managerUserName) {
-
+	@Autowired
+	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
+			String actors, int maxVisitors, long preisTag, String managerUserName) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
-		this.location = location;
+		this.locationId = locationId;
 		this.actors = actors;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
@@ -149,12 +152,12 @@ public class Festival {
 		this.preisTag = preisTag;
 	}
 
-	public String getLocation() {
-		return location;
+	public long getLocationId() {
+		return locationId;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocationId(long locationId) {
+		this.locationId = locationId;
 	}
 
 	public Money getManagementSalaryPerDay() {

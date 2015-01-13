@@ -18,7 +18,7 @@ import org.springframework.data.annotation.Id;
 public class AreaItem {
 	
 	public enum Type {
-		TOILET, AREA, STAGE, CATERING, CAMPING
+		TOILET, AREA, STAGE,BLOCKED, CATERING, CAMPING
 	}
 	
 	

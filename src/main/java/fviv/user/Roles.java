@@ -25,4 +25,6 @@ public abstract class Roles {
     public static final Role caterer = new Role("ROLE_CATERER");
     
     public static final Role guest = new Role("ROLE_GUEST");
+
+    public static final Role leader = new Role("ROLE_LEADER");
 }

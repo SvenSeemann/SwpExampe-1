@@ -23,6 +23,7 @@ public class Finance {
 		SALARY, RENT, CATERING;
 	}
 
+	private long festivalId;
 	private Money amount;
 	private Reference reference;
 	private FinanceType financeType;
@@ -36,7 +37,8 @@ public class Finance {
 	}
 
 	@Autowired
-	public Finance(Reference reference, Money amount, FinanceType financeType) {
+	public Finance(Reference reference, Money amount, FinanceType financeType/*, long festivalId*/) {
+		//this.festivalId = festivalId;
 		this.reference = reference;
 		this.amount = amount;		
 		this.financeType = financeType;

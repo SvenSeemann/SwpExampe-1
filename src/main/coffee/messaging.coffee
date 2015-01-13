@@ -189,8 +189,12 @@ class Messaging
         show_chat()
         chat_visible = true
 
-    hide_chat = ->
-      $('#messaging-area').css 'display', 'none'
+    hide_chat = ->      
+$('#messaging-area').animate
+    width : 0px
+    height: 0px
+    $('#messaging-area').css 'display', 'none'
+
 
     show_chat = ->
       $('#messaging-area').css 'display', 'block'
