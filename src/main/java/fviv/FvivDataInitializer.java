@@ -14,10 +14,8 @@ import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
-<<<<<<< HEAD
 import fviv.user.Roles;
-=======
->>>>>>> master
+
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;

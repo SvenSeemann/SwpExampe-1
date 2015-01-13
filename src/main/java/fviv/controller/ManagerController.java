@@ -625,38 +625,7 @@ public class ManagerController {
 		return "redirect:/management";
 	}
 
-<<<<<<< HEAD
-	
-=======
-	// ------------------------ ORDER MORE ------------------------ \\
 
-	/**
-	 * Check stock and order more food if necessary
-	 * 
-	 * @param item
-	 * @param units
-	 * @return link
-	 */
-
-	@RequestMapping("orderMore")
-	public String orderMore(@RequestParam("itemid") InventoryItem item,
-			@RequestParam("units") Long units) {
-		ProductIdentifier mid = item.getProduct().getIdentifier();
-		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
-				.findByProductIdentifier(mid).getPurchasePrice()
-				.multipliedBy(units)), FinanceType.CATERING));
-		item.increaseQuantity(Units.of(units));
-		inventory.save(item);
-
-		// Menu is orderable again, because its quantity is >0
-		Menu menu = menusRepository.findByProductIdentifier(item.getProduct()
-				.getId());
-		menu.setOrderable(true);
-		menusRepository.save(menu);
-
-		return "redirect:/manager";
-	}
->>>>>>> master
 
 	// ------------------------ MODEMAPPING ------------------------ \\
 
