@@ -5,16 +5,13 @@ import static org.joda.money.CurrencyUnit.EUR;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
-import org.salespointframework.useraccount.UserAccount;
-
 import java.time.LocalDate;
 
 @Entity
 public class Festival {
-
+	
 	@Id
 	@GeneratedValue
 	private long id;
@@ -95,6 +92,8 @@ public class Festival {
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
 		this.managerUserName = managerUserName;
+		//this.area = null;
+
 	}
 
 	public long getId() {
@@ -195,7 +194,6 @@ public class Festival {
 	}
 	
 	public void setManager(String managerUserName){
-		this.managerUserName = managerUserName;
+		this.managerUserName = managerUserName;	
 	}
-
 }

@@ -73,10 +73,10 @@
 			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
 		</div>
 
-
 		<div id="content">
 			<div id="substance">
 				<div id="chooseFestivalview" th:switch="${festivalmode}">
+				
 					<!-- FestivalCase -->
 					<div th:case="festival">
 						<form th:action="@{/newFestival}" method="post">
@@ -134,6 +134,29 @@
 								<td th:text="${festival.actors}"></td>
 								<td th:text="${festival.maxVisitors}"></td>
 								<td th:text="${festival.preisTag}"></td>
+							</tr>
+						</table>
+					</div>
+					
+					<!-- case areaplan -->
+					<div th:case="areaplan">
+						<table class="festivalTable">
+							Festival auswählen:
+							<tr>
+								<th>ID</th>
+								<th>Festival Name</th>
+							</tr>
+							<tr th:each=" festival : ${festivallist}">
+								<td th:text="${festival.id}"></td>
+								<td th:text="${festival.festivalName}"></td>
+								<td>
+									<form method="post" action="/setup/area">
+										<input type="hidden" name="festivalId" value="0"
+											th:value="${festival.id}" /> <input type="submit"
+											class="button_green" value="Geländeplan bearbeiten"
+											style="margin-top: 2px;" />
+									</form>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -201,7 +224,7 @@
 										min="1.00" step="0.10" value="0.00" /></td>
 								</tr>
 								<tr>
-									<td>Tagesgehalt für Cleaningangestellen</td>
+									<td>Tagesgehalt für Cleaningangestelle</td>
 									<td>Bisher:
 										<p th:text="${selected.cleaningSalaryPerDay}" />
 									</td>
@@ -265,6 +288,11 @@
 							</table>
 						</form>
 					</div>
+					
+					<!-- Default Case -->
+					<div th:case="*">
+					Neues Festival erstellen, klicken Sie auf Festivals erstellen, um zu beginnen.
+					</div>
 
 
 				</div>
@@ -279,14 +307,17 @@
 				<button class="slimButton" type="submit" value="chat"
 					th:text="#{catering.chat}">Chat</button>
 			</form>
+			<form th:action="@{/festival/create}" method="post">
+				<button class="boldButton">Festival erstellen</button>
+			</form>
+			<form th:action="@{/festival/areaplan}" method="post">
+				<button class="boldButton">Geländeplan</button>
+			</form>
 			<form th:action="@{/showFestival}" method="post">
 				<button class="boldButton">Festivals anzeigen</button>
 			</form>
 			<form th:action="@{/setup-employees}" method="post">
-				<button class="boldButton">Mitarbeiter hinzufügen</button>
-			</form>
-			<form th:action="@{/festival}" method="post">
-				<button class="boldButton">Festivals erstellen</button>
+				<button class="boldButton">Mitarbeiter bearbeiten</button>
 			</form>
 
 		</div>

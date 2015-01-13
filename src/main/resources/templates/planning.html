@@ -16,6 +16,7 @@
 
 <body>
 	<div id="webseite">
+	<div id="festival-id" th:text="${festivalId}" style="display:none;"></div>
 		<div id="header">
 			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
 			<div id="title">Planning</div>
@@ -52,8 +53,9 @@
 			</form>
 			<div th:include="messaging :: messaging"></div>
 			<button class="slimButton" onClick="saveIt();">Speichern</button>
-			<button class="boldButton" onClick="newArea();">Neues Areal</button>
-			<button class="boldButton" onClick="openSubMenu('stage');">Bühnen</button>
+			<button class="boldButton" onClick="newArea();">New Area</button>
+			<button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
+
 			<div class="objectMenu" id="stages">
 				<div class="chooseObject" onClick="buildObject(this,0, 'STAGE');">kleine
 					Bühne</div>

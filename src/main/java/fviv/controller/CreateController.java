@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.AreaItem.Type;
+import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.FestivalRepository;
 import fviv.festival.Festival;
 
@@ -28,12 +31,14 @@ import fviv.festival.Festival;
 @Controller
 @PreAuthorize("hasRole('ROLE_BOSS')")
 public class CreateController {
+	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 	private final FestivalRepository festivalRepository;
 	private String mode = "festival";
 	private Festival selected;
 	private UserAccountManager userAccountManager;
-	private LinkedList<String> managerAccounts = new LinkedList<String>();
-	
+	private LinkedList<String> managerAccounts = new LinkedList<String>();	
+	private AreaItemsRepository areaItems;
+
 	@Autowired
 	public CreateController(FestivalRepository festivalRepository, UserAccountManager userAccountManager) {
 		this.festivalRepository = festivalRepository;
@@ -42,7 +47,7 @@ public class CreateController {
 
 	@RequestMapping({ "/festival" })
 	public String index(ModelMap modelMap) {
-		mode = "festival";
+		//mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 		
 		managerAccounts.clear();
@@ -87,8 +92,37 @@ public class CreateController {
 		mode = "setup-employees";
 		return "redirect:/festival";
 	}
-
 	
+	@RequestMapping(value = "/festival/create", method = RequestMethod.POST)
+	public String createFestival() {
+		mode = "festival";
+		return "redirect:/festival";
+	}
+	
+	@RequestMapping(value = "/festival/areaplan", method = RequestMethod.POST)
+	public String areaplan() {
+		mode = "areaplan";
+		return "redirect:/festival";
+	}
+	
+	@RequestMapping(value = "/setup/area", method = RequestMethod.POST)
+	public String setUpArea(@RequestParam("festivalId") long festivalId) {
+		//hier auf max planner zugreifen
+		this.selected = festivalRepository.findById(festivalId);
+		
+		
+		
+		// TODO this.selected.setArea(afds);
+		festivalRepository.save(selected);
+		return "redirect:/planning/" + selected.getId();
+	}
+	
+	public String setUpAreaSave() {
+		//hier auf max planner zugreifen
+		//this.selected.setArea(areaItems);
+		return "redirect:/festival";
+	}
+
 	@RequestMapping("/setNewSalary")
 	public String setNewSalary(
 			@RequestParam("salManagement") long salManagement,
@@ -133,15 +167,17 @@ public class CreateController {
 			@RequestParam("preisTag") long preisTag,
 			@RequestParam("selectManager") String manager) throws ParseException {
 
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		
 		LocalDate dateStart = LocalDate.parse(startDate, formatter);
 		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
 		
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				location, actors, (int) maxVisitors, (long) preisTag, manager);
-
+				location, actors, (int) maxVisitors, (long) preisTag, manager);	
+		
 		festivalRepository.save(festival);
+		
 		return "redirect:/festival";
 
 	}

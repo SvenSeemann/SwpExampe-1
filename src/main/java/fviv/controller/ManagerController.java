@@ -24,8 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import fviv.areaPlanner.AreaItemsRepository;
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
+import fviv.festival.FestivalRepository;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
@@ -51,7 +53,7 @@ public class ManagerController {
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
-
+	
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
 			MenusRepository menusRepository,
@@ -97,7 +99,7 @@ public class ManagerController {
 	 * @return link
 	 */
 	@RequestMapping("/manager")
-	public String index(ModelMap modelMap) {
+	public String index(ModelMap modelMap) {		
 		// Money used as sum for each type of expense
 		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
 				.of(EUR, 0.00);
@@ -586,13 +588,6 @@ public class ManagerController {
 	@RequestMapping("/Accountmanagement")
 	public String newLogin() {
 		mode = "accounts";
-		showErrors = "no";
-		return "redirect:/manager";
-	}
-
-	@RequestMapping("/Terminal")
-	public String terminal() {
-		mode = "terminal";
 		showErrors = "no";
 		return "redirect:/manager";
 	}

@@ -27,7 +27,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
-
 @Component
 public class FvivDataInitializer implements DataInitializer {
 
@@ -48,7 +47,7 @@ public class FvivDataInitializer implements DataInitializer {
 			FinanceRepository financeRepository,
 			ArtistsRepository artistsRepository,
 			EventsRepository eventsRepository) {
-			Assert.notNull(employeeRepository,
+		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
@@ -81,16 +80,21 @@ public class FvivDataInitializer implements DataInitializer {
 				
 		Festival festival1 = new Festival(date1, date2, "Wonderland", "Dresden EnergieVerbund Arena",
 				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
-		Festival festival2 = new Festival(date2, date1, "Rock am Ring", "Berlin in deiner Mom",
-				"Netflix", 69999 , (long) 12.0, "manager");
+		Festival festival2 = new Festival(date2, date1, "Rock am Ring", "Berlin in deiner Mom",	"Netflix", 69999 , (long) 12.0, "manager");
 		
+		
+		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", Roles.guest);
+		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", Roles.guest);
+			
+		userAccountManager.save(festivalAccount1);
+		userAccountManager.save(festivalAccount2);
+			
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
-
+	
 	}
 
-
-	private void initializeTickets()  {
+	private void initializeTickets() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date = LocalDate.parse("2005-12-30", formatter);
 		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
@@ -100,24 +104,25 @@ public class FvivDataInitializer implements DataInitializer {
 	}
 
 	private void initializeUsers() {
-		UserAccount bossAccount = userAccountManager.create("boss", "123", Roles.boss);
+		UserAccount bossAccount = userAccountManager.create("boss", "123",
+				Roles.boss);
 		bossAccount.setEmail("Boss@Fviv.de");
 		bossAccount.setFirstname("Der");
 		bossAccount.setLastname("Boss");
-		UserAccount managerAccount = userAccountManager.create("manager", "123",
-				Roles.manager);
+		UserAccount managerAccount = userAccountManager.create("manager",
+				"123", Roles.manager);
 		managerAccount.setEmail("Manager@Fviv.de");
 		managerAccount.setFirstname("Der");
 		managerAccount.setLastname("Manager");
-		UserAccount catererAccount = userAccountManager.create("caterer", "123",
-				Roles.caterer);
+		UserAccount catererAccount = userAccountManager.create("caterer",
+				"123", Roles.caterer);
 		catererAccount.setEmail("Caterer@Fviv.de");
 		catererAccount.setFirstname("Der");
 		catererAccount.setLastname("Caterer");
 		userAccountManager.save(bossAccount);
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
-				
+
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
 				"123", Roles.employee);
@@ -131,17 +136,19 @@ public class FvivDataInitializer implements DataInitializer {
 				"123", Roles.employee);
 
 		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill",
-				"Bill.Gates@Microsoft.com", "0190CallBill", Departement.MANAGEMENT);
+				"Bill.Gates@Microsoft.com", "0190CallBill",
+				Departement.MANAGEMENT);
 		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela",
 				"Angie@Bundestag.de", "0123456789", Departement.CLEANING);
 		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans",
 				"Hans.Wurst@fviv.de", "0351/777888", Departement.SECURITY);
 		Employee employee4 = new Employee(employeeAccount4, "White", "Walter",
-				"Walter.White@Kochkurse.de", "BetterCallSaul", Departement.MANAGEMENT);
+				"Walter.White@Kochkurse.de", "BetterCallSaul",
+				Departement.MANAGEMENT);
 		Employee employee5 = new Employee(employeeAccount5, "Müller", "Thomas",
-				"Thomas.Müller@Weltmeister.de", "20304050", Departement.CATERING);
+				"Thomas.Müller@Weltmeister.de", "20304050",
+				Departement.CATERING);
 
-		
 		// Save to repository
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
@@ -154,23 +161,28 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount2);
 		userAccountManager.save(employeeAccount3);
 		userAccountManager.save(employeeAccount4);
-		userAccountManager.save(employeeAccount5);		
+		userAccountManager.save(employeeAccount5);
 	}
 
-
 	private void initializeFinances() {
-		
+
 		// Create expenses
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), FinanceType.RENT));
-		 
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				13.80), FinanceType.SALARY));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				680.40), FinanceType.SALARY));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				5600.00), FinanceType.RENT));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				2400.00), FinanceType.RENT));
+
 	}
 
 	private void initializeLineup() {
-		Artist artist = new Artist(100000, Money.of(CurrencyUnit.EUR, 20), "Dude", 20000);
-		Artist artist2 = new Artist(1000000, Money.of(CurrencyUnit.EUR, 20), "Dudette", 20000);
+		Artist artist = new Artist(100000, Money.of(CurrencyUnit.EUR, 20),
+				"Dude", 20000);
+		Artist artist2 = new Artist(1000000, Money.of(CurrencyUnit.EUR, 20),
+				"Dudette", 20000);
 
 		artistsRepository.save(artist);
 		artistsRepository.save(artist2);
@@ -178,10 +190,18 @@ public class FvivDataInitializer implements DataInitializer {
 		Festival festival = festivalRepository.findById(1);
 		Festival festival2 = festivalRepository.findById(2);
 
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival));
+		eventsRepository.save(new Event(
+				LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014,
+						12, 26, 1, 1, 0), artist, festival));
+		eventsRepository.save(new Event(
+				LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014,
+						12, 26, 1, 5, 0), artist2, festival));
 
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2));
+		eventsRepository.save(new Event(
+				LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014,
+						12, 26, 1, 1, 0), artist, festival2));
+		eventsRepository.save(new Event(
+				LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014,
+						12, 26, 1, 5, 0), artist2, festival2));
 	}
 }

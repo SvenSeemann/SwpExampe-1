@@ -15,6 +15,7 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="../resources/scripts/terminal.js"></script>
 <script th:inline="Javascript">
 $(function () { 
 	var salaryExpTotal = [[${salExpTot.getAmountMajorLong()}]];
@@ -96,7 +97,7 @@ $(function () {
 
 					<!-- EMPLOYEES -->
 
-					<div th:case="employees">
+					<div th:case="*">
 						<table class="employeeTable">
 							<tr>
 								<th>ID</th>
@@ -361,11 +362,10 @@ $(function () {
 					</div>
 
 					<!-- Standard case -->
-					<div th:case="*">
-						<img src="../resources/img/FVIVgmbh.png"
-							style="width: 100%; height: 150px;"></img>
+					<div th:case="terminal">
+						<div id="festivalId" th:text="${festivalId}"
+							style="display: none;"></div>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -378,9 +378,6 @@ $(function () {
 			</form>
 			<form>
 				<div th:include="messaging :: messaging"></div>
-			</form>
-			<form method="post" action="/Terminal">
-				<input type="submit" class="boldButton" value="Terminal"></input>
 			</form>
 			<form method="post" action="/Employees">
 				<input type="submit" class="boldButton" value="Mitarbeiter"></input>
