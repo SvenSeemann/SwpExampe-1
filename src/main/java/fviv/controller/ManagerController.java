@@ -2,11 +2,18 @@ package fviv.controller;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.joda.money.Money;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
@@ -26,6 +33,8 @@ import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
@@ -34,6 +43,8 @@ import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
 import fviv.model.Registration;
+import fviv.ticket.Ticket;
+import fviv.ticket.TicketRepository;
 
 /**
  * @author Hendric Eckelt
@@ -51,19 +62,26 @@ public class ManagerController {
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
+	private final FestivalRepository festivalRepository;
+	private long id;
+	private TicketRepository ticketRepository;
 
 	@Autowired
 	public ManagerController(EmployeeRepository employeeRepository,
 			MenusRepository menusRepository,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
-			FinanceRepository financeRepository) {
+			FinanceRepository financeRepository,
+			FestivalRepository festivalRepository,
+			TicketRepository ticketRepository) {
 
 		this.employeeRepository = employeeRepository;
 		this.menusRepository = menusRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.financeRepository = financeRepository;
+		this.festivalRepository = festivalRepository;
+		this.ticketRepository = ticketRepository;
 	}
 
 	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
@@ -86,6 +104,68 @@ public class ManagerController {
 	@ModelAttribute("showErrors")
 	public String showErrors() {
 		return showErrors;
+	}
+
+	// -------------------- REQUESTMAPPING from niko------------------ \\
+	/**
+	 * Model mapped the number of guest onto the website
+	 * 
+	 * @param modelMap
+	 * @param tagesdate
+	 * @return
+	 */
+	@RequestMapping("/getBesucher")
+	public String getBesucher(ModelMap modelMap,
+			@RequestParam("hilfsDate") String tagesdate) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
+		LocalDate datum = LocalDate.parse(tagesdate, formatter);
+		Festival festival = festivalRepository.findById(id);
+		List<Ticket> festivalnamelist = ticketRepository
+				.findByFestivalName(festival.getFestivalName());
+		List<Ticket> checkedlist = ticketRepository.findByChecked(true);
+		List<Ticket> datumlist = ticketRepository.findByTagesticketdate(datum);
+		List<Ticket> datum2list = ticketRepository.findByTagesticketdate(null);
+
+		Collection<Ticket> listone = new ArrayList<Ticket>(festivalnamelist);
+		Collection<Ticket> listtwo = new ArrayList<Ticket>(checkedlist);
+		Collection<Ticket> listthree = new ArrayList<Ticket>(datumlist);
+		Collection<Ticket> listfourth = new ArrayList<Ticket>(datum2list);
+
+		listone.retainAll(listtwo);
+
+		listthree.addAll(listfourth);
+
+		listone.retainAll(listthree);
+
+		int anzahl = listone.size();
+
+		modelMap.addAttribute("besucherzahl", anzahl);
+		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+
+		return "manager";
+	}
+
+	@RequestMapping("/loadtickets")
+	public String getFestivals(ModelMap modelMap,
+			@RequestParam("festivalId") long festivalId) {
+		Festival loadingfestival = festivalRepository.findById(festivalId);
+		id = festivalId;
+		LocalDate startDate = loadingfestival.getStartDatum();
+		LocalDate endDate = loadingfestival.getEndDatum();
+		DateTime startDatum = DateTime.parse(startDate.toString()); // hadtobedone
+		DateTime endDatum = DateTime.parse(endDate.toString()); // hadtobedone
+		String[] dateArray;
+		int days = Days.daysBetween(startDatum, endDatum).getDays();
+		dateArray = new String[days];
+		LocalDate hilfsDate = startDate;
+
+		for (int i = 0; i < days; i++) {
+			dateArray[i] = hilfsDate.toString();
+			hilfsDate = hilfsDate.plusDays(1);
+		}
+		modelMap.addAttribute("ticketdates", dateArray);
+
+		return "manager";
 	}
 
 	// ------------------------ REQUESTMAPPING ------------------------ \\
@@ -135,7 +215,7 @@ public class ManagerController {
 					&& finance.getReference() == Reference.DEPOSIT)
 				rentDeposit.add(finance);
 		}
-		
+
 		// Calculate total amounts of each expense type
 		for (Finance salDep : salaryDeposit) {
 			salDepTot = salDepTot.plus(salDep.getAmount());
@@ -176,6 +256,8 @@ public class ManagerController {
 		modelMap.addAttribute("cateringDeposit", cateringDeposit);
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
+
+		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
 		// ------------------------ ROLES ------------------------ \\
 
@@ -218,7 +300,8 @@ public class ManagerController {
 	@RequestMapping("/newEmployee")
 	public String newEmployee(
 			@ModelAttribute(value = "registration") @Valid Registration registration,
-			BindingResult results, @RequestParam("departement") String departementAsString) {
+			BindingResult results,
+			@RequestParam("departement") String departementAsString) {
 		// Assumption that given input is valid
 		showErrors = "no";
 
@@ -227,15 +310,15 @@ public class ManagerController {
 			showErrors = "newEmployee";
 			return "redirect:/management";
 		}
-		
+
 		Departement departement = Departement.NULL;
-		if (departementAsString.equalsIgnoreCase("management")) { 
+		if (departementAsString.equalsIgnoreCase("management")) {
 			departement = Departement.MANAGEMENT;
-		}		
-		if (departementAsString.equalsIgnoreCase("catering")) { 
+		}
+		if (departementAsString.equalsIgnoreCase("catering")) {
 			departement = Departement.CATERING;
 		}
-		if (departementAsString.equalsIgnoreCase("security")) { 
+		if (departementAsString.equalsIgnoreCase("security")) {
 			departement = Departement.SECURITY;
 		}
 		if (departementAsString.equalsIgnoreCase("cleaning")) {
@@ -252,10 +335,11 @@ public class ManagerController {
 		} else {
 			employeeRole = new Role("ROLE_EMPLOYEE");
 		}
-			
+
 		UserAccount employeeAccount = userAccountManager.create(
-				registration.getFirstname() + "." + registration.getLastname(), registration.getPassword() , employeeRole);
-		
+				registration.getFirstname() + "." + registration.getLastname(),
+				registration.getPassword(), employeeRole);
+
 		// Create employee
 		Employee employee = new Employee(employeeAccount,
 				registration.getLastname(), registration.getFirstname(),
@@ -309,9 +393,10 @@ public class ManagerController {
 	public String addRole(@RequestParam("roles") String role) {
 		// Assumption that given input is valid
 		showErrors = "no";
-		
-		UserAccount userAccount = userAccountManager.findByUsername(editSingleAccount).get();
-		
+
+		UserAccount userAccount = userAccountManager.findByUsername(
+				editSingleAccount).get();
+
 		// Define a role by the given string "role"
 		final Role addRole = new Role(role);
 
@@ -322,7 +407,7 @@ public class ManagerController {
 						.hasRole(addRole)) {
 			return "redirect:/management";
 		}
-		
+
 		// Add role to the useraccount and save it
 		userAccount.add(addRole);
 		userAccountManager.save(userAccount);
@@ -358,7 +443,8 @@ public class ManagerController {
 
 		// Define a role by the given string "role"
 		final Role deleteRole = new Role(role);
-		UserAccount userAccount = userAccountManager.findByUsername(editSingleAccount).get();
+		UserAccount userAccount = userAccountManager.findByUsername(
+				editSingleAccount).get();
 
 		// Redirect if the useraccount doesn't exist or doesn't have the role
 		// attached
@@ -539,7 +625,38 @@ public class ManagerController {
 		return "redirect:/management";
 	}
 
+<<<<<<< HEAD
 	
+=======
+	// ------------------------ ORDER MORE ------------------------ \\
+
+	/**
+	 * Check stock and order more food if necessary
+	 * 
+	 * @param item
+	 * @param units
+	 * @return link
+	 */
+
+	@RequestMapping("orderMore")
+	public String orderMore(@RequestParam("itemid") InventoryItem item,
+			@RequestParam("units") Long units) {
+		ProductIdentifier mid = item.getProduct().getIdentifier();
+		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
+				.findByProductIdentifier(mid).getPurchasePrice()
+				.multipliedBy(units)), FinanceType.CATERING));
+		item.increaseQuantity(Units.of(units));
+		inventory.save(item);
+
+		// Menu is orderable again, because its quantity is >0
+		Menu menu = menusRepository.findByProductIdentifier(item.getProduct()
+				.getId());
+		menu.setOrderable(true);
+		menusRepository.save(menu);
+
+		return "redirect:/manager";
+	}
+>>>>>>> master
 
 	// ------------------------ MODEMAPPING ------------------------ \\
 
@@ -569,5 +686,11 @@ public class ManagerController {
 		mode = "terminal";
 		showErrors = "no";
 		return "redirect:/management";
+	}
+
+	@RequestMapping("/Besucher")
+	public String besucher() {
+		mode = "checkBesucher";
+		return "redirect:/manager";
 	}
 }

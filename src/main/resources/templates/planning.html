@@ -16,7 +16,7 @@
 
 <body>
 	<div id="webseite">
-	<div id="festival-id" th:text="${festivalId}" style="display:none;"></div>
+		<div id="festival-id" th:text="${festivalId}" style="display: none;"></div>
 		<div id="header">
 			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
 			<div id="title">Planning</div>
@@ -63,20 +63,21 @@
 					Bühne</div>
 				<div class="chooseObject" onClick="buildObject(this,2, 'STAGE');">große
 					Bühne</div>
+				<div class="chooseObject" onClick="buildObject(this,3, 'BLOCKED');">geperrtes Areal</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('toilet');">Toiletten</button>
 			<div class="objectMenu" id="toilets">
-				<div class="chooseObject" onClick="buildObject(this,3, 'TOILET');">ToiToi</div>
-				<div class="chooseObject" onClick="buildObject(this,4, 'TOILET');">Behindertengerecht</div>
-				<div class="chooseObject" onClick="buildObject(this,5, 'CATERING');">BadContainer</div>
+				<div class="chooseObject" onClick="buildObject(this,4, 'TOILET');">ToiToi</div>
+				<div class="chooseObject" onClick="buildObject(this,5, 'TOILET');">Behindertengerecht</div>
+				<div class="chooseObject" onClick="buildObject(this,6, 'CATERING');">BadContainer</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
 			<div class="objectMenu" id="catering">
-				<div class="chooseObject" onClick="buildObject(this,6, 'CATERING');">Bierwagen</div>
-				<div class="chooseObject" onClick="buildObject(this,7, 'CATERING');">Essplätze</div>
-				<div class="chooseObject" onClick="buildObject(this,8, 'CATERING');">Mülleimer</div>
+				<div class="chooseObject" onClick="buildObject(this,7, 'CATERING');">Bierwagen</div>
+				<div class="chooseObject" onClick="buildObject(this,8, 'CATERING');">Essplätze</div>
+				<div class="chooseObject" onClick="buildObject(this,9, 'CATERING');">Mülleimer</div>
 			</div>
-			<button class="boldButton" onClick="buildObject(this,9,'CAMPING');">Campingareal</button>
+			<button class="boldButton" onClick="buildObject(this,10,'CAMPING');">Campingareal</button>
 		</div>
 	</div>
 </body>
