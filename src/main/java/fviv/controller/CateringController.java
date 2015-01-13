@@ -3,6 +3,8 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
 import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
@@ -27,10 +29,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -49,17 +53,20 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
+	private final FestivalRepository festivalRepository;
+	private long selected;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			Inventory<InventoryItem> inventory,
-			FinanceRepository financeRepository) {
+			FinanceRepository financeRepository, FestivalRepository festivalRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.inventory = inventory;
 		this.financeRepository = financeRepository;
+		this.festivalRepository = festivalRepository;
 
 	}
 
@@ -108,23 +115,46 @@ public class CateringController {
 						item.getProduct().getId()).setOrderable(false);
 			}
 		}
-
-		modelMap.addAttribute("meals",
-				this.menusRepository.findByType(Type.MEAL));
-		modelMap.addAttribute("drinks",
-				this.menusRepository.findByType(Type.DRINK));
+		modelMap.addAttribute("festivals", festivalRepository.findAll());
+		Collection<Menu> meals = this.menusRepository.findByType(Type.MEAL);
+		Collection<Menu> drinks = this.menusRepository.findByType(Type.DRINK);
+		
+		//Schnittmenge:
+		meals.retainAll(this.menusRepository.findByFestivalId(selected));
+		drinks.retainAll(this.menusRepository.findByFestivalId(selected));
+		
+		Iterable<Menu> mealsAsAttribute = meals;
+		Iterable<Menu> drinksAsAttribute = drinks;
+		
+		modelMap.addAttribute("meals", mealsAsAttribute
+				);
+		modelMap.addAttribute("drinks", drinksAsAttribute
+				);
+		
 		return "/catering";
 	}
 
-	@RequestMapping(value = "/catering-drinks", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/drinks", method = RequestMethod.POST)
 	public String drinks() {
 		mode = "drinks";
 		return "redirect:/catering";
 	}
 
-	@RequestMapping(value = "/catering-meals", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/meals", method = RequestMethod.POST)
 	public String meals() {
 		mode = "meals";
+		return "redirect:/catering";
+	}
+	
+	@RequestMapping(value = "/catering/choosefestival", method = RequestMethod.POST)
+	public String choosefestival() {
+		mode = "festival";
+		return "redirect:/catering";
+	}
+	
+	@RequestMapping(value = "/catering/festival", method = RequestMethod.POST)
+	public String festival(@RequestParam("festival") long festivalId) {
+		selected = festivalId;
 		return "redirect:/catering";
 	}
 
@@ -138,7 +168,7 @@ public class CateringController {
 	 * @param userAccount
 	 * @return link
 	 */
-	@RequestMapping("catering-menu/{mid}")
+	@RequestMapping("catering/menu/{mid}")
 	public String addMeal(ModelMap modelMap, @PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
@@ -179,7 +209,7 @@ public class CateringController {
 	 * @param cart
 	 * @return link
 	 */
-	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
 		// Cart cart = getCart(session);
 
@@ -203,7 +233,7 @@ public class CateringController {
 	 * @param userAccount
 	 * @return link
 	 */
-	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 

@@ -41,3 +41,13 @@
 	padding: 12.5px;
 	pointer-events: none;
 }
+
+#cancel {
+	position: absolute;
+	bottom : 0;
+}
+
+#confirm {
+	position: absolute;
+	bottom : 0;
+}

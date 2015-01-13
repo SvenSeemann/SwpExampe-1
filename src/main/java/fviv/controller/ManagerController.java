@@ -664,6 +664,6 @@ public class ManagerController {
 	public String besucher() {
 		mode = "checkBesucher";
 		showErrors = "no";
-		return "redirect:/manager";
+		return "redirect:/management";
 	}
 }
