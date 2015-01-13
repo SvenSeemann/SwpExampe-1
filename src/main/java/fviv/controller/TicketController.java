@@ -26,6 +26,7 @@ import org.springframework.ui.ModelMap;
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
+import fviv.location.LocationRepository;
 import fviv.ticket.TicketRepository;
 import fviv.ticket.Ticket;
 
@@ -41,15 +42,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TicketController {
 	private final TicketRepository ticketRepository;
 	private final FestivalRepository festivalRepository;
+	private final LocationRepository locationRepository;
+
 	private static long ticketid;
 	private String mode = "ticket";
 	private static Festival festival;
 
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
-			FestivalRepository festivalRepository) {
+			FestivalRepository festivalRepository, 
+			LocationRepository locationRepository) {
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
+		this.locationRepository = locationRepository;
 	}
 
 	@ModelAttribute("ticketmode")
@@ -267,6 +272,7 @@ public class TicketController {
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
 			acroFields.setField("actors", festival.getActors());
+			festival.getLocationId();
 			acroFields.setField("adressofvenue", "asdf");
 			acroFields.setField("date", datumshelper(date));
 			acroFields.setField("price", price);
