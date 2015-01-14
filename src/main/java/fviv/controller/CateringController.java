@@ -60,7 +60,8 @@ public class CateringController {
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			Inventory<InventoryItem> inventory,
-			FinanceRepository financeRepository, FestivalRepository festivalRepository) {
+			FinanceRepository financeRepository,
+			FestivalRepository festivalRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
@@ -118,19 +119,17 @@ public class CateringController {
 		modelMap.addAttribute("festivals", festivalRepository.findAll());
 		Collection<Menu> meals = this.menusRepository.findByType(Type.MEAL);
 		Collection<Menu> drinks = this.menusRepository.findByType(Type.DRINK);
-		
-		//Schnittmenge:
+
+		// Schnittmenge:
 		meals.retainAll(this.menusRepository.findByFestivalId(selected));
 		drinks.retainAll(this.menusRepository.findByFestivalId(selected));
-		
+
 		Iterable<Menu> mealsAsAttribute = meals;
 		Iterable<Menu> drinksAsAttribute = drinks;
-		
-		modelMap.addAttribute("meals", mealsAsAttribute
-				);
-		modelMap.addAttribute("drinks", drinksAsAttribute
-				);
-		
+
+		modelMap.addAttribute("meals", mealsAsAttribute);
+		modelMap.addAttribute("drinks", drinksAsAttribute);
+
 		return "/catering";
 	}
 
@@ -145,13 +144,13 @@ public class CateringController {
 		mode = "meals";
 		return "redirect:/catering";
 	}
-	
+
 	@RequestMapping(value = "/catering/choosefestival", method = RequestMethod.POST)
 	public String choosefestival() {
 		mode = "festival";
 		return "redirect:/catering";
 	}
-	
+
 	@RequestMapping(value = "/catering/festival", method = RequestMethod.POST)
 	public String festival(@RequestParam("festival") long festivalId) {
 		selected = festivalId;
@@ -180,7 +179,6 @@ public class CateringController {
 		// quantity.isGreaterThan(Units.ZERO));
 
 		CartItem cartItem = cart.addOrUpdateItem(menu, Units.of(1));
-
 		// List to keep track of the items in the cart
 		// Because there is no option to get all items in the cart?
 		if (!(currentCartItems.contains(cartItem)))
@@ -198,7 +196,6 @@ public class CateringController {
 			menu.setOrderable(false);
 			menusRepository.save(menu);
 		}
-
 		return "redirect:/catering";
 	}
 
@@ -239,15 +236,12 @@ public class CateringController {
 
 		return userAccount.map(
 				account -> {
-
 					Order order = new Order(account, Cash.CASH);
 
 					cart.addItemsTo(order);
-
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
 					orderManager.save(order);
-
 					financeRepository.save(new Finance(Reference.DEPOSIT, order
 							.getTotalPrice(), FinanceType.CATERING));
 

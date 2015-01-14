@@ -34,7 +34,6 @@ import org.springframework.stereotype.Controller;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
-
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Employee.Departement;
@@ -47,6 +46,7 @@ import fviv.model.FinanceRepository;
 import fviv.model.Registration;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
+import fviv.user.Roles;
 
 /**
  * @author Hendric Eckelt
@@ -267,12 +267,14 @@ public class ManagerController {
 
 		// List of available roles for the account management
 		LinkedList<Role> allRoles = new LinkedList<Role>();
-		allRoles.add(new Role("ROLE_BOSS"));
-		allRoles.add(new Role("ROLE_MANAGER"));
-		allRoles.add(new Role("ROLE_CATERER"));
-		allRoles.add(new Role("ROLE_EMPLOYEE"));
-		allRoles.add(new Role("MESSAGE_SENDER"));
-		allRoles.add(new Role("MESSAGE_RECEIVER"));
+		allRoles.add(Roles.boss);
+		allRoles.add(Roles.manager);
+		allRoles.add(Roles.caterer);
+		allRoles.add(Roles.employee);
+		allRoles.add(Roles.sender);
+		allRoles.add(Roles.receiver);
+		allRoles.add(Roles.guest);
+		allRoles.add(Roles.leader);
 
 		// Add accounts and roles to modelMap
 		modelMap.addAttribute("roles", allRoles);

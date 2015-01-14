@@ -64,4 +64,8 @@ public class Employee{
 	public Departement getDepartement() {
 		return departement;
 	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
 }
