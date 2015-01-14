@@ -17,6 +17,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -49,6 +52,7 @@ public class TicketController {
 	private String mode = "ticket";
 	private static Festival festival;
 	private static Location location;
+	private String asdf = "";
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
 			FestivalRepository festivalRepository, 
@@ -72,6 +76,7 @@ public class TicketController {
 	public String index(ModelMap modelMap) {
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 		modelMap.addAttribute("ticketlist", ticketRepository.findAll());
+		modelMap.addAttribute("eroor", asdf);
 
 		return "ticket";
 	}
@@ -145,7 +150,7 @@ public class TicketController {
 		}
 		modelMap.addAttribute("ticketdates", dateArray);
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-
+		asdf="";
 		return "ticket";
 
 	}
@@ -159,7 +164,7 @@ public class TicketController {
 	 * @throws BarcodeException
 	 */
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
-	public String newTicket(@RequestParam("ticketart") boolean ticketart,
+	public String newTicket(ModelMap modelMap, @RequestParam("ticketart") boolean ticketart,
 			@RequestParam("numbers") String numbers,
 			@RequestParam("hilfsDate") String tagesdate) throws IOException,
 			BarcodeException {
@@ -183,7 +188,19 @@ public class TicketController {
 						.ofPattern("yyyy-LL-dd");
 				date = LocalDate.parse(tagesdate, formatter);
 			}
+			int max = location.getMaxVisitors();
+			List<Ticket> festivalnamelist = ticketRepository
+					.findByFestivalName(festival.getFestivalName());
+			List<Ticket> datumlist = ticketRepository.findByTagesticketdate(date);
+			List<Ticket> datum2list = ticketRepository.findByTagesticketdate(null);
 
+			Collection<Ticket> listone = new ArrayList<Ticket>(festivalnamelist);
+			Collection<Ticket> listthree = new ArrayList<Ticket>(datumlist);
+			Collection<Ticket> listfourth = new ArrayList<Ticket>(datum2list);
+			listthree.addAll(listfourth);
+			listone.retainAll(listthree);
+			int ticketzahl=listone.size();
+			if (max > ticketzahl){
 			Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
 	
 			if (ticketart == true) {
@@ -198,6 +215,11 @@ public class TicketController {
 				pdfvorlagebearbeiten(preistag * 7 / 3, ticketart, date);
 				barcodegen();
 				addbarcode();
+
+			}
+			} else {
+				asdf = "NICHT GENÜGEND PLÄTZE VERFÜGBAR";
+				modelMap.addAttribute("eroor", asdf);
 
 			}
 		}
@@ -226,6 +248,7 @@ public class TicketController {
 	@RequestMapping({ "/ticketDrucken" })
 	public String ticketDrucken(
 			@RequestParam(value = "ticketnummer", required = false) String ticketnmr) {
+		asdf ="";
 		if (ticketnmr == "") {
 			ticketnmr = "" + ticketid;
 		} else {

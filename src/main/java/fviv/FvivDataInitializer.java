@@ -83,8 +83,8 @@ public class FvivDataInitializer implements DataInitializer {
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
 
-		Festival festival1 = new Festival(date1, date2, "Wonderland",1 ,
-				"Avicii, Linkin Park",20000, (long) 55.0, "manager");
+		Festival festival1 = new Festival(date1, date2, "Wonderland",5 ,
+				"Avicii, Linkin Park",5, (long) 55.0, "manager");
 		Festival festival2 = new Festival(date2, date1, "Rock am Ring", 2,
 				"Netflix",50000, (long) 12.0, "manager");
 

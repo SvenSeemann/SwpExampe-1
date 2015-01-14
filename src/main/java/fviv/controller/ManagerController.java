@@ -14,32 +14,27 @@ import javax.validation.Valid;
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.salespointframework.catalog.ProductIdentifier;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 
-import fviv.areaPlanner.AreaItemsRepository;
-import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
-
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
+import fviv.model.Employee;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
-import fviv.model.Employee;
 import fviv.model.Finance;
 import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
@@ -166,6 +161,7 @@ public class ManagerController {
 			hilfsDate = hilfsDate.plusDays(1);
 		}
 		modelMap.addAttribute("ticketdates", dateArray);
+		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
 		return "manager";
 	}
@@ -186,7 +182,7 @@ public class ManagerController {
 				.of(EUR, 0.00);
 		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
 				.of(EUR, 0.00);
-
+ 
 		// ------------------------ FINANCES ------------------------ \\
 
 		// Lists that contain Finances sorted by Type
@@ -663,7 +659,6 @@ public class ManagerController {
 	@RequestMapping("/Besucher")
 	public String besucher() {
 		mode = "checkBesucher";
-		showErrors = "no";
 		return "redirect:/manager";
 	}
 }

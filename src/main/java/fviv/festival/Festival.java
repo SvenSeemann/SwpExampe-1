@@ -91,6 +91,7 @@ public class Festival {
 		this.festivalName = festivalName;
 		this.locationId = locationId;
 		this.actors = actors;
+		this.maxVisitors=maxVisitors;
 		this.preisTag = preisTag;
 		this.managementSalaryPerDay = Money.of(EUR, 0.00);
 		this.cateringSalaryPerDay = Money.of(EUR, 0.00);
