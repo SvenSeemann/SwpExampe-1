@@ -1,20 +1,20 @@
 package fviv.controller;
 
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.pdf.AcroFields;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfStamper;
-import fviv.festival.Festival;
-import fviv.festival.FestivalRepository;
-import fviv.location.LocationRepository;
-import fviv.ticket.Ticket;
-import fviv.ticket.TicketRepository;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
+
+import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +26,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
+
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
+import fviv.ticket.Ticket;
+import fviv.ticket.TicketRepository;
 /**
  */
 @Controller
@@ -43,7 +51,8 @@ public class TicketController {
 	private static long ticketid;
 	private String mode = "ticket";
 	private static Festival festival;
-
+	private static Location location;
+	private String asdf = "";
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
 			FestivalRepository festivalRepository, 
@@ -67,6 +76,7 @@ public class TicketController {
 	public String index(ModelMap modelMap) {
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 		modelMap.addAttribute("ticketlist", ticketRepository.findAll());
+		modelMap.addAttribute("eroor", asdf);
 
 		return "ticket";
 	}
@@ -140,7 +150,7 @@ public class TicketController {
 		}
 		modelMap.addAttribute("ticketdates", dateArray);
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-
+		asdf="";
 		return "ticket";
 
 	}
@@ -154,7 +164,7 @@ public class TicketController {
 	 * @throws BarcodeException
 	 */
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
-	public String newTicket(@RequestParam("ticketart") boolean ticketart,
+	public String newTicket(ModelMap modelMap, @RequestParam("ticketart") boolean ticketart,
 			@RequestParam("numbers") String numbers,
 			@RequestParam("hilfsDate") String tagesdate) throws IOException,
 			BarcodeException {
@@ -168,16 +178,31 @@ public class TicketController {
 		Long longId = id;
 		for (int i = 1; i <= anzahl; i++) {
 			// Create Ticket
-			festival = festivalRepository.findOne(longId);
+			festival = festivalRepository.findById(longId);
+			location = locationRepository.findById(festival.getLocationId());
+
 			String festivalname = festival.getFestivalName();
-			long preistag = festival.getPreisTag();
+			
+			Money preistag = festival.getPreisTag();
 			LocalDate date = null;
 			if (ticketart == true) {
 				DateTimeFormatter formatter = DateTimeFormatter
 						.ofPattern("yyyy-LL-dd");
 				date = LocalDate.parse(tagesdate, formatter);
 			}
+			int max = location.getMaxVisitors();
+			List<Ticket> festivalnamelist = ticketRepository
+					.findByFestivalName(festival.getFestivalName());
+			List<Ticket> datumlist = ticketRepository.findByTagesticketdate(date);
+			List<Ticket> datum2list = ticketRepository.findByTagesticketdate(null);
 
+			Collection<Ticket> listone = new ArrayList<Ticket>(festivalnamelist);
+			Collection<Ticket> listthree = new ArrayList<Ticket>(datumlist);
+			Collection<Ticket> listfourth = new ArrayList<Ticket>(datum2list);
+			listthree.addAll(listfourth);
+			listone.retainAll(listthree);
+			int ticketzahl=listone.size();
+			if (max > ticketzahl){
 			Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
 	
 			if (ticketart == true) {
@@ -189,9 +214,14 @@ public class TicketController {
 			} else {
 				ticketRepository.save(ticket);
 				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag * 7 / 3, ticketart, date);
+				pdfvorlagebearbeiten(preistag.multipliedBy(7/3), ticketart, date);
 				barcodegen();
 				addbarcode();
+
+			}
+			} else {
+				asdf = "NICHT GENÜGEND PLÄTZE VERFÜGBAR";
+				modelMap.addAttribute("eroor", asdf);
 
 			}
 		}
@@ -220,6 +250,7 @@ public class TicketController {
 	@RequestMapping({ "/ticketDrucken" })
 	public String ticketDrucken(
 			@RequestParam(value = "ticketnummer", required = false) String ticketnmr) {
+		asdf ="";
 		if (ticketnmr == "") {
 			ticketnmr = "" + ticketid;
 		} else {
@@ -246,9 +277,9 @@ public class TicketController {
 	 * @throws IOException
 	 * @throws BarcodeException
 	 */
-	public static void pdfvorlagebearbeiten(float ticketkosten,
+	public static void pdfvorlagebearbeiten(Money ticketkosten,
 			boolean ticketart, LocalDate date) throws IOException, BarcodeException {
-		String price = "" + ticketkosten + "Euro";
+		String price = "" + ticketkosten;
 		try {
 
 			// (1) Einlesen der PDF-Vorlage
@@ -268,8 +299,8 @@ public class TicketController {
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
 			acroFields.setField("actors", festival.getActors());
-			festival.getLocationId();
-			acroFields.setField("adressofvenue", "asdf");
+			
+			acroFields.setField("adressofvenue", location.getAdresse());
 			acroFields.setField("date", datumshelper(date));
 			acroFields.setField("price", price);
 			acroFields.setField("eventnamesmall", festival.getFestivalName());
@@ -357,6 +388,10 @@ public class TicketController {
 
 	public static void setTicketid(long ticketid) {
 		TicketController.ticketid = ticketid;
+	}
+
+	public LocationRepository getLocationRepository() {
+		return locationRepository;
 	}
 
 }

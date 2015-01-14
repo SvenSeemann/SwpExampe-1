@@ -240,6 +240,33 @@ $(function () {
 										style="margin-top: 2px;"></input>
 								</form>
 
+					<div th:case="checkStock">
+						<table>
+							<tr>
+								<td>Menu</td>
+								<td>Quantity</td>
+								<td>Purchase price</td>
+								<td>Selling price</td>
+								<td>Get more</td>
+							</tr>
+							<tr th:each="item : ${inventory}">
+								<td th:text="${item.product.name}" />
+								<td th:text="${item.quantity}" />
+								<td th:text="${item.product.purchasePrice}" />
+								<td th:text="${item.product.sellingPrice}" />
+								<td>
+									<form action="/orderMore" method="post">
+										<input type="hidden" name="itemid" value="0"
+											th:value="${item.identifier}" /> <input id="number"
+											type="number" name="units" min="1" max="50" step="1"
+											placeholder="0" /> <input type="submit" class="button_green"
+											value="Order!" style="margin-top: 2px;" />
+									</form>
+								</td>
+							</tr>
+						</table>
+					</div>
+				
 								<!-- Change password of a single account -->
 								<p>Passwort ändern:</p>
 								<p th:if="${showErrors.equals('changePasswordEmpty')}"
@@ -259,6 +286,7 @@ $(function () {
 								</form>
 							</div>
 						</div>
+
 
 						<!-- CHECK BESUCHER CASE from niko -->
 						<div th:case="checkBesucher">
@@ -351,16 +379,16 @@ $(function () {
 							</div>
 						</div>
 
-						<!-- Terminal -->
-						<div th:case="*">
-							<img src="../resources/img/FVIVgmbh.png"
-								style="width: 100%; height: 150px;"></img>
-						</div>
-
+					<!-- Standard case -->
+					<div th:case="terminal">
+						<div id="festivalId" th:text="${festivalId}"
+							style="display: none;"></div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
 		<!-- MENU -->
 
@@ -388,5 +416,6 @@ $(function () {
 			</form>
 		</div>
 	</div>
+	
 </body>
 </html>

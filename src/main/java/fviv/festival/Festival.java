@@ -5,15 +5,17 @@ import static org.joda.money.CurrencyUnit.EUR;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
 
 import java.time.LocalDate;
 
@@ -28,8 +30,8 @@ public class Festival {
 	private String festivalName;
 	private long locationId;
 	private String actors;
+	private Money preisTag;
 	private int maxVisitors;
-	private long preisTag;
 	private Money managementSalaryPerDay;
 	private Money cateringSalaryPerDay;
 	private Money securitySalaryPerDay;
@@ -38,6 +40,10 @@ public class Festival {
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
+	@OneToOne
+	private UserAccount userAccount;
+	
+
 	private String managerUserName;
 
 	public int getQuantManagement() {
@@ -76,19 +82,20 @@ public class Festival {
 		this.quantCleaning = quantCleaning;
 	}
 
+
 	@Deprecated
 	protected Festival() {
 	}
 
 	@Autowired
 	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
-			String actors, int maxVisitors, long preisTag, String managerUserName) {
+			String actors, int maxVisitors, Money preisTag, String managerUserName) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
 		this.locationId = locationId;
 		this.actors = actors;
-		this.maxVisitors = maxVisitors;
+		this.maxVisitors=maxVisitors;
 		this.preisTag = preisTag;
 		this.managementSalaryPerDay = Money.of(EUR, 0.00);
 		this.cateringSalaryPerDay = Money.of(EUR, 0.00);
@@ -136,9 +143,7 @@ public class Festival {
 		this.festivalName = festivalName;
 	}
 
-	public int getMaxVisitors() {
-		return maxVisitors;
-	}
+	
 
 	public void setMaxVisitors(int maxVisitors) {
 		this.maxVisitors = maxVisitors;
@@ -152,11 +157,11 @@ public class Festival {
 		this.actors = actors;
 	}
 
-	public long getPreisTag() {
+	public Money getPreisTag() {
 		return preisTag;
 	}
 
-	public void setPreisTag(long preisTag) {
+	public void setPreisTag(Money preisTag) {
 		this.preisTag = preisTag;
 	}
 

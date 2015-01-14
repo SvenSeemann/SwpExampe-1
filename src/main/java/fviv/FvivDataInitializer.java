@@ -88,11 +88,14 @@ public class FvivDataInitializer implements DataInitializer {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
+		LocalDate date3 = LocalDate.parse("2015-01-05", formatter);
+		LocalDate date4 = LocalDate.parse("2015-01-08", formatter);
+
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
-				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
-		Festival festival2 = new Festival(date2, date1, "Rock am Ring", 2,
-				"Netflix", 69999, (long) 12.0, "manager");
+				"Avicii, Linkin Park", 500000, Money.of(EUR, 55), "manager");
+		Festival festival2 = new Festival(date3, date4, "Rock am Ring", 2,
+				"Netflix", 69999, Money.of(EUR, 55), "manager");
 
 		UserAccount festivalAccount1 = userAccountManager.create("festival1",
 				"123", Roles.guest);
@@ -109,17 +112,14 @@ public class FvivDataInitializer implements DataInitializer {
 		festivalRepository.save(festival2);
 
 	}
+	private void initializeLocations()
+			 {
+		Location location1 = new Location("Wunderland", 400, 300, 20000, "TU DRESDEN INF ");
+		Location location2 = new Location("Rock am Ring", 200, 500, 50000, "Spenerstraße");
+		Location location3 = new Location("Festival ist toll", 2000, 3000, 10000, "Das ist eine Adresse");
+		Location location4 = new Location("Namen sind unwichtig", 1000, 1400, 9000, "Saint Petersburger Straße 21 Klingelnummer 161");
+		Location location5 = new Location("Boom", 5000, 3000, 5, "Festival bei Niklas");
 
-	private void initializeLocations() {
-		Location location1 = new Location("Wunderland", 400, 300, 20000,
-				"aasdf");
-		Location location2 = new Location("Rock am Ring", 200, 500, 50000,
-				"aasdf");
-		Location location3 = new Location("Festival ist toll", 2000, 3000,
-				10000, "aasdf");
-		Location location4 = new Location("Namen sind unwichtig", 1000, 1400,
-				9000, "aasdf");
-		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf");
 		locationRepository.save(location1);
 		locationRepository.save(location2);
 		locationRepository.save(location3);
