@@ -120,13 +120,7 @@ $(function () {
 
 								<table class="cateringTable">
 									<tr>
-										<th>Catering Ausgaben Betrag:</th>
-									</tr>
-									<tr th:each=" item : ${cateringExpense}">
-										<td th:text="${item.amount}"></td>
-									</tr>
-									<tr>
-										<th>Total:
+										<th>Catering Ausgaben Betrag:
 											<p th:text="${catExpTot}" />
 										</th>
 									</tr>
@@ -134,13 +128,7 @@ $(function () {
 
 								<table class="cateringTable">
 									<tr>
-										<th>Catering Einnahmen Betrag:</th>
-									</tr>
-									<tr th:each=" catering : ${cateringDeposit}">
-										<td th:text="${catering.amount}"></td>
-									</tr>
-									<tr>
-										<th>Total:
+										<th>Catering Einnahmen Betrag:
 											<p th:text="${catDepTot}" />
 										</th>
 									</tr>
@@ -365,7 +353,7 @@ $(function () {
 						<!-- Terminal -->
 						<div th:case="*">
 							<img src="../resources/img/FVIVgmbh.png"
-							style="width: 100%; height: 150px;"></img>
+								style="width: 100%; height: 150px;"></img>
 						</div>
 
 					</div>
