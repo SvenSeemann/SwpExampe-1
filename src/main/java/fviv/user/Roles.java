@@ -16,11 +16,15 @@ public abstract class Roles {
      */
     public static final Role receiver = new Role("MESSAGE_RECEIVER");
 
-    public static final Role manager = new Role("ROLE_BOSS");
+    public static final Role manager = new Role("ROLE_MANAGER");
 
     public static final Role boss = new Role("ROLE_BOSS");
 
     public static final Role employee = new Role("ROLE_EMPLOYEE");
     
+    public static final Role caterer = new Role("ROLE_CATERER");
+    
+    public static final Role guest = new Role("ROLE_GUEST");
+
     public static final Role leader = new Role("ROLE_LEADER");
 }

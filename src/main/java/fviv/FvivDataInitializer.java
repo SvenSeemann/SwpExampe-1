@@ -19,7 +19,6 @@ import fviv.user.Roles;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
-import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ import org.springframework.util.Assert;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
-
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
@@ -80,22 +78,23 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeFestivals()
 			throws ParseException {
+				
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland",1 ,
-				"Avicii, Linkin Park", 500000, (long) 55.0);
+				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
 		Festival festival2 = new Festival(date2, date1, "Rock am Ring", 2,
-				"Netflix", 69999 , (long) 12.0);
+				"Netflix", 69999 , (long) 12.0, "manager");
 
 		
-		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", new Role("ROLE_GUEST"));
-		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", new Role("ROLE_GUEST"));
+		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", Roles.guest);
+		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", Roles.guest);
 		
 	//	festival1.setUserAccount(festivalAccount1);
 	//	festival2.setUserAccount(festivalAccount2);
-		
+					
 		userAccountManager.save(festivalAccount1);
 		userAccountManager.save(festivalAccount2);
 			
@@ -120,8 +119,7 @@ public class FvivDataInitializer implements DataInitializer {
 
 	}
 
-
-	private void initializeTickets()  {
+	private void initializeTickets() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date1 = LocalDate.parse("2014-12-31", formatter);
@@ -150,6 +148,30 @@ public class FvivDataInitializer implements DataInitializer {
 	}
 
 	private void initializeUsers() {
+		UserAccount bossAccount = userAccountManager.create("boss", "123",
+				Roles.boss);
+		bossAccount.setEmail("Boss@Fviv.de");
+		bossAccount.setFirstname("Der");
+		bossAccount.setLastname("Boss");
+		UserAccount managerAccount = userAccountManager.create("manager",
+				"123", Roles.manager);
+		managerAccount.setEmail("Manager@Fviv.de");
+		managerAccount.setFirstname("Der");
+		managerAccount.setLastname("Manager");
+		UserAccount catererAccount = userAccountManager.create("caterer",
+				"123", Roles.caterer);
+		catererAccount.setEmail("Caterer@Fviv.de");
+		catererAccount.setFirstname("Der");
+		catererAccount.setLastname("Caterer");
+		UserAccount leaderAccount = userAccountManager.create("leader", "123", Roles.leader);
+		leaderAccount.setEmail("Festivalleiter@Fviv.de");
+		leaderAccount.setFirstname("Der");
+		leaderAccount.setLastname("Festivalleiter");
+		userAccountManager.save(bossAccount);
+		userAccountManager.save(managerAccount);
+		userAccountManager.save(catererAccount);
+		userAccountManager.save(leaderAccount);
+
 
 		final Role bossRole = new Role("ROLE_BOSS");
 		final Role managerRole = new Role("ROLE_MANAGER");
@@ -183,29 +205,31 @@ public class FvivDataInitializer implements DataInitializer {
 		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
-				"123", employeeRole);
+				"123", Roles.employee);
 		UserAccount employeeAccount2 = userAccountManager.create("merkel",
-				"123", employeeRole);
+				"123", Roles.employee);
 		UserAccount employeeAccount3 = userAccountManager.create("wurst",
-				"123", employeeRole);
+				"123", Roles.employee);
 		UserAccount employeeAccount4 = userAccountManager.create("white",
-				"123", employeeRole);
+				"123", Roles.employee);
 		UserAccount employeeAccount5 = userAccountManager.create("müller",
-				"123", employeeRole);
+				"123", Roles.employee);
 
 		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill",
-				"Bill.Gates@Microsoft.com", "0190CallBill", Departement.MANAGEMENT);
+				"Bill.Gates@Microsoft.com", "0190CallBill",
+				Departement.MANAGEMENT);
 		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela",
 				"Angie@Bundestag.de", "0123456789", Departement.CLEANING);
 		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans",
 				"Hans.Wurst@fviv.de", "0351/777888", Departement.SECURITY);
 		Employee employee4 = new Employee(employeeAccount4, "White", "Walter",
-				"Walter.White@Kochkurse.de", "BetterCallSaul", Departement.MANAGEMENT);
+				"Walter.White@Kochkurse.de", "BetterCallSaul",
+				Departement.MANAGEMENT);
 		Employee employee5 = new Employee(employeeAccount5, "Müller", "Thomas",
-				"Thomas.Müller@Weltmeister.de", "20304050", Departement.CATERING);
+				"Thomas.Müller@Weltmeister.de", "20304050",
+				Departement.CATERING);
 
 		// Save to repository
-
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
 		employeeRepository.save(employee3);
@@ -220,20 +244,25 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount5);
 	}
 
-
 	private void initializeFinances() {
-		
+
 		// Create expenses
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 13.80), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR, 2400.00), FinanceType.RENT));
-		 
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				13.80), FinanceType.SALARY));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				680.40), FinanceType.SALARY));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				5600.00), FinanceType.RENT));
+		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+				2400.00), FinanceType.RENT));
+
 	}
 
 	private void initializeLineup() {
-		Artist artist = new Artist(100000, Money.of(CurrencyUnit.EUR, 20), "Dude", 20000);
-		Artist artist2 = new Artist(1000000, Money.of(CurrencyUnit.EUR, 20), "Dudette", 20000);
+		Artist artist = new Artist(100000, Money.of(CurrencyUnit.EUR, 20),
+				"Dude", 20000);
+		Artist artist2 = new Artist(1000000, Money.of(CurrencyUnit.EUR, 20),
+				"Dudette", 20000);
 
 		artistsRepository.save(artist);
 		artistsRepository.save(artist2);

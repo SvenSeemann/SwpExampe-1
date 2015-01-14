@@ -15,6 +15,7 @@
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="../resources/scripts/terminal.js"></script>
 <script th:inline="Javascript">
 $(function () { 
 	var salaryExpTotal = [[${salExpTot.getAmountMajorLong()}]];
@@ -84,6 +85,9 @@ $(function () {
 				<div th:case="accounts">
 					<div id="title">ACCOUNTS</div>
 				</div>
+				<div th:case="checkBesucher">
+					<div id="title">BESUCHERZAHLEN</div>
+				</div>
 				<div th:case="*">
 					<div id="title">TERMINAL</div>
 				</div>
@@ -92,310 +96,277 @@ $(function () {
 		</div>
 		<div id="content">
 			<div id="substance">
-				<div id="chooseManagerView" th:switch="${managermode}">
+				<div id="chooseManagerView">
+					<div th:switch="${managermode}">
+						
+						<!-- EMPLOYEES -->
 
-					<!-- EMPLOYEES -->
-
-					<div th:case="employees">
-						<table class="employeeTable">
-							<tr>
-								<th>ID</th>
-								<th>Nachname</th>
-								<th>Vorname</th>
-								<th>Abteilung</th>
-								<th>Email-Adresse</th>
-								<th>Telefonnummer</th>
-							</tr>
-							<tr th:each=" employee : ${employeelist}">
-								<td th:text="${employee.id}"></td>
-								<td th:text="${employee.userAccount.lastname}"></td>
-								<td th:text="${employee.userAccount.firstname}"></td>
-								<td th:text="${employee.departement}"></td>
-								<td th:text="${employee.userAccount.email}"></td>
-								<td th:text="${employee.phone}"></td>
-							</tr>
-						</table>
-						<div align="center">
-							<p>Mitarbeiter entfernen:</p>
-							<p th:if="${showErrors.equals('deleteEmployee')}"
-								style="color: #F00;">Ungültige ID</p>
-							<form th:action="@{/deleteEmployee}" method="post"
-								onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
-								<input type="number" placeholder="ID eingeben" name="employeeId"
-									id="deleteEmployeeText"></input> <input type="submit"
-									class="button_green" value="Löschen"></input>
-							</form>
-						</div>
-						<div align="center">
-							<p>Neuen Mitarbeiter hinzufügen:</p>
-							<!--Communicates with controller @RequestMapping("/newEmployee") -->
-							<p th:if="${showErrors.equals('newEmployee')}"
-								style="color: #F00;">Alle Felder müssen ausgefüllt sein</p>
-							<form th:action="@{/newEmployee}" method="post"
-								th:object="${registration}">
-								<input type="text" placeholder="Nachname" id="lastname"
-									th:field="*{lastname}"></input> <br /> <input type="text"
-									placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
-								<br /> <input type="text" placeholder="E-mail Adresse"
-									id="email" th:field="*{email}"></input> <br /> <input
-									type="text" placeholder="Telefonnummer" id="phone"
-									th:field="*{phone}"></input> <br /> <input type="password"
-									placeholder="Password" id="password" th:field="*{password}"></input>
-								<br /> <select name="departement">
-									<option th:value="management">Management</option>
-									<option th:value="catering">Catering</option>
-									<option th:value="security">Security</option>
-									<option th:value="cleaning">Cleaning</option>
-								</select> <br /> <input type="submit" value="Speichern"
-									class="button_green" style="margin-top: 3px"></input>
-							</form>
-						</div>
-					</div>
-
-					<!-- FINANCES -->
-
-					<div th:case="finances">
-						<div align="center">
-
-							<table class="salaryTable">
+						<div th:case="*">
+							<table class="employeeTable">
 								<tr>
-									<th>Gehälter Betrag:</th>
-								</tr>
-								<tr th:each=" salary : ${salaryExpense}">
-									<td th:text="${salary.amount}"></td>
-								</tr>
-								<tr>
-									<th>Total:
-										<p th:text="${salExpTot}" id="salaryTotal" />
-									</th>
-								</tr>
-							</table>
-
-							<table class="cateringTable">
-								<tr>
-									<th>Catering Ausgaben Betrag:</th>
-								</tr>
-								<tr th:each=" item : ${cateringExpense}">
-									<td th:text="${item.amount}"></td>
-								</tr>
-								<tr>
-									<th>Total:
-										<p th:text="${catExpTot}" />
-									</th>
-								</tr>
-							</table>
-
-							<table class="cateringTable">
-								<tr>
-									<th>Catering Einnahmen Betrag:</th>
-								</tr>
-								<tr th:each=" catering : ${cateringDeposit}">
-									<td th:text="${catering.amount}"></td>
-								</tr>
-								<tr>
-									<th>Total:
-										<p th:text="${catDepTot}" />
-									</th>
-								</tr>
-							</table>
-
-							<table class="rentTable">
-								<tr>
-									<th>Mietausgaben Betrag:</th>
-								</tr>
-								<tr th:each=" rent : ${rentExpense}">
-									<td th:text="${rent.amount}"></td>
-								</tr>
-								<tr>
-									<th>Total:
-										<p th:text="${rentExpTot}" />
-									</th>
-								</tr>
-							</table>
-
-						</div>
-						<div id="financesChart"></div>
-					</div>
-
-					<!-- ACCOUNTS -->
-
-					<div th:case="accounts">
-						<table class="accountTable">
-							<tr>
-								<th>Benutzername</th>
-								<th>Berechtigung</th>
-								<th>Status</th>
-							</tr>
-							<tr th:each=" account : ${userAccounts}">
-								<td th:text="${account.identifier}"></td>
-								<td th:text="${account.getRoles()}"></td>
-								<td th:if="${account.isEnabled()}">aktiviert</td>
-								<td th:unless="${account.isEnabled()}">deaktiviert</td>
-							</tr>
-						</table>
-						<div align="center">
-							<p>Account bearbeiten:</p>
-							<p th:if="${showErrors.equals('switchToEditAccount')}"
-								style="color: #F00;">Account existiert nicht</p>
-							<form action="/switchToEditAccount" method="post">
-								<input type="text" name="userNameEdit"
-									placeholder="Benutzername"></input> <input type="submit"
-									class="button_green" value="Account bearbeiten"></input>
-							</form>
-						</div>
-					</div>
-
-					<div th:case="editAccount">
-						<div align="center">
-							<table class="editAccountTable">
-								<tr>
-									<th>Benutzername</th>
+									<th>ID</th>
 									<th>Nachname</th>
 									<th>Vorname</th>
+									<th>Abteilung</th>
 									<th>Email-Adresse</th>
+									<th>Telefonnummer</th>
+								</tr>
+								<tr th:each=" employee : ${employeelist}">
+									<td th:text="${employee.id}"></td>
+									<td th:text="${employee.userAccount.lastname}"></td>
+									<td th:text="${employee.userAccount.firstname}"></td>
+									<td th:text="${employee.departement}"></td>
+									<td th:text="${employee.userAccount.email}"></td>
+									<td th:text="${employee.phone}"></td>
+								</tr>
+							</table>
+							<div align="center">
+								<p>Mitarbeiter entfernen:</p>
+								<p th:if="${showErrors.equals('deleteEmployee')}"
+									style="color: #F00;">Ungültige ID</p>
+								<form th:action="@{/deleteEmployee}" method="post"
+									onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
+									<input type="number" placeholder="ID eingeben"
+										name="employeeId" id="deleteEmployeeText"></input> <input
+										type="submit" class="button_green" value="Löschen"></input>
+								</form>
+							</div>
+							<div align="center">
+								<p>Neuen Mitarbeiter hinzufügen:</p>
+								<!--Communicates with controller @RequestMapping("/newEmployee") -->
+								<p th:if="${showErrors.equals('newEmployee')}"
+									style="color: #F00;">Alle Felder müssen ausgefüllt sein</p>
+								<form th:action="@{/newEmployee}" method="post"
+									th:object="${registration}">
+									<input type="text" placeholder="Nachname" id="lastname"
+										th:field="*{lastname}"></input> <br /> <input type="text"
+										placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
+									<br /> <input type="text" placeholder="E-mail Adresse"
+										id="email" th:field="*{email}"></input> <br /> <input
+										type="text" placeholder="Telefonnummer" id="phone"
+										th:field="*{phone}"></input> <br /> <input type="password"
+										placeholder="Password" id="password" th:field="*{password}"></input>
+									<br /> <select name="departement">
+										<option th:value="management">Management</option>
+										<option th:value="catering">Catering</option>
+										<option th:value="security">Security</option>
+										<option th:value="cleaning">Cleaning</option>
+									</select> <br /> <input type="submit" value="Speichern"
+										class="button_green" style="margin-top: 3px"></input>
+								</form>
+							</div>
+						</div>
+
+						<!-- FINANCES -->
+
+						<div th:case="finances">
+							<div align="center">
+
+								<table class="salaryTable">
+									<tr>
+										<th>Gehälter Betrag:</th>
+									</tr>
+									<tr th:each=" salary : ${salaryExpense}">
+										<td th:text="${salary.amount}"></td>
+									</tr>
+									<tr>
+										<th>Total:
+											<p th:text="${salExpTot}" id="salaryTotal" />
+										</th>
+									</tr>
+								</table>
+
+								<table class="cateringTable">
+									<tr>
+										<th>Catering Ausgaben Betrag:</th>
+									</tr>
+									<tr th:each=" item : ${cateringExpense}">
+										<td th:text="${item.amount}"></td>
+									</tr>
+									<tr>
+										<th>Total:
+											<p th:text="${catExpTot}" />
+										</th>
+									</tr>
+								</table>
+
+								<table class="cateringTable">
+									<tr>
+										<th>Catering Einnahmen Betrag:</th>
+									</tr>
+									<tr th:each=" catering : ${cateringDeposit}">
+										<td th:text="${catering.amount}"></td>
+									</tr>
+									<tr>
+										<th>Total:
+											<p th:text="${catDepTot}" />
+										</th>
+									</tr>
+								</table>
+
+								<table class="rentTable">
+									<tr>
+										<th>Mietausgaben Betrag:</th>
+									</tr>
+									<tr th:each=" rent : ${rentExpense}">
+										<td th:text="${rent.amount}"></td>
+									</tr>
+									<tr>
+										<th>Total:
+											<p th:text="${rentExpTot}" />
+										</th>
+									</tr>
+								</table>
+
+							</div>
+							<div id="financesChart"></div>
+						</div>
+
+						<!-- ACCOUNTS -->
+
+						<div th:case="accounts">
+							<table class="accountTable">
+								<tr>
+									<th>Benutzername</th>
 									<th>Berechtigung</th>
 									<th>Status</th>
 								</tr>
-								<tr th:each=" account : ${editSingleAccount}">
+								<tr th:each=" account : ${userAccounts}">
 									<td th:text="${account.identifier}"></td>
-									<td th:text="${account.lastname}"></td>
-									<td th:text="${account.firstname}"></td>
-									<td th:text="${account.email}"></td>
 									<td th:text="${account.getRoles()}"></td>
 									<td th:if="${account.isEnabled()}">aktiviert</td>
 									<td th:unless="${account.isEnabled()}">deaktiviert</td>
 								</tr>
 							</table>
+							<div align="center">
+								<p>Account bearbeiten:</p>
+								<p th:if="${showErrors.equals('switchToEditAccount')}"
+									style="color: #F00;">Account existiert nicht</p>
+								<form action="/switchToEditAccount" method="post">
+									<input type="text" name="userNameEdit"
+										placeholder="Benutzername"></input> <input type="submit"
+										class="button_green" value="Account bearbeiten"></input>
+								</form>
+							</div>
 						</div>
-						<div align="center">
-							<!-- Change roles of a single account -->
-							<form action="/editAccount" method="post">
-								<p>Berechtigung ändern:</p>
-								<p th:if="${showErrors.equals('deleteRoleManager')}"
-									style="color: #F00;">Die ROLE_MANAGER kann nicht vom
-									Account "manager" gelöscht werden</p>
-								<p th:if="${showErrors.equals('deleteRoleBoss')}"
-									style="color: #F00;">Die ROLE_BOSS kann nicht vom Account
-									"boss" gelöscht werden</p>
-								<p th:if="${showErrors.equals('deleteRoleCaterer')}"
-									style="color: #F00;">Die ROLE_CATERER kann nicht vom
-									Account "caterer" gelöscht werden</p>
-								<select name="roles">
-									<option th:each=" role : ${roles}" th:value="${role}"
-										th:text="${role.getName()}"></option>
-								</select> <input type="submit" class="button_green" name="save"
-									value="Berechtigung Hinzufügen"></input> <input type="submit"
-									class="button_green" name="delete" value="Berechtigung Löschen"></input>
-								<br />
 
-								<!-- De-/Activate a single account -->
-								<p>Account aktivieren/deaktivieren:</p>
-								<p th:if="${showErrors.equals('disableImportantAccount')}"
-									style="color: #F00;">Dieser Account kann nicht deaktiviert
-									werden</p>
+						<div th:case="editAccount">
+							<div align="center">
+								<table class="editAccountTable">
+									<tr>
+										<th>Benutzername</th>
+										<th>Nachname</th>
+										<th>Vorname</th>
+										<th>Email-Adresse</th>
+										<th>Berechtigung</th>
+										<th>Status</th>
+									</tr>
+									<tr th:each=" account : ${editSingleAccount}">
+										<td th:text="${account.identifier}"></td>
+										<td th:text="${account.lastname}"></td>
+										<td th:text="${account.firstname}"></td>
+										<td th:text="${account.email}"></td>
+										<td th:text="${account.getRoles()}"></td>
+										<td th:if="${account.isEnabled()}">aktiviert</td>
+										<td th:unless="${account.isEnabled()}">deaktiviert</td>
+									</tr>
+								</table>
+							</div>
+							<div align="center">
+								<!-- Change roles of a single account -->
+								<form action="/editAccount" method="post">
+									<p>Berechtigung ändern:</p>
+									<p th:if="${showErrors.equals('deleteRoleManager')}"
+										style="color: #F00;">Die ROLE_MANAGER kann nicht vom
+										Account "manager" gelöscht werden</p>
+									<p th:if="${showErrors.equals('deleteRoleBoss')}"
+										style="color: #F00;">Die ROLE_BOSS kann nicht vom Account
+										"boss" gelöscht werden</p>
+									<p th:if="${showErrors.equals('deleteRoleCaterer')}"
+										style="color: #F00;">Die ROLE_CATERER kann nicht vom
+										Account "caterer" gelöscht werden</p>
+									<select name="roles">
+										<option th:each=" role : ${roles}" th:value="${role}"
+											th:text="${role.getName()}"></option>
+									</select> <input type="submit" class="button_green" name="save"
+										value="Berechtigung Hinzufügen"></input> <input type="submit"
+										class="button_green" name="delete"
+										value="Berechtigung Löschen"></input> <br />
 
-								<input type="submit" class="button_green" name="enable"
-									value="Account aktivieren"></input> <input type="submit"
-									class="button_green" name="disable"
-									value="Account deaktivieren"></input>
-							</form>
+									<!-- De-/Activate a single account -->
+									<p>Account aktivieren/deaktivieren:</p>
+									<p th:if="${showErrors.equals('disableImportantAccount')}"
+										style="color: #F00;">Dieser Account kann nicht deaktiviert
+										werden</p>
 
-							<!-- Change user information of a single account -->
-							<p>Nutzerinformationen ändern:</p>
-							<form action="/editEmployeeDetails" method="post">
-								<input type="text" name="editLastname" placeholder="Nachname"></input>
-								<br /> <input type="text" name="editFirstname"
-									placeholder="Vorname"></input> <br /> <input type="text"
-									name="editEmail" placeholder="Email-Adresse"></input> <br /> <input
-									type="submit" class="button_green" value="Speichern"
-									style="margin-top: 2px;"></input>
-							</form>
+									<input type="submit" class="button_green" name="enable"
+										value="Account aktivieren"></input> <input type="submit"
+										class="button_green" name="disable"
+										value="Account deaktivieren"></input>
+								</form>
 
-							<!-- Change password of a single account -->
-							<p>Passwort ändern:</p>
-							<p th:if="${showErrors.equals('changePasswordEmpty')}"
-								style="color: #F00;">Passwörter dürfen nicht leer sein</p>
-							<p th:if="${showErrors.equals('changePasswordDifferentInput')}"
-								style="color: #F00;">Die eingegebenen Passwörter stimmen
-								nicht überein</p>
-							<p th:if="${showErrors.equals('changePasswordSuccessful')}"
-								style="color: #F00;">Passwort erfolgreich geändert</p>
-							<form action="/changePassword" method="post"
-								onsubmit="return confirm('Passwort wirklich ändern?');">
-								<input type="password" placeholder="Neues Passwort"
-									name="changePassword1"></input> <br /> <input type="password"
-									placeholder="Passwort wiederholen" name="changePassword2"></input>
-								<br /> <input type="submit" class="button_green"
-									value="Passwort speichern" style="margin-top: 2px;"></input>
-							</form>
+								<!-- Change user information of a single account -->
+								<p>Nutzerinformationen ändern:</p>
+								<form action="/editEmployeeDetails" method="post">
+									<input type="text" name="editLastname" placeholder="Nachname"></input>
+									<br /> <input type="text" name="editFirstname"
+										placeholder="Vorname"></input> <br /> <input type="text"
+										name="editEmail" placeholder="Email-Adresse"></input> <br />
+									<input type="submit" class="button_green" value="Speichern"
+										style="margin-top: 2px;"></input>
+								</form>
+
+								<!-- Change password of a single account -->
+								<p>Passwort ändern:</p>
+								<p th:if="${showErrors.equals('changePasswordEmpty')}"
+									style="color: #F00;">Passwörter dürfen nicht leer sein</p>
+								<p th:if="${showErrors.equals('changePasswordDifferentInput')}"
+									style="color: #F00;">Die eingegebenen Passwörter stimmen
+									nicht überein</p>
+								<p th:if="${showErrors.equals('changePasswordSuccessful')}"
+									style="color: #F00;">Passwort erfolgreich geändert</p>
+								<form action="/changePassword" method="post"
+									onsubmit="return confirm('Passwort wirklich ändern?');">
+									<input type="password" placeholder="Neues Passwort"
+										name="changePassword1"></input> <br /> <input type="password"
+										placeholder="Passwort wiederholen" name="changePassword2"></input>
+									<br /> <input type="submit" class="button_green"
+										value="Passwort speichern" style="margin-top: 2px;"></input>
+								</form>
+							</div>
+						</div>
+
+						<!-- CHECK BESUCHER CASE from niko -->
+						<div th:case="checkBesucher">
+							<div align="center">
+								<form th:action="@{/loadtickets}" method="post">
+									<fieldset>
+										<label class="label" for="festivalId"> Festival
+											ausw&auml;hlen: </label><select name="festivalId" size="1">
+											<option th:each=" festival : ${festivallist}"
+												th:text="${festival.id} + ${festival.festivalName}"
+												th:value="${festival.id}"></option>
+										</select><br /> <input type="submit" value="Festival laden" />
+									</fieldset>
+								</form>
+
+								<form th:action="@{/getBesucher}" method="post">
+									<fieldset>
+										<select name="hilfsDate" size="1">
+											<option th:each=" hilfsDate : ${ticketdates}"
+												th:text="${hilfsDate}" th:value="${hilfsDate}"></option>
+										</select><br /> <input type="submit" value="Besucher Abfragen" />
+									</fieldset>
+									<label class="label" for="checken" th:text="${besucherzahl}"></label>
+								</form>
+							</div>
+						</div>
+
+						<div th:case="terminal">
+							<div id="festivalId" th:text="${festivalId}"
+								style="display: none;"></div>
 						</div>
 					</div>
-
-					<!-- STOCK -->
-
-					<div th:case="checkStock">
-						<table>
-							<tr>
-								<td>Menu</td>
-								<td>Quantity</td>
-								<td>Purchase price</td>
-								<td>Selling price</td>
-								<td>Get more</td>
-							</tr>
-							<tr th:each="item : ${inventory}">
-								<td th:text="${item.product.name}" />
-								<td th:text="${item.quantity}" />
-								<td th:text="${item.product.purchasePrice}" />
-								<td th:text="${item.product.sellingPrice}" />
-								<td>
-									<form action="/orderMore" method="post">
-										<input type="hidden" name="itemid" value="0"
-											th:value="${item.identifier}" /> <input id="number"
-											type="number" name="units" min="1" max="50" step="1"
-											placeholder="0" /> <input type="submit" class="button_green"
-											value="Order!" style="margin-top: 2px;" />
-									</form>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<!-- CHECK BESUCHER CASE from niko -->
-					<div th:case="checkBesucher">
-						<form th:action="@{/loadtickets}" method="post">
-							<fieldset>
-								<label class="label" for="festivalId"> Festival
-									ausw&auml;hlen: </label><select name="festivalId" size="1">
-									<option th:each=" festival : ${festivallist}"
-										th:text="${festival.id} + ${festival.festivalName}"
-										th:value="${festival.id}"></option>
-								</select><br /> <input type="submit" value="Festival laden" />
-							</fieldset>
-						</form>
-
-						<form th:action="@{/getBesucher}">
-							<fieldset>
-								<select name="hilfsDate" size="1">
-									<option th:each=" hilfsDate : ${ticketdates}"
-										th:text="${hilfsDate}" th:value="${hilfsDate}"></option>
-								</select><br />
-								<input type="submit" value="Besucher Abfragen" />
-							</fieldset>
-							<label
-									class="label" for="checken" th:text="${besucherzahl}"></label>
-						</form>
-						
-					</div>
-
-
-
-
-
-					<!-- Standard case -->
-					<div th:case="*">
-						<img src="../resources/img/FVIVgmbh.png"
-							style="width: 100%; height: 150px;"></img>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -406,7 +377,7 @@ $(function () {
 			<form action="/logout" method="post">
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
-			<form>
+		 	<form>
 				<div th:include="messaging :: messaging"></div>
 			</form>
 			<form method="post" action="/management/terminal">
@@ -422,7 +393,7 @@ $(function () {
 				<input type="submit" class="boldButton" value="Accounts"></input>
 			</form>
 			<form method="post" action="/Besucher">
-				<input type="submit" class="boldButton" value="Besucher Abfragen"></input>
+				<input type="submit" class="boldButton" value="Besucherzahlen"></input>
 			</form>
 		</div>
 	</div>

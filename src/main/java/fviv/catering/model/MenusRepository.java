@@ -1,5 +1,6 @@
 package fviv.catering.model;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import org.salespointframework.catalog.ProductIdentifier;
@@ -15,5 +16,6 @@ public interface MenusRepository extends CrudRepository<Menu, ProductIdentifier>
 
 	Menu findByProductIdentifier(ProductIdentifier id);
 	Menu findByName(String name);
-	Iterable<Menu> findByType(Type type);
+	Collection<Menu> findByType(Type type);
+	Collection<Menu> findByFestivalId(Long festivalId);
 }

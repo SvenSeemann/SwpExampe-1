@@ -65,7 +65,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 
 		// ModelMap "roles" must contain all available roles (currently 6)
 		assertThat((Iterable<Object>) modelMap.get("roles"),
-				is(iterableWithSize(6)));
+				is(iterableWithSize(8)));
 
 		// ModelMap "userAccounts" must contain all userAccounts that exist
 		int countUserAccounts = 0;
@@ -93,7 +93,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		String returnedView = controller.newEmployee(registration, results, "123");
 
 		// returnedView has to be manager
-		assertThat(returnedView, is("redirect:/manager"));
+		assertThat(returnedView, is("redirect:/management"));
 
 		// Validate that the employee was created and added to the repository
 		List<Employee> testEmployee = employeeRepository
@@ -124,7 +124,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		String returnedView = controller.deleteEmployee(testEmployee.getId());
 
 		// returnedView has to be manager
-		assertThat(returnedView, is("redirect:/manager"));
+		assertThat(returnedView, is("redirect:/management"));
 
 		// TestEmployee must have been removed from the repository
 		assertThat(employeeRepository.findByPhone("0351/TestEverything"),
@@ -147,7 +147,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		String returnedView = controller.addRole("ROLE_MANAGER");
 		
 		// returnedView has to be manager
-		assertThat(returnedView, is("redirect:/manager"));
+		assertThat(returnedView, is("redirect:/management"));
 		
 		// testAccount must have both roles assigned
 		assertThat(userAccountManager.findByUsername("testAccountAddRole").get().hasRole(managerRole), is(true));
@@ -172,7 +172,7 @@ public class ManagerControllerTest extends AbstractIntegrationTests {
 		String returnedView = controller.deleteRole("ROLE_MANAGER");
 		
 		// returnedView has to be manager
-		assertThat(returnedView, is("redirect:/manager"));
+		assertThat(returnedView, is("redirect:/management"));
 		
 		// Test if manager role got deleted
 		assertThat(userAccountManager.findByUsername("testAccountDeleteRole").get().hasRole(managerRole), is(false));
