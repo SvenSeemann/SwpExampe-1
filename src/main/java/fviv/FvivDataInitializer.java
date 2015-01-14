@@ -163,9 +163,14 @@ public class FvivDataInitializer implements DataInitializer {
 		catererAccount.setEmail("Caterer@Fviv.de");
 		catererAccount.setFirstname("Der");
 		catererAccount.setLastname("Caterer");
+		UserAccount leaderAccount = userAccountManager.create("leader", "123", Roles.leader);
+		leaderAccount.setEmail("Festivalleiter@Fviv.de");
+		leaderAccount.setFirstname("Der");
+		leaderAccount.setLastname("Festivalleiter");
 		userAccountManager.save(bossAccount);
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
+		userAccountManager.save(leaderAccount);
 
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
@@ -211,13 +216,13 @@ public class FvivDataInitializer implements DataInitializer {
 	private void initializeFinances() {
 
 		// Create expenses
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
 				13.80), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
 				5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				2400.00), FinanceType.RENT));
 
 	}

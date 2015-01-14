@@ -11,6 +11,7 @@
 	width: 560px;
 	height: 500px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	border: #f9731C 2px solid;
 	float: right;
 	color: white;
@@ -40,4 +41,9 @@
 	color:grey;
 	padding: 12.5px;
 	pointer-events: none;
+}
+
+#confirmButtons {
+	position: absolute;
+	margin-bottom : 10;
 }

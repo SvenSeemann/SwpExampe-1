@@ -42,6 +42,7 @@ import fviv.model.FinanceRepository;
 import fviv.model.Registration;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
+import fviv.user.Roles;
 
 /**
  * @author Hendric Eckelt
@@ -60,6 +61,7 @@ public class ManagerController {
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
 	private final FestivalRepository festivalRepository;
+	private Festival selected;
 	private long id;
 	private TicketRepository ticketRepository;
 
@@ -139,7 +141,7 @@ public class ManagerController {
 		modelMap.addAttribute("besucherzahl", anzahl);
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
-		return "manager";
+		return "redirect:/management";
 	}
 
 	@RequestMapping("/loadtickets")
@@ -163,7 +165,7 @@ public class ManagerController {
 		modelMap.addAttribute("ticketdates", dateArray);
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
-		return "manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ REQUESTMAPPING ------------------------ \\
@@ -256,18 +258,20 @@ public class ManagerController {
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
 
-		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+		modelMap.addAttribute("festivals", festivalRepository.findAll());
 
 		// ------------------------ ROLES ------------------------ \\
 
 		// List of available roles for the account management
 		LinkedList<Role> allRoles = new LinkedList<Role>();
-		allRoles.add(new Role("ROLE_BOSS"));
-		allRoles.add(new Role("ROLE_MANAGER"));
-		allRoles.add(new Role("ROLE_CATERER"));
-		allRoles.add(new Role("ROLE_EMPLOYEE"));
-		allRoles.add(new Role("MESSAGE_SENDER"));
-		allRoles.add(new Role("MESSAGE_RECEIVER"));
+		allRoles.add(Roles.boss);
+		allRoles.add(Roles.manager);
+		allRoles.add(Roles.caterer);
+		allRoles.add(Roles.employee);
+		allRoles.add(Roles.sender);
+		allRoles.add(Roles.receiver);
+		allRoles.add(Roles.guest);
+		allRoles.add(Roles.leader);
 
 		// Add accounts and roles to modelMap
 		modelMap.addAttribute("roles", allRoles);
@@ -281,9 +285,6 @@ public class ManagerController {
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
 		modelMap.addAttribute("registration", new Registration());
 
-		// ------------------------ STOCK ------------------------ \\
-
-		modelMap.addAttribute("inventory", this.inventory.findAll());
 		return "manager";
 	}
 
@@ -512,7 +513,7 @@ public class ManagerController {
 				|| editSingleAccount.equals("boss")
 				|| editSingleAccount.equals("caterer")) {
 			showErrors = "disableImportantAccount";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Disable useraccount and save it
@@ -623,7 +624,8 @@ public class ManagerController {
 
 		return "redirect:/management";
 	}
-
+	
+	
 
 
 	// ------------------------ MODEMAPPING ------------------------ \\
@@ -659,6 +661,7 @@ public class ManagerController {
 	@RequestMapping("/Besucher")
 	public String besucher() {
 		mode = "checkBesucher";
-		return "redirect:/manager";
+		showErrors = "no";
+		return "redirect:/management";
 	}
 }
