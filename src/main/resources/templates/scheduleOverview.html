@@ -34,8 +34,9 @@
 
 </div>
 <div>
+    <a class="slimButton" href="/booking/artist">Lineup ändern</a>
     <ul th:each="festival : ${festivals}">
-        <li><a th:href="'/schedule?festival=' + ${festival.id}" th:text="${festival.festivalName}"></a> </li>
+        <li><a class="slimButton" th:href="'/schedule?festival=' + ${festival.id}" th:text="${festival.festivalName}"></a> </li>
     </ul>
 </div>
 </body>

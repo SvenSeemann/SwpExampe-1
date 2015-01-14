@@ -1,17 +1,5 @@
 package fviv.controller;
 
-import net.sourceforge.barbecue.Barcode;
-import net.sourceforge.barbecue.BarcodeException;
-import net.sourceforge.barbecue.BarcodeFactory;
-import net.sourceforge.barbecue.BarcodeImageHandler;
-
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.pdf.AcroFields;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfStamper;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,24 +9,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeException;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.location.Location;
 import fviv.location.LocationRepository;
-import fviv.ticket.TicketRepository;
 import fviv.ticket.Ticket;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import fviv.ticket.TicketRepository;
 /**
  */
 @Controller
@@ -133,7 +132,7 @@ public class TicketController {
 	@RequestMapping(value = "/loadfestivalTicket", method = RequestMethod.POST)
 	public String loadingFestival(ModelMap modelMap,
 			@RequestParam("festivalId") long id) {
-		Festival loadingfestival = festivalRepository.findById(id);
+		Festival loadingfestival = festivalRepository.findOne(id);
 		LocalDate startDate = loadingfestival.getStartDatum();
 		LocalDate endDate = loadingfestival.getEndDatum();
 		DateTime startDatum = DateTime.parse(startDate.toString()); //hadtobedone
@@ -180,6 +179,7 @@ public class TicketController {
 			// Create Ticket
 			festival = festivalRepository.findById(longId);
 			location = locationRepository.findById(festival.getLocationId());
+
 			String festivalname = festival.getFestivalName();
 			long preistag = festival.getPreisTag();
 			LocalDate date = null;

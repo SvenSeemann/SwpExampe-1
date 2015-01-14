@@ -65,6 +65,10 @@ public class Festival {
 	public int getQuantSecurity() {
 		return quantSecurity;
 	}
+	
+	public int getQuantCleaning(){
+		return quantCleaning;
+	}
 
 	public int getRecommendedQuantSecurity() {
 		return (maxVisitors / 100);

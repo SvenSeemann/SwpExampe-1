@@ -61,15 +61,19 @@ $(function () {
 			<div th:switch="${managermode}">
 				<div th:case="employees">
 					<div id="title">MITARBEITER</div>
+					<div id="selectedFestival" th:text="${selectedFestival}"></div>
 				</div>
 				<div th:case="finances">
 					<div id="title">FINANZEN</div>
+					<div id="selectedFestival" th:text="${selectedFestival}"></div>
 				</div>
 				<div th:case="accounts">
 					<div id="title">ACCOUNTS</div>
+					<div id="selectedFestival" th:text="${selectedFestival}"></div>
 				</div>
 				<div th:case="*">
 					<div id="title">TERMINAL</div>
+					<div id="selectedFestival" th:text="${selectedFestival}"></div>
 				</div>
 				<p th:text="${selectedFestival}" />
 			</div>

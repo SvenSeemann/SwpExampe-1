@@ -1,9 +1,7 @@
 package fviv;
 
-import static org.joda.money.CurrencyUnit.EUR;
-
-import java.text.ParseException;
-
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.location.Location;
@@ -19,15 +17,21 @@ import fviv.user.Roles;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static org.joda.money.CurrencyUnit.EUR;
+
+
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
@@ -40,17 +44,19 @@ public class FvivDataInitializer implements DataInitializer {
 	private final EventsRepository eventsRepository;
 	private final ArtistsRepository artistsRepository;
 	private final LocationRepository locationRepository;
+	private final AreaItemsRepository areaItemsRepository;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
+			AreaItemsRepository areaItemsRepository,
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
 			FinanceRepository financeRepository,
 			ArtistsRepository artistsRepository,
 			EventsRepository eventsRepository,
 			LocationRepository locationRepository) {
-			Assert.notNull(employeeRepository,
+		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
@@ -59,6 +65,7 @@ public class FvivDataInitializer implements DataInitializer {
 		this.financeRepository = financeRepository;
 		this.artistsRepository = artistsRepository;
 		this.eventsRepository = eventsRepository;
+		this.areaItemsRepository = areaItemsRepository;
 		this.locationRepository = locationRepository;
 	}
 
@@ -76,31 +83,34 @@ public class FvivDataInitializer implements DataInitializer {
 		initializeLineup();
 	}
 
-	private void initializeFestivals()
-			throws ParseException {
-				
+	private void initializeFestivals() throws ParseException {
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
+		LocalDate date3 = LocalDate.parse("2015-01-05", formatter);
+		LocalDate date4 = LocalDate.parse("2015-01-08", formatter);
 
-		Festival festival1 = new Festival(date1, date2, "Wonderland",5 ,
-				"Avicii, Linkin Park",5, (long) 55.0, "manager");
-		Festival festival2 = new Festival(date2, date1, "Rock am Ring", 2,
-				"Netflix",50000, (long) 12.0, "manager");
 
-		
-		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", Roles.guest);
-		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", Roles.guest);
-		
-	//	festival1.setUserAccount(festivalAccount1);
-	//	festival2.setUserAccount(festivalAccount2);
-					
+		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
+				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
+		Festival festival2 = new Festival(date3, date4, "Rock am Ring", 2,
+				"Netflix", 69999, (long) 12.0, "manager");
+
+		UserAccount festivalAccount1 = userAccountManager.create("festival1",
+				"123", Roles.guest);
+		UserAccount festivalAccount2 = userAccountManager.create("festival2",
+				"123", Roles.guest);
+
+		// festival1.setUserAccount(festivalAccount1);
+		// festival2.setUserAccount(festivalAccount2);
+
 		userAccountManager.save(festivalAccount1);
 		userAccountManager.save(festivalAccount2);
-			
+
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
-	
+
 	}
 	private void initializeLocations()
 			 {
@@ -109,13 +119,12 @@ public class FvivDataInitializer implements DataInitializer {
 		Location location3 = new Location("Festival ist toll", 2000, 3000, 10000, "Das ist eine Adresse");
 		Location location4 = new Location("Namen sind unwichtig", 1000, 1400, 9000, "Saint Petersburger Straße 21 Klingelnummer 161");
 		Location location5 = new Location("Boom", 5000, 3000, 5, "Festival bei Niklas");
+
 		locationRepository.save(location1);
 		locationRepository.save(location2);
 		locationRepository.save(location3);
 		locationRepository.save(location4);
 		locationRepository.save(location5);
-
-		
 
 	}
 
@@ -123,7 +132,7 @@ public class FvivDataInitializer implements DataInitializer {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date1 = LocalDate.parse("2014-12-31", formatter);
-//true(tages), already checked in
+		// true(tages), already checked in
 		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
 		Ticket ticket3 = new Ticket(true, true, "Wonderland", date1);
 		Ticket ticket4 = new Ticket(true, true, "Wonderland", date);
@@ -133,7 +142,7 @@ public class FvivDataInitializer implements DataInitializer {
 		Ticket ticket8 = new Ticket(true, false, "Wonderland", date);
 
 		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
-		
+
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
 		ticketRepository.save(ticket3);
@@ -143,13 +152,11 @@ public class FvivDataInitializer implements DataInitializer {
 		ticketRepository.save(ticket7);
 		ticketRepository.save(ticket8);
 
-
-
 	}
 
 	private void initializeUsers() {
 		UserAccount bossAccount = userAccountManager.create("boss", "123",
-				Roles.boss);
+				Roles.boss, Roles.receiver, Roles.sender);
 		bossAccount.setEmail("Boss@Fviv.de");
 		bossAccount.setFirstname("Der");
 		bossAccount.setLastname("Boss");
@@ -163,7 +170,8 @@ public class FvivDataInitializer implements DataInitializer {
 		catererAccount.setEmail("Caterer@Fviv.de");
 		catererAccount.setFirstname("Der");
 		catererAccount.setLastname("Caterer");
-		UserAccount leaderAccount = userAccountManager.create("leader", "123", Roles.leader);
+		UserAccount leaderAccount = userAccountManager.create("leader", "123",
+				Roles.leader);
 		leaderAccount.setEmail("Festivalleiter@Fviv.de");
 		leaderAccount.setFirstname("Der");
 		leaderAccount.setLastname("Festivalleiter");
@@ -171,7 +179,7 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
 		userAccountManager.save(leaderAccount);
-
+		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
 				"123", Roles.employee);
@@ -236,13 +244,23 @@ public class FvivDataInitializer implements DataInitializer {
 		artistsRepository.save(artist);
 		artistsRepository.save(artist2);
 
-		Festival festival = festivalRepository.findById(1);
-		Festival festival2 = festivalRepository.findById(2);
+		Festival festival = festivalRepository.findOne((long) 1);
+		Festival festival2 = festivalRepository.findOne((long) 2);
 
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival));
+		AreaItem areaItem = new AreaItem(AreaItem.Type.STAGE, "Stage 1", 30, 30, 30, 30, festival);
 
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2));
+		AreaItem areaItem2 = new AreaItem(AreaItem.Type.STAGE, "Stage 2", 30, 30, 10, 70, festival);
+
+		areaItemsRepository.save(areaItem);
+		areaItemsRepository.save(areaItem2);
+
+
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival, areaItem));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival, areaItem2));
+
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival, areaItem));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival, areaItem2));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2, areaItem2));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2, areaItem2));
 	}
 }

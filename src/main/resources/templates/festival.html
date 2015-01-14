@@ -69,7 +69,14 @@
 	<div id="webseite">
 		<div id="header">
 			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
-			<div id="title">Festival Erstellung</div>
+			<div th:switch="${festivalmode}">
+				<div th:case="editFestivals">
+					<div id="title">Festivals bearbeiten</div>
+				</div>
+				<div th:case="*">
+					<div id="title">Festivals erstellen</div>
+				</div>
+			</div>
 			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
 		</div>
 
@@ -79,40 +86,7 @@
 
 					<!-- FestivalCase -->
 					<div th:case="festival">
-						<form th:action="@{/newFestival}" method="post">
-							<fieldset>
-							<label class="label" for="locationId"> Location
-									ausw&auml;hlen: </label><select name="locationId" size="1">
-									<option th:each=" location : ${locationlist}"
-										th:text="${location.id} + ${location.name}"
-										th:value="${location.id}"></option>
-								</select><br />
-								<label class="label" for="festivalName"> <input
-									type="text" name="festivalName" size="40"
-									placeholder="festivalname"></input>Festivalname
-								</label> <br />  <label class="label" for="startDate"> <input
-									type="date" name="startDate" size="40" placeholder="yyyy-MM-dd"></input>Startdatum
-								</label> <br /> <label class="label" for="endDate"> <input
-									type="date" name="endDate" size="40" placeholder="yyyy-MM-dd"></input>EndDatum
-								</label> <br /> <label class="label" for="actors"> <input
-									type="text" name="actors" size="40" placeholder="Künstler"></input>Künstler
-								</label> <br />  <label class="label" for="preisTag"> <input
-									type="text" name="preisTag" size="40"
-									placeholder="Kosten Tageskarte"></input>Kosten Tageskarte <br /></label><label
-									class="label" for="selectManager">Manager zuordnen</label> <select
-									name="selectManager">
-									<option th:each=" account : ${managerAccounts}"
-										th:value="${account}" th:text="${account}"></option>
-								</select> <br /> <input type="submit"
-									onclick="alert('Festival wird erstellt')"
-									value="Festival erstellen" />
-							</fieldset>
-						</form>
-					</div>
-
-					<!-- case show festivals -->
-					<div th:case="showFestivals">
-						<table class="festivalTable">
+						<table th:unless="${festivallist.isEmpty()}" class="festivalTable">
 							<tr>
 								<th>ID</th>
 								<th>StartDatum</th>
@@ -135,12 +109,69 @@
 								<td th:text="${festival.preisTag}"></td>
 							</tr>
 						</table>
+
+						<div align="center">
+							<form th:action="@{/newFestival}" method="post">
+								<table id="newFestivalTable">
+									<tr>
+										<th colspan="2">Neues Festival anlegen:</th>
+									</tr>
+									<tr style="background: #666;">
+										<th>Location</th>
+										<td><select name="locationId" size="1"
+											class="button_green">
+												<option th:each=" location : ${locationlist}"
+													th:text="${location.id} + ${location.name}"
+													th:value="${location.id}"></option>
+										</select></td>
+									</tr>
+									<tr style="background: #666;">
+										<th>Startdatum</th>
+										<td><input type="date" class="wideInput" name="startDate"
+											size="40" placeholder="yyyy-MM-dd"></input></td>
+									</tr>
+									<tr style="background: #666;">
+										<th>Enddatum</th>
+										<td><input type="date" class="wideInput" name="endDate"
+											size="40" placeholder="yyyy-MM-dd"></input></td>
+									</tr>
+									<tr style="background: #666;">
+										<th>Festivalname</th>
+										<td><input type="text" class="wideInput"
+											name="festivalName" size="40" placeholder="Festivalname"></input></td>
+									</tr>
+									<tr style="background: #666;">
+										<th>Künstler</th>
+										<td><input type="text" class="wideInput" name="actors"
+											size="40" placeholder="Künstler"></input></td>
+									</tr>
+									<tr style="background: #666;">
+										<th>Kosten Tageskarte</th>
+										<td><input type="number" class="wideInput"
+											name="preisTag" size="40" placeholder="Kosten Tageskarte"></input></td>
+									</tr>
+									<tr style="background: #666;">
+										<th>Manager</th>
+										<td><select name="selectManager" class="button_green">
+												<option th:each=" account : ${managerAccounts}"
+													th:value="${account}" th:text="${account}"></option>
+										</select></td>
+									</tr>
+									<tr style="background: #666;">
+										<td colspan="2" style="text-align: center;"><input
+											type="submit" class="slimButtonSpecial"
+											onclick="alert('Festival wird erstellt')"
+											value="Festival erstellen"></input></td>
+									</tr>
+								</table>
+								<br />
+							</form>
+						</div>
 					</div>
 
-					<!-- case areaplan -->
-					<div th:case="areaplan">
+					<!-- case editFestivals -->
+					<div th:case="editFestivals">
 						<table class="festivalTable">
-							Festival auswählen:
 							<tr>
 								<th>ID</th>
 								<th>Festival Name</th>
@@ -152,30 +183,15 @@
 									<form method="post" action="/setup/area">
 										<input type="hidden" name="festivalId" value="0"
 											th:value="${festival.id}" /> <input type="submit"
-											class="button_green" value="Geländeplan bearbeiten"
+											class="editFestivalButton" value="Geländeplan bearbeiten"
 											style="margin-top: 2px;" />
 									</form>
 								</td>
-							</tr>
-						</table>
-					</div>
-
-					<!-- case setup-employees -->
-					<div th:case="setup-employees">
-						<table class="festivalTable">
-							Festival auswählen:
-							<tr>
-								<th>ID</th>
-								<th>Festival Name</th>
-							</tr>
-							<tr th:each=" festival : ${festivallist}">
-								<td th:text="${festival.id}"></td>
-								<td th:text="${festival.festivalName}"></td>
 								<td>
 									<form method="post" action="/setQuantityOfEmployees">
 										<input type="hidden" name="festivalId" value="0"
 											th:value="${festival.id}" /> <input type="submit"
-											class="button_green" value="Mitarbeiter aufstocken"
+											class="editFestivalButton" value="Mitarbeiter aufstocken"
 											style="margin-top: 2px;" />
 									</form>
 								</td>
@@ -183,108 +199,121 @@
 									<form method="post" action="/setSalary">
 										<input type="hidden" name="festivalId" value="0"
 											th:value="${festival.id}" /> <input type="submit"
-											class="button_green" value="Gehälter festlegen"
+											class="editFestivalButton" value="Gehälter festlegen"
 											style="margin-top: 2px;" />
 									</form>
 								</td>
 							</tr>
 						</table>
+						<br />
 					</div>
 
 					<!-- case setSalary -->
 					<div th:case="setSalary">
-
-						<p th:text="${selected.festivalName}" />
+						<div align="center">
+							<p th:text="'Ausgewähltes Festival: '+${selected.festivalName}"></p>
+						</div>
 						<form name="salform" action="/setNewSalary" method="post"
 							onsubmit="return validateSal()">
 							<table class="festivalTable">
 								<tr>
-									<td>Tagesgehalt für Managementangestellen</td>
-									<td>Bisher:
+									<th colspan="2">Tagesgehalt</th>
+									<th>aktualisieren</th>
+								</tr>
+								<tr>
+									<td>Manager</td>
+									<td>Aktuell:
 										<p th:text="${selected.managementSalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salManagement"
-										min="1.00" step="0.10" value="0.00" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td>Tagesgehalt für Cateringangestellen</td>
-									<td>Bisher:
+									<td>Caterer</td>
+									<td>Aktuell:
 										<p th:text="${selected.cateringSalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salCatering"
-										min="1.00" step="0.10" value="0.00" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td>Tagesgehalt für Securityangestellen</td>
-									<td>Bisher:
+									<td>Security</td>
+									<td>Aktuell:
 										<p th:text="${selected.securitySalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salSecurity"
-										min="1.00" step="0.10" value="0.00" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td>Tagesgehalt für Cleaningangestelle</td>
-									<td>Bisher:
+									<td>Cleaning</td>
+									<td>Aktuell:
 										<p th:text="${selected.cleaningSalaryPerDay}" />
 									</td>
 									<td><input id="number" type="number" name="salCleaning"
-										min="1.00" step="0.10" value="0.00" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td></td>
-									<td></td>
-									<td><input type="submit" class="button_green"
-										value="Festlegen" style="margin-top: 2px;" /></td>
+									<td colspan="3"><input type="submit"
+										class="slimButtonSpecial" value="Festlegen"
+										style="margin-top: 2px;" /></td>
 								</tr>
 							</table>
+							<br />
 						</form>
 					</div>
 
 					<!-- case setQuantity -->
 					<div th:case="setQuantity">
+						<div align="center">
+							<p th:text="'Ausgewähltes Festival: '+${selected.festivalName}"></p>
+						</div>
 						<form name="quantform" action="/setNewQuant" method="post"
 							onsubmit="return validateQuant()">
 							<table class="festivalTable">
 								<tr>
-									<td>Anzahl Manager</td>
-									<td>Bisher:
+									<th colspan="2">Anzahl</th>
+									<th>aktualisieren</th>
+								</tr>
+								<tr>
+									<td>Manager</td>
+									<td>Aktuell:
 										<p th:text="${selected.quantManagement}" />
 									</td>
 									<td><input id="number" type="number"
-										name="quantManagement" min="1" step="1" value="0" /></td>
+										name="quantManagement" min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td>Anzahl Caterer:</td>
-									<td>Bisher:
+									<td>Caterer</td>
+									<td>Aktuell:
 										<p th:text="${selected.quantCatering}" />
 									</td>
 									<td><input id="number" type="number" name="quantCatering"
-										min="1" step="1" value="0" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td>Anzahl Securityangesteller</td>
-									<td>Bisher:
+									<td>Security</td>
+									<td>Aktuell:
 										<p th:text="${selected.quantSecurity}" /> Empfohlen:
 										<p th:text="${selected.RecommendedQuantSecurity}" />
 									</td>
 									<td><input id="number" type="number" name="quantSecurity"
-										min="1" step="1" value="0" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td>Anzahl Cleaningangestellter:</td>
-									<td>Bisher:
+									<td>Cleaning</td>
+									<td>Aktuell:
 										<p th:text="${selected.quantCleaning}" />
 									</td>
 									<td><input id="number" type="number" name="quantCleaning"
-										min="1" step="1" value="0" /></td>
+										min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
-									<td></td>
-									<td></td>
-									<td><input type="submit" class="button_green"
-										value="Festlegen" style="margin-top: 2px;" /></td>
+									<td colspan="3"><input type="submit"
+										class="slimButtonSpecial" value="Festlegen"
+										style="margin-top: 2px;" /></td>
 								</tr>
 							</table>
+							<br />
 						</form>
 					</div>
 
@@ -303,16 +332,10 @@
 			</form>
 			<!-- <div th:include="messaging :: messaging"></div>-->
 			<form th:action="@{/festival/create}" method="post">
-				<button class="boldButton">Festival erstellen</button>
+				<button class="boldButton">Festivals</button>
 			</form>
-			<form th:action="@{/festival/areaplan}" method="post">
-				<button class="boldButton">Geländeplan</button>
-			</form>
-			<form th:action="@{/showFestival}" method="post">
-				<button class="boldButton">Festivals anzeigen</button>
-			</form>
-			<form th:action="@{/setup-employees}" method="post">
-				<button class="boldButton">Mitarbeiter bearbeiten</button>
+			<form th:action="@{/editFestivals}" method="post">
+				<button class="boldButton">Festivals bearbeiten</button>
 			</form>
 		</div>
 	</div>

@@ -1,10 +1,11 @@
 package fviv.areaPlanner;
 
+import fviv.festival.Festival;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * 
@@ -18,14 +19,15 @@ import org.springframework.data.annotation.Id;
 public class AreaItem {
 	
 	public enum Type {
-		TOILET, AREA, STAGE,BLOCKED, CATERING, CAMPING
+		TOILET, AREA, STAGE,BLOCKED, CATERING, CAMPING, PARKING
 	}
 	
 	
 	@javax.persistence.Id
 	@GeneratedValue
 	private long id;
-	private long festivalId;
+	@ManyToOne
+	private Festival festival;
 	private int width;
 	private int height;
 	private float yPos;
@@ -33,31 +35,42 @@ public class AreaItem {
 	private Type type;
 	private String name;
 	private float factor;
+
+	@Deprecated
 	public AreaItem(){
 		
 	}
 	@Autowired 
-	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, long festivalId) {
+	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, Festival festival) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
-		this.festivalId = festivalId;
+		this.festival = festival;
 	}
 	
 	@Autowired
-	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, float factor, long festivalId) {
+	public AreaItem(Type type, String name, int width, int height, float xPos, float yPos, float factor, Festival festival) {
 		this.width = width;
 		this.height = height;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
-		this.festivalId = festivalId;
+		this.festival = festival;
 		this.setFactor(factor);
 	}
+
+	public Festival getFestival() {
+		return festival;
+	}
+
+	public void setFestival(Festival festival) {
+		this.festival = festival;
+	}
+
 	public long getId(){
 		return id;
 	}

@@ -3,6 +3,7 @@ package fviv.areaPlanner;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
@@ -23,14 +24,14 @@ public class PlanningItem {
 	String name;
 	int width;
 	int height;
-	float rentCost;
+	Money rentCost;
 
 	public PlanningItem(){
 		
 	}
 	
 	@Autowired
-	public PlanningItem(String name, int width, int height, float rentCost) {
+	public PlanningItem(String name, int width, int height, Money rentCost) {
 		//super();
 		this.name = name;
 		this.width = width;
@@ -54,11 +55,11 @@ public class PlanningItem {
 		this.height = height;
 	}
 
-	public float getRentCost() {
+	public Money getRentCost() {
 		return rentCost;
 	}
 
-	public void setRentCost(float rentCost) {
+	public void setRentCost(Money rentCost) {
 		this.rentCost = rentCost;
 	}
 
