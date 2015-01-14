@@ -7,12 +7,12 @@
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-	<div th:fragment="messaging"
-		sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER')">
+
+	<div th:fragment="messaging">
 		<link rel="stylesheet" type="text/css"
 			href="../resources/css/messaging.css" />
-		<button id="toggle-chat" class="slimButton">Show Chat</button>
-		<div id="messaging-area">
+		<button id="toggle-chat" class="slimButton" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')">Show Chat</button>
+		<div id="messaging-area" sec:authorize="hasAnyRole('MESSAGE_SENDER','MESSAGE_RECEIVER', 'ROLE_BOSS')">
 
 
 			<div class="left-Content">

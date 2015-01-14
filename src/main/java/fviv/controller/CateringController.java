@@ -54,7 +54,8 @@ public class CateringController {
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
 	private final FestivalRepository festivalRepository;
-	private long selected;
+	private Festival selected;
+	private long selectedId;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
@@ -74,9 +75,22 @@ public class CateringController {
 	// --- --- --- --- --- --- ModelAttributes --- --- --- --- --- --- \\
 
 	/**
-	 * Sets the order mode to MEALS or DRINKS in the UI
 	 * 
-	 * @return mode
+	 * @return the name of the festival for the UI
+	 */
+	@ModelAttribute("selectedFestival")
+	public String selectedFestival() {
+		if (selected == null) {
+			return "(noch kein Festival ausgewählt)";
+		} else {
+			selectedId = selected.getId();
+			return selected.getFestivalName();
+		}
+	}
+	
+	/**
+	 *
+	 * @return MEALS or DRINKS as mode in the UI
 	 */
 	@ModelAttribute("ordermode")
 	public String ordermode() {
@@ -121,8 +135,8 @@ public class CateringController {
 		Collection<Menu> drinks = this.menusRepository.findByType(Type.DRINK);
 
 		// Schnittmenge:
-		meals.retainAll(this.menusRepository.findByFestivalId(selected));
-		drinks.retainAll(this.menusRepository.findByFestivalId(selected));
+		meals.retainAll(this.menusRepository.findByFestivalId(selectedId));
+		drinks.retainAll(this.menusRepository.findByFestivalId(selectedId));
 
 		Iterable<Menu> mealsAsAttribute = meals;
 		Iterable<Menu> drinksAsAttribute = drinks;
@@ -153,7 +167,7 @@ public class CateringController {
 
 	@RequestMapping(value = "/catering/festival", method = RequestMethod.POST)
 	public String festival(@RequestParam("festival") long festivalId) {
-		selected = festivalId;
+		selected = festivalRepository.findById(festivalId);
 		return "redirect:/catering";
 	}
 
@@ -242,8 +256,9 @@ public class CateringController {
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
 					orderManager.save(order);
-					financeRepository.save(new Finance(Reference.DEPOSIT, order
-							.getTotalPrice(), FinanceType.CATERING));
+					financeRepository.save(new Finance(selectedId,
+							Reference.DEPOSIT, order.getTotalPrice(),
+							FinanceType.CATERING));
 
 					currentCartItems.clear();
 					cart.clear();

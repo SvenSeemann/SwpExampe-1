@@ -37,11 +37,12 @@ public class Finance {
 	}
 
 	@Autowired
-	public Finance(Reference reference, Money amount, FinanceType financeType/*, long festivalId*/) {
+	public Finance(long festivalId, Reference reference, Money amount, FinanceType financeType) {
 		//this.festivalId = festivalId;
 		this.reference = reference;
 		this.amount = amount;		
 		this.financeType = financeType;
+		this.setFestivalId(festivalId);
 	}
 
 	/** Returns whether the finance is an expense or an deposit.
@@ -69,5 +70,13 @@ public class Finance {
 	
 	public FinanceType getFinanceType(){
 		return financeType;
+	}
+
+	public long getFestivalId() {
+		return festivalId;
+	}
+
+	public void setFestivalId(long festivalId) {
+		this.festivalId = festivalId;
 	}
 }

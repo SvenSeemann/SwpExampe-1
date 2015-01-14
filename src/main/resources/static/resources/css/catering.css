@@ -24,6 +24,7 @@
 	width: 560px;
 	height: 500px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	border: #f9731C 2px solid;
 	float: right;
 	color: white;
@@ -56,6 +57,7 @@
 	pointer-events: none;
 }
 
+<<<<<<< HEAD
 #cancel {
 margin-left:40px;
 	}
@@ -63,3 +65,9 @@ margin-left:40px;
 #confirm {
 margin-left:40px;
 	}
+=======
+#confirmButtons {
+	position: absolute;
+	margin-bottom : 10;
+}
+>>>>>>> master
