@@ -30,11 +30,13 @@ public class Festival {
 	private String actors;
 	private int maxVisitors;
 	private long preisTag;
-	private Money managementSalaryPerDay;
-	private Money cateringSalaryPerDay;
-	private Money securitySalaryPerDay;
-	private Money cleaningSalaryPerDay;
+	private Money managementSalaryPerHour;
+	private Money leadershipSalaryPerHour;
+	private Money cateringSalaryPerHour;
+	private Money securitySalaryPerHour;
+	private Money cleaningSalaryPerHour;
 	private int quantManagement;
+	private int quantLeadership;
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
@@ -90,12 +92,13 @@ public class Festival {
 		this.actors = actors;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
-		this.managementSalaryPerDay = Money.of(EUR, 0.00);
-		this.cateringSalaryPerDay = Money.of(EUR, 0.00);
-		this.securitySalaryPerDay = Money.of(EUR, 0.00);
-		this.cleaningSalaryPerDay = Money.of(EUR, 0.00);
+		this.managementSalaryPerHour = Money.of(EUR, 0.00);
+		this.cateringSalaryPerHour = Money.of(EUR, 0.00);
+		this.securitySalaryPerHour = Money.of(EUR, 0.00);
+		this.cleaningSalaryPerHour = Money.of(EUR, 0.00);
 		this.quantCleaning = 0;
-		this.quantManagement = 0;
+		this.quantManagement = 1;
+		this.quantLeadership = 1;
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
 		this.managerUserName = managerUserName;
@@ -168,36 +171,36 @@ public class Festival {
 		this.locationId = locationId;
 	}
 
-	public Money getManagementSalaryPerDay() {
-		return managementSalaryPerDay;
+	public Money getManagementSalaryPerHour() {
+		return managementSalaryPerHour;
 	}
 
-	public void setManagementSalaryPerDay(Money managementSalaryPerDay) {
-		this.managementSalaryPerDay = managementSalaryPerDay;
+	public void setManagementSalaryPerHour(Money managementSalaryPerHour) {
+		this.managementSalaryPerHour = managementSalaryPerHour;
 	}
 
-	public Money getCateringSalaryPerDay() {
-		return cateringSalaryPerDay;
+	public Money getCateringSalaryPerHour() {
+		return cateringSalaryPerHour;
 	}
 
-	public void setCateringSalaryPerDay(Money cateringSalaryPerDay) {
-		this.cateringSalaryPerDay = cateringSalaryPerDay;
+	public void setCateringSalaryPerHour(Money cateringSalaryPerHour) {
+		this.cateringSalaryPerHour = cateringSalaryPerHour;
 	}
 
-	public Money getSecuritySalaryPerDay() {
-		return securitySalaryPerDay;
+	public Money getSecuritySalaryPerHour() {
+		return securitySalaryPerHour;
 	}
 
-	public void setSecuritySalaryPerDay(Money securitySalaryPerDay) {
-		this.securitySalaryPerDay = securitySalaryPerDay;
+	public void setSecuritySalaryPerHour(Money securitySalaryPerHour) {
+		this.securitySalaryPerHour = securitySalaryPerHour;
 	}
 
-	public Money getCleaningSalaryPerDay() {
-		return cleaningSalaryPerDay;
+	public Money getCleaningSalaryPerHour() {
+		return cleaningSalaryPerHour;
 	}
 
-	public void setCleaningSalaryPerDay(Money cleaningSalaryPerDay) {
-		this.cleaningSalaryPerDay = cleaningSalaryPerDay;
+	public void setCleaningSalaryPerHour(Money cleaningSalaryPerHour) {
+		this.cleaningSalaryPerHour = cleaningSalaryPerHour;
 	}
 
 	public String getManager() {
@@ -206,5 +209,21 @@ public class Festival {
 	
 	public void setManager(String managerUserName){
 		this.managerUserName = managerUserName;	
+	}
+
+	public int getQuantLeadership() {
+		return quantLeadership;
+	}
+
+	public void setQuantLeadership(int quantLeadership) {
+		this.quantLeadership = quantLeadership;
+	}
+
+	public Money getLeadershipSalaryPerHour() {
+		return leadershipSalaryPerHour;
+	}
+
+	public void setLeadershipSalaryPerHour(Money leadershipSalaryPerHour) {
+		this.leadershipSalaryPerHour = leadershipSalaryPerHour;
 	}
 }
