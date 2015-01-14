@@ -9,6 +9,7 @@ import fviv.model.ArtistsRepository;
 import fviv.model.Event;
 import fviv.model.EventsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
  * @author justusadam
  */
 @Controller
+@PreAuthorize("hasRole('ROLE_BOSS')")
 public class Booking {
 
     private RestBooking restBooking;
