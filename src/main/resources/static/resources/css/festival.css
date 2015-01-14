@@ -1,5 +1,10 @@
 @charset "utf-8";
 /* CSS Document */
+
+#content{
+	border-top:#0c3 thick dashed;
+}
+
 #substance{
 	width: 835px;
 	height: 800px;

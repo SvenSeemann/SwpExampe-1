@@ -1,24 +1,18 @@
 // globale Variablen
-//..........................
-// 0 = small stage
-// 1 = medium stage
-// 2 = big stage
-// 3 = standard-toilet
-// 4 = behindertenklo
-// 5 = Badcontainer
-// 6 = Standard-catering
 
 //objectValues(new Array(name, breite, hoehe))
 var objectValues = new Array();
 
-// Array mit allen Objekten, die in die DB geschickt werden. ObjektArray(typ,
-// bezeichnung, weite, hoehe, left, top)
+// Array with all datas for the db. ObjektArray(type,
+// description, width, height, left, top)
 var objectList = new Array();
 // ...........................
 var factor;
 var areaWidth;
 var areaHeight;
 
+// ------------------------------------//
+// get the values for of the object-types from the db
 $(document).ready(
 		function() {
 			event.preventDefault();
@@ -38,6 +32,8 @@ $(document).ready(
 
 		});
 
+// ask the db for datas, if there are some object-datas, the script will build
+// the objects on the area
 $(document).ready(
 		function() {
 			event.preventDefault();
@@ -51,9 +47,10 @@ $(document).ready(
 				success : function(data) {
 					console.log(data);
 					if (data.length >= 1) {
+						// build the existing area
 						buildArea(data[0].width, data[0].height);
 						factor = data[0].factor;
-
+						// build extisting objects
 						for (i = 1; i < data.length; i++) {
 							var newElem = document.createElement("div");
 							newElem = $(newElem);
@@ -71,7 +68,7 @@ $(document).ready(
 								'top' : data[i].yPos
 							});
 							newElem.text(data[i].name);
-
+							// script for draggalbe
 							$(function() {
 								$(".objekt").draggable({
 									containment : "#area",
@@ -80,6 +77,7 @@ $(document).ready(
 									snapTolerance : "8"
 								});
 							});
+							// put all objects in the ojectList-Array
 							objectList.push(new Array(newElem.attr('name'),
 									newElem.text(), newElem.width(), newElem
 											.height(), newElem.position().left,
@@ -90,10 +88,7 @@ $(document).ready(
 			});
 		});
 
-function newArea() {
-	document.getElementById('request').style.display = "block";
-}
-// ---------------------------------------------------
+// toogle the submenu you click
 function openSubMenu(thing) {
 	switch (thing) {
 	case "stage":
@@ -110,10 +105,15 @@ function openSubMenu(thing) {
 		break;
 	}
 }
+
+// onLoad the Submenu with the choosable objects will be hidden
 $(document).ready(function() {
 	$(".objectMenu").hide();
 });
-// --------------------------------------------------
+
+function newArea() {
+	document.getElementById('request').style.display = "block";
+}
 
 function areaRequest(event, form) {
 	document.getElementById('request').style.display = "none";
@@ -131,7 +131,7 @@ $(document).ready(function() {
 function breakIt() {
 	document.getElementById('request').style.display = "none";
 }
-// ------------------------------------------
+
 function buildArea(width, height) {
 	var parent = document.getElementById("substance");
 	var area = document.createElement("div");
@@ -150,7 +150,9 @@ function buildArea(width, height) {
 	});
 
 }
+// function to build camping-sites
 function buildCamping() {
+	// --- build the requestBox ---
 	var frame = document.createElement("div");
 	frame = $(frame);
 	frame.attr("class", "requestAll");
@@ -168,11 +170,14 @@ function buildCamping() {
 	table
 			.append("<tr><td>Höhe:</td><td><input type='number' name='height' size='30' /> m</td></tr>");
 	table
-			.append("<tr><td colspan='2'><input type='submit' value='submit'class='button'/><input type='reset' id='delete' value='reset'class='button' /></td></tr>")
+			.append("<tr><td colspan='2'><input type='submit' value='submit'class='button'/><input type='reset' id='delete' value='cancel'class='button' /></td></tr>")
 	frame.appendTo("#substance");
+	// --------------------------
+	// remove the requestBox by click the- canel-button
 	$('#delete').on("click", function() {
 		frame.remove();
 	});
+	// builds the campingsite
 	$(form).submit(
 			function(event) {
 				event.preventDefault();
@@ -213,6 +218,7 @@ function buildCamping() {
 			});
 
 }
+// the same thing like the camping-site, only for the blocked Areals
 function buildBlocked() {
 	var frame = document.createElement("div");
 	frame = $(frame);
@@ -276,16 +282,18 @@ function buildBlocked() {
 			});
 
 }
+// builds the Object
 function buildObject(element, type, name) {
-	console.log(type);
-	if (type == 10) {
+	// cases for the camp and the blocked areal
+	if (type == "camp") {
 		buildCamping();
-	} else if (type == 3) {
+	} else if (type == "block") {
 		buildBlocked();
 	} else {
 		var title = objectValues[type][0];
 		var width = objectValues[type][1];
 		var height = objectValues[type][2];
+		// checking if the item is to big for the areal
 		if ($('#area').width() <= (width * factor)
 				|| $('#area').height() <= (height * factor)) {
 			alert("Objekt zu gross. Bitte nehmen sie ein anderes.");
@@ -304,7 +312,7 @@ function buildObject(element, type, name) {
 				'height' : (height * factor)
 			});
 			newElem.text(title);
-
+			// function for draggable
 			$(function() {
 				$(".objekt").draggable({
 					containment : "#area",
@@ -313,6 +321,7 @@ function buildObject(element, type, name) {
 					snapTolerance : "8"
 				});
 			});
+			// put the object in the objectList-Array
 			objectList.push(new Array(newElem.attr('name'), newElem.text(),
 					width, height, newElem.position().left,
 					newElem.position().top));
@@ -325,17 +334,11 @@ function validateIt(element) {
 
 	objectList[index][4] = element.position().left;
 	objectList[index][5] = element.position().top;
-
-	for (i = 0; i < objectList.length; i++) {
-		console.log(objectList[i][0] + ", " + objectList[i][1] + ", "
-				+ objectList[i][2] + ", " + objectList[i][3] + ", "
-				+ objectList[i][4] + ", " + objectList[i][5]);
-	}
 }
-
+// by clicking the save-button...
 function saveIt() {
 	$(document).ready(function() {
-		console.log(areaWidth, areaHeight);
+		// send the area-values at first to the db
 		$.ajax({
 			url : "/newArea",
 			type : "POST",
@@ -346,6 +349,8 @@ function saveIt() {
 				festival : $("#festival-id").text()
 			},
 			success : function() {
+				// for each element in the objectList-Array, an ajax will be
+				// sent
 				for (i = 0; i < objectList.length; i++) {
 					$.ajax({
 						url : "/newObject",
@@ -360,7 +365,6 @@ function saveIt() {
 							festival : $("#festival-id").text()
 						},
 						success : function(data) {
-							console.log(data);
 						}
 					});
 				}
@@ -369,7 +373,7 @@ function saveIt() {
 		});
 	});
 }
-
+// function for turn the objects
 function turnObject(element) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
@@ -378,47 +382,59 @@ function turnObject(element) {
 	console.log(objectList[my_index]);
 	width = objectList[my_index][2];
 	height = objectList[my_index][3];
-	objectList[my_index][2] = height;
-	objectList[my_index][3] = width;
-	parent.css({
-		'width' : objectList[my_index][2] * factor,
-		'height' : objectList[my_index][3] * factor
-	});
+
+	if ($('#area').width() <= (width * factor)
+			|| $('#area').height() <= (height * factor)) {
+		alert("Drehen nicht möglich, Objekt geht über das Areal hinaus.");
+		return false;
+	} else {
+
+		objectList[my_index][2] = height;
+		objectList[my_index][3] = width;
+		parent.css({
+			'width' : objectList[my_index][2] * factor,
+			'height' : objectList[my_index][3] * factor
+		});
+	}
 }
+
+// delete the chosed object
 function deleteObject(index) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
-	var my_index = a.parent().children().index(a);
-	objectList.splice(my_index, 1);
-	parent.remove();
+	var my_index = a.parent().children().index(a); // get the index-value to find the right position in the objectList-Array
+	objectList.splice(my_index, 1); // delete the entry in the array
+	parent.remove(); 
 }
-
+// click right and get the context-menu
 function contextMenu(element) {
+	// blanks the original context-menu
 	$(document).bind("contextmenu", function(e) {
 		return false;
 	});
 	var element = $(element);
 	var a = element.parent().children().index(element);
-	console.log(a);
-	console.log(objectList[a][1]);
-
 	var menu = document.createElement("div");
 	var list = document.createElement("ul");
-
+	//.........
 	var name = document.createElement("li");
 	$(name).text("Name: " + objectList[a][1]);
 	$(name).attr("id", "use_a_line");
 	$(name).appendTo(list);
+	//.........
 	var weite = document.createElement("li");
 	$(weite).text("Breite: " + objectList[a][2] + "m");
 	$(weite).appendTo(list);
+	//........
 	var hoehe = document.createElement("li");
 	$(hoehe).text("Höhe: " + objectList[a][3] + "m");
 	$(hoehe).attr("id", "use_a_line");
 	$(hoehe).appendTo(list);
+	//........
 	var turnCCW = document.createElement("li");
 	var turnACW = document.createElement("li");
 	var loeschen = document.createElement("li");
+	//........
 	loeschen = $(loeschen);
 	turnCCW = $(turnCCW);
 	turnACW = $(turnACW);
@@ -438,6 +454,7 @@ function contextMenu(element) {
 	$(list).appendTo(menu);
 	menu.attr("id", "context");
 	menu.appendTo(element);
+	// remove the context-menu by click anywhere
 	$(document).click(function() {
 		menu.remove();
 	});

@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 public class AreaItem {
 	
 	public enum Type {
-		TOILET, AREA, STAGE,BLOCKED, CATERING, CAMPING
+		TOILET, AREA, STAGE,BLOCKED, CATERING, CAMPING, PARKING
 	}
 	
 	
