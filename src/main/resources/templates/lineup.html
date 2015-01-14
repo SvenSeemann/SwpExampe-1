@@ -38,28 +38,16 @@
         <table>
             <thead>
             <tr>
-                <td>Festival ID</td>
-                <td>Festival Name</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="festival : ${festivals}">
-                <td th:text="${festival.id}"></td>
-                <td th:text="${festival.festivalName}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <table>
-            <thead>
-            <tr>
                 <td>Stage ID</td>
                 <td>Stage Name</td>
+                <td>Festival</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="stage : ${stages}">
                 <td th:text="${stage.id}"></td>
                 <td th:text="${stage.name}"></td>
+                <td th:text="${stage.festival.festivalName}"></td>
             </tr>
             </tbody>
         </table>
@@ -67,8 +55,6 @@
     </div>
     <form action="/booking/artist/schedule" method="POST">
         <div class="formsegement"><label for="artist">Artist ID</label><input id="artist" name="artist" type="number" /></div>
-
-        <div class="formsegement"><label for="festival">Festival</label><input id="festival" name="festival" type="number" /></div>
 
         <div class="formsegement"><label for="startDay">Tag</label><input id="startDay" name="startDay" type="number" /></div>
         <div class="formsegement"><label for="startMonth">Monat</label><input id="startMonth" name="startMonth" type="number" /></div>

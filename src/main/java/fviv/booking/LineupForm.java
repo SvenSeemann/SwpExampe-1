@@ -10,16 +10,6 @@ public class LineupForm {
     @NotNull
     private long artist;
 
-    public long getFestival() {
-        return festival;
-    }
-
-    public void setFestival(long festival) {
-        this.festival = festival;
-    }
-
-    @NotNull private long festival;
-
     @NotNull private int startYear;
     @NotNull private int startMonth;
     @NotNull private int startDay;

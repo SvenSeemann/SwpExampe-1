@@ -54,7 +54,7 @@ public class FvivDataInitializer implements DataInitializer {
 			ArtistsRepository artistsRepository,
 			EventsRepository eventsRepository,
 			LocationRepository locationRepository) {
-			Assert.notNull(employeeRepository,
+		Assert.notNull(employeeRepository,
 				"EmployeeRepository must not be null!");
 		this.employeeRepository = employeeRepository;
 		this.userAccountManager = userAccountManager;
@@ -81,38 +81,42 @@ public class FvivDataInitializer implements DataInitializer {
 		initializeLineup();
 	}
 
-	private void initializeFestivals()
-			throws ParseException {
-				
+	private void initializeFestivals() throws ParseException {
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
 
-		Festival festival1 = new Festival(date1, date2, "Wonderland",1 ,
+		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
 				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
 		Festival festival2 = new Festival(date2, date1, "Rock am Ring", 2,
-				"Netflix", 69999 , (long) 12.0, "manager");
+				"Netflix", 69999, (long) 12.0, "manager");
 
-		
-		UserAccount festivalAccount1 = userAccountManager.create("festival1" , "123", Roles.guest);
-		UserAccount festivalAccount2 = userAccountManager.create("festival2" , "123", Roles.guest);
-		
-	//	festival1.setUserAccount(festivalAccount1);
-	//	festival2.setUserAccount(festivalAccount2);
-					
+		UserAccount festivalAccount1 = userAccountManager.create("festival1",
+				"123", Roles.guest);
+		UserAccount festivalAccount2 = userAccountManager.create("festival2",
+				"123", Roles.guest);
+
+		// festival1.setUserAccount(festivalAccount1);
+		// festival2.setUserAccount(festivalAccount2);
+
 		userAccountManager.save(festivalAccount1);
 		userAccountManager.save(festivalAccount2);
-			
+
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
-	
+
 	}
-	private void initializeLocations()
-			 {
-		Location location1 = new Location("Wunderland", 400, 300, 20000, "aasdf");
-		Location location2 = new Location("Rock am Ring", 200, 500, 50000, "aasdf");
-		Location location3 = new Location("Festival ist toll", 2000, 3000, 10000, "aasdf");
-		Location location4 = new Location("Namen sind unwichtig", 1000, 1400, 9000, "aasdf");
+
+	private void initializeLocations() {
+		Location location1 = new Location("Wunderland", 400, 300, 20000,
+				"aasdf");
+		Location location2 = new Location("Rock am Ring", 200, 500, 50000,
+				"aasdf");
+		Location location3 = new Location("Festival ist toll", 2000, 3000,
+				10000, "aasdf");
+		Location location4 = new Location("Namen sind unwichtig", 1000, 1400,
+				9000, "aasdf");
 		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf");
 		locationRepository.save(location1);
 		locationRepository.save(location2);
@@ -120,15 +124,13 @@ public class FvivDataInitializer implements DataInitializer {
 		locationRepository.save(location4);
 		locationRepository.save(location5);
 
-		
-
 	}
 
 	private void initializeTickets() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date1 = LocalDate.parse("2014-12-31", formatter);
-//true(tages), already checked in
+		// true(tages), already checked in
 		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
 		Ticket ticket3 = new Ticket(true, true, "Wonderland", date1);
 		Ticket ticket4 = new Ticket(true, true, "Wonderland", date);
@@ -138,7 +140,7 @@ public class FvivDataInitializer implements DataInitializer {
 		Ticket ticket8 = new Ticket(true, false, "Wonderland", date);
 
 		Ticket ticke2 = new Ticket(false, true, "Rock am Ring", null);
-		
+
 		ticketRepository.save(ticket1);
 		ticketRepository.save(ticke2);
 		ticketRepository.save(ticket3);
@@ -147,8 +149,6 @@ public class FvivDataInitializer implements DataInitializer {
 		ticketRepository.save(ticket6);
 		ticketRepository.save(ticket7);
 		ticketRepository.save(ticket8);
-
-
 
 	}
 
@@ -168,7 +168,8 @@ public class FvivDataInitializer implements DataInitializer {
 		catererAccount.setEmail("Caterer@Fviv.de");
 		catererAccount.setFirstname("Der");
 		catererAccount.setLastname("Caterer");
-		UserAccount leaderAccount = userAccountManager.create("leader", "123", Roles.leader);
+		UserAccount leaderAccount = userAccountManager.create("leader", "123",
+				Roles.leader);
 		leaderAccount.setEmail("Festivalleiter@Fviv.de");
 		leaderAccount.setFirstname("Der");
 		leaderAccount.setLastname("Festivalleiter");
@@ -176,37 +177,6 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
 		userAccountManager.save(leaderAccount);
-
-
-		final Role bossRole = new Role("ROLE_BOSS");
-		final Role managerRole = new Role("ROLE_MANAGER");
-		final Role catererRole = new Role("ROLE_CATERER");
-		final Role employeeRole = new Role("ROLE_EMPLOYEE");
-
-		UserAccount boss = userAccountManager.create("boss", "123", bossRole);
-		boss.setFirstname("Der");
-		boss.setLastname("Boss");
-		boss.add(Roles.receiver);
-		boss.add(Roles.sender);
-		UserAccount manager = userAccountManager.create("manager", "123",
-				managerRole);
-		manager.setFirstname("Der");
-		manager.setLastname("Manager");
-		manager.add(Roles.receiver);
-		manager.add(Roles.sender);
-		UserAccount caterer = userAccountManager.create("caterer", "123",
-				catererRole);
-
-		caterer.setFirstname("Der");
-		caterer.setLastname("Caterer");
-		caterer.add(Roles.receiver);
-		caterer.add(Roles.sender);
-		UserAccount leader = userAccountManager.create("leader", "123", Roles.leader);
-
-		userAccountManager.save(boss);
-		userAccountManager.save(manager);
-		userAccountManager.save(caterer);
-		userAccountManager.save(leader);
 		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
@@ -272,15 +242,16 @@ public class FvivDataInitializer implements DataInitializer {
 		artistsRepository.save(artist);
 		artistsRepository.save(artist2);
 
-		Festival festival = festivalRepository.findById(1);
-		Festival festival2 = festivalRepository.findById(2);
+		Festival festival = festivalRepository.findOne((long) 1);
+		Festival festival2 = festivalRepository.findOne((long) 2);
 
-		AreaItem areaItem = new AreaItem(AreaItem.Type.STAGE, "Stage 1", 30, 30, 30, 30, festival.getId());
+		AreaItem areaItem = new AreaItem(AreaItem.Type.STAGE, "Stage 1", 30, 30, 30, 30, festival);
 
-		AreaItem areaItem2 = new AreaItem(AreaItem.Type.STAGE, "Stage 2", 30, 30, 10, 70, festival.getId());
+		AreaItem areaItem2 = new AreaItem(AreaItem.Type.STAGE, "Stage 2", 30, 30, 10, 70, festival);
 
 		areaItemsRepository.save(areaItem);
 		areaItemsRepository.save(areaItem2);
+
 
 		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival, areaItem));
 		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival, areaItem2));
