@@ -25,7 +25,7 @@ import org.springframework.ui.ModelMap;
 import fviv.AbstractIntegrationTests;
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
-import fviv.catering.model.Menu.Type;
+import fviv.catering.model.Menu.MenuType;
 import fviv.festival.FestivalRepository;
 import fviv.model.Finance.FinanceType;
 import fviv.model.FinanceRepository;
@@ -89,7 +89,7 @@ public class CateringControllerTest extends AbstractIntegrationTests {
 		ModelMap modelMap = new ModelMap();
 
 		Menu menu = new Menu(1, "testMeal", Money.of(EUR, 2), Money.of(EUR, 5),
-				Type.MEAL);
+				MenuType.MEAL);
 		InventoryItem inventoryItem = new InventoryItem(menu, Units.of(1));
 		inventory.save(inventoryItem);
 
@@ -114,7 +114,7 @@ public class CateringControllerTest extends AbstractIntegrationTests {
 
 		Cart cart = new Cart();
 		Menu menu = new Menu(1, "testMeal", Money.of(EUR, 2), Money.of(EUR, 5),
-				Type.MEAL);
+				MenuType.MEAL);
 		cart.addOrUpdateItem(menu, Units.of(1));
 
 		String returnedView = controller.cancel(null, cart);

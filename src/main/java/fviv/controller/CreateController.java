@@ -4,9 +4,13 @@ import static org.joda.money.CurrencyUnit.EUR;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.joda.money.Money;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.quantity.Units;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
@@ -27,6 +31,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItem.Type;
 import fviv.areaPlanner.AreaItemsRepository;
+import fviv.catering.model.Menu;
+import fviv.catering.model.Menu.MenuType;
+import fviv.catering.model.MenusRepository;
 import fviv.festival.FestivalRepository;
 import fviv.festival.Festival;
 import fviv.location.Location;
@@ -48,15 +55,20 @@ public class CreateController {
 	private Festival selected;
 	private AreaItemsRepository areaItems;
 	private FinanceRepository financeRepository;
+	private MenusRepository menusRepository;
+	private Inventory inventory;
 
 	@Autowired
 	public CreateController(FestivalRepository festivalRepository,
 			LocationRepository locationrepository,
-			FinanceRepository financeRepository, AreaItemsRepository areaItems) {
+			FinanceRepository financeRepository, AreaItemsRepository areaItems,
+			MenusRepository menusRepository, Inventory inventory) {
 		this.festivalRepository = festivalRepository;
 		this.locationRepository = locationrepository;
 		this.financeRepository = financeRepository;
+		this.menusRepository = menusRepository;
 		this.areaItems = areaItems;
+		this.inventory = inventory;
 	}
 
 	/**
@@ -196,8 +208,7 @@ public class CreateController {
 	 * @return link
 	 */
 	@RequestMapping("/setNewQuant")
-	public String setNewQuant(
-			@RequestParam("quantCatering") int quantCatering,
+	public String setNewQuant(@RequestParam("quantCatering") int quantCatering,
 			@RequestParam("quantSecurity") int quantSecurity,
 			@RequestParam("quantCleaning") int quantCleaning) {
 
@@ -287,6 +298,51 @@ public class CreateController {
 				.findById(locationId).getWidth(), locationRepository.findById(
 				locationId).getHeight(), 0, 0, festivalRepository
 				.findById(festivalId)));
+		
+		// --- Initialize Menus for new festival --- \\
+		
+		// --- Menus --- \\
+
+				Menu Meal1 = new Menu(festivalId, "Pommes Frites", Money.of(EUR, 0.50),
+						Money.of(EUR, 2.50), MenuType.MEAL);
+				Menu Meal2 = new Menu(festivalId, "Pommes Spezial", Money.of(EUR, 0.70),
+						Money.of(EUR, 3.50), MenuType.MEAL);
+				Menu Meal3 = new Menu(festivalId, "Bratwurst", Money.of(EUR, 0.20), Money.of(
+						EUR, 2.00), MenuType.MEAL);
+				Menu Meal4 = new Menu(festivalId, "Currywurst", Money.of(EUR, 0.50), Money.of(
+						EUR, 3.00), MenuType.MEAL);
+				Menu Meal5 = new Menu(festivalId, "Currywurst mit Pommes", Money.of(EUR, 1.00),
+						Money.of(EUR, 4.50), MenuType.MEAL);
+				Menu Meal6 = new Menu(festivalId, "Stück Pizza", Money.of(EUR, 0.40), Money.of(
+						EUR, 2.50), MenuType.MEAL);
+				Menu Meal7 = new Menu(festivalId, "Vanilleeis", Money.of(EUR, 0.20), Money.of(
+						EUR, 1.00), MenuType.MEAL);
+				Menu Meal8 = new Menu(festivalId, "Schokoeis", Money.of(EUR, 0.20), Money.of(
+						EUR, 1.00), MenuType.MEAL);
+
+				// --- Drinks --- \\
+
+				Menu Drink1 = new Menu(festivalId, "Pils", Money.of(EUR, 0.50), Money.of(EUR,
+						2.50), MenuType.DRINK);
+				Menu Drink2 = new Menu(festivalId, "Alt", Money.of(EUR, 0.60), Money.of(EUR,
+						3.00), MenuType.DRINK);
+				Menu Drink3 = new Menu(festivalId, "Alkoholfrei", Money.of(EUR, 0.50), Money.of(
+						EUR, 3.00), MenuType.DRINK);
+				Menu Drink4 = new Menu(festivalId, "Softdrink", Money.of(EUR, 0.50), Money.of(
+						EUR, 2.20), MenuType.DRINK);
+				Menu Drink5 = new Menu(festivalId, "Wein", Money.of(EUR, 0.70), Money.of(EUR,
+						4.00), MenuType.DRINK);
+				
+				menusRepository
+				.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5, Meal6,
+						Meal7, Meal8, Drink1, Drink2, Drink3, Drink4,
+						Drink5));
+
+		for (Menu menu : menusRepository.findAll()) {
+			menu.setOrderable(true);
+			InventoryItem inventoryItem = new InventoryItem(menu, Units.of(50));
+			inventory.save(inventoryItem);
+		}
 
 		return "redirect:/festival";
 	}

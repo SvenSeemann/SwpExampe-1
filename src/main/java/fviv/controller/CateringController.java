@@ -1,7 +1,7 @@
 package fviv.controller;
 
 import fviv.catering.model.Menu;
-import fviv.catering.model.Menu.Type;
+import fviv.catering.model.Menu.MenuType;
 import fviv.catering.model.MenusRepository;
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
@@ -131,8 +131,8 @@ public class CateringController {
 			}
 		}
 		modelMap.addAttribute("festivals", festivalRepository.findAll());
-		Collection<Menu> meals = this.menusRepository.findByType(Type.MEAL);
-		Collection<Menu> drinks = this.menusRepository.findByType(Type.DRINK);
+		Collection<Menu> meals = this.menusRepository.findByType(MenuType.MEAL);
+		Collection<Menu> drinks = this.menusRepository.findByType(MenuType.DRINK);
 
 		// Schnittmenge:
 		meals.retainAll(this.menusRepository.findByFestivalId(selectedId));
