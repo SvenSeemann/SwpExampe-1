@@ -55,12 +55,13 @@ public class CreateController {
 	public CreateController(FestivalRepository festivalRepository,
 			LocationRepository locationrepository,
 			UserAccountManager userAccountManager,
-			FinanceRepository financeRepository) {
+			FinanceRepository financeRepository,
+			AreaItemsRepository areaItems) {
 		this.festivalRepository = festivalRepository;
 		this.locationRepository = locationrepository;
 		this.userAccountManager = userAccountManager;
 		this.financeRepository = financeRepository;
-
+		this.areaItems = areaItems;
 	}
 
 	/**
@@ -131,7 +132,9 @@ public class CreateController {
 	}
 
 	/**
-	 * Calculates finances (salary) for each employee after setting the amount of the salary per hour multiplied by 8 working hours.
+	 * Calculates finances (salary) for each employee after setting the amount
+	 * of the salary per hour multiplied by 8 working hours.
+	 * 
 	 * @param salManagement
 	 * @param salLeadership
 	 * @param salCatering
@@ -146,7 +149,7 @@ public class CreateController {
 			@RequestParam("salCatering") BigDecimal salCatering,
 			@RequestParam("salSecurity") BigDecimal salSecurity,
 			@RequestParam("salCleaning") BigDecimal salCleaning) {
-		 
+
 		if (salManagement.floatValue() != 0)
 			selected.setManagementSalaryPerHour(Money.of(EUR, salManagement));
 		if (salLeadership.floatValue() != 0)
@@ -158,18 +161,29 @@ public class CreateController {
 		if (salCleaning.floatValue() != 0)
 			selected.setCleaningSalaryPerHour(Money.of(EUR, salCleaning));
 		festivalRepository.save(selected);
-		
-		financeRepository.delete(financeRepository.findByFinanceType(FinanceType.SALARY));
-		
+
+		financeRepository.delete(financeRepository
+				.findByFinanceType(FinanceType.SALARY));
+
 		Period dateHelper;
 		dateHelper = selected.getStartDatum().until(selected.getEndDatum());
 		int days = dateHelper.getDays();
-		Money salaryTotalManagement = selected.getManagementSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantManagement()).multipliedBy(8);
-		Money salaryTotalLeadership = selected.getLeadershipSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantLeadership()).multipliedBy(8);
-		Money salaryTotalCatering = selected.getCateringSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantCatering()).multipliedBy(8);
-		Money salaryTotalSecurity = selected.getSecuritySalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantSecurity()).multipliedBy(8);
-		Money salaryTotalCleaning = selected.getCleaningSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantCleaning()).multipliedBy(8);
-		
+		Money salaryTotalManagement = selected.getManagementSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantManagement())
+				.multipliedBy(8);
+		Money salaryTotalLeadership = selected.getLeadershipSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantLeadership())
+				.multipliedBy(8);
+		Money salaryTotalCatering = selected.getCateringSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantCatering())
+				.multipliedBy(8);
+		Money salaryTotalSecurity = selected.getSecuritySalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantSecurity())
+				.multipliedBy(8);
+		Money salaryTotalCleaning = selected.getCleaningSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantCleaning())
+				.multipliedBy(8);
+
 		financeRepository.save(new Finance(selected.getId(), Reference.EXPENSE,
 				salaryTotalManagement, FinanceType.SALARY));
 		financeRepository.save(new Finance(selected.getId(), Reference.EXPENSE,
@@ -184,7 +198,9 @@ public class CreateController {
 	}
 
 	/**
-	 * Calculates finances (salary) for each employee after setting the quantity of employees multiplied by 8 working hours.
+	 * Calculates finances (salary) for each employee after setting the quantity
+	 * of employees multiplied by 8 working hours.
+	 * 
 	 * @param quantManagement
 	 * @param quantCatering
 	 * @param quantSecurity
@@ -207,18 +223,29 @@ public class CreateController {
 		if (quantCleaning != 0)
 			selected.setQuantCleaning(quantCleaning);
 		festivalRepository.save(selected);
-		
-		financeRepository.delete(financeRepository.findByFinanceType(FinanceType.SALARY));
+
+		financeRepository.delete(financeRepository
+				.findByFinanceType(FinanceType.SALARY));
 
 		Period dateHelper;
 		dateHelper = selected.getStartDatum().until(selected.getEndDatum());
 		int days = dateHelper.getDays();
-		Money salaryTotalManagement = selected.getManagementSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantManagement()).multipliedBy(8);
-		Money salaryTotalLeadership = selected.getLeadershipSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantLeadership()).multipliedBy(8);
-		Money salaryTotalCatering = selected.getCateringSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantCatering()).multipliedBy(8);
-		Money salaryTotalSecurity = selected.getSecuritySalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantSecurity()).multipliedBy(8);
-		Money salaryTotalCleaning = selected.getCleaningSalaryPerHour().multipliedBy(days).multipliedBy(selected.getQuantCleaning()).multipliedBy(8);
-		
+		Money salaryTotalManagement = selected.getManagementSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantManagement())
+				.multipliedBy(8);
+		Money salaryTotalLeadership = selected.getLeadershipSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantLeadership())
+				.multipliedBy(8);
+		Money salaryTotalCatering = selected.getCateringSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantCatering())
+				.multipliedBy(8);
+		Money salaryTotalSecurity = selected.getSecuritySalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantSecurity())
+				.multipliedBy(8);
+		Money salaryTotalCleaning = selected.getCleaningSalaryPerHour()
+				.multipliedBy(days).multipliedBy(selected.getQuantCleaning())
+				.multipliedBy(8);
+
 		financeRepository.save(new Finance(selected.getId(), Reference.EXPENSE,
 				salaryTotalManagement, FinanceType.SALARY));
 		financeRepository.save(new Finance(selected.getId(), Reference.EXPENSE,
@@ -229,7 +256,7 @@ public class CreateController {
 				salaryTotalSecurity, FinanceType.SALARY));
 		financeRepository.save(new Finance(selected.getId(), Reference.EXPENSE,
 				salaryTotalCleaning, FinanceType.SALARY));
-		
+
 		return "redirect:/festival";
 	}
 
@@ -260,6 +287,8 @@ public class CreateController {
 			@RequestParam("selectManager") String manager,
 			@RequestParam("locationId") long locationId) throws ParseException {
 
+		
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 
 		LocalDate dateStart = LocalDate.parse(startDate, formatter);
@@ -267,9 +296,15 @@ public class CreateController {
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
 
-				locationId, actors, (int) locationRepository.findById(locationId).getMaxVisitors(),Money.of(EUR, Long.parseLong(preisTag)), manager);
-	
-		festivalRepository.save(festival);
+		locationId, actors, (int) locationRepository.findById(locationId)
+				.getMaxVisitors(), Money.of(EUR, Long.parseLong(preisTag)),
+				manager);
+
+		long festivalId = festivalRepository.save(festival).getId();
+		
+		this.areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
+				.findById(locationId).getWidth(), locationRepository
+				.findById(locationId).getHeight(), 0, 0, festivalRepository.findById(festivalId)));
 
 		return "redirect:/festival";
 	}
