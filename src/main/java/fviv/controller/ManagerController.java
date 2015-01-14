@@ -261,6 +261,8 @@ public class ManagerController {
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
 
+		System.out.println(financeRepository.findAll());
+		
 		modelMap.addAttribute("festivals", festivalRepository.findAll());
 
 		// ------------------------ ROLES ------------------------ \\

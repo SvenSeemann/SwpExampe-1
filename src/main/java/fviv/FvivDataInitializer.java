@@ -13,9 +13,11 @@ import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 import fviv.user.Roles;
+
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,37 +178,6 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
 		userAccountManager.save(leaderAccount);
-
-
-		final Role bossRole = new Role("ROLE_BOSS");
-		final Role managerRole = new Role("ROLE_MANAGER");
-		final Role catererRole = new Role("ROLE_CATERER");
-		final Role employeeRole = new Role("ROLE_EMPLOYEE");
-
-		UserAccount boss = userAccountManager.create("boss", "123", bossRole);
-		boss.setFirstname("Der");
-		boss.setLastname("Boss");
-		boss.add(Roles.receiver);
-		boss.add(Roles.sender);
-		UserAccount manager = userAccountManager.create("manager", "123",
-				managerRole);
-		manager.setFirstname("Der");
-		manager.setLastname("Manager");
-		manager.add(Roles.receiver);
-		manager.add(Roles.sender);
-		UserAccount caterer = userAccountManager.create("caterer", "123",
-				catererRole);
-
-		caterer.setFirstname("Der");
-		caterer.setLastname("Caterer");
-		caterer.add(Roles.receiver);
-		caterer.add(Roles.sender);
-		UserAccount leader = userAccountManager.create("leader", "123", Roles.leader);
-
-		userAccountManager.save(boss);
-		userAccountManager.save(manager);
-		userAccountManager.save(caterer);
-		userAccountManager.save(leader);
 		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
