@@ -144,7 +144,7 @@ public class ManagerController {
 		modelMap.addAttribute("besucherzahl", anzahl);
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
-		return "manager";
+		return "redirect:/management";
 	}
 
 	@RequestMapping("/loadtickets")
@@ -167,7 +167,7 @@ public class ManagerController {
 		}
 		modelMap.addAttribute("ticketdates", dateArray);
 
-		return "manager";
+		return "redirect:/management";
 	}
 
 	// ------------------------ REQUESTMAPPING ------------------------ \\
@@ -181,6 +181,7 @@ public class ManagerController {
 
 	@RequestMapping("/management")
 	public String index(ModelMap modelMap) {
+		System.out.println("current mode: "+mode);
 		// Money used as sum for each type of expense
 		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
 				.of(EUR, 0.00);
@@ -285,9 +286,6 @@ public class ManagerController {
 		modelMap.addAttribute("employeelist", employeeRepository.findAll());
 		modelMap.addAttribute("registration", new Registration());
 
-		// ------------------------ STOCK ------------------------ \\
-
-		modelMap.addAttribute("inventory", this.inventory.findAll());
 		return "manager";
 	}
 
@@ -516,7 +514,7 @@ public class ManagerController {
 				|| editSingleAccount.equals("boss")
 				|| editSingleAccount.equals("caterer")) {
 			showErrors = "disableImportantAccount";
-			return "redirect:/manager";
+			return "redirect:/management";
 		}
 
 		// Disable useraccount and save it

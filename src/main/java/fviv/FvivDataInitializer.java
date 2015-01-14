@@ -163,9 +163,14 @@ public class FvivDataInitializer implements DataInitializer {
 		catererAccount.setEmail("Caterer@Fviv.de");
 		catererAccount.setFirstname("Der");
 		catererAccount.setLastname("Caterer");
+		UserAccount leaderAccount = userAccountManager.create("leader", "123", Roles.leader);
+		leaderAccount.setEmail("Festivalleiter@Fviv.de");
+		leaderAccount.setFirstname("Der");
+		leaderAccount.setLastname("Festivalleiter");
 		userAccountManager.save(bossAccount);
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
+		userAccountManager.save(leaderAccount);
 
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",

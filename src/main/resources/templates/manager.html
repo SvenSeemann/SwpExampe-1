@@ -85,6 +85,9 @@ $(function () {
 				<div th:case="accounts">
 					<div id="title">ACCOUNTS</div>
 				</div>
+				<div th:case="checkBesucher">
+					<div id="title">BESUCHERZAHLEN</div>
+				</div>
 				<div th:case="*">
 					<div id="title">TERMINAL</div>
 				</div>
@@ -95,6 +98,7 @@ $(function () {
 			<div id="substance">
 				<div id="chooseManagerView">
 					<div th:switch="${managermode}">
+						
 						<!-- EMPLOYEES -->
 
 						<div th:case="*">
@@ -332,64 +336,32 @@ $(function () {
 							</div>
 						</div>
 
-						<!-- STOCK -->
-
-						<div th:case="checkStock">
-							<table>
-								<tr>
-									<td>Menu</td>
-									<td>Quantity</td>
-									<td>Purchase price</td>
-									<td>Selling price</td>
-									<td>Get more</td>
-								</tr>
-								<tr th:each="item : ${inventory}">
-									<td th:text="${item.product.name}" />
-									<td th:text="${item.quantity}" />
-									<td th:text="${item.product.purchasePrice}" />
-									<td th:text="${item.product.sellingPrice}" />
-									<td>
-										<form action="/orderMore" method="post">
-											<input type="hidden" name="itemid" value="0"
-												th:value="${item.identifier}" /> <input id="number"
-												type="number" name="units" min="1" max="50" step="1"
-												placeholder="0" /> <input type="submit"
-												class="button_green" value="Order!" style="margin-top: 2px;" />
-										</form>
-									</td>
-								</tr>
-							</table>
-						</div>
 						<!-- CHECK BESUCHER CASE from niko -->
 						<div th:case="checkBesucher">
-							<form th:action="@{/loadtickets}" method="post">
-								<fieldset>
-									<label class="label" for="festivalId"> Festival
-										ausw&auml;hlen: </label><select name="festivalId" size="1">
-										<option th:each=" festival : ${festivallist}"
-											th:text="${festival.id} + ${festival.festivalName}"
-											th:value="${festival.id}"></option>
-									</select><br /> <input type="submit" value="Festival laden" />
-								</fieldset>
-							</form>
+							<div align="center">
+								<form th:action="@{/loadtickets}" method="post">
+									<fieldset>
+										<label class="label" for="festivalId"> Festival
+											ausw&auml;hlen: </label><select name="festivalId" size="1">
+											<option th:each=" festival : ${festivallist}"
+												th:text="${festival.id} + ${festival.festivalName}"
+												th:value="${festival.id}"></option>
+										</select><br /> <input type="submit" value="Festival laden" />
+									</fieldset>
+								</form>
 
-							<form th:action="@{/getBesucher}">
-								<fieldset>
-									<select name="hilfsDate" size="1">
-										<option th:each=" hilfsDate : ${ticketdates}"
-											th:text="${hilfsDate}" th:value="${hilfsDate}"></option>
-									</select><br /> <input type="submit" value="Besucher Abfragen" />
-								</fieldset>
-								<label class="label" for="checken" th:text="${besucherzahl}"></label>
-							</form>
-
+								<form th:action="@{/getBesucher}" method="post">
+									<fieldset>
+										<select name="hilfsDate" size="1">
+											<option th:each=" hilfsDate : ${ticketdates}"
+												th:text="${hilfsDate}" th:value="${hilfsDate}"></option>
+										</select><br /> <input type="submit" value="Besucher Abfragen" />
+									</fieldset>
+									<label class="label" for="checken" th:text="${besucherzahl}"></label>
+								</form>
+							</div>
 						</div>
 
-
-
-
-
-						<!-- Standard case -->
 						<div th:case="terminal">
 							<div id="festivalId" th:text="${festivalId}"
 								style="display: none;"></div>
@@ -405,7 +377,7 @@ $(function () {
 			<form action="/logout" method="post">
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
-			<form>
+		 	<form>
 				<div th:include="messaging :: messaging"></div>
 			</form>
 			<form method="post" action="/management/terminal">
@@ -421,7 +393,7 @@ $(function () {
 				<input type="submit" class="boldButton" value="Accounts"></input>
 			</form>
 			<form method="post" action="/Besucher">
-				<input type="submit" class="boldButton" value="Besucher Abfragen"></input>
+				<input type="submit" class="boldButton" value="Besucherzahlen"></input>
 			</form>
 		</div>
 	</div>
