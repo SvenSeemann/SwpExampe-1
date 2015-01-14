@@ -25,6 +25,14 @@ body {
 	height: 60px;
 	float: left;
 }
+
+#selectedFestival {
+	font-size: 20px;
+	height: 60px;
+	float: left;
+	background-color: #fff;
+}
+
 #loggedAs {
 	clear: both;
 	width: 1000px;

@@ -65,6 +65,7 @@ public class ManagerController {
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
 	private final FestivalRepository festivalRepository;
+	private Festival selected;
 	private long id;
 	private TicketRepository ticketRepository;
 
@@ -181,7 +182,6 @@ public class ManagerController {
 
 	@RequestMapping("/management")
 	public String index(ModelMap modelMap) {
-		System.out.println("current mode: "+mode);
 		// Money used as sum for each type of expense
 		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
 				.of(EUR, 0.00);
@@ -261,7 +261,7 @@ public class ManagerController {
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
 
-		modelMap.addAttribute("festivallist", festivalRepository.findAll());
+		modelMap.addAttribute("festivals", festivalRepository.findAll());
 
 		// ------------------------ ROLES ------------------------ \\
 
@@ -627,7 +627,8 @@ public class ManagerController {
 
 		return "redirect:/management";
 	}
-
+	
+	
 
 
 	// ------------------------ MODEMAPPING ------------------------ \\

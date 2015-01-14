@@ -1,9 +1,7 @@
 package fviv;
 
-import static org.joda.money.CurrencyUnit.EUR;
-
-import java.text.ParseException;
-
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.location.Location;
@@ -15,7 +13,6 @@ import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 import fviv.user.Roles;
-
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
@@ -25,9 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static org.joda.money.CurrencyUnit.EUR;
+
+
 
 @Component
 public class FvivDataInitializer implements DataInitializer {
@@ -40,10 +42,12 @@ public class FvivDataInitializer implements DataInitializer {
 	private final EventsRepository eventsRepository;
 	private final ArtistsRepository artistsRepository;
 	private final LocationRepository locationRepository;
+	private final AreaItemsRepository areaItemsRepository;
 
 	@Autowired
 	public FvivDataInitializer(EmployeeRepository employeeRepository,
 			UserAccountManager userAccountManager,
+			AreaItemsRepository areaItemsRepository,
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
 			FinanceRepository financeRepository,
@@ -59,6 +63,7 @@ public class FvivDataInitializer implements DataInitializer {
 		this.financeRepository = financeRepository;
 		this.artistsRepository = artistsRepository;
 		this.eventsRepository = eventsRepository;
+		this.areaItemsRepository = areaItemsRepository;
 		this.locationRepository = locationRepository;
 	}
 
@@ -247,13 +252,13 @@ public class FvivDataInitializer implements DataInitializer {
 	private void initializeFinances() {
 
 		// Create expenses
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
 				13.80), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
 				5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				2400.00), FinanceType.RENT));
 
 	}
@@ -270,10 +275,19 @@ public class FvivDataInitializer implements DataInitializer {
 		Festival festival = festivalRepository.findById(1);
 		Festival festival2 = festivalRepository.findById(2);
 
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival));
+		AreaItem areaItem = new AreaItem(AreaItem.Type.STAGE, "Stage 1", 30, 30, 30, 30, festival.getId());
 
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2));
+		AreaItem areaItem2 = new AreaItem(AreaItem.Type.STAGE, "Stage 2", 30, 30, 10, 70, festival.getId());
+
+		areaItemsRepository.save(areaItem);
+		areaItemsRepository.save(areaItem2);
+
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival, areaItem));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 26, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival, areaItem2));
+
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival, areaItem));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival, areaItem2));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2, areaItem2));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2, areaItem2));
 	}
 }
