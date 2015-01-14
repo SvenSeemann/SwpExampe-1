@@ -2,12 +2,20 @@
 /* CSS Document */
 #substance{
 	width: 835px;
-	height: 800px;
+	height: auto;
 	border: #0c3 medium solid;
 	margin-top: 10px;
 }
 table {
 	border-collapse: collapse;
+}
+#festivalTable{
+	border-collapse: collapse;
+}
+#newFestivalTable{
+	margin-top: 30px;
+	background: #666;
+	text-align: left;
 }
 tr:nth-child(even) {
 	background: #666;
@@ -20,6 +28,16 @@ th{
 	border-style: solid;
 	border-color: black;
 	padding: 5px;
+}
+.button_green{
+	border: #0C3 medium solid;
+	background-color: #383839;
+	color: #FFF;
+	text-align: center;
+	font-family: 'Oxygen', sans-serif;
+	font-size: 12px;
+	cursor: pointer;
+	margin-top:5px;
 }
 td {
 	border-width: 1px;
@@ -44,7 +62,7 @@ td {
 .boldButton:active {
 	border: #0c3 medium solid  !important;
 }
-#content {b  
+#content { 
 	border-top: #0c3 thick dashed !important;
 }
 fieldset{
@@ -55,7 +73,31 @@ fieldset{
 	margin-top:100px;
 	padding:30px 30px;
 }
-
-.label input{
-	margin-top:10px;
+.editFestivalButton{
+	width:auto;
+	border: #0C3 medium solid;
+	background-color: #383839;
+	color: #FFF;
+	text-align: center;
+	font-family: 'Oxygen', sans-serif;
+	font-size: 12px;
+	cursor: pointer;
+	margin-top:5px;
+}
+.slimButtonSpecial {
+	width:250px;
+	height: 30px;
+	border: #0C3 medium solid;
+	background-color: #383839;
+	color: #FFF;
+	text-align: center;
+	font-family: 'Oxygen', sans-serif;
+	font-size: 16px;
+	cursor: pointer;
+}
+.wideInput{
+	width:250px;
+}
+input{
+	width:auto;
 }

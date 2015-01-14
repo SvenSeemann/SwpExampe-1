@@ -69,37 +69,22 @@ public class CreateController {
 		return "festival";
 	}
 
-	@RequestMapping({ "/showFestival" })
-	public String showFestival() {
-		mode = "showFestivals";
-
-		return "redirect:/festival";
-	}
-
 	@ModelAttribute("selected")
 	public Festival festival() {
 		return selected;
 	}
 
-	@RequestMapping("/setQuantityOfEmployees")
+	@RequestMapping(value = "/setQuantityOfEmployees")
 	public String quantityEmployees(@RequestParam("festivalId") long festivalId) {
 		mode = "setQuantity";
 		selected = festivalRepository.findById(festivalId);
 		return "redirect:/festival";
 	}
 	
-	@RequestMapping("/setSalary")
+	@RequestMapping(value = "/setSalary")
 	public String setSalary(@RequestParam("festivalId") long festivalId) {
 		mode = "setSalary";
-		System.out.println(festivalRepository.findById(festivalId)
-				.getFestivalName());
 		selected = festivalRepository.findById(festivalId);
-		return "redirect:/festival";
-	}
-
-	@RequestMapping(value = "/setup-employees", method = RequestMethod.POST)
-	public String setUpEmployees() {
-		mode = "setup-employees";
 		return "redirect:/festival";
 	}
 	
@@ -109,9 +94,9 @@ public class CreateController {
 		return "redirect:/festival";
 	}
 	
-	@RequestMapping(value = "/festival/areaplan", method = RequestMethod.POST)
+	@RequestMapping(value = "/editFestivals", method = RequestMethod.POST)
 	public String areaplan() {
-		mode = "areaplan";
+		mode = "editFestivals";
 		return "redirect:/festival";
 	}
 	
@@ -135,14 +120,14 @@ public class CreateController {
 
 	@RequestMapping("/setNewSalary")
 	public String setNewSalary(
-			@RequestParam("salManagement") long salManagement,
-			@RequestParam("salCatering") long salCatering,
-			@RequestParam("salSecurity") long salSecurity,
-			@RequestParam("salCleaning") long salCleaning) {
-		selected.setManagementSalaryPerDay(Money.of(EUR, salManagement));
-		selected.setCateringSalaryPerDay(Money.of(EUR, salCatering));
-		selected.setSecuritySalaryPerDay(Money.of(EUR, salSecurity));
-		selected.setCleaningSalaryPerDay(Money.of(EUR, salCleaning));
+			@RequestParam("salManagement") int salManagement,
+			@RequestParam("salCatering") int salCatering,
+			@RequestParam("salSecurity") int salSecurity,
+			@RequestParam("salCleaning") int salCleaning) {
+		if(salManagement != 0)selected.setManagementSalaryPerDay(Money.of(EUR, salManagement));
+		if(salCatering != 0)selected.setCateringSalaryPerDay(Money.of(EUR, salCatering));
+		if(salSecurity != 0)selected.setSecuritySalaryPerDay(Money.of(EUR, salSecurity));
+		if(salCleaning != 0)selected.setCleaningSalaryPerDay(Money.of(EUR, salCleaning));
 		festivalRepository.save(selected);
 		return "redirect:/festival";
 	}
@@ -153,10 +138,11 @@ public class CreateController {
 			@RequestParam("quantCatering") int quantCatering,
 			@RequestParam("quantSecurity") int quantSecurity,
 			@RequestParam("quantCleaning") int quantCleaning) {
-		selected.setQuantManagement(quantManagement);
-		selected.setQuantCatering(quantCatering);
-		selected.setQuantSecurity(quantSecurity);
-		selected.setQuantCleaning(quantCleaning);
+		
+		if(quantManagement != 0)selected.setQuantManagement(quantManagement);
+		if(quantCatering != 0)selected.setQuantCatering(quantCatering);
+		if(quantSecurity != 0)selected.setQuantSecurity(quantSecurity);
+		if(quantCleaning != 0)selected.setQuantCleaning(quantCleaning);
 		festivalRepository.save(selected);
 		return "redirect:/festival";
 	}
@@ -201,7 +187,5 @@ public class CreateController {
 		festivalRepository.save(festival);
 				
 		return "redirect:/festival";
-
 	}
-
 }

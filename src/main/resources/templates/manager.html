@@ -98,64 +98,6 @@ $(function () {
 			<div id="substance">
 				<div id="chooseManagerView">
 					<div th:switch="${managermode}">
-						
-						<!-- EMPLOYEES -->
-
-						<div th:case="*">
-							<table class="employeeTable">
-								<tr>
-									<th>ID</th>
-									<th>Nachname</th>
-									<th>Vorname</th>
-									<th>Abteilung</th>
-									<th>Email-Adresse</th>
-									<th>Telefonnummer</th>
-								</tr>
-								<tr th:each=" employee : ${employeelist}">
-									<td th:text="${employee.id}"></td>
-									<td th:text="${employee.userAccount.lastname}"></td>
-									<td th:text="${employee.userAccount.firstname}"></td>
-									<td th:text="${employee.departement}"></td>
-									<td th:text="${employee.userAccount.email}"></td>
-									<td th:text="${employee.phone}"></td>
-								</tr>
-							</table>
-							<div align="center">
-								<p>Mitarbeiter entfernen:</p>
-								<p th:if="${showErrors.equals('deleteEmployee')}"
-									style="color: #F00;">Ungültige ID</p>
-								<form th:action="@{/deleteEmployee}" method="post"
-									onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
-									<input type="number" placeholder="ID eingeben"
-										name="employeeId" id="deleteEmployeeText"></input> <input
-										type="submit" class="button_green" value="Löschen"></input>
-								</form>
-							</div>
-							<div align="center">
-								<p>Neuen Mitarbeiter hinzufügen:</p>
-								<!--Communicates with controller @RequestMapping("/newEmployee") -->
-								<p th:if="${showErrors.equals('newEmployee')}"
-									style="color: #F00;">Alle Felder müssen ausgefüllt sein</p>
-								<form th:action="@{/newEmployee}" method="post"
-									th:object="${registration}">
-									<input type="text" placeholder="Nachname" id="lastname"
-										th:field="*{lastname}"></input> <br /> <input type="text"
-										placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
-									<br /> <input type="text" placeholder="E-mail Adresse"
-										id="email" th:field="*{email}"></input> <br /> <input
-										type="text" placeholder="Telefonnummer" id="phone"
-										th:field="*{phone}"></input> <br /> <input type="password"
-										placeholder="Password" id="password" th:field="*{password}"></input>
-									<br /> <select name="departement">
-										<option th:value="management">Management</option>
-										<option th:value="catering">Catering</option>
-										<option th:value="security">Security</option>
-										<option th:value="cleaning">Cleaning</option>
-									</select> <br /> <input type="submit" value="Speichern"
-										class="button_green" style="margin-top: 3px"></input>
-								</form>
-							</div>
-						</div>
 
 						<!-- FINANCES -->
 
@@ -366,6 +308,64 @@ $(function () {
 							<div id="festivalId" th:text="${festivalId}"
 								style="display: none;"></div>
 						</div>
+
+						<!-- EMPLOYEES -->
+						<div th:case="*">
+							<table class="employeeTable">
+								<tr>
+									<th>ID</th>
+									<th>Nachname</th>
+									<th>Vorname</th>
+									<th>Abteilung</th>
+									<th>Email-Adresse</th>
+									<th>Telefonnummer</th>
+								</tr>
+								<tr th:each=" employee : ${employeelist}">
+									<td th:text="${employee.id}"></td>
+									<td th:text="${employee.userAccount.lastname}"></td>
+									<td th:text="${employee.userAccount.firstname}"></td>
+									<td th:text="${employee.departement}"></td>
+									<td th:text="${employee.userAccount.email}"></td>
+									<td th:text="${employee.phone}"></td>
+								</tr>
+							</table>
+							<div align="center">
+								<p>Mitarbeiter entfernen:</p>
+								<p th:if="${showErrors.equals('deleteEmployee')}"
+									style="color: #F00;">Ungültige ID</p>
+								<form th:action="@{/deleteEmployee}" method="post"
+									onsubmit="return confirm('Mitarbeiter wirklich löschen?');">
+									<input type="number" placeholder="ID eingeben"
+										name="employeeId" id="deleteEmployeeText"></input> <input
+										type="submit" class="button_green" value="Löschen"></input>
+								</form>
+							</div>
+							<div align="center">
+								<p>Neuen Mitarbeiter hinzufügen:</p>
+								<!--Communicates with controller @RequestMapping("/newEmployee") -->
+								<p th:if="${showErrors.equals('newEmployee')}"
+									style="color: #F00;">Alle Felder müssen ausgefüllt sein</p>
+								<form th:action="@{/newEmployee}" method="post"
+									th:object="${registration}">
+									<input type="text" placeholder="Nachname" id="lastname"
+										th:field="*{lastname}"></input> <br /> <input type="text"
+										placeholder="Vorname" id="firstname" th:field="*{firstname}"></input>
+									<br /> <input type="text" placeholder="E-mail Adresse"
+										id="email" th:field="*{email}"></input> <br /> <input
+										type="text" placeholder="Telefonnummer" id="phone"
+										th:field="*{phone}"></input> <br /> <input type="password"
+										placeholder="Password" id="password" th:field="*{password}"></input>
+									<br /> <select name="departement">
+										<option th:value="management">Management</option>
+										<option th:value="catering">Catering</option>
+										<option th:value="security">Security</option>
+										<option th:value="cleaning">Cleaning</option>
+									</select> <br /> <input type="submit" value="Speichern"
+										class="button_green" style="margin-top: 3px"></input>
+								</form>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -377,7 +377,7 @@ $(function () {
 			<form action="/logout" method="post">
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
-		 	<form>
+			<form>
 				<div th:include="messaging :: messaging"></div>
 			</form>
 			<form method="post" action="/management/terminal">
