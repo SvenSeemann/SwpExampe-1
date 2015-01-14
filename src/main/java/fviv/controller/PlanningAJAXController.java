@@ -14,6 +14,10 @@ import fviv.areaPlanner.PlanningItem;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.areaPlanner.PlanningItemsRepository;
 import fviv.areaPlanner.AreaItem.Type;
+import fviv.model.Finance;
+import fviv.model.Finance.FinanceType;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
 
 @RestController
 @PreAuthorize("hasAnyRole('ROLE_BOSS','ROLE_SENDER','ROLE_RECEIVER')")
@@ -21,15 +25,18 @@ public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 	private PlanningItemsRepository planningItems;
 	private AreaItemsRepository areaItems;
+	private FinanceRepository financeRepository;
 	private FestivalRepository festivalRepository;
 
 	@Autowired
 	public PlanningAJAXController(AreaItemsRepository areaItems,
 			PlanningItemsRepository itemsForPlanerRepository,
-			FestivalRepository festivalRepository) {
+			FinanceRepository financeRepository, FestivalRepository festivalRepository) {
+		super();
 		this.festivalRepository = festivalRepository;
 		this.areaItems = areaItems;
 		this.planningItems = itemsForPlanerRepository;
+		this.financeRepository = financeRepository;
 	}
 
 	@RequestMapping(value = "/isThereAnything", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
@@ -57,7 +64,7 @@ public class PlanningAJAXController {
 			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
 					height, 0, 0, factor, festivalRepository.findOne(festivalId)));
 		}
-		
+
 		return true;
 	}
 
@@ -66,11 +73,14 @@ public class PlanningAJAXController {
 			@RequestParam("name") String name,
 			@RequestParam("width") int width,
 			@RequestParam("height") int height,
-			@RequestParam("left") float left,
-			@RequestParam("top") float top,
+			@RequestParam("left") float left, @RequestParam("top") float top,
 			@RequestParam("festival") long festivalId) {
 
 		if (areaItems.findByName("Areal") != null) {
+			Finance finance = new Finance(festivalId,
+					Reference.EXPENSE, planningItems.findByName(name)
+					.getRentCost(), FinanceType.RENT);
+			financeRepository.save(finance);
 			switch (typ) {
 			case "TOILET":
 				areaItems.save(new AreaItem(Type.TOILET, (name), width,
