@@ -2,6 +2,7 @@ package fviv.controller;
 
 import fviv.festival.FestivalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import fviv.areaPlanner.PlanningItemsRepository;
 import fviv.areaPlanner.AreaItem.Type;
 
 @RestController
+@PreAuthorize("hasAnyRole('ROLE_BOSS','ROLE_SENDER','ROLE_RECEIVER')")
 public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 	private PlanningItemsRepository planningItems;
