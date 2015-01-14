@@ -106,16 +106,11 @@ $(function () {
 
 								<table class="salaryTable">
 									<tr>
-										<th>Gehälter Betrag:</th>
-									</tr>
-									<tr th:each=" salary : ${salaryExpense}">
-										<td th:text="${salary.amount}"></td>
-									</tr>
-									<tr>
-										<th>Total:
+										<th>Gehälter Betrag:
 											<p th:text="${salExpTot}" id="salaryTotal" />
 										</th>
 									</tr>
+
 								</table>
 
 								<table class="cateringTable">
@@ -240,33 +235,34 @@ $(function () {
 										style="margin-top: 2px;"></input>
 								</form>
 
-					<div th:case="checkStock">
-						<table>
-							<tr>
-								<td>Menu</td>
-								<td>Quantity</td>
-								<td>Purchase price</td>
-								<td>Selling price</td>
-								<td>Get more</td>
-							</tr>
-							<tr th:each="item : ${inventory}">
-								<td th:text="${item.product.name}" />
-								<td th:text="${item.quantity}" />
-								<td th:text="${item.product.purchasePrice}" />
-								<td th:text="${item.product.sellingPrice}" />
-								<td>
-									<form action="/orderMore" method="post">
-										<input type="hidden" name="itemid" value="0"
-											th:value="${item.identifier}" /> <input id="number"
-											type="number" name="units" min="1" max="50" step="1"
-											placeholder="0" /> <input type="submit" class="button_green"
-											value="Order!" style="margin-top: 2px;" />
-									</form>
-								</td>
-							</tr>
-						</table>
-					</div>
-				
+								<div th:case="checkStock">
+									<table>
+										<tr>
+											<td>Menu</td>
+											<td>Quantity</td>
+											<td>Purchase price</td>
+											<td>Selling price</td>
+											<td>Get more</td>
+										</tr>
+										<tr th:each="item : ${inventory}">
+											<td th:text="${item.product.name}" />
+											<td th:text="${item.quantity}" />
+											<td th:text="${item.product.purchasePrice}" />
+											<td th:text="${item.product.sellingPrice}" />
+											<td>
+												<form action="/orderMore" method="post">
+													<input type="hidden" name="itemid" value="0"
+														th:value="${item.identifier}" /> <input id="number"
+														type="number" name="units" min="1" max="50" step="1"
+														placeholder="0" /> <input type="submit"
+														class="button_green" value="Order!"
+														style="margin-top: 2px;" />
+												</form>
+											</td>
+										</tr>
+									</table>
+								</div>
+
 								<!-- Change password of a single account -->
 								<p>Passwort ändern:</p>
 								<p th:if="${showErrors.equals('changePasswordEmpty')}"
@@ -379,16 +375,16 @@ $(function () {
 							</div>
 						</div>
 
-					<!-- Standard case -->
-					<div th:case="terminal">
-						<div id="festivalId" th:text="${festivalId}"
-							style="display: none;"></div>
-						
+						<!-- Standard case -->
+						<div th:case="terminal">
+							<div id="festivalId" th:text="${festivalId}"
+								style="display: none;"></div>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 		<!-- MENU -->
 
@@ -416,6 +412,6 @@ $(function () {
 			</form>
 		</div>
 	</div>
-	
+
 </body>
 </html>

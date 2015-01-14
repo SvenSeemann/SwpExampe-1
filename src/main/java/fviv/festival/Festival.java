@@ -42,11 +42,6 @@ public class Festival {
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
-	@OneToOne
-	private UserAccount userAccount;
-	
-
-	private String managerUserName;
 
 	public int getQuantManagement() {
 		return quantManagement;
@@ -91,7 +86,7 @@ public class Festival {
 
 	@Autowired
 	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
-			String actors, int maxVisitors, Money preisTag, String managerUserName) {
+			String actors, int maxVisitors, Money preisTag) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
@@ -100,6 +95,7 @@ public class Festival {
 		this.maxVisitors=maxVisitors;
 		this.preisTag = preisTag;
 		this.managementSalaryPerHour = Money.of(EUR, 0.00);
+		this.leadershipSalaryPerHour = Money.of(EUR, 0.00);
 		this.cateringSalaryPerHour = Money.of(EUR, 0.00);
 		this.securitySalaryPerHour = Money.of(EUR, 0.00);
 		this.cleaningSalaryPerHour = Money.of(EUR, 0.00);
@@ -108,7 +104,6 @@ public class Festival {
 		this.quantLeadership = 1;
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
-		this.managerUserName = managerUserName;
 		//this.area = null;
 
 	}
@@ -208,14 +203,6 @@ public class Festival {
 
 	public void setCleaningSalaryPerHour(Money cleaningSalaryPerHour) {
 		this.cleaningSalaryPerHour = cleaningSalaryPerHour;
-	}
-
-	public String getManager() {
-		return managerUserName;
-	}
-	
-	public void setManager(String managerUserName){
-		this.managerUserName = managerUserName;	
 	}
 
 	public int getQuantLeadership() {

@@ -46,20 +46,15 @@ public class CreateController {
 	private final LocationRepository locationRepository;
 	private String mode = "festival";
 	private Festival selected;
-	private UserAccountManager userAccountManager;
-	private LinkedList<String> managerAccounts = new LinkedList<String>();
 	private AreaItemsRepository areaItems;
 	private FinanceRepository financeRepository;
 
 	@Autowired
 	public CreateController(FestivalRepository festivalRepository,
 			LocationRepository locationrepository,
-			UserAccountManager userAccountManager,
-			FinanceRepository financeRepository,
-			AreaItemsRepository areaItems) {
+			FinanceRepository financeRepository, AreaItemsRepository areaItems) {
 		this.festivalRepository = festivalRepository;
 		this.locationRepository = locationrepository;
-		this.userAccountManager = userAccountManager;
 		this.financeRepository = financeRepository;
 		this.areaItems = areaItems;
 	}
@@ -74,13 +69,6 @@ public class CreateController {
 	public String index(ModelMap modelMap) {
 		// mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-
-		managerAccounts.clear();
-		for (UserAccount userAccount : userAccountManager.findAll()) {
-			if (userAccount.hasRole(new Role("ROLE_MANAGER")))
-				managerAccounts.add(userAccount.getIdentifier().toString());
-		}
-		modelMap.addAttribute("managerAccounts", managerAccounts);
 		modelMap.addAttribute("locationlist", locationRepository.findAll());
 		return "festival";
 	}
@@ -209,13 +197,10 @@ public class CreateController {
 	 */
 	@RequestMapping("/setNewQuant")
 	public String setNewQuant(
-			@RequestParam("quantManagement") int quantManagement,
 			@RequestParam("quantCatering") int quantCatering,
 			@RequestParam("quantSecurity") int quantSecurity,
 			@RequestParam("quantCleaning") int quantCleaning) {
 
-		if (quantManagement != 0)
-			selected.setQuantManagement(quantManagement);
 		if (quantCatering != 0)
 			selected.setQuantCatering(quantCatering);
 		if (quantSecurity != 0)
@@ -284,10 +269,7 @@ public class CreateController {
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
 			@RequestParam("preisTag") String preisTag,
-			@RequestParam("selectManager") String manager,
 			@RequestParam("locationId") long locationId) throws ParseException {
-
-		
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 
@@ -295,16 +277,16 @@ public class CreateController {
 		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-
-		locationId, actors, (int) locationRepository.findById(locationId)
-				.getMaxVisitors(), Money.of(EUR, Long.parseLong(preisTag)),
-				manager);
+				locationId, actors, (int) locationRepository.findById(
+						locationId).getMaxVisitors(), Money.of(EUR,
+						Long.parseLong(preisTag)));
 
 		long festivalId = festivalRepository.save(festival).getId();
-		
+
 		this.areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
-				.findById(locationId).getWidth(), locationRepository
-				.findById(locationId).getHeight(), 0, 0, festivalRepository.findById(festivalId)));
+				.findById(locationId).getWidth(), locationRepository.findById(
+				locationId).getHeight(), 0, 0, festivalRepository
+				.findById(festivalId)));
 
 		return "redirect:/festival";
 	}

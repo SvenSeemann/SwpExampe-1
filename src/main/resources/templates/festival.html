@@ -151,13 +151,6 @@
 											name="preisTag" size="40" placeholder="Kosten Tageskarte"></input></td>
 									</tr>
 									<tr style="background: #666;">
-										<th>Manager</th>
-										<td><select name="selectManager" class="button_green">
-												<option th:each=" account : ${managerAccounts}"
-													th:value="${account}" th:text="${account}"></option>
-										</select></td>
-									</tr>
-									<tr style="background: #666;">
 										<td colspan="2" style="text-align: center;"><input
 											type="submit" class="slimButtonSpecial"
 											onclick="alert('Festival wird erstellt')"
