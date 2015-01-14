@@ -1,7 +1,34 @@
 package fviv.controller;
 
-import static org.joda.money.CurrencyUnit.EUR;
+import fviv.catering.model.MenusRepository;
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
+import fviv.model.*;
+import fviv.model.Employee.Departement;
+import fviv.model.Finance.FinanceType;
+import fviv.model.Finance.Reference;
+import fviv.ticket.Ticket;
+import fviv.ticket.TicketRepository;
+import fviv.user.Roles;
+import org.joda.money.Money;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.salespointframework.inventory.Inventory;
+import org.salespointframework.inventory.InventoryItem;
+import org.salespointframework.useraccount.Role;
+import org.salespointframework.useraccount.UserAccount;
+import org.salespointframework.useraccount.UserAccountManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -9,44 +36,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.joda.money.Money;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.salespointframework.catalog.ProductIdentifier;
-import org.salespointframework.inventory.Inventory;
-import org.salespointframework.inventory.InventoryItem;
-import org.salespointframework.quantity.Units;
-import org.salespointframework.useraccount.Role;
-import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-
-import fviv.areaPlanner.AreaItemsRepository;
-import fviv.catering.model.Menu;
-import fviv.catering.model.MenusRepository;
-import fviv.festival.Festival;
-import fviv.festival.FestivalRepository;
-import fviv.model.Employee.Departement;
-import fviv.model.EmployeeRepository;
-import fviv.model.Employee;
-import fviv.model.Finance;
-import fviv.model.Finance.FinanceType;
-import fviv.model.Finance.Reference;
-import fviv.model.FinanceRepository;
-import fviv.model.Registration;
-import fviv.ticket.Ticket;
-import fviv.ticket.TicketRepository;
-import fviv.user.Roles;
+import static org.joda.money.CurrencyUnit.EUR;
 
 /**
  * @author Hendric Eckelt
@@ -122,7 +112,7 @@ public class ManagerController {
 			@RequestParam("hilfsDate") String tagesdate) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate datum = LocalDate.parse(tagesdate, formatter);
-		Festival festival = festivalRepository.findById(id);
+		Festival festival = festivalRepository.findOne(id);
 		List<Ticket> festivalnamelist = ticketRepository
 				.findByFestivalName(festival.getFestivalName());
 		List<Ticket> checkedlist = ticketRepository.findByChecked(true);
@@ -151,7 +141,7 @@ public class ManagerController {
 	@RequestMapping("/loadtickets")
 	public String getFestivals(ModelMap modelMap,
 			@RequestParam("festivalId") long festivalId) {
-		Festival loadingfestival = festivalRepository.findById(festivalId);
+		Festival loadingfestival = festivalRepository.findOne(festivalId);
 		id = festivalId;
 		LocalDate startDate = loadingfestival.getStartDatum();
 		LocalDate endDate = loadingfestival.getEndDatum();

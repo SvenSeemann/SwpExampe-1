@@ -27,7 +27,7 @@ public class ScheduleController {
 
     @RequestMapping(value = "/schedule", method = RequestMethod.GET, params = "festival")
     public String handle(Model model, @RequestParam("festival") Long festival){
-        model.addAttribute("events",eventsRepository.findByFestivalOrderByStartAsc(festivalRepository.findById(festival)));
+        model.addAttribute("events",eventsRepository.findByFestivalOrderByStartAsc(festivalRepository.findOne(festival)));
         return "schedule";
     }
 
