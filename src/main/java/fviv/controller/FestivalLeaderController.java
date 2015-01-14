@@ -2,6 +2,7 @@ package fviv.controller;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -46,7 +47,7 @@ import fviv.model.Registration;
 @PreAuthorize("hasRole('ROLE_LEADER')")
 @Controller
 public class FestivalLeaderController {
-	private String lmode = "startConfiguration"; //leadermode
+	private String lmode = "startConfiguration"; // leadermode
 	private String editSingleAccount = "startConfiguration";
 	private String showErrors = "no";
 	private final EmployeeRepository employeeRepository;
@@ -63,7 +64,8 @@ public class FestivalLeaderController {
 			MenusRepository menusRepository,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
-			FinanceRepository financeRepository, FestivalRepository festivalRepository) {
+			FinanceRepository financeRepository,
+			FestivalRepository festivalRepository) {
 
 		this.employeeRepository = employeeRepository;
 		this.menusRepository = menusRepository;
@@ -74,7 +76,7 @@ public class FestivalLeaderController {
 	}
 
 	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
-	
+
 	/**
 	 * 
 	 * @return the name of the festival for the UI
@@ -88,7 +90,7 @@ public class FestivalLeaderController {
 			return selected.getFestivalName();
 		}
 	}
-	
+
 	/**
 	 * String managermode for th:switch to decide which div to display
 	 * 
@@ -137,18 +139,19 @@ public class FestivalLeaderController {
 			if (finance.getFinanceType().equals(FinanceType.CATERING)
 					&& finance.getReference() == Reference.DEPOSIT)
 				cateringDeposit.add(finance);
-			
+
 		}
-		
+
 		// Schnittmenge:
-		cateringExpense.retainAll(this.financeRepository.findByFestivalId(selectedId));
-		cateringDeposit.retainAll(this.financeRepository.findByFestivalId(selectedId));
-		
+		cateringExpense.retainAll(this.financeRepository
+				.findByFestivalId(selectedId));
+		cateringDeposit.retainAll(this.financeRepository
+				.findByFestivalId(selectedId));
+
 		Iterable<Finance> cateringExpenseAsAttribute = cateringExpense;
 		Iterable<Finance> cateringDepositAsAttribute = cateringDeposit;
-		
+
 		// Calculate total amounts of each expense type
-		
 
 		for (Finance catDep : cateringDeposit) {
 			catDepTot = catDepTot.plus(catDep.getAmount());
@@ -168,7 +171,22 @@ public class FestivalLeaderController {
 
 		// ------------------------ STOCK ------------------------ \\
 
-		modelMap.addAttribute("inventory", this.inventory.findAll());
+		Collection<InventoryItem> inventoryItemsAsCollection = new ArrayList<InventoryItem>();
+		Iterable<InventoryItem> inventoryItemsAsIterable = this.inventory
+				.findAll();
+
+		for (InventoryItem item : this.inventory.findAll()) {
+			ProductIdentifier identifier = item.getProduct().getIdentifier();
+			Menu menu = this.menusRepository
+					.findByProductIdentifier(identifier);
+			if (menu.getFestivalId() == selectedId) {
+				inventoryItemsAsCollection.add(item);
+			}
+		}
+
+		inventoryItemsAsIterable = inventoryItemsAsCollection;
+
+		modelMap.addAttribute("inventory", inventoryItemsAsIterable);
 		modelMap.addAttribute("festivals", this.festivalRepository.findAll());
 		return "festivalleader";
 	}
@@ -186,14 +204,16 @@ public class FestivalLeaderController {
 	public String orderMore(@RequestParam("itemid") InventoryItem item,
 			@RequestParam("units") Long units) {
 		ProductIdentifier mid = item.getProduct().getIdentifier();
-		financeRepository.save(new Finance(selectedId, Reference.EXPENSE, (menusRepository
-				.findByProductIdentifier(mid).getPurchasePrice()
-				.multipliedBy(units)), FinanceType.CATERING));
+		financeRepository.save(new Finance(selectedId, Reference.EXPENSE,
+				(menusRepository.findByProductIdentifier(mid)
+						.getPurchasePrice().multipliedBy(units)),
+				FinanceType.CATERING));
 		item.increaseQuantity(Units.of(units));
 		inventory.save(item);
-		
+
 		// Menu is orderable again, because its quantity is >0
-		Menu menu = menusRepository.findByProductIdentifier(item.getProduct().getId());
+		Menu menu = menusRepository.findByProductIdentifier(item.getProduct()
+				.getId());
 		menu.setOrderable(true);
 		menusRepository.save(menu);
 
@@ -207,7 +227,7 @@ public class FestivalLeaderController {
 		selected = festivalRepository.findOne(festivalId);
 		return "redirect:/leadership";
 	}
-	
+
 	@RequestMapping("/Finances")
 	public String finances() {
 		lmode = "finances";

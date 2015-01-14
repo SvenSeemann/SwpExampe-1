@@ -65,5 +65,12 @@ public class Menu extends Product {
 	public void setOrderable(Boolean orderable) {
 		this.orderable = orderable;
 	}
-	
+
+	public long getFestivalId() {
+		return festivalId;
+	}
+
+	public void setFestivalId(long festivalId) {
+		this.festivalId = festivalId;
+	}	
 }
