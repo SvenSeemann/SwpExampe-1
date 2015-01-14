@@ -112,14 +112,14 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeLocations() {
 		Location location1 = new Location("Wunderland", 400, 300, 20000,
-				"aasdf");
+				"aasdf", Money.of(EUR, 300.00));
 		Location location2 = new Location("Rock am Ring", 200, 500, 50000,
-				"aasdf");
+				"aasdf", Money.of(EUR, 450.00));
 		Location location3 = new Location("Festival ist toll", 2000, 3000,
-				10000, "aasdf");
+				10000, "aasdf", Money.of(EUR, 400.00));
 		Location location4 = new Location("Namen sind unwichtig", 1000, 1400,
-				9000, "aasdf");
-		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf");
+				9000, "aasdf", Money.of(EUR, 350.00));
+		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf", Money.of(EUR, 500.00));
 		locationRepository.save(location1);
 		locationRepository.save(location2);
 		locationRepository.save(location3);
@@ -228,10 +228,6 @@ public class FvivDataInitializer implements DataInitializer {
 				13.80), FinanceType.SALARY));
 		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
-				5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
-				2400.00), FinanceType.RENT));
 
 	}
 

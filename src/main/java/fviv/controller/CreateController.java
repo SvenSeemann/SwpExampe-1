@@ -105,10 +105,6 @@ public class CreateController {
 	public String setUpArea(@RequestParam("festivalId") long festivalId) {
 		//hier auf max planner zugreifen
 		this.selected = festivalRepository.findOne(festivalId);
-		
-		
-		
-		// TODO this.selected.setArea(afds);
 		festivalRepository.save(selected);
 		return "redirect:/planning/" + selected.getId();
 	}

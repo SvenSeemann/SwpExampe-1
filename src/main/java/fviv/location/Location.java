@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -24,11 +25,12 @@ public class Location {
 	private LocalDate endDate;
 	private String adresse;
 	private int maxVisitors;
+	private Money costPerDay;
 	
 	@Deprecated
 	protected Location(){}
 	@Autowired
-	public Location(String name,int width, int height, int maxVisitors, String adresse){
+	public Location(String name,int width, int height, int maxVisitors, String adresse, Money costPerDay){
 		
 		this.width= width;
 		this.height = height;
@@ -40,6 +42,7 @@ public class Location {
 		LocalDate date2 = LocalDate.parse("1002-01-03", formatter);
 		this.startDate = date1;
 		this.endDate = date2;
+		this.setCostPerDay(costPerDay);
 		
 	}
 	
@@ -95,5 +98,13 @@ public class Location {
 	}
 	public void setMaxVisitors(int maxVisitors) {
 		this.maxVisitors = maxVisitors;
+	}
+
+	public Money getCostPerDay() {
+		return costPerDay;
+	}
+	
+	public void setCostPerDay(Money costPerDay) {
+		this.costPerDay = costPerDay;
 	}
 }
