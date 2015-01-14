@@ -293,15 +293,16 @@ public class CreateController {
 						Long.parseLong(preisTag)));
 
 		long festivalId = festivalRepository.save(festival).getId();
-
+		float factor = (835/locationRepository.findById(locationId).getWidth());
+		
 		this.areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
 				.findById(locationId).getWidth(), locationRepository.findById(
-				locationId).getHeight(), 0, 0, festivalRepository
+				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));
 		
 		// --- Initialize Menus for new festival --- \\
 		
-		// --- Menus --- \\
+			// --- Meals --- \\
 
 				Menu Meal1 = new Menu(festivalId, "Pommes Frites", Money.of(EUR, 0.50),
 						Money.of(EUR, 2.50), MenuType.MEAL);
