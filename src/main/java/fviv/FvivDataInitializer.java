@@ -93,9 +93,9 @@ public class FvivDataInitializer implements DataInitializer {
 
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
-				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
+				"Avicii, Linkin Park", 500000, Money.of(EUR, 55), "manager");
 		Festival festival2 = new Festival(date3, date4, "Rock am Ring", 2,
-				"Netflix", 69999, (long) 12.0, "manager");
+				"Netflix", 69999, Money.of(EUR, 55), "manager");
 
 		UserAccount festivalAccount1 = userAccountManager.create("festival1",
 				"123", Roles.guest);

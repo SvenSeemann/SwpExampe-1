@@ -14,6 +14,7 @@ import net.sourceforge.barbecue.BarcodeException;
 import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
 
+import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,7 +182,8 @@ public class TicketController {
 			location = locationRepository.findById(festival.getLocationId());
 
 			String festivalname = festival.getFestivalName();
-			long preistag = festival.getPreisTag();
+			
+			Money preistag = festival.getPreisTag();
 			LocalDate date = null;
 			if (ticketart == true) {
 				DateTimeFormatter formatter = DateTimeFormatter
@@ -212,7 +214,7 @@ public class TicketController {
 			} else {
 				ticketRepository.save(ticket);
 				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag * 7 / 3, ticketart, date);
+				pdfvorlagebearbeiten(preistag.multipliedBy(7/3), ticketart, date);
 				barcodegen();
 				addbarcode();
 
@@ -275,9 +277,9 @@ public class TicketController {
 	 * @throws IOException
 	 * @throws BarcodeException
 	 */
-	public static void pdfvorlagebearbeiten(float ticketkosten,
+	public static void pdfvorlagebearbeiten(Money ticketkosten,
 			boolean ticketart, LocalDate date) throws IOException, BarcodeException {
-		String price = "" + ticketkosten + "Euro";
+		String price = "" + ticketkosten;
 		try {
 
 			// (1) Einlesen der PDF-Vorlage

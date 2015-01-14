@@ -30,7 +30,7 @@ public class Festival {
 	private String festivalName;
 	private long locationId;
 	private String actors;
-	private long preisTag;
+	private Money preisTag;
 	private int maxVisitors;
 	private Money managementSalaryPerDay;
 	private Money cateringSalaryPerDay;
@@ -89,7 +89,7 @@ public class Festival {
 
 	@Autowired
 	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
-			String actors, int maxVisitors, long preisTag, String managerUserName) {
+			String actors, int maxVisitors, Money preisTag, String managerUserName) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
@@ -157,11 +157,11 @@ public class Festival {
 		this.actors = actors;
 	}
 
-	public long getPreisTag() {
+	public Money getPreisTag() {
 		return preisTag;
 	}
 
-	public void setPreisTag(long preisTag) {
+	public void setPreisTag(Money preisTag) {
 		this.preisTag = preisTag;
 	}
 
