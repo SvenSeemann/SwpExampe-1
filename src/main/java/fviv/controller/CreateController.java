@@ -245,7 +245,6 @@ public class CreateController {
 	 * @param startDate
 	 * @param endDate
 	 * @param actors
-	 * @param maxVisitors
 	 * @param location
 	 * @param preisTag
 	 * @return
@@ -257,7 +256,7 @@ public class CreateController {
 			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
-			@RequestParam("preisTag") long preisTag,
+			@RequestParam("preisTag") String preisTag,
 			@RequestParam("selectManager") String manager,
 			@RequestParam("locationId") long locationId) throws ParseException {
 
@@ -267,9 +266,9 @@ public class CreateController {
 		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				locationId, actors, (int) locationRepository.findById(
-						locationId).getMaxVisitors(), (long) preisTag, manager);
 
+				locationId, actors, (int) locationRepository.findById(locationId).getMaxVisitors(),Money.of(EUR, Long.parseLong(preisTag)), manager);
+	
 		festivalRepository.save(festival);
 
 		return "redirect:/festival";
