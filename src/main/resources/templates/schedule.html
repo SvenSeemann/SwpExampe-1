@@ -5,6 +5,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="../resources/css/indexcss.css" />
+    <link rel="stylesheet" type="text/css" href="../resources/css/terminal.css" />
     <link href='http://fonts.googleapis.com/css?family=Oxygen'
           rel='stylesheet' type='text/css' />
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -33,23 +34,28 @@
     </form>
 
 </div>
-<div>
-    <table th:fragment="schedule">
-        <thead>
-        <tr>
-            <td>Künstler</td>
-            <td>Start</td>
-            <td>Ende</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="event : ${events}">
-            <td th:text="${event.artist.name}"></td>
-            <td th:text="${event.start}"></td>
-            <td th:text="${event.end}"></td>
-        </tr>
-        </tbody>
-    </table>
+<div th:fragment="schedule">
+    <div th:each="tuple : ${stages}" class="day">
+        <div class="dayHeadline" th:text="${tuple.t1.name}"></div>
+        <div class="dayContent">
+            <table>
+                <thead>
+                <tr>
+                    <td>Künstler</td>
+                    <td colspan="1">Start</td>
+                    <td colspan="1">Ende</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="event : ${tuple.t2}">
+                    <td class="event" th:text="${event.artist.name}"></td>
+                    <td class="time" th:text="${event.start.toLocalTime()}"></td>
+                    <td class="time" th:text="${event.end.toLocalTime()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

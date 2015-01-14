@@ -156,7 +156,7 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeUsers() {
 		UserAccount bossAccount = userAccountManager.create("boss", "123",
-				Roles.boss);
+				Roles.boss, Roles.receiver, Roles.sender);
 		bossAccount.setEmail("Boss@Fviv.de");
 		bossAccount.setFirstname("Der");
 		bossAccount.setLastname("Boss");
