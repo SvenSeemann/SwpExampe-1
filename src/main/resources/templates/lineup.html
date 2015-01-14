@@ -22,6 +22,12 @@
 <div id="content">
     <div>
         <table>
+            <thead>
+            <tr>
+                <td>Artist ID</td>
+                <td>Artist Name</td>
+            </tr>
+            </thead>
             <tbody>
             <tr th:each="artist : ${bookedArtists}">
                 <td th:text="${artist.id}"></td>
@@ -30,6 +36,12 @@
             </tbody>
         </table>
         <table>
+            <thead>
+            <tr>
+                <td>Festival ID</td>
+                <td>Festival Name</td>
+            </tr>
+            </thead>
             <tbody>
             <tr th:each="festival : ${festivals}">
                 <td th:text="${festival.id}"></td>
@@ -37,6 +49,21 @@
             </tr>
             </tbody>
         </table>
+        <table>
+            <thead>
+            <tr>
+                <td>Stage ID</td>
+                <td>Stage Name</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="stage : ${stages}">
+                <td th:text="${stage.id}"></td>
+                <td th:text="${stage.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <table th:include="schedule :: schedule"></table>
     </div>
     <form action="/booking/artist/schedule" method="POST">
         <div class="formsegement"><label for="artist">Artist ID</label><input id="artist" name="artist" type="number" /></div>
@@ -50,6 +77,8 @@
         <div class="formsegement"><label for="startMinute">Minute</label><input id="startMinute" name="startMinute" type="number" /></div>
 
         <div class="formsegement"><label for="duration">Dauer</label><input id="duration" name="duration" type="number" /></div>
+
+        <div class="formsegement"><label for="stage">Stage</label><input id="stage" name="stage" type="text" /> </div>
         <input type="submit" value="Submit" />
     </form>
 </div>

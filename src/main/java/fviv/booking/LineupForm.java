@@ -26,6 +26,16 @@ public class LineupForm {
     @NotNull private int startHour;
     @NotNull private int startMinute;
 
+    @NotNull private long stage;
+
+    public long getStage() {
+        return stage;
+    }
+
+    public void setStage(long stage) {
+        this.stage = stage;
+    }
+
     public int getStartHour() {
         return startHour;
     }
