@@ -37,23 +37,36 @@
 			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
 		</div>
 		<div id="content">
-			<div id="orderList">
+			<div id="left-box">
+				<div id="orderList">
 
-				<div th:unless="${cart.empty}">
-					<table>
-						<tr th:each="orderline : ${cart}">
-							<td th:text="${orderline.productName}">Currywurst</td>
-							<td th:text="${orderline.price}">3.00 EUR</td>
-							<td th:text="${orderline.quantity}">1</td>
-						</tr>
-					</table>
+					<div th:unless="${cart.empty}">
+						<table>
+							<tr th:each="orderline : ${cart}">
+								<td th:text="${orderline.productName}">Currywurst</td>
+								<td th:text="${orderline.price}">3.00 EUR</td>
+								<td th:text="${orderline.quantity}">1</td>
+							</tr>
+						</table>
 
-					<table>
-						<tr>
-							<td th:text="#{catering.total} + ': ' + ${cart.price}"></td>
-						</tr>
-					</table>
+						<table>
+							<tr>
+								<td th:text="#{catering.total} + ': ' + ${cart.price}"></td>
+							</tr>
+						</table>
+					</div>
 				</div>
+				<div id="button-box">
+					<form method="post" action="/catering/confirm">
+						<button class="slimButton" type="submit"
+							th:text="#{catering.confirm}" value="confirm" id="confirm">confirm</button>
+					</form>
+					<form method="post" action="/catering/cancel">
+						<button class="slimButton" type="submit"
+							th:text="#{catering.cancel}" value="cancel" id="cancel">cancel</button>
+					</form>
+				</div>
+
 				<div id="comfirmButtons">
 					<form method="post" action="/catering/confirm">
 						<button class="slimButton" type="submit"
@@ -64,8 +77,8 @@
 							th:text="#{catering.cancel}" value="cancel">cancel</button>
 					</form>
 				</div>
-			</div>
 
+			</div>
 			<div id="chooseBox" th:switch="${ordermode}">
 				<div th:case="meals">
 					<a th:each="meal : ${meals}"

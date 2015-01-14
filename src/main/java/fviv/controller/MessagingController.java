@@ -79,7 +79,6 @@ public class MessagingController {
      */
     @RequestMapping(value = "/messaging/get", method = RequestMethod.POST, headers = Headers.AJAX)
     public List<Message> getMessages(@LoggedIn Optional<UserAccount> user, @RequestParam("last") String date){
-        System.out.println(date);
         return user.isPresent() ?
                 postOffice.getMessages(
                         user.get(), ZonedDateTime.parse(date, JavaScriptDateTimeFormatters.javaScriptUTCDateTimeFormat)
