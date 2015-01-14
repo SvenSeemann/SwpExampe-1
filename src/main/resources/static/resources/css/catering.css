@@ -57,7 +57,6 @@
 	pointer-events: none;
 }
 
-<<<<<<< HEAD
 #cancel {
 margin-left:40px;
 	}
@@ -65,9 +64,3 @@ margin-left:40px;
 #confirm {
 margin-left:40px;
 	}
-=======
-#confirmButtons {
-	position: absolute;
-	margin-bottom : 10;
-}
->>>>>>> master

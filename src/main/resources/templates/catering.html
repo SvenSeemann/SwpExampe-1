@@ -64,17 +64,6 @@
 					</form>
 				</div>
 
-				<div id="comfirmButtons">
-					<form method="post" action="/catering/confirm">
-						<button class="slimButton" type="submit"
-							th:text="#{catering.confirm}" value="confirm">confirm</button>
-					</form>
-					<form method="post" action="/catering/cancel">
-						<button class="slimButton" type="submit"
-							th:text="#{catering.cancel}" value="cancel">cancel</button>
-					</form>
-				</div>
-
 			</div>
 			<div id="chooseBox" th:switch="${ordermode}">
 				<div th:case="meals">
