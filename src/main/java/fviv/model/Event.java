@@ -1,5 +1,6 @@
 package fviv.model;
 
+import fviv.areaPlanner.AreaItem;
 import fviv.festival.Festival;
 import org.hibernate.annotations.Type;
 
@@ -36,14 +37,26 @@ public class Event {
     @ManyToOne
     private Festival festival;
 
+    @ManyToOne
+    private AreaItem stage;
+
+    public AreaItem getStage() {
+        return stage;
+    }
+
+    public void setStage(AreaItem stage) {
+        this.stage = stage;
+    }
+
     @Deprecated
     public Event(){}
 
-    public Event(LocalDateTime start, LocalDateTime end, Artist artist, Festival festival) {
+    public Event(LocalDateTime start, LocalDateTime end, Artist artist, Festival festival, AreaItem stage) {
         this.start = start;
         this.end = end;
         this.artist = artist;
         this.festival = festival;
+        this.stage = stage;
     }
 
     public Festival getFestival() {

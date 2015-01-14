@@ -16,6 +16,23 @@ Der Manager hat Zugriffsberechtigungen für alle Komponenten des Systems.
 Die Catering Oberfläche bietet Ihnen Auswahl- und Bestellfunktionen für Speisen und Getränke.
 ## Geländeplanung
 Der Geländeplaner erlaubt es Ihnen das Festivallayout bequem und grafisch zu planen und zu speichern.
+
+###Erstellen eines Objektes
+Nachdem Sie sich eine Location ausgewählt haben, wird Ihnen ein leeres Festivalgelände vorgegeben. 
+
+Rechts im Menu finden Sie die verwendbaren Objekte, geordnet nach Objekttypen. Mit Klick auf den Typ erweitert sich das Menu um die Objekte dieses Typs.
+
+Klicken Sie nun auf das Objekt, dass Sie erstellen möchten. Nun erscheint oben links in der Ecke des Areal das gewünschte Objekt. 
+
+Sollte das Objekt zu groß für das Gelände sein, wird Ihnen dies mitgeteilt und das zu große Objekt nicht erstellt. 
+
+###Bewegen eines Objektes auf dem Gelände
+Wenn Sie ein Objekt auf dem Gelände bewegen möchten, können Sie dies ganz einfach per Drag-and-Drop machen. 
+
+### Das Kontext-Menu
+Wenn Sie auf ein Objekt mit der rechten Maustaste klicken, erscheint das Kontextmenu. Hier können Sie Informationen über die Höhe, Breite, und Name des Objektes erfahren. 
+
+Weiterhin haben Sie die Mögichkeit per Klick auf die jeweiligen Buttons das Objekt zu drehen und zu löschen.
 ## Nutzerverwaltung
 Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
 ## Kommunikation

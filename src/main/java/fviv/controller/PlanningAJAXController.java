@@ -1,5 +1,6 @@
 package fviv.controller;
 
+import fviv.festival.FestivalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,13 @@ public class PlanningAJAXController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 	private PlanningItemsRepository planningItems;
 	private AreaItemsRepository areaItems;
+	private FestivalRepository festivalRepository;
 
 	@Autowired
 	public PlanningAJAXController(AreaItemsRepository areaItems,
-			PlanningItemsRepository itemsForPlanerRepository) {
-		super();
+			PlanningItemsRepository itemsForPlanerRepository,
+			FestivalRepository festivalRepository) {
+		this.festivalRepository = festivalRepository;
 		this.areaItems = areaItems;
 		this.planningItems = itemsForPlanerRepository;
 	}
@@ -31,8 +34,8 @@ public class PlanningAJAXController {
 	public Iterable<AreaItem> rebuildPlaner(
 			@RequestParam("request") String request,
 			@RequestParam("festival") long festivalId) {
-		if (areaItems.findByFestivalId(festivalId) != null) {
-			return areaItems.findByFestivalId(festivalId);
+		if (areaItems.findByFestival(festivalRepository.findOne(festivalId)) != null) {
+			return areaItems.findByFestival(festivalRepository.findOne(festivalId));
 		} else {
 			return null;
 		}
@@ -46,11 +49,11 @@ public class PlanningAJAXController {
 		AreaItem area = areaItems.findByName("Areal");
 		if (area == null) {
 			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
-					height, 0, 0, factor, festivalId));
+					height, 0, 0, factor, festivalRepository.findOne(festivalId)));
 		} else {
 			areaItems.deleteAll();
 			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
-					height, 0, 0, factor, festivalId));
+					height, 0, 0, factor, festivalRepository.findOne(festivalId)));
 		}
 		
 		return true;
@@ -69,21 +72,21 @@ public class PlanningAJAXController {
 			switch (typ) {
 			case "TOILET":
 				areaItems.save(new AreaItem(Type.TOILET, (name), width,
-						height, left, top, festivalId));
+						height, left, top, festivalRepository.findOne(festivalId)));
 				break;
 			case "STAGE":
 				areaItems.save(new AreaItem(Type.STAGE, (name), width,
-						height, left, top, festivalId));
+						height, left, top, festivalRepository.findOne(festivalId)));
 				break;
 			case "CATERING":
 				areaItems.save(new AreaItem(Type.CATERING, (name),
-						width, height, left, top, festivalId));
+						width, height, left, top, festivalRepository.findOne(festivalId)));
 				break;
 			case "CAMPING":
 				areaItems.save(new AreaItem(Type.CAMPING, (name), width,
-						height, left, top, festivalId));
+						height, left, top, festivalRepository.findOne(festivalId)));
 			}
-			return areaItems.findByFestivalId(festivalId);
+			return areaItems.findByFestival(festivalRepository.findOne(festivalId));
 		} else {
 			return null;
 		}
@@ -99,6 +102,6 @@ public class PlanningAJAXController {
 	public Iterable<AreaItem> giveMeAllEntries(
 			@RequestParam("request") String request,
 			@PathVariable("fid") long festivalId) {
-		return areaItems.findByFestivalId(festivalId);
+		return areaItems.findByFestival(festivalRepository.findOne(festivalId));
 	}
 }

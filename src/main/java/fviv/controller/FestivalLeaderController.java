@@ -2,6 +2,7 @@ package fviv.controller;
 
 import static org.joda.money.CurrencyUnit.EUR;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.validation.Valid;
@@ -26,6 +27,8 @@ import org.springframework.stereotype.Controller;
 
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
 import fviv.model.Employee.Departement;
 import fviv.model.EmployeeRepository;
 import fviv.model.Employee;
@@ -51,23 +54,41 @@ public class FestivalLeaderController {
 	private final UserAccountManager userAccountManager;
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
+	private final FestivalRepository festivalRepository;
+	private Festival selected;
+	private long selectedId;
 
 	@Autowired
 	public FestivalLeaderController(EmployeeRepository employeeRepository,
 			MenusRepository menusRepository,
 			UserAccountManager userAccountManager,
 			Inventory<InventoryItem> inventory,
-			FinanceRepository financeRepository) {
+			FinanceRepository financeRepository, FestivalRepository festivalRepository) {
 
 		this.employeeRepository = employeeRepository;
 		this.menusRepository = menusRepository;
 		this.userAccountManager = userAccountManager;
 		this.inventory = inventory;
 		this.financeRepository = financeRepository;
+		this.festivalRepository = festivalRepository;
 	}
 
 	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
-
+	
+	/**
+	 * 
+	 * @return the name of the festival for the UI
+	 */
+	@ModelAttribute("selectedFestival")
+	public String selectedFestival() {
+		if (selected == null) {
+			return "(noch kein Festival ausgewählt)";
+		} else {
+			selectedId = selected.getId();
+			return selected.getFestivalName();
+		}
+	}
+	
 	/**
 	 * String managermode for th:switch to decide which div to display
 	 * 
@@ -99,20 +120,14 @@ public class FestivalLeaderController {
 	@RequestMapping("/leadership")
 	public String index(ModelMap modelMap) {
 		// Money used as sum for each type of expense
-		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
-				.of(EUR, 0.00);
-		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
-				.of(EUR, 0.00);
+		Money catExpTot = Money.of(EUR, 0.00);
+		Money catDepTot = Money.of(EUR, 0.00);
 
 		// ------------------------ FINANCES ------------------------ \\
 
 		// Lists that contain Finances sorted by Type
-		LinkedList<Finance> salaryExpense = new LinkedList<Finance>();
-		LinkedList<Finance> salaryDeposit = new LinkedList<Finance>();
-		LinkedList<Finance> cateringExpense = new LinkedList<Finance>();
-		LinkedList<Finance> cateringDeposit = new LinkedList<Finance>();
-		LinkedList<Finance> rentExpense = new LinkedList<Finance>();
-		LinkedList<Finance> rentDeposit = new LinkedList<Finance>();
+		Collection<Finance> cateringExpense = new LinkedList<Finance>();
+		Collection<Finance> cateringDeposit = new LinkedList<Finance>();
 
 		// Fill the Finance lists
 		for (Finance finance : financeRepository.findAll()) {
@@ -122,7 +137,15 @@ public class FestivalLeaderController {
 			if (finance.getFinanceType().equals(FinanceType.CATERING)
 					&& finance.getReference() == Reference.DEPOSIT)
 				cateringDeposit.add(finance);
+			
 		}
+		
+		// Schnittmenge:
+		cateringExpense.retainAll(this.financeRepository.findByFestivalId(selectedId));
+		cateringDeposit.retainAll(this.financeRepository.findByFestivalId(selectedId));
+		
+		Iterable<Finance> cateringExpenseAsAttribute = cateringExpense;
+		Iterable<Finance> cateringDepositAsAttribute = cateringDeposit;
 		
 		// Calculate total amounts of each expense type
 		
@@ -140,24 +163,15 @@ public class FestivalLeaderController {
 		modelMap.addAttribute("catDepTot", catDepTot);
 
 		// Add finances by type to the modelMap
-		modelMap.addAttribute("cateringExpense", cateringExpense);
-		modelMap.addAttribute("cateringDeposit", cateringDeposit);
+		modelMap.addAttribute("cateringExpense", cateringExpenseAsAttribute);
+		modelMap.addAttribute("cateringDeposit", cateringDepositAsAttribute);
 
 		// ------------------------ STOCK ------------------------ \\
 
 		modelMap.addAttribute("inventory", this.inventory.findAll());
+		modelMap.addAttribute("festivals", this.festivalRepository.findAll());
 		return "festivalleader";
 	}
-
-	
-
-	
-
-	
-
-	
-
-	
 
 	// ------------------------ ORDER MORE ------------------------ \\
 
@@ -168,12 +182,11 @@ public class FestivalLeaderController {
 	 * @param units
 	 * @return link
 	 */
-
 	@RequestMapping("orderMore")
 	public String orderMore(@RequestParam("itemid") InventoryItem item,
 			@RequestParam("units") Long units) {
 		ProductIdentifier mid = item.getProduct().getIdentifier();
-		financeRepository.save(new Finance(Reference.EXPENSE, (menusRepository
+		financeRepository.save(new Finance(selectedId, Reference.EXPENSE, (menusRepository
 				.findByProductIdentifier(mid).getPurchasePrice()
 				.multipliedBy(units)), FinanceType.CATERING));
 		item.increaseQuantity(Units.of(units));
@@ -189,6 +202,12 @@ public class FestivalLeaderController {
 
 	// ------------------------ MODEMAPPING ------------------------ \\
 
+	@RequestMapping("/leadership/festival")
+	public String festival(@RequestParam("festival") long festivalId) {
+		selected = festivalRepository.findOne(festivalId);
+		return "redirect:/leadership";
+	}
+	
 	@RequestMapping("/Finances")
 	public String finances() {
 		lmode = "finances";
