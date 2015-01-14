@@ -6,7 +6,6 @@ import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.iterableWithSize;
 
 import fviv.AbstractIntegrationTests;
 import fviv.model.Employee.Departement;
