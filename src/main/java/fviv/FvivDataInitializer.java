@@ -2,10 +2,6 @@ package fviv;
 
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
-import static org.joda.money.CurrencyUnit.EUR;
-
-import java.text.ParseException;
-
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.location.Location;
@@ -17,7 +13,6 @@ import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 import fviv.user.Roles;
-
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
@@ -33,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.joda.money.CurrencyUnit.EUR;
+
 
 
 @Component
@@ -260,7 +256,7 @@ public class FvivDataInitializer implements DataInitializer {
 
 		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival, areaItem));
 		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival, areaItem2));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2));
-		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 1, 1), LocalDateTime.of(2014, 12, 26, 1, 1, 0), artist, festival2, areaItem2));
+		eventsRepository.save(new Event(LocalDateTime.of(2024, 12, 28, 1, 4, 1), LocalDateTime.of(2014, 12, 26, 1, 5, 0), artist2, festival2, areaItem2));
 	}
 }
