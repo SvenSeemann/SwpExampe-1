@@ -216,13 +216,13 @@ public class FvivDataInitializer implements DataInitializer {
 	private void initializeFinances() {
 
 		// Create expenses
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
 				13.80), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
 				5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(Reference.EXPENSE, Money.of(EUR,
+		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				2400.00), FinanceType.RENT));
 
 	}

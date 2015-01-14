@@ -11,6 +11,7 @@
 	width: 560px;
 	height: 500px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 	border: #f9731C 2px solid;
 	float: right;
 	color: white;
@@ -42,12 +43,7 @@
 	pointer-events: none;
 }
 
-#cancel {
+#confirmButtons {
 	position: absolute;
-	bottom : 0;
-}
-
-#confirm {
-	position: absolute;
-	bottom : 0;
+	margin-bottom : 10;
 }
