@@ -204,7 +204,7 @@ public class FestivalLeaderController {
 
 	@RequestMapping("/leadership/festival")
 	public String festival(@RequestParam("festival") long festivalId) {
-		selected = festivalRepository.findById(festivalId);
+		selected = festivalRepository.findOne(festivalId);
 		return "redirect:/leadership";
 	}
 	

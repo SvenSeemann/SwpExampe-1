@@ -84,16 +84,16 @@ public class CreateController {
 	@RequestMapping("/setQuantityOfEmployees")
 	public String quantityEmployees(@RequestParam("festivalId") long festivalId) {
 		mode = "setQuantity";
-		selected = festivalRepository.findById(festivalId);
+		selected = festivalRepository.findOne(festivalId);
 		return "redirect:/festival";
 	}
 	
 	@RequestMapping("/setSalary")
 	public String setSalary(@RequestParam("festivalId") long festivalId) {
 		mode = "setSalary";
-		System.out.println(festivalRepository.findById(festivalId)
+		System.out.println(festivalRepository.findOne(festivalId)
 				.getFestivalName());
-		selected = festivalRepository.findById(festivalId);
+		selected = festivalRepository.findOne(festivalId);
 		return "redirect:/festival";
 	}
 
@@ -118,7 +118,7 @@ public class CreateController {
 	@RequestMapping(value = "/setup/area", method = RequestMethod.POST)
 	public String setUpArea(@RequestParam("festivalId") long festivalId) {
 		//hier auf max planner zugreifen
-		this.selected = festivalRepository.findById(festivalId);
+		this.selected = festivalRepository.findOne(festivalId);
 		
 		
 		

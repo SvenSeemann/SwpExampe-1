@@ -241,12 +241,12 @@ public class FvivDataInitializer implements DataInitializer {
 		artistsRepository.save(artist);
 		artistsRepository.save(artist2);
 
-		Festival festival = festivalRepository.findById(1);
-		Festival festival2 = festivalRepository.findById(2);
+		Festival festival = festivalRepository.findOne((long) 1);
+		Festival festival2 = festivalRepository.findOne((long) 2);
 
-		AreaItem areaItem = new AreaItem(AreaItem.Type.STAGE, "Stage 1", 30, 30, 30, 30, festival.getId());
+		AreaItem areaItem = new AreaItem(AreaItem.Type.STAGE, "Stage 1", 30, 30, 30, 30, festival);
 
-		AreaItem areaItem2 = new AreaItem(AreaItem.Type.STAGE, "Stage 2", 30, 30, 10, 70, festival.getId());
+		AreaItem areaItem2 = new AreaItem(AreaItem.Type.STAGE, "Stage 2", 30, 30, 10, 70, festival);
 
 		areaItemsRepository.save(areaItem);
 		areaItemsRepository.save(areaItem2);

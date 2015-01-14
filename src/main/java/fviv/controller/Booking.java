@@ -3,7 +3,6 @@ package fviv.controller;
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.booking.LineupForm;
-import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.model.Artist;
 import fviv.model.ArtistsRepository;
@@ -44,10 +43,9 @@ public class Booking {
         LocalDateTime start = LocalDateTime.of(lineupForm.getStartYear(), lineupForm.getStartMonth(), lineupForm.getStartDay(), lineupForm.getStartHour(), lineupForm.getStartMinute(), 0);
         LocalDateTime end = start.plusHours(lineupForm.getDuration());
         Artist artist = artistsRepository.findOne(lineupForm.getArtist());
-        Festival festival = festivalRepository.findById(lineupForm.getFestival());
         AreaItem stage =  areaItemsRepository.findOne(lineupForm.getStage());
-        if (festival != null && artist != null) {
-            eventsRepository.save(new Event(start, end, artist, festival, stage));
+        if (artist != null && stage != null) {
+            eventsRepository.save(new Event(start, end, artist, stage.getFestival(), stage));
         }
         return "redirect:/booking/artist/schedule";
 
@@ -56,7 +54,6 @@ public class Booking {
     @RequestMapping(value = "booking/artist", method = RequestMethod.GET)
     public String handle(Model model) {
         model.addAttribute("bookedArtists", restBooking.booked());
-        model.addAttribute("festivals", festivalRepository.findAll());
         model.addAttribute("stages", areaItemsRepository.findByType(AreaItem.Type.STAGE));
         return "lineup";
     }

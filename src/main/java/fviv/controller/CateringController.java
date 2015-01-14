@@ -167,7 +167,7 @@ public class CateringController {
 
 	@RequestMapping(value = "/catering/festival", method = RequestMethod.POST)
 	public String festival(@RequestParam("festival") long festivalId) {
-		selected = festivalRepository.findById(festivalId);
+		selected = festivalRepository.findOne(festivalId);
 		return "redirect:/catering";
 	}
 
