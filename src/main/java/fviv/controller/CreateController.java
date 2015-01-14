@@ -3,14 +3,14 @@ package fviv.controller;
 import static org.joda.money.CurrencyUnit.EUR;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 
 import org.joda.money.Money;
 import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -25,6 +25,8 @@ import fviv.areaPlanner.AreaItem.Type;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.FestivalRepository;
 import fviv.festival.Festival;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
 
 // by niko // festivalerstellungscontroller
 
@@ -33,22 +35,37 @@ import fviv.festival.Festival;
 public class CreateController {
 	private static final String IS_AJAX_HEADER = "X-Requested-With=XMLHttpRequest";
 	private final FestivalRepository festivalRepository;
+	private final LocationRepository locationRepository;
 	private String mode = "festival";
 	private Festival selected;
-	private AreaItemsRepository areaItems;
 	private UserAccountManager userAccountManager;
+	private LinkedList<String> managerAccounts = new LinkedList<String>();	
+	private AreaItemsRepository areaItems;
 
 	@Autowired
-	public CreateController(FestivalRepository festivalRepository, UserAccountManager userAccountManager) {
+	public CreateController(FestivalRepository festivalRepository, LocationRepository locationrepository,UserAccountManager userAccountManager) {
 		this.festivalRepository = festivalRepository;
+		this.locationRepository = locationrepository;
 		this.userAccountManager = userAccountManager;
-	}
 
+
+	}
+/**
+ * index method and Modelmapping of the festivallist and locationlist
+ * @param modelMap
+ * @return
+ */
 	@RequestMapping({ "/festival" })
 	public String index(ModelMap modelMap) {
 		//mode = "festival";
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
+		managerAccounts.clear();
+		for(UserAccount userAccount : userAccountManager.findAll()){
+			if(userAccount.hasRole(new Role("ROLE_MANAGER")))managerAccounts.add(userAccount.getIdentifier().toString());
+		}
+		modelMap.addAttribute("managerAccounts", managerAccounts);
+		modelMap.addAttribute("locationlist", locationRepository.findAll());
 		return "festival";
 	}
 
@@ -149,15 +166,27 @@ public class CreateController {
 		return mode;
 	}
 
+	/**
+	 * Creating Festival from the inputs of the site
+	 * @param festivalName
+	 * @param startDate
+	 * @param endDate
+	 * @param actors
+	 * @param maxVisitors
+	 * @param location
+	 * @param preisTag
+	 * @return
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "/newFestival", method = RequestMethod.POST)
 	public String newFestival(
 			@RequestParam("festivalName") String festivalName,
 			@RequestParam("startDate") String startDate,
 			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
-			@RequestParam("maxVisitors") int maxVisitors,
-			@RequestParam("location") String location,
-			@RequestParam("preisTag") long preisTag) throws ParseException {
+			@RequestParam("preisTag") long preisTag,
+			@RequestParam("selectManager") String manager,
+			@RequestParam("locationId") long locationId) throws ParseException {
 
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
@@ -167,16 +196,10 @@ public class CreateController {
 
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
-				location, actors, (int) maxVisitors, (long) preisTag);
+				locationId, actors, (int) locationRepository.findById(locationId).getMaxVisitors(), (long) preisTag, manager);
 	
 		festivalRepository.save(festival);
-		
-		UserAccount festivalAccount = userAccountManager.create("festival" + festival.getId(), "123", new Role("ROLE_GUEST"));
-		
-		userAccountManager.save(festivalAccount);
-		festival.setUserAccount(festivalAccount);
-		festivalRepository.save(festival);
-		
+				
 		return "redirect:/festival";
 
 	}

@@ -5,14 +5,15 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-<link rel="stylesheet" href="../resources/css/standard.css"/>
-<link rel="stylesheet" href="../resources/css/catering.css"/>
-<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/catering.css" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
 
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title th:text="#{catering.title}">Catering</title>
 </head>
-
+<br />
 <body>
 
 	<div id="webseite">
@@ -23,11 +24,12 @@
 					<div id="title" th:text="#{catering.meals}">meals</div>
 				</div>
 				<div th:case="drinks">
-					<div  th:text="#{catering.drinks}" id="title">drinks</div>
+					<div id="title" th:text="#{catering.drinks}">drinks</div>
 				</div>
 				<div th:case="*">
 					<div id="title">TERMINAL</div>
 				</div>
+				<div id="selectedFestival" th:text="${selectedFestival}"></div>
 			</div>
 			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
 		</div>
@@ -49,23 +51,23 @@
 						</tr>
 					</table>
 				</div>
-
-				<form method="post" action="/catering-confirm">
-					<button class="slimButton" type="submit"
-						th:text="#{catering.confirm}" value="confirm">confirm</button>
-				</form>
-				<form method="post" action="/catering-cancel">
-					<button class="slimButton" type="submit"
-						th:text="#{catering.cancel}" value="cancel">cancel</button>
-				</form>
-
+				<div id="comfirmButtons">
+					<form method="post" action="/catering/confirm">
+						<button class="slimButton" type="submit"
+							th:text="#{catering.confirm}" value="confirm">confirm</button>
+					</form>
+					<form method="post" action="/catering/cancel">
+						<button class="slimButton" type="submit"
+							th:text="#{catering.cancel}" value="cancel">cancel</button>
+					</form>
+				</div>
 			</div>
 
 			<div id="chooseBox" th:switch="${ordermode}">
 				<div th:case="meals">
 					<a th:each="meal : ${meals}"
-						th:href="@{'/catering-menu/' + ${meal.identifier}}">
-						<div th:class= "${meal.orderable} ? field : fieldgrey" >
+						th:href="@{'/catering/menu/' + ${meal.identifier}}">
+						<div th:class="${meal.orderable} ? field : fieldgrey">
 							<p th:text="${meal.name}"></p>
 							<p th:text="${meal.price}"></p>
 						</div>
@@ -74,14 +76,26 @@
 
 				<div th:case="drinks">
 					<a th:each="drink : ${drinks}"
-						th:href="@{'/catering-menu/' + ${drink.identifier}}">
-						<div th:class= "${drink.orderable} ? field : fieldgrey" >
+						th:href="@{'/catering/menu/' + ${drink.identifier}}">
+						<div th:class="${drink.orderable} ? field : fieldgrey">
 							<p th:text="${drink.name}"></p>
 							<p th:text="${drink.price}"></p>
 						</div>
 					</a>
 				</div>
-				<h2 th:case="*" th:text="#{catering.welcome}">New Customer</h2>
+				<div th:case="*">
+					<table th:each="festival : ${festivals}">
+						<tr>
+							<form method="post" action="/catering/festival">
+								<button class="slimButton" type="submit"
+									th:text="${festival.festivalName}" th:value="${festival.Id}"
+									value="festival" name="festival">Logout</button>
+							</form>
+						</tr>
+					</table>
+
+				</div>
+
 			</div>
 		</div>
 
@@ -92,11 +106,15 @@
 				<button class="slimButton" type="submit"
 					th:text="#{catering.logout}" value="logout">Logout</button>
 			</form>
-			<form method="post" action="/catering-meals">
+			<form method="post" action="/catering/choosefestival">
+				<button class="boldButton" type="submit" value="catering-meals"
+					th:text="#{catering.festival}">Menu</button>
+			</form>
+			<form method="post" action="/catering/meals">
 				<button class="boldButton" type="submit" value="catering-meals"
 					th:text="#{catering.meals}">Menu</button>
 			</form>
-			<form method="post" action="/catering-drinks">
+			<form method="post" action="/catering/drinks">
 				<button class="boldButton" type="submit" value="catering-drinks"
 					th:text="#{catering.drinks}">Menu</button>
 			</form>

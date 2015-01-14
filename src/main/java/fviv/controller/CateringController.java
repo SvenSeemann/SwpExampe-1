@@ -3,6 +3,8 @@ package fviv.controller;
 import fviv.catering.model.Menu;
 import fviv.catering.model.Menu.Type;
 import fviv.catering.model.MenusRepository;
+import fviv.festival.Festival;
+import fviv.festival.FestivalRepository;
 import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
 import fviv.model.FinanceRepository;
@@ -27,10 +29,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -49,26 +53,44 @@ public class CateringController {
 	private final OrderManager<Order> orderManager;
 	private final Inventory<InventoryItem> inventory;
 	private final FinanceRepository financeRepository;
+	private final FestivalRepository festivalRepository;
+	private Festival selected;
+	private long selectedId;
 
 	@Autowired
 	public CateringController(MenusRepository menusRepository,
 			OrderManager<Order> orderManager,
 			Inventory<InventoryItem> inventory,
-			FinanceRepository financeRepository) {
+			FinanceRepository financeRepository,
+			FestivalRepository festivalRepository) {
 
 		this.menusRepository = menusRepository;
 		this.orderManager = orderManager;
 		this.inventory = inventory;
 		this.financeRepository = financeRepository;
+		this.festivalRepository = festivalRepository;
 
 	}
 
 	// --- --- --- --- --- --- ModelAttributes --- --- --- --- --- --- \\
 
 	/**
-	 * Sets the order mode to MEALS or DRINKS in the UI
 	 * 
-	 * @return mode
+	 * @return the name of the festival for the UI
+	 */
+	@ModelAttribute("selectedFestival")
+	public String selectedFestival() {
+		if (selected == null) {
+			return "(noch kein Festival ausgewählt)";
+		} else {
+			selectedId = selected.getId();
+			return selected.getFestivalName();
+		}
+	}
+	
+	/**
+	 *
+	 * @return MEALS or DRINKS as mode in the UI
 	 */
 	@ModelAttribute("ordermode")
 	public String ordermode() {
@@ -108,23 +130,44 @@ public class CateringController {
 						item.getProduct().getId()).setOrderable(false);
 			}
 		}
+		modelMap.addAttribute("festivals", festivalRepository.findAll());
+		Collection<Menu> meals = this.menusRepository.findByType(Type.MEAL);
+		Collection<Menu> drinks = this.menusRepository.findByType(Type.DRINK);
 
-		modelMap.addAttribute("meals",
-				this.menusRepository.findByType(Type.MEAL));
-		modelMap.addAttribute("drinks",
-				this.menusRepository.findByType(Type.DRINK));
+		// Schnittmenge:
+		meals.retainAll(this.menusRepository.findByFestivalId(selectedId));
+		drinks.retainAll(this.menusRepository.findByFestivalId(selectedId));
+
+		Iterable<Menu> mealsAsAttribute = meals;
+		Iterable<Menu> drinksAsAttribute = drinks;
+
+		modelMap.addAttribute("meals", mealsAsAttribute);
+		modelMap.addAttribute("drinks", drinksAsAttribute);
+
 		return "/catering";
 	}
 
-	@RequestMapping(value = "/catering-drinks", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/drinks", method = RequestMethod.POST)
 	public String drinks() {
 		mode = "drinks";
 		return "redirect:/catering";
 	}
 
-	@RequestMapping(value = "/catering-meals", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/meals", method = RequestMethod.POST)
 	public String meals() {
 		mode = "meals";
+		return "redirect:/catering";
+	}
+
+	@RequestMapping(value = "/catering/choosefestival", method = RequestMethod.POST)
+	public String choosefestival() {
+		mode = "festival";
+		return "redirect:/catering";
+	}
+
+	@RequestMapping(value = "/catering/festival", method = RequestMethod.POST)
+	public String festival(@RequestParam("festival") long festivalId) {
+		selected = festivalRepository.findById(festivalId);
 		return "redirect:/catering";
 	}
 
@@ -138,7 +181,7 @@ public class CateringController {
 	 * @param userAccount
 	 * @return link
 	 */
-	@RequestMapping("catering-menu/{mid}")
+	@RequestMapping("catering/menu/{mid}")
 	public String addMeal(ModelMap modelMap, @PathVariable("mid") Menu menu,
 			@ModelAttribute Cart cart, HttpSession session,
 			@LoggedIn UserAccount userAccount) {
@@ -150,7 +193,6 @@ public class CateringController {
 		// quantity.isGreaterThan(Units.ZERO));
 
 		CartItem cartItem = cart.addOrUpdateItem(menu, Units.of(1));
-
 		// List to keep track of the items in the cart
 		// Because there is no option to get all items in the cart?
 		if (!(currentCartItems.contains(cartItem)))
@@ -168,7 +210,6 @@ public class CateringController {
 			menu.setOrderable(false);
 			menusRepository.save(menu);
 		}
-
 		return "redirect:/catering";
 	}
 
@@ -179,7 +220,7 @@ public class CateringController {
 	 * @param cart
 	 * @return link
 	 */
-	@RequestMapping(value = "/catering-cancel", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/cancel", method = RequestMethod.POST)
 	public String cancel(HttpSession session, @ModelAttribute Cart cart) {
 		// Cart cart = getCart(session);
 
@@ -203,23 +244,21 @@ public class CateringController {
 	 * @param userAccount
 	 * @return link
 	 */
-	@RequestMapping(value = "/catering-confirm", method = RequestMethod.POST)
+	@RequestMapping(value = "/catering/confirm", method = RequestMethod.POST)
 	public String confirm(@ModelAttribute Cart cart,
 			@LoggedIn Optional<UserAccount> userAccount) {
 
 		return userAccount.map(
 				account -> {
-
 					Order order = new Order(account, Cash.CASH);
 
 					cart.addItemsTo(order);
-
 					orderManager.payOrder(order);
 					orderManager.completeOrder(order);
 					orderManager.save(order);
-
-					financeRepository.save(new Finance(Reference.DEPOSIT, order
-							.getTotalPrice(), FinanceType.CATERING));
+					financeRepository.save(new Finance(selectedId,
+							Reference.DEPOSIT, order.getTotalPrice(),
+							FinanceType.CATERING));
 
 					currentCartItems.clear();
 					cart.clear();

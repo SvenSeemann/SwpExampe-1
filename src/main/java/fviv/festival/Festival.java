@@ -5,9 +5,10 @@ import static org.joda.money.CurrencyUnit.EUR;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
@@ -25,7 +26,7 @@ public class Festival {
 	private LocalDate startDatum;
 	private LocalDate endDatum;
 	private String festivalName;
-	private String location;
+	private long locationId;
 	private String actors;
 	private int maxVisitors;
 	private long preisTag;
@@ -37,21 +38,51 @@ public class Festival {
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
-	
-	@OneToOne
-	private UserAccount userAccount;
-	
+	private String managerUserName;
+
+	public int getQuantManagement() {
+		return quantManagement;
+	}
+
+	public void setQuantManagement(int quantManagement) {
+		this.quantManagement = quantManagement;
+	}
+
+	public int getQuantCatering() {
+		return quantCatering;
+	}
+
+	public void setQuantCatering(int quantSalary) {
+		this.quantCatering = quantSalary;
+	}
+
+	public int getQuantSecurity() {
+		return quantSecurity;
+	}
+
+	public int getRecommendedQuantSecurity() {
+		return (maxVisitors / 100);
+	}
+
+	public void setQuantSecurity(int quantSecurity) {
+		this.quantSecurity = quantSecurity;
+	}
+
+	public void setQuantCleaning(int quantCleaning) {
+		this.quantCleaning = quantCleaning;
+	}
 
 	@Deprecated
 	protected Festival() {
 	}
 
-	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, String location,
-			String actors, int maxVisitors, long preisTag) {
+	@Autowired
+	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
+			String actors, int maxVisitors, long preisTag, String managerUserName) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
-		this.location = location;
+		this.locationId = locationId;
 		this.actors = actors;
 		this.maxVisitors = maxVisitors;
 		this.preisTag = preisTag;
@@ -63,11 +94,17 @@ public class Festival {
 		this.quantManagement = 0;
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
+		this.managerUserName = managerUserName;
 		//this.area = null;
 
 	}
-	public long getId(){
+
+	public long getId() {
 		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public LocalDate getStartDatum() {
@@ -75,7 +112,7 @@ public class Festival {
 	}
 
 	public void setStartDatum(LocalDate startDatum) {
-		
+
 		this.startDatum = startDatum;
 	}
 
@@ -119,12 +156,12 @@ public class Festival {
 		this.preisTag = preisTag;
 	}
 
-	public String getLocation() {
-		return location;
+	public long getLocationId() {
+		return locationId;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocationId(long locationId) {
+		this.locationId = locationId;
 	}
 
 	public Money getManagementSalaryPerDay() {
@@ -159,49 +196,11 @@ public class Festival {
 		this.cleaningSalaryPerDay = cleaningSalaryPerDay;
 	}
 
-	public int getQuantManagement() {
-		return quantManagement;
-	}
-
-	public void setQuantManagement(int quantManagement) {
-		this.quantManagement = quantManagement;
-	}
-
-	public int getQuantCatering() {
-		return quantCatering;
-	}
-
-	public void setQuantCatering(int quantSalary) {
-		this.quantCatering = quantSalary;
-	}
-
-	public int getQuantSecurity() {
-		return quantSecurity;
+	public String getManager() {
+		return managerUserName;
 	}
 	
-	public int getRecommendedQuantSecurity() {
-		return (maxVisitors / 100);
+	public void setManager(String managerUserName){
+		this.managerUserName = managerUserName;	
 	}
-
-	public void setQuantSecurity(int quantSecurity) {
-		this.quantSecurity = quantSecurity;
-	}
-
-	public int getQuantCleaning() {
-		return quantCleaning;
-	}
-
-	public void setQuantCleaning(int quantCleaning) {
-		this.quantCleaning = quantCleaning;
-	}
-
-	public UserAccount getUserAccount() {
-		return userAccount;
-	}
-
-	public void setUserAccount(UserAccount userAccount) {
-		this.userAccount = userAccount;
-	}
-	
-	
 }

@@ -99,8 +99,6 @@ public class PlanningAJAXController {
 	public Iterable<AreaItem> giveMeAllEntries(
 			@RequestParam("request") String request,
 			@PathVariable("fid") long festivalId) {
-		System.out.println(festivalId);
-		System.out.println(areaItems.findByFestivalId(festivalId));
 		return areaItems.findByFestivalId(festivalId);
 	}
 }
