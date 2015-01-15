@@ -44,7 +44,7 @@ import fviv.model.Registration;
  * @author Niklas Fallik
  */
 
-@PreAuthorize("hasRole('ROLE_LEADER')")
+@PreAuthorize("hasAnyRole('ROLE_LEADER','ROLE_BOSS')")
 @Controller
 public class FestivalLeaderController {
 	private String lmode = "startConfiguration"; // leadermode

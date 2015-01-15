@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,29 +38,37 @@ import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.location.Location;
 import fviv.location.LocationRepository;
+import fviv.model.Finance;
+import fviv.model.Finance.FinanceType;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
+
 /**
  */
 @Controller
-@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_BOSS')")
 public class TicketController {
 	private final TicketRepository ticketRepository;
 	private final FestivalRepository festivalRepository;
 	private final LocationRepository locationRepository;
+	private final FinanceRepository financeRepository;
 
 	private static long ticketid;
 	private String mode = "ticket";
 	private static Festival festival;
 	private static Location location;
 	private String asdf = "";
+
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
-			FestivalRepository festivalRepository, 
-			LocationRepository locationRepository) {
+			FestivalRepository festivalRepository,
+			LocationRepository locationRepository, FinanceRepository financeRepository) {
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
 		this.locationRepository = locationRepository;
+		this.financeRepository = financeRepository;
 	}
 
 	@ModelAttribute("ticketmode")
@@ -69,6 +78,7 @@ public class TicketController {
 
 	/**
 	 * index method and mapping the festival and ticketlist on the weppage
+	 * 
 	 * @param modelMap
 	 * @return
 	 */
@@ -92,9 +102,11 @@ public class TicketController {
 		mode = "ticketpruefen";
 		return "redirect:/ticket";
 	}
+
 	/**
-	 * method to controle the ticket if it is already checked 
-	 * returns a modelmap attribute
+	 * method to controle the ticket if it is already checked returns a modelmap
+	 * attribute
+	 * 
 	 * @param modelMap
 	 * @param id
 	 * @return
@@ -123,9 +135,12 @@ public class TicketController {
 			return "ticket";
 		}
 	}
+
 	/**
-	 * loads festivals from the festival list and gets start and end date 
-	 * calculates the differenz and creates a list where each date from a festival can be choosen
+	 * loads festivals from the festival list and gets start and end date
+	 * calculates the differenz and creates a list where each date from a
+	 * festival can be choosen
+	 * 
 	 * @param modelMap
 	 * @param id
 	 * @return
@@ -136,9 +151,9 @@ public class TicketController {
 		Festival loadingfestival = festivalRepository.findOne(id);
 		LocalDate startDate = loadingfestival.getStartDatum();
 		LocalDate endDate = loadingfestival.getEndDatum();
-		DateTime startDatum = DateTime.parse(startDate.toString()); //hadtobedone
+		DateTime startDatum = DateTime.parse(startDate.toString()); // hadtobedone
 		ticketid = id;
-		DateTime endDatum = DateTime.parse(endDate.toString()); //hadtobedone
+		DateTime endDatum = DateTime.parse(endDate.toString()); // hadtobedone
 		String[] dateArray;
 		int days = Days.daysBetween(startDatum, endDatum).getDays();
 		dateArray = new String[days];
@@ -150,12 +165,14 @@ public class TicketController {
 		}
 		modelMap.addAttribute("ticketdates", dateArray);
 		modelMap.addAttribute("festivallist", festivalRepository.findAll());
-		asdf="";
+		asdf = "";
 		return "ticket";
 
 	}
+
 	/**
 	 * creates new ticket
+	 * 
 	 * @param ticketart
 	 * @param numbers
 	 * @param tagesdate
@@ -164,16 +181,17 @@ public class TicketController {
 	 * @throws BarcodeException
 	 */
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
-	public String newTicket(ModelMap modelMap, @RequestParam("ticketart") boolean ticketart,
-			@RequestParam("numbers") String numbers,
+	public String newTicket(ModelMap modelMap,
+			@RequestParam("ticketart") boolean ticketart,
+			@RequestParam("numbers") int numbers,
 			@RequestParam("hilfsDate") String tagesdate) throws IOException,
 			BarcodeException {
 		long id = ticketid;
 		int anzahl;
-		if (numbers == "") {
+		if (numbers < 1) {
 			anzahl = 1;
 		} else {
-			anzahl = Integer.parseInt(numbers);
+			anzahl = numbers;
 		}
 		Long longId = id;
 		for (int i = 1; i <= anzahl; i++) {
@@ -182,7 +200,7 @@ public class TicketController {
 			location = locationRepository.findById(festival.getLocationId());
 
 			String festivalname = festival.getFestivalName();
-			
+
 			Money preistag = festival.getPreisTag();
 			LocalDate date = null;
 			if (ticketart == true) {
@@ -193,37 +211,64 @@ public class TicketController {
 			int max = location.getMaxVisitors();
 			List<Ticket> festivalnamelist = ticketRepository
 					.findByFestivalName(festival.getFestivalName());
-			List<Ticket> datumlist = ticketRepository.findByTagesticketdate(date);
-			List<Ticket> datum2list = ticketRepository.findByTagesticketdate(null);
+			List<Ticket> datumlist = ticketRepository
+					.findByTagesticketdate(date);
+			List<Ticket> datum2list = ticketRepository
+					.findByTagesticketdate(null);
 
 			Collection<Ticket> listone = new ArrayList<Ticket>(festivalnamelist);
 			Collection<Ticket> listthree = new ArrayList<Ticket>(datumlist);
 			Collection<Ticket> listfourth = new ArrayList<Ticket>(datum2list);
 			listthree.addAll(listfourth);
 			listone.retainAll(listthree);
-			int ticketzahl=listone.size();
-			if (max > ticketzahl){
-			Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
-	
-			if (ticketart == true) {
-				ticketRepository.save(ticket);
-				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag, ticketart, date);
-				barcodegen();
-				addbarcode();
-			} else {
-				ticketRepository.save(ticket);
-				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag.multipliedBy(7/3), ticketart, date);
-				barcodegen();
-				addbarcode();
+			int ticketzahl = listone.size();
+			if (max > ticketzahl) {
+				Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
 
-			}
+				if (ticketart == true) {
+					ticketRepository.save(ticket);
+					setTicketid(ticket.getId());
+					pdfvorlagebearbeiten(preistag, ticketart, date);
+					barcodegen();
+					addbarcode();
+				} else {
+					ticketRepository.save(ticket);
+					setTicketid(ticket.getId());
+					pdfvorlagebearbeiten(preistag.multipliedBy(7 / 3),
+							ticketart, date);
+					barcodegen();
+					addbarcode();
+
+				}
 			} else {
 				asdf = "NICHT GENÜGEND PLÄTZE VERFÜGBAR";
 				modelMap.addAttribute("eroor", asdf);
 
 			}
+
+			// Tagesticket: true
+
+			LocalDate dateStart = festivalRepository.findById(longId)
+					.getStartDatum();
+			LocalDate dateEnd = festivalRepository.findById(longId)
+					.getEndDatum();
+			Period dateHelper;
+			dateHelper = dateStart.until(dateEnd);
+			int days = dateHelper.getDays() + 1;
+			if (ticketart == true) {
+				Finance ticketDeposit = new Finance(longId, Reference.DEPOSIT,
+						festivalRepository.findById(longId).getPreisTag(),
+						FinanceType.TICKET);
+				financeRepository.save(ticketDeposit);
+			} else {
+				Finance ticketDeposit = new Finance(longId, Reference.DEPOSIT,
+						festivalRepository.findById(longId).getPreisTag().multipliedBy(days),
+						FinanceType.TICKET);
+				financeRepository.save(ticketDeposit);
+			}
+			
+			
+
 		}
 		return "redirect:/ticket";
 	}
@@ -231,7 +276,9 @@ public class TicketController {
 	// true = tagesticket
 	// false == 3tagesticket
 	/**
-	 * turns ticketart(bool) into a String which is used to creates the pdf - ticket - docuement
+	 * turns ticketart(bool) into a String which is used to creates the pdf -
+	 * ticket - docuement
+	 * 
 	 * @param ticketart
 	 * @param date
 	 * @return
@@ -242,15 +289,18 @@ public class TicketController {
 		} else
 			return "3-Tagesticket";
 	}
+
 	/**
-	 * checks if the input number is aviable to print and if it is it prints the ticket
+	 * checks if the input number is aviable to print and if it is it prints the
+	 * ticket
+	 * 
 	 * @param ticketnmr
 	 * @return
 	 */
 	@RequestMapping({ "/ticketDrucken" })
 	public String ticketDrucken(
 			@RequestParam(value = "ticketnummer", required = false) String ticketnmr) {
-		asdf ="";
+		asdf = "";
 		if (ticketnmr == "") {
 			ticketnmr = "" + ticketid;
 		} else {
@@ -269,8 +319,10 @@ public class TicketController {
 		}
 		return "redirect:/" + festival.getFestivalName() + ticketid + ".pdf";
 	}
+
 	/**
 	 * edits the pdf document
+	 * 
 	 * @param ticketkosten
 	 * @param ticketart
 	 * @param date
@@ -278,7 +330,8 @@ public class TicketController {
 	 * @throws BarcodeException
 	 */
 	public static void pdfvorlagebearbeiten(Money ticketkosten,
-			boolean ticketart, LocalDate date) throws IOException, BarcodeException {
+			boolean ticketart, LocalDate date) throws IOException,
+			BarcodeException {
 		String price = "" + ticketkosten;
 		try {
 
@@ -299,12 +352,12 @@ public class TicketController {
 			acroFields.setField("number1", ticketid + "");
 			acroFields.setField("number2", ticketid + "");
 			acroFields.setField("actors", festival.getActors());
-			
+
 			acroFields.setField("adressofvenue", location.getAdresse());
 			acroFields.setField("date", datumshelper(date));
 			acroFields.setField("price", price);
 			acroFields.setField("eventnamesmall", festival.getFestivalName());
-			acroFields.setField("datesmall", datumshelper(date) );
+			acroFields.setField("datesmall", datumshelper(date));
 
 			// (5) Dokumente schließen
 			stamper.close();
@@ -319,28 +372,32 @@ public class TicketController {
 		barcodegen();
 		addbarcode();
 	}
+
 	/**
-	 * date into string 
+	 * date into string
+	 * 
 	 * @param date
 	 * @return
 	 */
-	public static String datumshelper( LocalDate date){
-		if (date == null){
+	public static String datumshelper(LocalDate date) {
+		if (date == null) {
 			return festival.getStartDatum() + "";
 		}
-		
+
 		return date.toString();
 	}
+
 	/**
-	 * creates a barcode from the saved festivalname and ticketid
-	 * saves the barcode as a png file
+	 * creates a barcode from the saved festivalname and ticketid saves the
+	 * barcode as a png file
+	 * 
 	 * @throws IOException
 	 * @throws BarcodeException
 	 */
 	public static void barcodegen() throws IOException, BarcodeException {
-		// get a Barcode from the BarcodeFactory 
+		// get a Barcode from the BarcodeFactory
 		Barcode barcode = BarcodeFactory.createCode128B(festival
-				.getFestivalName() + ticketid); 
+				.getFestivalName() + ticketid);
 		try {
 			File f = new File("out.png");
 
@@ -350,6 +407,7 @@ public class TicketController {
 			// Error handling here
 		}
 	}
+
 	/**
 	 * adds barcode(png) into the pdf of the ticket
 	 */

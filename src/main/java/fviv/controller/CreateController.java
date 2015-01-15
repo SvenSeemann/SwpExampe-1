@@ -292,6 +292,8 @@ public class CreateController {
 						locationId).getMaxVisitors(), Money.of(EUR,
 						Long.parseLong(preisTag)));
 
+		
+		
 		long festivalId = festivalRepository.save(festival).getId();
 		float factor = (835/locationRepository.findById(locationId).getWidth());
 		
@@ -300,11 +302,12 @@ public class CreateController {
 				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));
 		
-		Finance finance = new Finance(festivalId, Reference.EXPENSE,
-				locationRepository.findById(locationId).getCostPerDay(),
-				FinanceType.RENT);
-		financeRepository.save(finance);
-
+		Period dateHelper;
+		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
+		int days = dateHelper.getDays() + 1;
+		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);
+		Finance locationCost = new Finance(festivalId, Reference.EXPENSE, costTot, FinanceType.RENT);
+		financeRepository.save(locationCost);
 		
 		// --- Initialize Menus for new festival --- \\
 		

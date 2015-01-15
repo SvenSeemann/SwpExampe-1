@@ -4,6 +4,17 @@
 
 @@TOC@@
 
+##Oberfläche
+Die Software ist in 3 Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine orangene Farbgebung, die Breiche der Planung sind grün und die Terminalbereiche sind blau. 
+
+Die Seite ist immer in 3 Bereiche gegliedert. 
+
+Im Kopf der Seite finden Sie verschiedene Informationen. Links steht der Titel der Seite. In der Mitte steht der Name des aktuell angewählten Festivals. Rechts sehen Sie als welche Person Sie gerade eingeloggt sind. 
+
+am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie "Logout" und "Show Chat" finden Sie überall. Weitere Menupunkte sind Bereichsspezifisch. 
+
+Der dritte große Bereich ist der Bereichsspezifisch gefüllte Inhalt der Seite. 
+
 ## Festivalerstellung
 In der Festivalerstellung können sie neue Festivals anlegen und Informationen und Rahmenbedingungen für diese festsetzen und speichern.
 ## Die Manager Rolle
@@ -14,6 +25,12 @@ Der Manager kann die Finanzen einsehen und verwalten.
 Der Manager hat Zugriffsberechtigungen für alle Komponenten des Systems.
 ## Catering
 Die Catering Oberfläche bietet Ihnen Auswahl- und Bestellfunktionen für Speisen und Getränke.
+
+Im Menü finden Sie neben den "Logout" und "Show Chat" Button die Punkte "Festival auswählen", "Meals" und "Drinks".
+Unter dem Punkt "Festival auswählen" können Sie zwischen den verfügbaren Festivals auswählen. Im Punkt "Meals" können Sie die verfügbaren Speisen auswählen, bei "Drinks" die verfügbaren Getränke.
+
+Links finden Sie eine Liste mit den gerade ausgewählten Speisen und Getränken. Mit dem Button "Cancel" brechen Sie die aktuelle Aktion ab und alle ausgewählten Artikel werden gelöscht. bei Klick auf "Confirm", zahlt der Kunde, die gewählten Artikel werden aus dem Lagerbestand herausgerechnet und die Einnahmen in die Finanzstatistiken eingetragen. 
+  
 ## Geländeplanung
 Der Geländeplaner erlaubt es Ihnen das Festivallayout bequem und grafisch zu planen und zu speichern.
 
@@ -33,8 +50,14 @@ Wenn Sie ein Objekt auf dem Gelände bewegen möchten, können Sie dies ganz ein
 Wenn Sie auf ein Objekt mit der rechten Maustaste klicken, erscheint das Kontextmenu. Hier können Sie Informationen über die Höhe, Breite, und Name des Objektes erfahren. 
 
 Weiterhin haben Sie die Mögichkeit per Klick auf die jeweiligen Buttons das Objekt zu drehen und zu löschen.
+##Finanzen
+###Mitarbeiter
+ Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. bei der Finanzkalkulation wird von einem 8 Stunden arbeitstag pro Mitarbeiter ausgegangen
 ## Nutzerverwaltung
-Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
+Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
+Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
+
+Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
 ## Kommunikation
 Für die Kommunikation stehen Ihnen ein Chatsystem zur Verfügung. Personen mit den entsprechenden Berechtigungen sind in der Lage anderen Nutzern via des Chats Nachrichten zu schreiben.
 

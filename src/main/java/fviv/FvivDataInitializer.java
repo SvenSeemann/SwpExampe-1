@@ -151,20 +151,35 @@ public class FvivDataInitializer implements DataInitializer {
 		managerAccount.setEmail("Manager@Fviv.de");
 		managerAccount.setFirstname("Der");
 		managerAccount.setLastname("Manager");
+		managerAccount.add(Roles.sender);
+		managerAccount.add(Roles.receiver);
 		UserAccount catererAccount = userAccountManager.create("caterer",
 				"123", Roles.caterer);
 		catererAccount.setEmail("Caterer@Fviv.de");
 		catererAccount.setFirstname("Der");
 		catererAccount.setLastname("Caterer");
+		catererAccount.add(Roles.sender);
+		catererAccount.add(Roles.receiver);
 		UserAccount leaderAccount = userAccountManager.create("leader", "123",
 				Roles.leader);
 		leaderAccount.setEmail("Festivalleiter@Fviv.de");
 		leaderAccount.setFirstname("Der");
 		leaderAccount.setLastname("Festivalleiter");
+		leaderAccount.add(Roles.sender);
+		leaderAccount.add(Roles.receiver);
+		UserAccount employeeAccount = userAccountManager.create("employee", "123",
+				Roles.employee);
+		employeeAccount.setEmail("employee@Fviv.de");
+		employeeAccount.setFirstname("Der");
+		employeeAccount.setLastname("Angestellte");
+		employeeAccount.add(Roles.sender);
+		employeeAccount.add(Roles.receiver);
+		
 		userAccountManager.save(bossAccount);
 		userAccountManager.save(managerAccount);
 		userAccountManager.save(catererAccount);
 		userAccountManager.save(leaderAccount);
+		userAccountManager.save(employeeAccount);
 		
 		// Create employees
 		UserAccount employeeAccount1 = userAccountManager.create("gates",
@@ -181,10 +196,6 @@ public class FvivDataInitializer implements DataInitializer {
 		Employee employee1 = new Employee(employeeAccount1, "Gates", "Bill",
 				"Bill.Gates@Microsoft.com", "0190CallBill",
 				Departement.MANAGEMENT);
-		Employee employee2 = new Employee(employeeAccount2, "Merkel", "Angela",
-				"Angie@Bundestag.de", "0123456789", Departement.CLEANING);
-		Employee employee3 = new Employee(employeeAccount3, "Wurst", "Hans",
-				"Hans.Wurst@fviv.de", "0351/777888", Departement.SECURITY);
 		Employee employee4 = new Employee(employeeAccount4, "White", "Walter",
 				"Walter.White@Kochkurse.de", "BetterCallSaul",
 				Departement.MANAGEMENT);
@@ -194,8 +205,6 @@ public class FvivDataInitializer implements DataInitializer {
 
 		// Save to repository
 		employeeRepository.save(employee1);
-		employeeRepository.save(employee2);
-		employeeRepository.save(employee3);
 		employeeRepository.save(employee4);
 		employeeRepository.save(employee5);
 
