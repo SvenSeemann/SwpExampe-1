@@ -297,15 +297,15 @@ public class CreateController {
 		long festivalId = festivalRepository.save(festival).getId();
 		float factor = (835/locationRepository.findById(locationId).getWidth());
 		
-		Period dateHelper;
-		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
-		int days = dateHelper.getDays();
-		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);
 		areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
 				.findById(locationId).getWidth(), locationRepository.findById(
 				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));
 		
+		Period dateHelper;
+		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
+		int days = dateHelper.getDays() + 1;
+		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);
 		Finance locationCost = new Finance(festivalId, Reference.EXPENSE, costTot, FinanceType.RENT);
 		financeRepository.save(locationCost);
 		
