@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Finance;
@@ -65,7 +64,7 @@ public class ManagerController {
 	private long id;
 	private int anzahl;
 	private String[] datumArray;
-	
+
 	private TicketRepository ticketRepository;
 
 	@Autowired
@@ -139,8 +138,7 @@ public class ManagerController {
 
 		listone.retainAll(listthree);
 
-		 anzahl = listone.size();
-
+		anzahl = listone.size();
 
 		return "redirect:/management";
 	}
@@ -182,7 +180,7 @@ public class ManagerController {
 				.of(EUR, 0.00);
 		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
 				.of(EUR, 0.00), ticketDepTot = Money.of(EUR, 0.00);
- 
+
 		// ------------------------ FINANCES ------------------------ \\
 
 		// Lists that contain Finances sorted by Type
@@ -243,7 +241,7 @@ public class ManagerController {
 		for (Finance rentExp : rentExpense) {
 			rentExpTot = rentExpTot.plus(rentExp.getAmount());
 		}
-		
+
 		for (Finance ticketDep : ticketDeposit) {
 			ticketDepTot = ticketDepTot.plus(ticketDep.getAmount());
 		}
@@ -265,7 +263,6 @@ public class ManagerController {
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
 		modelMap.addAttribute("ticketDeosit", ticketDeposit);
-
 
 		System.out.println(financeRepository.findAll());
 		modelMap.addAttribute("besucherzahl", anzahl);
@@ -337,6 +334,9 @@ public class ManagerController {
 		if (departementAsString.equalsIgnoreCase("cleaning")) {
 			departement = Departement.CLEANING;
 		}
+		if (departementAsString.equalsIgnoreCase("leadership")) {
+			departement = Departement.LEADERSHIP;
+		}
 
 		// Create useraccount
 		Role employeeRole;
@@ -345,6 +345,9 @@ public class ManagerController {
 		}
 		if (departement == Departement.CATERING) {
 			employeeRole = new Role("ROLE_CATERER");
+		}
+		if (departement == Departement.LEADERSHIP) {
+			employeeRole = new Role("ROLE_LEADER");
 		} else {
 			employeeRole = new Role("ROLE_EMPLOYEE");
 		}
@@ -352,6 +355,8 @@ public class ManagerController {
 		UserAccount employeeAccount = userAccountManager.create(
 				registration.getFirstname() + "." + registration.getLastname(),
 				registration.getPassword(), employeeRole);
+		employeeAccount.add(Roles.sender);
+		employeeAccount.add(Roles.receiver);
 
 		// Create employee
 		Employee employee = new Employee(employeeAccount,
@@ -637,9 +642,6 @@ public class ManagerController {
 
 		return "redirect:/management";
 	}
-	
-	
-
 
 	// ------------------------ MODEMAPPING ------------------------ \\
 
@@ -649,7 +651,7 @@ public class ManagerController {
 		showErrors = "no";
 		return "redirect:/management";
 	}
-	
+
 	@RequestMapping("/management/finances")
 	public String finances() {
 		mode = "finances";
