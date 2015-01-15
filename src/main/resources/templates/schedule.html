@@ -4,9 +4,11 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="styles/standard.css"/>
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/terminal.css" />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title th:text="#{home.title}">FVIV Festivalmanager</title>
 
 </head>
@@ -14,36 +16,36 @@
 <!--  Festival Plan -->
 
 <body>
-<div id="webseite">
-<div id="header">
-    <div id="loggedAs">angemeldet als:</div>
-    <div id="title">title</div>
-    <div id="loginName">UserName</div>
-</div>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs"></div>
+			<div id="title">terminal</div>
+			<div id="loginName"></div>
+		</div>
 
-<div th:fragment="schedule">
-    <div th:each="tuple : ${stages}" class="day">
-        <div class="dayHeadline" th:text="${tuple.t1.name}"></div>
-        <div class="dayContent">
-            <table>
-                <thead>
-                <tr>
-                    <td>Künstler</td>
-                    <td colspan="1">Start</td>
-                    <td colspan="1">Ende</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="event : ${tuple.t2}">
-                    <td class="event" th:text="${event.artist.name}"></td>
-                    <td class="time" th:text="${event.start.toLocalTime()}"></td>
-                    <td class="time" th:text="${event.end.toLocalTime()}"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-</div>
+		<div th:fragment="schedule" id="content">
+			<div th:each="tuple : ${stages}" class="day">
+				<div class="dayHeadline" th:text="${tuple.t1.name}"></div>
+				<div class="dayContent">
+					<table>
+						<thead>
+							<tr>
+								<td>Künstler</td>
+								<td colspan="1">Start</td>
+								<td colspan="1">Ende</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="event : ${tuple.t2}">
+								<td class="event" th:text="${event.artist.name}"></td>
+								<td class="time" th:text="${event.start.toLocalTime()}"></td>
+								<td class="time" th:text="${event.end.toLocalTime()}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
