@@ -30,8 +30,8 @@ $(function () {
 	var ticketDepTotal = [[${ticketDepTot.getAmountMajorLong()}]];
 	var artistExpTotal = [[${artistExpTot.getAmountMajorLong()}]];
 	
-	var totalExpense = salaryExpTotal+cateringExpTotal+rentExpTotal;
-	var totalDeposit = salaryDepTotal+cateringDepTotal+rentDepTotal+ticketExpTotal;
+	var totalExpense = salaryExpTotal+cateringExpTotal+rentExpTotal+artistExpTotal;
+	var totalDeposit = salaryDepTotal+cateringDepTotal+rentDepTotal+ticketDepTotal;
 	var balance = totalDeposit - totalExpense;
 	
     $('#financesChart').highcharts({
@@ -118,31 +118,31 @@ $(function () {
 
 								<table class="salaryTable">
 									<tr>
-										<th>Gehälter Betrag:
-											<p th:text="${salExpTot}" id="salaryTotal" />
+										<th>Ausaben für Gehälter:
+											<p style="color: #E00" th:text="${salExpTot}" id="salaryTotal" />
 										</th>
 									</tr>
 								</table>
 								
 								<table class="artistTable">
 									<tr>
-										<th>Gagen Ausgaben Betrag:
-											<p th:text="${artistExpTot}" />
+										<th>Ausgaben für Gagen:
+											<p style="color: #E00" th:text="${artistExpTot}" />
 										</th>
 									</tr>
 								</table>
 								
 								<table class="cateringTable">
 									<tr>
-										<th>Catering Ausgaben Betrag:
-											<p th:text="${catExpTot}" />
+										<th>Ausgaben für den Catering-Verkauf:
+											<p style="color: #E00" th:text="${catExpTot}" />
 										</th>
 									</tr>
 								</table>
 
 								<table class="cateringTable">
 									<tr>
-										<th>Catering Einnahmen Betrag:
+										<th>Einnahmen aus dem Catering:
 											<p th:text="${catDepTot}" />
 										</th>
 									</tr>
@@ -150,14 +150,14 @@ $(function () {
 
 								<table class="rentTable">
 									<tr>
-										<th>Mietausgaben Betrag:
-											<p th:text="${rentExpTot}" />
+										<th>Ausgaben für Mieten:
+											<p style="color: #E00" th:text="${rentExpTot}" />
 										</th>
 									</tr>
 								</table>
 								<table class="ticketTable">
 									<tr>
-										<th>Ticket Einnahmen Betrag:
+										<th>Einnahmen durch den Ticketverkauf:
 											<p th:text="${ticketDepTot}" />
 										</th>
 									</tr>
