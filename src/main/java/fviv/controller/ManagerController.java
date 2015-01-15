@@ -28,6 +28,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+import fviv.model.Employee;
+import fviv.model.EmployeeRepository;
+import fviv.model.Finance;
+import fviv.model.FinanceRepository;
+import fviv.model.Registration;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,6 +63,9 @@ public class ManagerController {
 	private final FestivalRepository festivalRepository;
 	private Festival selected;
 	private long id;
+	private int anzahl;
+	private String[] datumArray;
+	
 	private TicketRepository ticketRepository;
 
 	@Autowired
@@ -130,10 +139,8 @@ public class ManagerController {
 
 		listone.retainAll(listthree);
 
-		int anzahl = listone.size();
+		 anzahl = listone.size();
 
-		modelMap.addAttribute("besucherzahl", anzahl);
-		modelMap.addAttribute("festivallist", festivalRepository.findAll());
 
 		return "redirect:/management";
 	}
@@ -147,16 +154,14 @@ public class ManagerController {
 		LocalDate endDate = loadingfestival.getEndDatum();
 		DateTime startDatum = DateTime.parse(startDate.toString()); // hadtobedone
 		DateTime endDatum = DateTime.parse(endDate.toString()); // hadtobedone
-		String[] dateArray;
 		int days = Days.daysBetween(startDatum, endDatum).getDays();
-		dateArray = new String[days];
+		datumArray = new String[days];
 		LocalDate hilfsDate = startDate;
 
 		for (int i = 0; i < days; i++) {
-			dateArray[i] = hilfsDate.toString();
+			datumArray[i] = hilfsDate.toString();
 			hilfsDate = hilfsDate.plusDays(1);
 		}
-		modelMap.addAttribute("ticketdates", dateArray);
 
 		return "redirect:/management";
 	}
@@ -177,7 +182,7 @@ public class ManagerController {
 				.of(EUR, 0.00);
 		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
 				.of(EUR, 0.00);
-
+ 
 		// ------------------------ FINANCES ------------------------ \\
 
 		// Lists that contain Finances sorted by Type
@@ -250,6 +255,11 @@ public class ManagerController {
 		modelMap.addAttribute("cateringDeposit", cateringDeposit);
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
+
+
+		System.out.println(financeRepository.findAll());
+		modelMap.addAttribute("besucherzahl", anzahl);
+		modelMap.addAttribute("ticketdates", datumArray);
 
 		modelMap.addAttribute("festivals", festivalRepository.findAll());
 

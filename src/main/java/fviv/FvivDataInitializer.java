@@ -13,9 +13,11 @@ import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 import fviv.user.Roles;
+
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
+import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,22 +88,14 @@ public class FvivDataInitializer implements DataInitializer {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date2 = LocalDate.parse("2015-01-03", formatter);
+		LocalDate date3 = LocalDate.parse("2015-01-05", formatter);
+		LocalDate date4 = LocalDate.parse("2015-01-08", formatter);
+
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
-				"Avicii, Linkin Park", 500000, (long) 55.0, "manager");
-		Festival festival2 = new Festival(date2, date1, "Rock am Ring", 2,
-				"Netflix", 69999, (long) 12.0, "manager");
-
-		UserAccount festivalAccount1 = userAccountManager.create("festival1",
-				"123", Roles.guest);
-		UserAccount festivalAccount2 = userAccountManager.create("festival2",
-				"123", Roles.guest);
-
-		// festival1.setUserAccount(festivalAccount1);
-		// festival2.setUserAccount(festivalAccount2);
-
-		userAccountManager.save(festivalAccount1);
-		userAccountManager.save(festivalAccount2);
+				"Avicii, Linkin Park", 500000, Money.of(EUR, 55));
+		Festival festival2 = new Festival(date3, date4, "Rock am Ring", 2,
+				"Netflix", 69999, Money.of(EUR, 55));
 
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
@@ -110,20 +104,20 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeLocations() {
 		Location location1 = new Location("Wunderland", 400, 300, 20000,
-				"aasdf");
+				"aasdf", Money.of(EUR, 300.00));
 		Location location2 = new Location("Rock am Ring", 200, 500, 50000,
-				"aasdf");
+				"aasdf", Money.of(EUR, 450.00));
 		Location location3 = new Location("Festival ist toll", 2000, 3000,
-				10000, "aasdf");
+				10000, "aasdf", Money.of(EUR, 400.00));
 		Location location4 = new Location("Namen sind unwichtig", 1000, 1400,
-				9000, "aasdf");
-		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf");
+				9000, "aasdf", Money.of(EUR, 350.00));
+		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf", Money.of(EUR, 500.00));
+
 		locationRepository.save(location1);
 		locationRepository.save(location2);
 		locationRepository.save(location3);
 		locationRepository.save(location4);
 		locationRepository.save(location5);
-
 	}
 
 	private void initializeTickets() {
@@ -154,7 +148,7 @@ public class FvivDataInitializer implements DataInitializer {
 
 	private void initializeUsers() {
 		UserAccount bossAccount = userAccountManager.create("boss", "123",
-				Roles.boss);
+				Roles.boss, Roles.receiver, Roles.sender);
 		bossAccount.setEmail("Boss@Fviv.de");
 		bossAccount.setFirstname("Der");
 		bossAccount.setLastname("Boss");
@@ -226,10 +220,6 @@ public class FvivDataInitializer implements DataInitializer {
 				13.80), FinanceType.SALARY));
 		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				680.40), FinanceType.SALARY));
-		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
-				5600.00), FinanceType.RENT));
-		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
-				2400.00), FinanceType.RENT));
 
 	}
 
