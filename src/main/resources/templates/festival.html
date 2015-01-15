@@ -103,7 +103,7 @@
 								<td th:text="${festival.startDatum}"></td>
 								<td th:text="${festival.endDatum}"></td>
 								<td th:text="${festival.festivalName}"></td>
-								<!-- <td th:text="${festival.location}"></td> -->
+								<!-- <td th:text="${festival.location.name}"></td> -->
 								<td th:text="${festival.actors}"></td>
 								<td th:text="${festival.maxVisitors}"></td>
 								<td th:text="${festival.preisTag}"></td>
@@ -151,13 +151,6 @@
 											name="preisTag" size="40" placeholder="Kosten Tageskarte"></input></td>
 									</tr>
 									<tr style="background: #666;">
-										<th>Manager</th>
-										<td><select name="selectManager" class="button_green">
-												<option th:each=" account : ${managerAccounts}"
-													th:value="${account}" th:text="${account}"></option>
-										</select></td>
-									</tr>
-									<tr style="background: #666;">
 										<td colspan="2" style="text-align: center;"><input
 											type="submit" class="slimButtonSpecial"
 											onclick="alert('Festival wird erstellt')"
@@ -191,7 +184,7 @@
 									<form method="post" action="/setQuantityOfEmployees">
 										<input type="hidden" name="festivalId" value="0"
 											th:value="${festival.id}" /> <input type="submit"
-											class="editFestivalButton" value="Mitarbeiter aufstocken"
+											class="editFestivalButton" value="Anzahl Mitarbeiter"
 											style="margin-top: 2px;" />
 									</form>
 								</td>
@@ -199,7 +192,7 @@
 									<form method="post" action="/setSalary">
 										<input type="hidden" name="festivalId" value="0"
 											th:value="${festival.id}" /> <input type="submit"
-											class="editFestivalButton" value="Gehälter festlegen"
+											class="editFestivalButton" value="Gehälter bearbeiten"
 											style="margin-top: 2px;" />
 									</form>
 								</td>
@@ -218,39 +211,47 @@
 							<table class="festivalTable">
 								<tr>
 									<th colspan="2">Tagesgehalt</th>
-									<th>aktualisieren</th>
+									<th>Aktualisieren</th>
 								</tr>
 								<tr>
-									<td>Manager</td>
+									<td>Management</td>
 									<td>Aktuell:
-										<p th:text="${selected.managementSalaryPerDay}" />
+										<p th:text="${selected.managementSalaryPerHour}" />
 									</td>
 									<td><input id="number" type="number" name="salManagement"
-										min="0" step="1" value="0" /></td>
+										min="0" step="0.01" value="0" /></td>
+								</tr>
+								<tr>
+									<td>Leadership</td>
+									<td>Aktuell:
+										<p th:text="${selected.leadershipSalaryPerHour}" />
+									</td>
+									<td><input id="number" type="number" name="salLeadership"
+										min="0" step="0.01" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Caterer</td>
 									<td>Aktuell:
-										<p th:text="${selected.cateringSalaryPerDay}" />
+										<p th:text="${selected.cateringSalaryPerHour}" />
 									</td>
 									<td><input id="number" type="number" name="salCatering"
-										min="0" step="1" value="0" /></td>
+										min="0" step="0.01" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Security</td>
 									<td>Aktuell:
-										<p th:text="${selected.securitySalaryPerDay}" />
+										<p th:text="${selected.securitySalaryPerHour}" />
 									</td>
 									<td><input id="number" type="number" name="salSecurity"
-										min="0" step="1" value="0" /></td>
+										min="0" step="0.01" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Cleaning</td>
 									<td>Aktuell:
-										<p th:text="${selected.cleaningSalaryPerDay}" />
+										<p th:text="${selected.cleaningSalaryPerHour}" />
 									</td>
 									<td><input id="number" type="number" name="salCleaning"
-										min="0" step="1" value="0" /></td>
+										min="0" step="0.01" value="0" /></td>
 								</tr>
 								<tr>
 									<td colspan="3"><input type="submit"
@@ -273,14 +274,6 @@
 								<tr>
 									<th colspan="2">Anzahl</th>
 									<th>aktualisieren</th>
-								</tr>
-								<tr>
-									<td>Manager</td>
-									<td>Aktuell:
-										<p th:text="${selected.quantManagement}" />
-									</td>
-									<td><input id="number" type="number"
-										name="quantManagement" min="0" step="1" value="0" /></td>
 								</tr>
 								<tr>
 									<td>Caterer</td>

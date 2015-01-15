@@ -1,6 +1,7 @@
 package fviv.controller;
 
 import fviv.festival.FestivalRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import fviv.areaPlanner.PlanningItem;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.areaPlanner.PlanningItemsRepository;
 import fviv.areaPlanner.AreaItem.Type;
+import fviv.location.LocationRepository;
 import fviv.model.Finance;
 import fviv.model.Finance.FinanceType;
 import fviv.model.Finance.Reference;
@@ -27,16 +29,20 @@ public class PlanningAJAXController {
 	private AreaItemsRepository areaItems;
 	private FinanceRepository financeRepository;
 	private FestivalRepository festivalRepository;
+	private LocationRepository locationRepository;
 
 	@Autowired
 	public PlanningAJAXController(AreaItemsRepository areaItems,
 			PlanningItemsRepository itemsForPlanerRepository,
-			FinanceRepository financeRepository, FestivalRepository festivalRepository) {
+			FinanceRepository financeRepository,
+			FestivalRepository festivalRepository,
+			LocationRepository locationRepository) {
 		super();
 		this.festivalRepository = festivalRepository;
 		this.areaItems = areaItems;
 		this.planningItems = itemsForPlanerRepository;
 		this.financeRepository = financeRepository;
+		this.locationRepository = locationRepository;
 	}
 
 	@RequestMapping(value = "/isThereAnything", method = RequestMethod.POST, headers = IS_AJAX_HEADER)
@@ -44,7 +50,8 @@ public class PlanningAJAXController {
 			@RequestParam("request") String request,
 			@RequestParam("festival") long festivalId) {
 		if (areaItems.findByFestival(festivalRepository.findOne(festivalId)) != null) {
-			return areaItems.findByFestival(festivalRepository.findOne(festivalId));
+			return areaItems.findByFestival(festivalRepository
+					.findOne(festivalId));
 		} else {
 			return null;
 		}
@@ -55,15 +62,21 @@ public class PlanningAJAXController {
 			@RequestParam("height") int height,
 			@RequestParam("faktor") float factor,
 			@RequestParam("festival") long festivalId) {
-		AreaItem area = areaItems.findByName("Areal");
+/*		AreaItem area = areaItems.findByName("Areal");
 		if (area == null) {
-			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
-					height, 0, 0, factor, festivalRepository.findOne(festivalId)));
+			areaItems.save(new AreaItem(Type.AREA, "Areal", width, height, 0,
+					0, factor, festivalRepository.findOne(festivalId)));
 		} else {
 			areaItems.deleteAll();
-			areaItems.save(new AreaItem(Type.AREA, "Areal", width,
-					height, 0, 0, factor, festivalRepository.findOne(festivalId)));
-		}
+			areaItems.save(new AreaItem(Type.AREA, "Areal", width, height, 0,
+					0, factor, festivalRepository.findOne(festivalId)));
+			long locationId = festivalRepository.findOne(festivalId)
+					.getLocationId();
+			Finance finance = new Finance(festivalId, Reference.EXPENSE,
+					locationRepository.findById(locationId).getCostPerDay(),
+					FinanceType.RENT);
+			financeRepository.save(finance);
+		}*/
 
 		return true;
 	}
@@ -75,30 +88,33 @@ public class PlanningAJAXController {
 			@RequestParam("height") int height,
 			@RequestParam("left") float left, @RequestParam("top") float top,
 			@RequestParam("festival") long festivalId) {
-
+		
 		if (areaItems.findByName("Areal") != null) {
-			Finance finance = new Finance(festivalId,
-					Reference.EXPENSE, planningItems.findByName(name)
-					.getRentCost(), FinanceType.RENT);
+			Finance finance = new Finance(festivalId, Reference.EXPENSE,
+					planningItems.findByName(name).getRentCost(),
+					FinanceType.RENT);
 			financeRepository.save(finance);
 			switch (typ) {
 			case "TOILET":
-				areaItems.save(new AreaItem(Type.TOILET, (name), width,
-						height, left, top, festivalRepository.findOne(festivalId)));
+				areaItems.save(new AreaItem(Type.TOILET, (name), width, height,
+						left, top, festivalRepository.findOne(festivalId)));
 				break;
 			case "STAGE":
-				areaItems.save(new AreaItem(Type.STAGE, (name), width,
-						height, left, top, festivalRepository.findOne(festivalId)));
+				areaItems.save(new AreaItem(Type.STAGE, (name), width, height,
+						left, top, festivalRepository.findOne(festivalId)));
 				break;
 			case "CATERING":
-				areaItems.save(new AreaItem(Type.CATERING, (name),
-						width, height, left, top, festivalRepository.findOne(festivalId)));
+				areaItems.save(new AreaItem(Type.CATERING, (name), width,
+						height, left, top, festivalRepository
+								.findOne(festivalId)));
 				break;
 			case "CAMPING":
 				areaItems.save(new AreaItem(Type.CAMPING, (name), width,
-						height, left, top, festivalRepository.findOne(festivalId)));
+						height, left, top, festivalRepository
+								.findOne(festivalId)));
 			}
-			return areaItems.findByFestival(festivalRepository.findOne(festivalId));
+			return areaItems.findByFestival(festivalRepository
+					.findOne(festivalId));
 		} else {
 			return null;
 		}

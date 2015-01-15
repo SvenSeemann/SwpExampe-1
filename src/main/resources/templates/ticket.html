@@ -50,6 +50,8 @@
 									type="text" name="numbers" size="40" placeholder="Anzahl" /></label> <input
 									type="submit" onclick="alert('Ticket/s wird/werden erstellt')"
 									value="Ticket erstellen" />
+									 <label
+									class="label" for="eroor" th:text="${eroor}"></label>
 							</fieldset>
 
 						</form>
@@ -68,9 +70,8 @@
 						<button class="slimButton" type="submit"
 							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<div th:include="messaging :: messaging"></div>
 					<form th:action="@{/ticket}" method="post">
-						<button class="boldButton" type="submit">Ticket Pr&uuml;fen</button>
+						<button class="boldButton" type="submit">Ticket Drucken</button>
 					</form>
 					<form th:action="@{/ticketPruefen}" method="post">
 						<button class="boldButton">Ticket Pr&uuml;fen</button>
@@ -114,7 +115,6 @@
 						<button class="slimButton" type="submit"
 							th:text="#{catering.logout}" value="logout">Logout</button>
 					</form>
-					<div th:include="messaging :: messaging"></div>
 					<form th:action="@{/changeMode}" method="post">
 						<button class="boldButton">Ticket Drucken</button>
 					</form>

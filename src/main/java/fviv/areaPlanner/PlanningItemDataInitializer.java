@@ -2,9 +2,6 @@ package fviv.areaPlanner;
 
 import static org.joda.money.CurrencyUnit.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
 import org.springframework.beans.factory.annotation.Autowired;

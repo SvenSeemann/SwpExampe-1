@@ -5,15 +5,17 @@ import static org.joda.money.CurrencyUnit.EUR;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.salespointframework.useraccount.UserAccount;
 import org.springframework.data.repository.CrudRepository;
 
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItemsRepository;
+import fviv.location.Location;
+import fviv.location.LocationRepository;
 
 import java.time.LocalDate;
 
@@ -28,17 +30,18 @@ public class Festival {
 	private String festivalName;
 	private long locationId;
 	private String actors;
+	private Money preisTag;
 	private int maxVisitors;
-	private long preisTag;
-	private Money managementSalaryPerDay;
-	private Money cateringSalaryPerDay;
-	private Money securitySalaryPerDay;
-	private Money cleaningSalaryPerDay;
+	private Money managementSalaryPerHour;
+	private Money leadershipSalaryPerHour;
+	private Money cateringSalaryPerHour;
+	private Money securitySalaryPerHour;
+	private Money cleaningSalaryPerHour;
 	private int quantManagement;
+	private int quantLeadership;
 	private int quantCatering;
 	private int quantSecurity;
 	private int quantCleaning;
-	private String managerUserName;
 
 	public int getQuantManagement() {
 		return quantManagement;
@@ -76,29 +79,31 @@ public class Festival {
 		this.quantCleaning = quantCleaning;
 	}
 
+
 	@Deprecated
 	protected Festival() {
 	}
 
 	@Autowired
 	public Festival(LocalDate startDatum, LocalDate endDatum, String festivalName, long locationId,
-			String actors, int maxVisitors, long preisTag, String managerUserName) {
+			String actors, int maxVisitors, Money preisTag) {
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.festivalName = festivalName;
 		this.locationId = locationId;
 		this.actors = actors;
-		this.maxVisitors = maxVisitors;
+		this.maxVisitors=maxVisitors;
 		this.preisTag = preisTag;
-		this.managementSalaryPerDay = Money.of(EUR, 0.00);
-		this.cateringSalaryPerDay = Money.of(EUR, 0.00);
-		this.securitySalaryPerDay = Money.of(EUR, 0.00);
-		this.cleaningSalaryPerDay = Money.of(EUR, 0.00);
+		this.managementSalaryPerHour = Money.of(EUR, 0.00);
+		this.leadershipSalaryPerHour = Money.of(EUR, 0.00);
+		this.cateringSalaryPerHour = Money.of(EUR, 0.00);
+		this.securitySalaryPerHour = Money.of(EUR, 0.00);
+		this.cleaningSalaryPerHour = Money.of(EUR, 0.00);
 		this.quantCleaning = 0;
-		this.quantManagement = 0;
+		this.quantManagement = 1;
+		this.quantLeadership = 1;
 		this.quantSecurity = 0;
 		this.quantCatering = 0;
-		this.managerUserName = managerUserName;
 		//this.area = null;
 
 	}
@@ -137,7 +142,7 @@ public class Festival {
 	}
 
 	public int getMaxVisitors() {
-		return maxVisitors;
+		return this.maxVisitors;
 	}
 
 	public void setMaxVisitors(int maxVisitors) {
@@ -152,11 +157,11 @@ public class Festival {
 		this.actors = actors;
 	}
 
-	public long getPreisTag() {
+	public Money getPreisTag() {
 		return preisTag;
 	}
 
-	public void setPreisTag(long preisTag) {
+	public void setPreisTag(Money preisTag) {
 		this.preisTag = preisTag;
 	}
 
@@ -168,43 +173,51 @@ public class Festival {
 		this.locationId = locationId;
 	}
 
-	public Money getManagementSalaryPerDay() {
-		return managementSalaryPerDay;
+	public Money getManagementSalaryPerHour() {
+		return managementSalaryPerHour;
 	}
 
-	public void setManagementSalaryPerDay(Money managementSalaryPerDay) {
-		this.managementSalaryPerDay = managementSalaryPerDay;
+	public void setManagementSalaryPerHour(Money managementSalaryPerHour) {
+		this.managementSalaryPerHour = managementSalaryPerHour;
 	}
 
-	public Money getCateringSalaryPerDay() {
-		return cateringSalaryPerDay;
+	public Money getCateringSalaryPerHour() {
+		return cateringSalaryPerHour;
 	}
 
-	public void setCateringSalaryPerDay(Money cateringSalaryPerDay) {
-		this.cateringSalaryPerDay = cateringSalaryPerDay;
+	public void setCateringSalaryPerHour(Money cateringSalaryPerHour) {
+		this.cateringSalaryPerHour = cateringSalaryPerHour;
 	}
 
-	public Money getSecuritySalaryPerDay() {
-		return securitySalaryPerDay;
+	public Money getSecuritySalaryPerHour() {
+		return securitySalaryPerHour;
 	}
 
-	public void setSecuritySalaryPerDay(Money securitySalaryPerDay) {
-		this.securitySalaryPerDay = securitySalaryPerDay;
+	public void setSecuritySalaryPerHour(Money securitySalaryPerHour) {
+		this.securitySalaryPerHour = securitySalaryPerHour;
 	}
 
-	public Money getCleaningSalaryPerDay() {
-		return cleaningSalaryPerDay;
+	public Money getCleaningSalaryPerHour() {
+		return cleaningSalaryPerHour;
 	}
 
-	public void setCleaningSalaryPerDay(Money cleaningSalaryPerDay) {
-		this.cleaningSalaryPerDay = cleaningSalaryPerDay;
+	public void setCleaningSalaryPerHour(Money cleaningSalaryPerHour) {
+		this.cleaningSalaryPerHour = cleaningSalaryPerHour;
 	}
 
-	public String getManager() {
-		return managerUserName;
+	public int getQuantLeadership() {
+		return quantLeadership;
 	}
-	
-	public void setManager(String managerUserName){
-		this.managerUserName = managerUserName;	
+
+	public void setQuantLeadership(int quantLeadership) {
+		this.quantLeadership = quantLeadership;
+	}
+
+	public Money getLeadershipSalaryPerHour() {
+		return leadershipSalaryPerHour;
+	}
+
+	public void setLeadershipSalaryPerHour(Money leadershipSalaryPerHour) {
+		this.leadershipSalaryPerHour = leadershipSalaryPerHour;
 	}
 }

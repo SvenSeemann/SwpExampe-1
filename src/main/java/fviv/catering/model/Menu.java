@@ -1,7 +1,6 @@
 package fviv.catering.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 
 import org.joda.money.Money;
 import org.salespointframework.catalog.Product;
@@ -15,19 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SuppressWarnings("serial")
 @Entity
 public class Menu extends Product {
-	public static enum Type {
+	public static enum MenuType {
 		MEAL, DRINK;
 	}
 	
-	@SuppressWarnings("unused")
 	private long festivalId;
 	private Boolean orderable;
-	private Type type;
+	private MenuType type;
 	private Money purchasePrice;
 	private Money sellingPrice;
 	
 	@Autowired
-	public Menu(long festivalId, String name, Money purchasePrice, Money sellingPrice, Type type) {
+	public Menu(long festivalId, String name, Money purchasePrice, Money sellingPrice, MenuType type) {
 		super(name, sellingPrice, Units.METRIC);
 		this.festivalId = festivalId;
 		this.type = type;
@@ -65,5 +63,16 @@ public class Menu extends Product {
 	public void setOrderable(Boolean orderable) {
 		this.orderable = orderable;
 	}
+
+	public long getFestivalId() {
+		return festivalId;
+	}
+
+	public void setFestivalId(long festivalId) {
+		this.festivalId = festivalId;
+	}
 	
+	public MenuType getMenuType() {
+		return this.type;
+	}
 }
