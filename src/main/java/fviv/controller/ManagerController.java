@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import fviv.model.Employee;
 import fviv.model.EmployeeRepository;
 import fviv.model.Finance;
@@ -49,7 +48,7 @@ import static org.joda.money.CurrencyUnit.EUR;
  * @author Niklas Fallik
  */
 
-@PreAuthorize("hasRole('ROLE_MANAGER')")
+@PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_BOSS')")
 @Controller
 public class ManagerController {
 	private String mode = "startConfiguration";
@@ -65,7 +64,7 @@ public class ManagerController {
 	private long id;
 	private int anzahl;
 	private String[] datumArray;
-	
+
 	private TicketRepository ticketRepository;
 
 	@Autowired
@@ -139,8 +138,7 @@ public class ManagerController {
 
 		listone.retainAll(listthree);
 
-		 anzahl = listone.size();
-
+		anzahl = listone.size();
 
 		return "redirect:/management";
 	}
@@ -181,8 +179,8 @@ public class ManagerController {
 		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
 				.of(EUR, 0.00);
 		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
-				.of(EUR, 0.00);
- 
+				.of(EUR, 0.00), ticketDepTot = Money.of(EUR, 0.00);
+
 		// ------------------------ FINANCES ------------------------ \\
 
 		// Lists that contain Finances sorted by Type
@@ -192,6 +190,7 @@ public class ManagerController {
 		LinkedList<Finance> cateringDeposit = new LinkedList<Finance>();
 		LinkedList<Finance> rentExpense = new LinkedList<Finance>();
 		LinkedList<Finance> rentDeposit = new LinkedList<Finance>();
+		LinkedList<Finance> ticketDeposit = new LinkedList<Finance>();
 
 		// Fill the Finance lists
 		for (Finance finance : financeRepository.findAll()) {
@@ -213,6 +212,9 @@ public class ManagerController {
 			if (finance.getFinanceType().equals(FinanceType.RENT)
 					&& finance.getReference() == Reference.DEPOSIT)
 				rentDeposit.add(finance);
+			if (finance.getFinanceType().equals(FinanceType.TICKET)
+					&& finance.getReference() == Reference.DEPOSIT)
+				ticketDeposit.add(finance);
 		}
 
 		// Calculate total amounts of each expense type
@@ -240,6 +242,10 @@ public class ManagerController {
 			rentExpTot = rentExpTot.plus(rentExp.getAmount());
 		}
 
+		for (Finance ticketDep : ticketDeposit) {
+			ticketDepTot = ticketDepTot.plus(ticketDep.getAmount());
+		}
+
 		// Add deposit and total amounts to modelMap
 		modelMap.addAttribute("salExpTot", salExpTot);
 		modelMap.addAttribute("catExpTot", catExpTot);
@@ -247,6 +253,7 @@ public class ManagerController {
 		modelMap.addAttribute("salDepTot", salDepTot);
 		modelMap.addAttribute("catDepTot", catDepTot);
 		modelMap.addAttribute("rentDepTot", rentDepTot);
+		modelMap.addAttribute("ticketDepTot", ticketDepTot);
 
 		// Add finances by type to the modelMap
 		modelMap.addAttribute("salaryExpense", salaryExpense);
@@ -255,7 +262,7 @@ public class ManagerController {
 		modelMap.addAttribute("cateringDeposit", cateringDeposit);
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
-
+		modelMap.addAttribute("ticketDeosit", ticketDeposit);
 
 		System.out.println(financeRepository.findAll());
 		modelMap.addAttribute("besucherzahl", anzahl);
@@ -327,6 +334,9 @@ public class ManagerController {
 		if (departementAsString.equalsIgnoreCase("cleaning")) {
 			departement = Departement.CLEANING;
 		}
+		if (departementAsString.equalsIgnoreCase("leadership")) {
+			departement = Departement.LEADERSHIP;
+		}
 
 		// Create useraccount
 		Role employeeRole;
@@ -335,6 +345,9 @@ public class ManagerController {
 		}
 		if (departement == Departement.CATERING) {
 			employeeRole = new Role("ROLE_CATERER");
+		}
+		if (departement == Departement.LEADERSHIP) {
+			employeeRole = new Role("ROLE_LEADER");
 		} else {
 			employeeRole = new Role("ROLE_EMPLOYEE");
 		}
@@ -342,6 +355,8 @@ public class ManagerController {
 		UserAccount employeeAccount = userAccountManager.create(
 				registration.getFirstname() + "." + registration.getLastname(),
 				registration.getPassword(), employeeRole);
+		employeeAccount.add(Roles.sender);
+		employeeAccount.add(Roles.receiver);
 
 		// Create employee
 		Employee employee = new Employee(employeeAccount,
@@ -627,9 +642,6 @@ public class ManagerController {
 
 		return "redirect:/management";
 	}
-	
-	
-
 
 	// ------------------------ MODEMAPPING ------------------------ \\
 
@@ -639,7 +651,7 @@ public class ManagerController {
 		showErrors = "no";
 		return "redirect:/management";
 	}
-	
+
 	@RequestMapping("/management/finances")
 	public String finances() {
 		mode = "finances";
