@@ -4,11 +4,9 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="../resources/css/standard.css" />
-<link rel="stylesheet" href="../resources/css/catering.css" />
-<link href='http://fonts.googleapis.com/css?family=Oxygen'
-	rel='stylesheet' type='text/css' />
-<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="styles/standard.css"/>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <title th:text="#{home.title}">FVIV Festivalmanager</title>
 
 </head>
@@ -16,25 +14,13 @@
 <!--  Festival Plan -->
 
 <body>
-
-	<div id="content">
-		<form action="/catering" method="post">
-			<input type="submit" value="Catering Terminal" class="slimButton"></input>
-		</form>
-		<form action="/manager" method="post">
-			<input type="submit" value="Manager Terminal" class="slimButton"></input>
-		</form>
-		<form action="/ticket" method="post">
-			<input type="submit" value="Ticket Terminal" class="slimButton"></input>
-		</form>
-		<form action="/planning" method="post">
-			<input type="submit" value="Gel&auml;ndeplaner" class="slimButton"></input>
-		</form>
-		<form action="/festival" method="post">
-			<input type="submit" value="Festival Terminal" class="slimButton"></input>
-		</form>
-
+<div id="webseite">
+<div id="header">
+    <div id="loggedAs">angemeldet als:</div>
+    <div id="title">title</div>
+    <div id="loginName">UserName</div>
 </div>
+
 <div th:fragment="schedule">
     <div th:each="tuple : ${stages}" class="day">
         <div class="dayHeadline" th:text="${tuple.t1.name}"></div>
@@ -57,6 +43,7 @@
             </table>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

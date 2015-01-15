@@ -3,9 +3,19 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
     <meta charset="UTF-8" />
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="styles/standard.css"/>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <title></title>
 </head>
 <body>
+
+<div id="header">
+    <div id="loggedAs">angemeldet als:</div>
+    <div id="title">title</div>
+    <div id="loginName">UserName</div>
+</div>
+
 <div th:fragment="artists" id="artists">
     <div style="display: block; clear: both"></div>
     <table id="artists-table" style="float: left;">
