@@ -27,8 +27,10 @@ $(function () {
 	var rentExpTotal = [[${rentExpTot.getAmountMajorLong()}]];
 	var rentDepTotal = [[${rentDepTot.getAmountMajorLong()}]];
 	
+	var ticketDepTotal = [[${ticketDepTot.getAmountMajorLong()}]];
+	
 	var totalExpense = salaryExpTotal+cateringExpTotal+rentExpTotal;
-	var totalDeposit = salaryDepTotal+cateringDepTotal+rentDepTotal;
+	var totalDeposit = salaryDepTotal+cateringDepTotal+rentDepTotal+ticketDepTotal;
 	var balance = totalDeposit - totalExpense;
 	
     $('#financesChart').highcharts({
@@ -62,8 +64,14 @@ $(function () {
         	name: 'Ausgaben: Catering',
         	data: [cateringExpTotal]
         },{
+        	name: 'Einnahmen: Catering',
+        	data: [cateringDepTotal]
+        },{
         	name: 'Ausgaben: Miete',
         	data: [rentExpTotal]
+        },{
+        	name: 'Einnahmen: Tickets',
+        	data: [ticketDepTotal]
         }]
     });
 });
@@ -103,14 +111,13 @@ $(function () {
 
 						<div th:case="finances">
 							<div align="center">
-
+								
 								<table class="salaryTable">
 									<tr>
 										<th>Gehälter Betrag:
 											<p th:text="${salExpTot}" id="salaryTotal" />
 										</th>
 									</tr>
-
 								</table>
 
 								<table class="cateringTable">
@@ -133,6 +140,13 @@ $(function () {
 									<tr>
 										<th>Mietausgaben Betrag:
 											<p th:text="${rentExpTot}" />
+										</th>
+									</tr>
+								</table>
+								<table class="ticketTable">
+									<tr>
+										<th>Ticket Einnahmen Betrag:
+											<p th:text="${ticketDepTot}" />
 										</th>
 									</tr>
 								</table>
@@ -366,9 +380,9 @@ $(function () {
 										placeholder="Password" id="password" th:field="*{password}"></input>
 									<br /> <select name="departement">
 										<option th:value="management">Management</option>
+										<option th:value="leadership">Festivalleitung</option>
 										<option th:value="catering">Catering</option>
 										<option th:value="security">Security</option>
-										<option th:value="cleaning">Cleaning</option>
 									</select> <br /> <input type="submit" value="Speichern"
 										class="button_green" style="margin-top: 3px"></input>
 								</form>
