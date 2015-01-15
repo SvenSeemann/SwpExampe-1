@@ -295,7 +295,7 @@ public class CreateController {
 		long festivalId = festivalRepository.save(festival).getId();
 		float factor = (835/locationRepository.findById(locationId).getWidth());
 		
-		this.areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
+		areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
 				.findById(locationId).getWidth(), locationRepository.findById(
 				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));

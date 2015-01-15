@@ -62,7 +62,7 @@ public class PlanningAJAXController {
 			@RequestParam("height") int height,
 			@RequestParam("faktor") float factor,
 			@RequestParam("festival") long festivalId) {
-		AreaItem area = areaItems.findByName("Areal");
+/*		AreaItem area = areaItems.findByName("Areal");
 		if (area == null) {
 			areaItems.save(new AreaItem(Type.AREA, "Areal", width, height, 0,
 					0, factor, festivalRepository.findOne(festivalId)));
@@ -76,7 +76,7 @@ public class PlanningAJAXController {
 					locationRepository.findById(locationId).getCostPerDay(),
 					FinanceType.RENT);
 			financeRepository.save(finance);
-		}
+		}*/
 
 		return true;
 	}
@@ -88,7 +88,7 @@ public class PlanningAJAXController {
 			@RequestParam("height") int height,
 			@RequestParam("left") float left, @RequestParam("top") float top,
 			@RequestParam("festival") long festivalId) {
-
+		
 		if (areaItems.findByName("Areal") != null) {
 			Finance finance = new Finance(festivalId, Reference.EXPENSE,
 					planningItems.findByName(name).getRentCost(),
