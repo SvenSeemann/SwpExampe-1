@@ -8,8 +8,6 @@ import fviv.location.Location;
 import fviv.location.LocationRepository;
 import fviv.model.*;
 import fviv.model.Employee.Departement;
-import fviv.model.Finance.FinanceType;
-import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 import fviv.user.Roles;
@@ -17,7 +15,6 @@ import fviv.user.Roles;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.salespointframework.core.DataInitializer;
-import org.salespointframework.useraccount.Role;
 import org.salespointframework.useraccount.UserAccount;
 import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,6 @@ public class FvivDataInitializer implements DataInitializer {
 	private final UserAccountManager userAccountManager;
 	private final FestivalRepository festivalRepository;
 	private final TicketRepository ticketRepository;
-	private final FinanceRepository financeRepository;
 	private final EventsRepository eventsRepository;
 	private final ArtistsRepository artistsRepository;
 	private final LocationRepository locationRepository;
@@ -52,7 +48,6 @@ public class FvivDataInitializer implements DataInitializer {
 			AreaItemsRepository areaItemsRepository,
 			TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
-			FinanceRepository financeRepository,
 			ArtistsRepository artistsRepository,
 			EventsRepository eventsRepository,
 			LocationRepository locationRepository) {
@@ -62,7 +57,6 @@ public class FvivDataInitializer implements DataInitializer {
 		this.userAccountManager = userAccountManager;
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
-		this.financeRepository = financeRepository;
 		this.artistsRepository = artistsRepository;
 		this.eventsRepository = eventsRepository;
 		this.areaItemsRepository = areaItemsRepository;
@@ -72,7 +66,6 @@ public class FvivDataInitializer implements DataInitializer {
 	@Override
 	public void initialize() {
 		initializeUsers();
-		initializeFinances();
 		initializeTickets();
 		initializeLocations();
 		try {
@@ -124,6 +117,7 @@ public class FvivDataInitializer implements DataInitializer {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date = LocalDate.parse("2014-12-30", formatter);
 		LocalDate date1 = LocalDate.parse("2014-12-31", formatter);
+
 		// true(tages), already checked in
 		Ticket ticket1 = new Ticket(true, false, "Wonderland", date);
 		Ticket ticket3 = new Ticket(true, true, "Wonderland", date1);
@@ -211,16 +205,6 @@ public class FvivDataInitializer implements DataInitializer {
 		userAccountManager.save(employeeAccount3);
 		userAccountManager.save(employeeAccount4);
 		userAccountManager.save(employeeAccount5);
-	}
-
-	private void initializeFinances() {
-
-		// Create expenses
-		financeRepository.save(new Finance(1, Reference.EXPENSE, Money.of(EUR,
-				13.80), FinanceType.SALARY));
-		financeRepository.save(new Finance(2, Reference.EXPENSE, Money.of(EUR,
-				680.40), FinanceType.SALARY));
-
 	}
 
 	private void initializeLineup() {
