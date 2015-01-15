@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/indexcss.css" />
-    <link href='http://fonts.googleapis.com/css?family=Oxygen'
-          rel='stylesheet' type='text/css' />
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-    <title th:text="#{home.title}">FVIV Festivalmanager</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css' />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<title th:text="#{home.title}">FVIV Festivalmanager</title>
 </head>
 
 <!--  Festival Plan -->
 
 <body>
 
-<div id="content">
-    <form action="/catering" method="post">
-        <input type="submit" value="Catering Terminal" class="slimButton"></input>
-    </form>
-    <form action="/manager" method="post">
-        <input type="submit" value="Manager Terminal" class="slimButton"></input>
-    </form>
-    <form action="/ticket" method="post">
-        <input type="submit" value="Ticket Terminal" class="slimButton"></input>
-    </form>
-    <form action="/planning" method="post">
-        <input type="submit" value="Gel&auml;ndeplaner" class="slimButton"></input>
-    </form>
-    <form action="/festival" method="post">
-        <input type="submit" value="Festival Terminal" class="slimButton"></input>
-    </form>
+	<div id="content">
+		<form action="/catering" method="post">
+			<input type="submit" value="Catering Terminal" class="slimButton"></input>
+		</form>
+		<form action="/manager" method="post">
+			<input type="submit" value="Manager Terminal" class="slimButton"></input>
+		</form>
+		<form action="/ticket" method="post">
+			<input type="submit" value="Ticket Terminal" class="slimButton"></input>
+		</form>
+		<form action="/planning" method="post">
+			<input type="submit" value="Gel&auml;ndeplaner" class="slimButton"></input>
+		</form>
+		<form action="/festival" method="post">
+			<input type="submit" value="Festival Terminal" class="slimButton"></input>
+		</form>
 
-</div>
-<div>
-    <a class="slimButton" href="/booking/artist">Lineup ändern</a>
-    <ul th:each="festival : ${festivals}">
-        <li><a class="slimButton" th:href="'/schedule?festival=' + ${festival.id}" th:text="${festival.festivalName}"></a> </li>
-    </ul>
-</div>
+	</div>
+	<div>
+		<a class="slimButton" href="/booking/artist">Lineup ändern</a>
+		<ul th:each="festival : ${festivals}">
+			<li><a class="slimButton"
+				th:href="'/schedule?festival=' + ${festival.id}"
+				th:text="${festival.festivalName}"></a></li>
+		</ul>
+	</div>
 </body>
 </html>

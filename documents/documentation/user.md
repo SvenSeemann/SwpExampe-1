@@ -52,9 +52,12 @@ Wenn Sie auf ein Objekt mit der rechten Maustaste klicken, erscheint das Kontext
 Weiterhin haben Sie die Mögichkeit per Klick auf die jeweiligen Buttons das Objekt zu drehen und zu löschen.
 ##Finanzen
 ###Mitarbeiter
- Für mitarbeiter werden bei der festivalerstellung löhne pro stunde festgelegt. bei der finanzkalkulation wird von einem 8 Stunden arbeitstag pro mitarbeiter ausgegangen
+ Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. bei der Finanzkalkulation wird von einem 8 Stunden arbeitstag pro Mitarbeiter ausgegangen
 ## Nutzerverwaltung
-Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
+Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
+Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
+
+Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
 ## Kommunikation
 Für die Kommunikation stehen Ihnen ein Chatsystem zur Verfügung. Personen mit den entsprechenden Berechtigungen sind in der Lage anderen Nutzern via des Chats Nachrichten zu schreiben.
 
