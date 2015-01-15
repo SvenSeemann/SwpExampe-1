@@ -130,6 +130,9 @@ public class CateringControllerTest extends AbstractIntegrationTests {
 	public void CateringControllerConfirmTest() {
 		login("caterer", "123");
 
+		long amountOfFinancesInRepository = financeRepository
+				.findByFinanceType(FinanceType.CATERING).size();
+
 		// Create a cart with one unit of "testMeal"
 		Cart cart = new Cart();
 
@@ -145,7 +148,8 @@ public class CateringControllerTest extends AbstractIntegrationTests {
 		assertThat(cart.isEmpty(), is(true));
 
 		// There must be one finance in the repository after confirm
+		amountOfFinancesInRepository += 1;
 		assertThat(financeRepository.findByFinanceType(FinanceType.CATERING),
-				is(iterableWithSize(1)));
+				is(iterableWithSize((int) amountOfFinancesInRepository)));
 	}
 }

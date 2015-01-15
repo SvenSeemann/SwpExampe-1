@@ -300,6 +300,12 @@ public class CreateController {
 				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));
 		
+		Finance finance = new Finance(festivalId, Reference.EXPENSE,
+				locationRepository.findById(locationId).getCostPerDay(),
+				FinanceType.RENT);
+		financeRepository.save(finance);
+
+		
 		// --- Initialize Menus for new festival --- \\
 		
 			// --- Meals --- \\

@@ -73,6 +73,9 @@ public class CreateControllerTest extends AbstractIntegrationTests {
 	public void CreateControllerSetNewSalaryTest() {
 		login("boss", "123");
 
+		long amountOfFinancesInRepository = financeRepository
+				.findByFinanceType(FinanceType.SALARY).size();
+
 		// Create a new festival
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 		LocalDate date1 = LocalDate.parse("2014-12-30", formatter);
@@ -103,9 +106,10 @@ public class CreateControllerTest extends AbstractIntegrationTests {
 				.getSecuritySalaryPerHour().abs(), is(Money.of(EUR, 7).abs()));
 		assertThat(festivalRepository.findById(testFestival.getId())
 				.getCleaningSalaryPerHour().abs(), is(Money.of(EUR, 0).abs()));
-		
+
 		// Validate that finances are created
+		amountOfFinancesInRepository += 5;
 		assertThat(financeRepository.findByFinanceType(FinanceType.SALARY),
-				is(iterableWithSize(5)));
+				is(iterableWithSize((int) amountOfFinancesInRepository)));
 	}
 }
