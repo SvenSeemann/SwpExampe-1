@@ -181,7 +181,7 @@ public class ManagerController {
 		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
 				.of(EUR, 0.00);
 		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
-				.of(EUR, 0.00);
+				.of(EUR, 0.00), ticketDepTot = Money.of(EUR, 0.00);
  
 		// ------------------------ FINANCES ------------------------ \\
 
@@ -192,6 +192,7 @@ public class ManagerController {
 		LinkedList<Finance> cateringDeposit = new LinkedList<Finance>();
 		LinkedList<Finance> rentExpense = new LinkedList<Finance>();
 		LinkedList<Finance> rentDeposit = new LinkedList<Finance>();
+		LinkedList<Finance> ticketDeposit = new LinkedList<Finance>();
 
 		// Fill the Finance lists
 		for (Finance finance : financeRepository.findAll()) {
@@ -213,6 +214,9 @@ public class ManagerController {
 			if (finance.getFinanceType().equals(FinanceType.RENT)
 					&& finance.getReference() == Reference.DEPOSIT)
 				rentDeposit.add(finance);
+			if (finance.getFinanceType().equals(FinanceType.TICKET)
+					&& finance.getReference() == Reference.DEPOSIT)
+				ticketDeposit.add(finance);
 		}
 
 		// Calculate total amounts of each expense type
@@ -239,6 +243,10 @@ public class ManagerController {
 		for (Finance rentExp : rentExpense) {
 			rentExpTot = rentExpTot.plus(rentExp.getAmount());
 		}
+		
+		for (Finance ticketDep : ticketDeposit) {
+			ticketDepTot = ticketDepTot.plus(ticketDep.getAmount());
+		}
 
 		// Add deposit and total amounts to modelMap
 		modelMap.addAttribute("salExpTot", salExpTot);
@@ -247,6 +255,7 @@ public class ManagerController {
 		modelMap.addAttribute("salDepTot", salDepTot);
 		modelMap.addAttribute("catDepTot", catDepTot);
 		modelMap.addAttribute("rentDepTot", rentDepTot);
+		modelMap.addAttribute("ticketDepTot", ticketDepTot);
 
 		// Add finances by type to the modelMap
 		modelMap.addAttribute("salaryExpense", salaryExpense);
@@ -255,6 +264,7 @@ public class ManagerController {
 		modelMap.addAttribute("cateringDeposit", cateringDeposit);
 		modelMap.addAttribute("rentExpense", rentExpense);
 		modelMap.addAttribute("rentDeposit", rentDeposit);
+		modelMap.addAttribute("ticketDeosit", ticketDeposit);
 
 
 		System.out.println(financeRepository.findAll());

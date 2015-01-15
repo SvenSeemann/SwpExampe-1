@@ -38,6 +38,10 @@ import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
 import fviv.location.Location;
 import fviv.location.LocationRepository;
+import fviv.model.Finance;
+import fviv.model.Finance.FinanceType;
+import fviv.model.Finance.Reference;
+import fviv.model.FinanceRepository;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 
@@ -49,6 +53,7 @@ public class TicketController {
 	private final TicketRepository ticketRepository;
 	private final FestivalRepository festivalRepository;
 	private final LocationRepository locationRepository;
+	private final FinanceRepository financeRepository;
 
 	private static long ticketid;
 	private String mode = "ticket";
@@ -59,10 +64,11 @@ public class TicketController {
 	@Autowired
 	public TicketController(TicketRepository ticketRepository,
 			FestivalRepository festivalRepository,
-			LocationRepository locationRepository) {
+			LocationRepository locationRepository, FinanceRepository financeRepository) {
 		this.ticketRepository = ticketRepository;
 		this.festivalRepository = festivalRepository;
 		this.locationRepository = locationRepository;
+		this.financeRepository = financeRepository;
 	}
 
 	@ModelAttribute("ticketmode")
@@ -175,7 +181,8 @@ public class TicketController {
 	 * @throws BarcodeException
 	 */
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
-	public String newTicket(ModelMap modelMap, @RequestParam("ticketart") boolean ticketart,
+	public String newTicket(ModelMap modelMap,
+			@RequestParam("ticketart") boolean ticketart,
 			@RequestParam("numbers") int numbers,
 			@RequestParam("hilfsDate") String tagesdate) throws IOException,
 			BarcodeException {
@@ -193,7 +200,7 @@ public class TicketController {
 			location = locationRepository.findById(festival.getLocationId());
 
 			String festivalname = festival.getFestivalName();
-			
+
 			Money preistag = festival.getPreisTag();
 			LocalDate date = null;
 			if (ticketart == true) {
@@ -204,46 +211,64 @@ public class TicketController {
 			int max = location.getMaxVisitors();
 			List<Ticket> festivalnamelist = ticketRepository
 					.findByFestivalName(festival.getFestivalName());
-			List<Ticket> datumlist = ticketRepository.findByTagesticketdate(date);
-			List<Ticket> datum2list = ticketRepository.findByTagesticketdate(null);
+			List<Ticket> datumlist = ticketRepository
+					.findByTagesticketdate(date);
+			List<Ticket> datum2list = ticketRepository
+					.findByTagesticketdate(null);
 
 			Collection<Ticket> listone = new ArrayList<Ticket>(festivalnamelist);
 			Collection<Ticket> listthree = new ArrayList<Ticket>(datumlist);
 			Collection<Ticket> listfourth = new ArrayList<Ticket>(datum2list);
 			listthree.addAll(listfourth);
 			listone.retainAll(listthree);
-			int ticketzahl=listone.size();
-			if (max > ticketzahl){
-			Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
-	
-			if (ticketart == true) {
-				ticketRepository.save(ticket);
-				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag, ticketart, date);
-				barcodegen();
-				addbarcode();
-			} else {
-				ticketRepository.save(ticket);
-				setTicketid(ticket.getId());
-				pdfvorlagebearbeiten(preistag.multipliedBy(7/3), ticketart, date);
-				barcodegen();
-				addbarcode();
+			int ticketzahl = listone.size();
+			if (max > ticketzahl) {
+				Ticket ticket = new Ticket(ticketart, false, festivalname, date); // Eins
 
-			}
+				if (ticketart == true) {
+					ticketRepository.save(ticket);
+					setTicketid(ticket.getId());
+					pdfvorlagebearbeiten(preistag, ticketart, date);
+					barcodegen();
+					addbarcode();
+				} else {
+					ticketRepository.save(ticket);
+					setTicketid(ticket.getId());
+					pdfvorlagebearbeiten(preistag.multipliedBy(7 / 3),
+							ticketart, date);
+					barcodegen();
+					addbarcode();
+
+				}
 			} else {
 				asdf = "NICHT GENÜGEND PLÄTZE VERFÜGBAR";
 				modelMap.addAttribute("eroor", asdf);
 
 			}
-			
-			//Tagesticket: true
-			
-			LocalDate dateStart = festivalRepository.findById(longId).getStartDatum();
-			LocalDate dateEnd = festivalRepository.findById(longId).getEndDatum();
+
+			// Tagesticket: true
+
+			LocalDate dateStart = festivalRepository.findById(longId)
+					.getStartDatum();
+			LocalDate dateEnd = festivalRepository.findById(longId)
+					.getEndDatum();
 			Period dateHelper;
 			dateHelper = dateStart.until(dateEnd);
 			int days = dateHelper.getDays() + 1;
+			if (ticketart == true) {
+				Finance ticketDeposit = new Finance(longId, Reference.DEPOSIT,
+						festivalRepository.findById(longId).getPreisTag(),
+						FinanceType.TICKET);
+				financeRepository.save(ticketDeposit);
+			} else {
+				Finance ticketDeposit = new Finance(longId, Reference.DEPOSIT,
+						festivalRepository.findById(longId).getPreisTag().multipliedBy(days),
+						FinanceType.TICKET);
+				financeRepository.save(ticketDeposit);
+			}
 			
+			
+
 		}
 		return "redirect:/ticket";
 	}
