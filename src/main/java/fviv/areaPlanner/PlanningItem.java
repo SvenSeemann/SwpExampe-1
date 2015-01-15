@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
 
 /**
  * 

@@ -9,9 +9,6 @@ import org.salespointframework.core.DataInitializer;
 import org.salespointframework.inventory.Inventory;
 import org.salespointframework.inventory.InventoryItem;
 import org.salespointframework.quantity.Units;
-import org.salespointframework.useraccount.Role;
-import org.salespointframework.useraccount.UserAccount;
-import org.salespointframework.useraccount.UserAccountManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -19,7 +16,6 @@ import org.springframework.util.Assert;
 import fviv.catering.model.Menu;
 import fviv.catering.model.MenusRepository;
 import fviv.catering.model.Menu.MenuType;
-import fviv.model.StaffRepository;
 
 /**
  * @author Niklas Fallik

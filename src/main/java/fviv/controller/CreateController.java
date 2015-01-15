@@ -344,7 +344,13 @@ public class CreateController {
 			InventoryItem inventoryItem = new InventoryItem(menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
-
+		
+		
 		return "redirect:/festival";
+	}
+	
+	// Setter for jUnit testing
+	public void setSelected(Festival festival){
+		this.selected = festival;
 	}
 }

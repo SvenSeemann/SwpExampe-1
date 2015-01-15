@@ -1,7 +1,6 @@
 package fviv.catering.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 
 import org.joda.money.Money;
 import org.salespointframework.catalog.Product;
@@ -19,7 +18,6 @@ public class Menu extends Product {
 		MEAL, DRINK;
 	}
 	
-	@SuppressWarnings("unused")
 	private long festivalId;
 	private Boolean orderable;
 	private MenuType type;
@@ -72,5 +70,9 @@ public class Menu extends Product {
 
 	public void setFestivalId(long festivalId) {
 		this.festivalId = festivalId;
-	}	
+	}
+	
+	public MenuType getMenuType() {
+		return this.type;
+	}
 }
