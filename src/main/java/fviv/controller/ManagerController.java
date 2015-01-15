@@ -48,7 +48,7 @@ import static org.joda.money.CurrencyUnit.EUR;
  * @author Niklas Fallik
  */
 
-@PreAuthorize("hasRole('ROLE_MANAGER')")
+@PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_BOSS')")
 @Controller
 public class ManagerController {
 	private String mode = "startConfiguration";

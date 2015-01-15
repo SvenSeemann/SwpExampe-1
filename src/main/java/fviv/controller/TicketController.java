@@ -48,7 +48,7 @@ import fviv.ticket.TicketRepository;
 /**
  */
 @Controller
-@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+@PreAuthorize("hasAnyRole('ROLE_EMPLOYEE','ROLE_BOSS')")
 public class TicketController {
 	private final TicketRepository ticketRepository;
 	private final FestivalRepository festivalRepository;
