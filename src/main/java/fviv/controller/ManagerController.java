@@ -10,6 +10,7 @@ import fviv.model.Finance.Reference;
 import fviv.ticket.Ticket;
 import fviv.ticket.TicketRepository;
 import fviv.user.Roles;
+
 import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -33,8 +34,11 @@ import fviv.model.EmployeeRepository;
 import fviv.model.Finance;
 import fviv.model.FinanceRepository;
 import fviv.model.Registration;
+
 import javax.validation.Valid;
+
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -183,6 +187,11 @@ public class ManagerController {
 	public String index(ModelMap modelMap) {
 
 		// ------------------------ FINANCES ------------------------ \\
+		
+		/*Period dateHelper;
+		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
+		int days = dateHelper.getDays() + 1;
+		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);*/
 		
 		for (Event event : eventsRepository.findAll()) {
 			Finance newEventDeposit = new Finance(event.getFestival().getId(), Reference.DEPOSIT, event.getArtist().getPrice(), FinanceType.ARTIST);
