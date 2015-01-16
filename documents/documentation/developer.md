@@ -1,111 +1,62 @@
-# Nutzerdokumentation für den FVIV Festivalmanager
+# Architekturdokumentation
 
-## Inhaltsverzeichnis
+### Fviv Festivalmanager
 
-@@TOC@@
-
-##Oberfläche
-Die Software ist in 3 Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine orangene Farbgebung, die Breiche der Planung sind grün und die Terminalbereiche sind blau. 
-
-Die Seite ist immer in 3 Bereiche gegliedert. 
-
-Im Kopf der Seite finden Sie verschiedene Informationen. Links steht der Titel der Seite. In der Mitte steht der Name des aktuell angewählten Festivals. Rechts sehen Sie als welche Person Sie gerade eingeloggt sind. 
-
-am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie "Logout" und "Show Chat" finden Sie überall. Weitere Menupunkte sind Bereichsspezifisch. 
-
-Der dritte große Bereich ist der Bereichsspezifisch gefüllte Inhalt der Seite. 
-
-## Die Manager Rolle
-Der Manager ist die wichtigste und zentralste Rolle der gesamten Nutzerstruktur.
-Der Manager kann die Finanzen einsehen und verwalten.
-###Mitarbeiter
-Zum Anlegen neuer Mitarbeiter füllen Sie das Formular zum Hinzufügen eines neuen Mitarbeiter aus. Wählen Sie im Drop-Down-Menü anschließend die Art des Useraccounts aus. Klicken Sie nun auf den Speichern-Button.  
-
-Um einen Mitarbeiter zu löschen geben Sie die gewünschte Mitarbeiter-ID ein und klicken Sie auf" löschen". 
-
-###Finanzen
-Diese Oberfläche bietet Ihnen eine komplette Übersicht der Finanzen. 
-
-###Accounts
-Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
-Diesen können Sie bearbeiten, indem Sie in das Feld dne Namen des Account eingeben und auf "Account bearbeiten" klicken. 
-Sie können Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
-Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
-###Besucherzahlen
-Wählen Sie das Festival aus, deren Besucherzahlen Sie abfragen möchten, und klicken Sie auf "Festival laden". Wählen Sie anschließend das gewünschte Datum und fragen Sie die Anzahl der Besucher ab. 
-
-##Festival Terminal (scheiss name)
-Hier legen Sie neue Festivals an und bearbeiten bestehende Festivals. 
-
-### Neues Festival anlegen
-Wählen Sie zuerst eine Location aus. Tragen Sie Start- und Enddatum, den Names des Festivals, die Künstler und Kartenpreis ein und erstellen ein neues Festival durch KLick auf den Button. 
-
-###Festival bearbeiten
-In diesem Nenü können Sie den Geländeplan erstellen und bearbeiten (mehr dazu im Punkt Geländeplanung). Zudem können Sie Angestellte hinzufügen und deren Gehälter bestimmen- bitte auf Mindestlohn achten, sonst kommt das Finanzamt :P.
-
-## Catering
-Die Catering Oberfläche bietet Ihnen Auswahl- und Bestellfunktionen für Speisen und Getränke.
-
-Im Menü finden Sie neben den "Logout" und "Show Chat" Button die Punkte "Festival auswählen", "Meals" und "Drinks".
-Unter dem Punkt "Festival auswählen" können Sie zwischen den verfügbaren Festivals auswählen. Im Punkt "Meals" können Sie die verfügbaren Speisen auswählen, bei "Drinks" die verfügbaren Getränke.
-
-Links finden Sie eine Liste mit den gerade ausgewählten Speisen und Getränken. Mit dem Button "Cancel" brechen Sie die aktuelle Aktion ab und alle ausgewählten Artikel werden gelöscht. bei Klick auf "Confirm", zahlt der Kunde, die gewählten Artikel werden aus dem Lagerbestand herausgerechnet und die Einnahmen in die Finanzstatistiken eingetragen. 
-  
-## Geländeplanung
-Der Geländeplaner erlaubt es Ihnen das Festivallayout bequem und grafisch zu planen und zu speichern.
-
-###Erstellen eines Objektes
-Nachdem Sie sich eine Location ausgewählt haben, wird Ihnen ein leeres Festivalgelände vorgegeben. 
-
-Rechts im Menu finden Sie die verwendbaren Objekte, geordnet nach Objekttypen. Mit Klick auf den Typ erweitert sich das Menu um die Objekte dieses Typs.
-
-Klicken Sie nun auf das Objekt, dass Sie erstellen möchten. Nun erscheint oben links in der Ecke des Areal das gewünschte Objekt. 
-
-Sollte das Objekt zu groß für das Gelände sein, wird Ihnen dies mitgeteilt und das zu große Objekt nicht erstellt. 
-
-###Bewegen eines Objektes auf dem Gelände
-Wenn Sie ein Objekt auf dem Gelände bewegen möchten, können Sie dies ganz einfach per Drag-and-Drop machen. 
-
-### Das Kontext-Menu
-Wenn Sie auf ein Objekt mit der rechten Maustaste klicken, erscheint das Kontextmenu. Hier können Sie Informationen über die Höhe, Breite, und Name des Objektes erfahren. 
-
-Weiterhin haben Sie die Mögichkeit per Klick auf die jeweiligen Buttons das Objekt zu drehen und zu löschen.
-##Finanzen
-###Mitarbeiter
- Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. bei der Finanzkalkulation wird von einem 8 Stunden arbeitstag pro Mitarbeiter ausgegangen
-## Nutzerverwaltung
-
-## Kommunikation
-Für die Kommunikation stehen Ihnen ein Chatsystem zur Verfügung. Personen mit den entsprechenden Berechtigungen sind in der Lage anderen Nutzern via des Chats Nachrichten zu schreiben.
-
-Dazu öffnen Sie zunächst ihr Chatfenster, indem Sie auf <button>Chat Öffnen</button> klicken.
-
-In der Liste der möglichen Empfänger können Sie nun durch klicken ihren gewünschten Empfänger auswählen.
-
-Daraufhin erscheint ein Eingabefeld
-<div style="border:1px solid #CCCCCC;border-radius:5px;box-shadow:0 0 5px #999999;padding:10px 15px;float:left;"><div>**Empfänger**</div><textarea style="box-shadow:0 0 5px #999999 inset;margin:10px 0" rows=3 cols=34>Ihre persönliche Nachricht hier!</textarea><button style="display:block;margin:10px 0;">Absenden</button>
+erstellt von:
+<div style="padding-left:30px">
+Praktikumsgruppe swt13w33m  
+Hendric Eckelt, Justus Adam, Max Schwarze, Niklas Fallik, Nikolai Kostka
 </div>
-<div style="clear:both;"></div>
-In welchem Sie Ihre Nachricht eingeben können. Ein Klick auf den <button>Absenden</button> Button versendet Ihre Nachricht.
+<p> </p>
+<div style="font-size: smaller">
+Angepasstes Template angelehnt an das ARC Template für das Softwarepraktikum an der TU Dresden
+</div>
 
-Sollten Sie den falschen Empfänger ausgewählt haben, können Sie diesen mit einem Klick auf den korrekten Empfänger ändern.
 
-*Bitte Beachten: In der aktuellen Version löscht das Auswählen eines neuen Empfängers Ihre Nachricht*
+### Änderungsübersicht
 
-## Besucherterminal
-Das Besucherterminal bietet eine sichere Umgebung die die Besucher Ihres Festivals benutzen können um sich zu orientieren.
+Version | Datum | Bearbeiter | Beschreibung
+--------|-------|------------|-------------
+1.0 | 12.01.15 | Nikolai Kostka | Erstellung der Architekturdokumentation
+1.1 | 16.01.15 | Justus Adam | Änderungen und Vervollständigung
 
-Dazu gehören ein Spiel- und Geländeplan.
+### Basisdokumente
 
-## Tickets
-Die Ticketverwaltung ermöglicht es Ihnen Tickets anzufordern, auszustellen und zu drucken.
+Dokument | Beschreibung
+-|
+Pflichtenheft | Pflichtenheft der Version 1.1 mit allen Enthaltenen Diagrammen
 
-###Tickets erstellen
-Wählen Sie sich zuerst das gewünschte Festival aus. Klicken sie anschließend den "Laden" Button. 
-Anschließend können Sie zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket wählen. Suchen Sie über das Drop-Down-Menü nun den gewünschten Festivaltag aus. Geben Sie nun die gewünschte Anzahl der zu erstellenden Tickets an. Mit Klick auf "Ticket erstellen" werden nun Ihre Tickets erstellt. 
+# Inhaltsverzeichnis
 
-### Tickets drucken
-Sie können Tickets drucken, indem Sie die gewünschte TicketId in das Feld eingeben und anschließend auf "Ticket drucken" klicken. 
+1. Einfühung und Ziele  
+    1. Aufgabenstellung
+    * Qualitätsziele
+    * Stakeholder
+* Randbedingungen
+    1. Technische Randbedingungen
+    * Konventionen
+* Kontextabgrenzung
+    1. Externe Schnittstellen
+* Lösungsstrategien und Entwurfsentscheidungen
+* Konzepte
+    1. Persistenz
+    * Benutzungsoberfläche
+* Glossar
 
-###Ticket prüfen
-Sie können Tickets prüfen indem Sie aus der Liste der verfügbaren Festivals das gewünschte auswählen, anschließend die ID des zu prüfenden Tickets eingeben und anschließend das Ticket prüfen.  
+## 1. Einführung und Ziele
+Das folgende Dokument hat die Beschreibung und Erläuterung des Aufbaus und der Funktionen der FVIV Festivalmanager Software, geschrieben im Rahmen des SWT Softwareprojektes 2014/15, zum Ziel.
+### 1.2. Aufgabenstellung
+Der Festivalveranstalter, die „FVIV GmbH“, sieht sich mit ihrem derzeitigen System den wachsenden Aufgaben einer Festival-Organisation und –Durchführung nicht mehr gewachsen und benötigt daher zeitnah ein neues IT-System, das interne Verwaltungsaufgaben, als auch den Kundenkontakt übernimmt. Daher werden sie damit beauftragt, dieses System zu entwerfen und auch umzusetzen.  
+ Das System soll unter anderem in der Planungsabteilung eingesetzt werden, in der Festivals angelegt werden. Dazu muss ein Termin festgelegt werden und die passende Location zu diesem Zeitpunkt gebucht werden. Doppelbuchungen dieser Locations sind unter allen Umständen zu vermeiden. Jede Location bietet Platz für eine maximale Anzahl von Besuchern und Bühnen. Außerdem ist jede Location in verschiedene, eindeutig gekennzeichnete Bereiche unterteilt, die wiederum einen Teil der maximalen Besucherzahl fassen können und sich außerdem in Camping-, Park-, Catering- und Stage-Bereiche einordnen. Um dem Planungsteam einen guten Überblick zu verschaffen, ist es zwingend notwendig, dass das Gelände und die Bereiche visualisiert werden können. Sobald die Location gebucht ist, können für dieses Festival Anpassungen durchgeführt werden, wie die Bühnenpositionierung, Toilettenbestückung und Cateringstände, und es muss möglich sein, bestimmte Bereiche zu sperren. Die genannten Gegenstände (Bühnen, usw.) werden von externen Anbietern gemietet.In der nächsten Stufe muss das „Line-Up“ zusammengestellt werden. Dazu müssen Angebote bei verschiedenen Künstlern eingeholt werden. Anschließend werden aus diesen Angeboten Künstler ausgewählt und es muss ein Spielplan für jede Bühne erstellt werden. Neben den genannten Künstlern ist weiteres Personal erforderlich, wie Sicherheitspersonal (mindestens einer pro 100 Besuchern), Bedienungen an den Cateringständen, Bühnentechniker (Anzahl wird durch die Band bestimmt), sowie ein Veranstaltungsleiter. Jede Arbeitskraft wird dabei auf Stundenbasis bezahlt.  
+ Zu jedem Zeitpunkt während der Planung muss der Planungsabteilung als auch dem Management eine automatische Kostenaufstellung zur Verfügung gestellt werden können, in der Kosten für Mieten, Gagen, Personal und Sonstigem aufgelistet und aggregiert werden. Schon während der Planungsphase kann ein Event freigegeben werden, und es kann ein Kartenpreis festgelegt werden. Es gibt dabei Camping-Tickets, die das ganze Festival über gültig sind und Tageskarten. Diese Tickets werden bis 3 Tage vor Veranstaltungsbeginn in den Filialen der „FVIV GmbH“ verkauft und danach nur noch an der Abendkasse. Es muss den Verkaufsmitarbeitern möglich sein, bei noch vorhandenen Tickets diese zu verkaufen und auszudrucken. Auf jedes Ticket wird ein Barcode bzw. eine eindeutige Nummer aufgedruckt, mit dem es dem Personal am Festivaleingang möglich ist, das Ticket auf Gültigkeit hin zu überprüfen und zu vermeiden, dass verschiedene Personen das Gelände mit derselben Karte betreten. Eine weitere Nutzergruppe ist das Cateringpersonal, das sich an entsprechenden Terminals am Verkaufsstand mit gültigem Login anmeldet. Dort können Getränke und vorgefertigte Speisen ausgewählt und abgerechnet werden. Dabei wird das Gekaufte vom verfügbaren Lagerbestand abgezogen. Sollte ein gewisser Mindestbestand unterschritten werden erfolgt eine Mittteilung an die Festivalleitung. Der Festivalleiter besitzt ebenfalls ein persönliches Terminal, an dem es ihm möglich ist, das Lager einzusehen und Nachbestellungen zu tätigen. Weiterhin sieht er dort aktuelle Besucherzahlen, Nachrichten von anderen Mitarbeitern, sowie Verkaufszahlen des Caterings und die aktuelle Bühnenbelegung. Überall auf dem Festivalgelände verteilt befinden sich Terminals, die für jeden frei nutzbar sind. Dort sieht man neben einem Plan vom Festivalgelände auch den Spielplan für alle Festivaltage. Der Manager der „FVIV GmbH“ sorgt für die Verteilung der Logins an die Mitarbeiter und kann sehen, welcher Mitarbeiter momentan am System angemeldet ist. Weiterhin soll es ihm möglich sein, betriebswirtschaftliche Daten, wie Umsatz, Ausgaben,... , abzurufen und grafisch zu visualisieren.
+
+### 1.2. Qualitätsziele
+Ein Funktionsfähiges Festivalmanagement Programm zu erstellen, das die Aufgaben von Festivalleiter bis zu einem einfachem Caterer erleichtern soll. Ebenso für einfache Festivalgäste, die auf Terminals zugreifen und sich über Auftritte verschiedener Künstler informieren können.
+
+### 1.3. Stakeholder
+Rolle | Beschreibung | Ziel/Intention | Kontakt | Bemerkung
+-|
+Auftraggeber | Kunde | Empfänger und Nutzer der Software | Sven Seemann |
+Entwickler | Entwickelt die Software | Entwicklung der Software | Niklas Fallik & Team |
+
+##

@@ -1,11 +1,10 @@
 package fviv.catering.model;
 
-import javax.persistence.Entity;
-
 import org.joda.money.Money;
 import org.salespointframework.catalog.Product;
 import org.salespointframework.quantity.Units;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.Entity;
 
 /**
  *@author Niklas Fallik
@@ -24,7 +23,6 @@ public class Menu extends Product {
 	private Money purchasePrice;
 	private Money sellingPrice;
 	
-	@Autowired
 	public Menu(long festivalId, String name, Money purchasePrice, Money sellingPrice, MenuType type) {
 		super(name, sellingPrice, Units.METRIC);
 		this.festivalId = festivalId;
