@@ -5,6 +5,7 @@
 <meta charset="utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
 	rel='stylesheet' type='text/css' />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <link rel="stylesheet" href="../resources/css/standard.css" />
 <link rel="stylesheet" href="../resources/css/festival.css" />
 <title>Festival erstellung</title>
@@ -323,13 +324,14 @@
 				<button class="slimButton" type="submit"
 					th:text="#{catering.logout}" value="logout">Logout</button>
 			</form>
-			<!-- <div th:include="messaging :: messaging"></div>-->
+			 <div th:include="messaging :: messaging"></div>
 			<form th:action="@{/festival/create}" method="post">
 				<button class="boldButton">Festivals</button>
 			</form>
 			<form th:action="@{/editFestivals}" method="post">
 				<button class="boldButton">Festivals bearbeiten</button>
 			</form>
+			<a class="slimButton" href="/schedule">Zeitplan</a>
 		</div>
 	</div>
 </body>

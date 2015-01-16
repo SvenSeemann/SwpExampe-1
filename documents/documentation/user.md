@@ -81,3 +81,10 @@ Das Besucherterminal bietet eine sichere Umgebung die die Besucher Ihres Festiva
 Dazu gehören ein Spiel- und Geländeplan.
 ## Tickets
 Die Ticketverwaltung ermöglicht es Ihnen Tickets anzufordern, auszustellen und zu drucken.
+
+###Tickets erstellen
+Wählen Sie sich zuerst das gewünschte Festival aus. Klicken sie anschließend den "Laden" Button. 
+Anschließend können Sie zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket wählen. Suchen Sie über das Drop-Down-Menü nun den gewünschten Festivaltag aus. Geben Sie nun die gewünschte Anzahl der zu erstellenden Tickets an. Mit Klick auf "Ticket erstellen" werden nun Ihre Tickets erstellt. 
+
+### Tickets drucken
+Sie können Tickets drucken, indem Sie die gewünschte TicketId in das Feld eingeben und anschließend auf "Ticket drucken" klicken.  
