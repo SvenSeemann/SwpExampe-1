@@ -53,6 +53,8 @@ $(document).ready(
 						// build extisting objects
 						for (i = 1; i < data.length; i++) {
 							var newElem = document.createElement("div");
+							var width = data[i].width;
+							var height = data[i].height;
 							newElem = $(newElem);
 							newElem.appendTo('#area');
 							newElem.attr("class", "objekt");
@@ -62,13 +64,13 @@ $(document).ready(
 											("contextMenu(this)"));
 							newElem.attr("onmouseup", "validateIt(this)");
 							newElem.css({
-								'width' : (data[i].width * factor),
-								'height' : (data[i].height * factor),
+								'width' : (data[i].width*factor),
+								'height' : (data[i].height*factor),
 								'left' : data[i].xPos,
 								'top' : data[i].yPos
 							});
 							newElem.text(data[i].name);
-							// script for draggalbe
+							// script for draggable
 							$(function() {
 								$(".objekt").draggable({
 									containment : "#area",
@@ -79,8 +81,7 @@ $(document).ready(
 							});
 							// put all objects in the ojectList-Array
 							objectList.push(new Array(newElem.attr('name'),
-									newElem.text(), newElem.width(), newElem
-											.height(), newElem.position().left,
+									newElem.text(), width, height, newElem.position().left,
 									newElem.position().top));
 						}
 					}
@@ -197,8 +198,8 @@ function buildCamping() {
 					newElem.attr("oncontextmenu", ("contextMenu(this)"));
 					newElem.attr("onmouseup", "validateIt(this)");
 					newElem.css({
-						'width' : (width * factor),
-						'height' : (height * factor)
+						'width' : (document.formul.width.value * factor),
+						'height' : (document.formul.height.value * factor)
 					});
 					newElem.text("Campingplatz");
 
