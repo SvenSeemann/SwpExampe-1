@@ -1,5 +1,9 @@
 package fviv.controller;
 
+import fviv.areaPlanner.AreaItem;
+import fviv.areaPlanner.AreaItemsRepository;
+import fviv.areaPlanner.PlanningItem;
+import fviv.areaPlanner.PlanningItemsRepository;
 import fviv.catering.model.MenusRepository;
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
@@ -66,6 +70,8 @@ public class ManagerController {
 	private final FestivalRepository festivalRepository;
 	private final ArtistsRepository artistsRepository;
 	private final EventsRepository eventsRepository;
+	private final AreaItemsRepository areaItemsRepository;
+	private final PlanningItemsRepository planningItemsRepository;
 	private Festival selected;
 	private long id;
 	private int anzahl;
@@ -82,7 +88,9 @@ public class ManagerController {
 			FestivalRepository festivalRepository,
 			TicketRepository ticketRepository,
 			ArtistsRepository artistsRepository,
-			EventsRepository eventsRepository) {
+			EventsRepository eventsRepository,
+			AreaItemsRepository areaItemsRepository,
+			PlanningItemsRepository planningItemsRepository) {
 
 		this.employeeRepository = employeeRepository;
 		this.menusRepository = menusRepository;
@@ -93,6 +101,8 @@ public class ManagerController {
 		this.ticketRepository = ticketRepository;
 		this.artistsRepository = artistsRepository;
 		this.eventsRepository = eventsRepository;
+		this.areaItemsRepository = areaItemsRepository;
+		this.planningItemsRepository = planningItemsRepository;
 	}
 
 	// ------------------------ ATTRIBUTEMAPPING ------------------------ \\
@@ -187,22 +197,43 @@ public class ManagerController {
 	public String index(ModelMap modelMap) {
 
 		// ------------------------ FINANCES ------------------------ \\
-		
-		/*Period dateHelper;
-		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
-		int days = dateHelper.getDays() + 1;
-		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);*/
-		
+
+		/*
+		 * Period dateHelper; dateHelper =
+		 * festival.getStartDatum().until(festival.getEndDatum()); int days =
+		 * dateHelper.getDays() + 1; Money costTot =
+		 * locationRepository.findById(
+		 * locationId).getCostPerDay().multipliedBy(days);
+		 */
+		for (AreaItem areaItem : areaItemsRepository.findAll()) {
+			PlanningItem x = this.planningItemsRepository.findByName(areaItem
+					.getName());
+			if (x != null) {			//checks for null, due to test data
+				Money rentCost = x.getRentCost();
+				Festival festival = areaItem.getFestival();
+				Period dateHelper;
+				dateHelper = festival.getStartDatum().until(
+						festival.getEndDatum());
+				int days = dateHelper.getDays() + 1;
+				Money costTot = rentCost.multipliedBy(days);
+				Finance rentFinance = new Finance(festival.getId(),
+						Reference.EXPENSE, costTot, FinanceType.RENT);
+				financeRepository.save(rentFinance);
+			}
+		}
+
 		for (Event event : eventsRepository.findAll()) {
-			Finance newEventDeposit = new Finance(event.getFestival().getId(), Reference.DEPOSIT, event.getArtist().getPrice(), FinanceType.ARTIST);
+			Finance newEventDeposit = new Finance(event.getFestival().getId(),
+					Reference.DEPOSIT, event.getArtist().getPrice(),
+					FinanceType.ARTIST);
 			financeRepository.save(newEventDeposit);
 		}
-		
+
 		// Money used as sum for each type of expense
-				Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
-						.of(EUR, 0.00), artistExpTot = Money.of(EUR, 0.00);
-				Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
-						.of(EUR, 0.00), ticketDepTot = Money.of(EUR, 0.00);
+		Money salExpTot = Money.of(EUR, 0.00), catExpTot = Money.of(EUR, 0.00), rentExpTot = Money
+				.of(EUR, 0.00), artistExpTot = Money.of(EUR, 0.00);
+		Money salDepTot = Money.of(EUR, 0.00), catDepTot = Money.of(EUR, 0.00), rentDepTot = Money
+				.of(EUR, 0.00), ticketDepTot = Money.of(EUR, 0.00);
 
 		// Lists that contain Finances sorted by Type
 		LinkedList<Finance> salaryExpense = new LinkedList<Finance>();
@@ -270,7 +301,7 @@ public class ManagerController {
 		for (Finance ticketDep : ticketDeposit) {
 			ticketDepTot = ticketDepTot.plus(ticketDep.getAmount());
 		}
-		
+
 		for (Finance artistExp : artistExpense) {
 			artistExpTot = artistExpTot.plus(artistExp.getAmount());
 		}
