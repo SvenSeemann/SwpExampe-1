@@ -46,9 +46,7 @@ public class MenuTest extends AbstractIntegrationTests {
 				.abs()));
 
 		// Check if the menus got saved to the repository
-		assertThat(menusRepository.findByName("testMeal").getFestivalId(),
-				is(2L));
-		assertThat(menusRepository.findByName("testDrink").getFestivalId(),
-				is(1L));
+		assertThat(menusRepository.findOne(testMenu1.getId()).getName().equals("testMeal"), is(true));
+		assertThat(menusRepository.findOne(testMenu2.getId()).getName().equals("testDrink"), is(true));	
 	}
 }
