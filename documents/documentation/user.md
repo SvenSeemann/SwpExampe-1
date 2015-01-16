@@ -95,11 +95,10 @@ Dazu öffnen Sie zunächst ihr Chatfenster, indem Sie auf <button>Chat Öffnen</
 
 In der Liste der möglichen Empfänger können Sie nun durch klicken Ihren gewünschten Empfänger auswählen.
 
-Daraufhin erscheint ein Eingabefeld
+Daraufhin erscheint ein Eingabefeld, n welchem Sie Ihre Nachricht eingeben können. Ein Klick auf den <button>Absenden</button> Button versendet Ihre Nachricht.
 <div style="border-color:yellow; width:300px; height:170px;" class="hello"><div>**Empfänger**</div><textarea class="hello" style="border-color:yellow;" rows=3 cols=34>Ihre persönliche Nachricht hier!</textarea><button style="display:block;margin:10px 0;">Absenden</button>
 </div>
 <div style="clear:both;"></div>
-In welchem Sie Ihre Nachricht eingeben können. Ein Klick auf den <button>Absenden</button> Button versendet Ihre Nachricht.
 
 Sollten Sie den falschen Empfänger ausgewählt haben, können Sie diesen mit einem Klick auf den korrekten Empfänger ändern.
 
