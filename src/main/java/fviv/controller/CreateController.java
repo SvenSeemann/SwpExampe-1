@@ -277,7 +277,6 @@ public class CreateController {
 	public String newFestival(
 			@RequestParam("festivalName") String festivalName,
 			@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate,
 			@RequestParam("actors") String actors,
 			@RequestParam("preisTag") String preisTag,
 			@RequestParam("locationId") long locationId) throws ParseException {
@@ -286,8 +285,7 @@ public class CreateController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 
 		LocalDate dateStart = LocalDate.parse(startDate, formatter);
-		LocalDate dateEnd = LocalDate.parse(endDate, formatter);
-		if (dateStart.isBefore(dateEnd)){
+		LocalDate dateEnd = dateStart.plusDays(2);
 
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
 				locationId, actors, (int) locationRepository.findById(
@@ -355,7 +353,7 @@ public class CreateController {
 			InventoryItem inventoryItem = new InventoryItem(menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
-		}
+		
 
 		return "redirect:/festival";
 	}
