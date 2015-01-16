@@ -1,0 +1,15 @@
+button, .hello {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: #f9731c medium solid;
+    background-color: #383839;
+    color: #FFF;
+    text-align: center;
+    font-family: 'Oxygen', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+a {
+    text-decoration: none;
+    color: rgb(66, 124, 247);
+}
