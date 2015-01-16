@@ -86,9 +86,9 @@ public class FvivDataInitializer implements DataInitializer {
 
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
-				"Avicii, Linkin Park", 500000, Money.of(EUR, 55));
+				"Avicii, Linkin Park", 20000, Money.of(EUR, 55));
 		Festival festival2 = new Festival(date3, date4, "Rock am Ring", 2,
-				"Netflix", 69999, Money.of(EUR, 55));
+				"Netflix", 50000, Money.of(EUR, 55));
 
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);

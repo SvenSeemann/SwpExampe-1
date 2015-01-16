@@ -23,7 +23,7 @@
 		</div>
 		<div id="content">
 			<div id="substance">
-				<table>
+				<table style="float:left">
 					<thead>
 						<tr>
 							<td>Artist ID</td>
@@ -37,7 +37,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<table>
+				<table style="float:left">
 					<thead>
 						<tr>
 							<td>Stage ID</td>
@@ -53,7 +53,8 @@
 						</tr>
 					</tbody>
 				</table>
-				<div th:each="festival : ${festivalSchedules}">
+				<div style="clear:both"></div>
+				<div th:each="festival : ${festivalSchedules}" style="width:270px; height: auto; float:left; margin-bottom:20px;">
 					<h3 th:text="${festival.t1.festivalName}"></h3>
 					<div th:each="tuple : ${festival.t2}" class="day">
 						<div class="dayHeadline" th:text="${tuple.t1.name}"></div>
