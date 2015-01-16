@@ -306,7 +306,7 @@ public class CreateController {
 		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
 		int days = dateHelper.getDays() + 1;
 		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);
-		Finance locationCost = new Finance(festivalId, Reference.EXPENSE, costTot, FinanceType.RENT);
+		Finance locationCost = new Finance(festivalId, Reference.EXPENSE, costTot, FinanceType.LOCATION);
 		financeRepository.save(locationCost);
 		
 		// --- Initialize Menus for new festival --- \\
