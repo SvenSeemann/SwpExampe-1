@@ -25,6 +25,7 @@ public class FinanceTest extends AbstractIntegrationTests {
 	@Test
 	public void newFinanceTest() {
 		// Create new finances
+		long amountFinancesInRepository = financeRepository.count();
 		Finance testFinance1 = new Finance(2, Reference.EXPENSE, Money.of(EUR,
 				80), FinanceType.RENT);
 		Finance testFinance2 = new Finance(1, Reference.DEPOSIT, Money.of(EUR,
@@ -45,6 +46,7 @@ public class FinanceTest extends AbstractIntegrationTests {
 		assertThat(testFinance2.getFinanceType(), is(FinanceType.CATERING));
 
 		// Check if the finances got saved to the repository
-		assertThat(financeRepository.findAll(), is(iterableWithSize(2)));
+		amountFinancesInRepository += 2;
+		assertThat(financeRepository.findAll(), is(iterableWithSize((int)amountFinancesInRepository)));
 	}
 }

@@ -53,6 +53,8 @@ $(document).ready(
 						// build extisting objects
 						for (i = 1; i < data.length; i++) {
 							var newElem = document.createElement("div");
+							var width = data[i].width;
+							var height = data[i].height;
 							newElem = $(newElem);
 							newElem.appendTo('#area');
 							newElem.attr("class", "objekt");
@@ -62,13 +64,13 @@ $(document).ready(
 											("contextMenu(this)"));
 							newElem.attr("onmouseup", "validateIt(this)");
 							newElem.css({
-								'width' : (data[i].width * factor),
-								'height' : (data[i].height * factor),
+								'width' : (data[i].width*factor),
+								'height' : (data[i].height*factor),
 								'left' : data[i].xPos,
 								'top' : data[i].yPos
 							});
 							newElem.text(data[i].name);
-							// script for draggalbe
+							// script for draggable
 							$(function() {
 								$(".objekt").draggable({
 									containment : "#area",
@@ -79,8 +81,7 @@ $(document).ready(
 							});
 							// put all objects in the ojectList-Array
 							objectList.push(new Array(newElem.attr('name'),
-									newElem.text(), newElem.width(), newElem
-											.height(), newElem.position().left,
+									newElem.text(), width, height, newElem.position().left,
 									newElem.position().top));
 						}
 					}
@@ -197,8 +198,8 @@ function buildCamping() {
 					newElem.attr("oncontextmenu", ("contextMenu(this)"));
 					newElem.attr("onmouseup", "validateIt(this)");
 					newElem.css({
-						'width' : (width * factor),
-						'height' : (height * factor)
+						'width' : (document.formul.width.value * factor),
+						'height' : (document.formul.height.value * factor)
 					});
 					newElem.text("Campingplatz");
 
@@ -340,12 +341,9 @@ function saveIt() {
 	$(document).ready(function() {
 		// send the area-values at first to the db
 		$.ajax({
-			url : "/newArea",
+			url : "/deleteExistingOnSave",
 			type : "POST",
 			data : {
-				width : areaWidth,
-				height : areaHeight,
-				faktor : factor,
 				festival : $("#festival-id").text()
 			},
 			success : function() {
@@ -362,13 +360,13 @@ function saveIt() {
 							height : objectList[i][3],
 							left : objectList[i][4],
 							top : objectList[i][5],
+							faktor : factor,
 							festival : $("#festival-id").text()
 						},
 						success : function(data) {
 						}
 					});
 				}
-
 			}
 		});
 	});
@@ -402,9 +400,11 @@ function turnObject(element) {
 function deleteObject(index) {
 	var parent = $(".contextButton").parents('.objekt');
 	var a = $(parent);
-	var my_index = a.parent().children().index(a); // get the index-value to find the right position in the objectList-Array
+	var my_index = a.parent().children().index(a); // get the index-value to
+													// find the right position
+													// in the objectList-Array
 	objectList.splice(my_index, 1); // delete the entry in the array
-	parent.remove(); 
+	parent.remove();
 }
 // click right and get the context-menu
 function contextMenu(element) {
@@ -416,25 +416,25 @@ function contextMenu(element) {
 	var a = element.parent().children().index(element);
 	var menu = document.createElement("div");
 	var list = document.createElement("ul");
-	//.........
+	// .........
 	var name = document.createElement("li");
 	$(name).text("Name: " + objectList[a][1]);
 	$(name).attr("id", "use_a_line");
 	$(name).appendTo(list);
-	//.........
+	// .........
 	var weite = document.createElement("li");
 	$(weite).text("Breite: " + objectList[a][2] + "m");
 	$(weite).appendTo(list);
-	//........
+	// ........
 	var hoehe = document.createElement("li");
 	$(hoehe).text("Höhe: " + objectList[a][3] + "m");
 	$(hoehe).attr("id", "use_a_line");
 	$(hoehe).appendTo(list);
-	//........
+	// ........
 	var turnCCW = document.createElement("li");
 	var turnACW = document.createElement("li");
 	var loeschen = document.createElement("li");
-	//........
+	// ........
 	loeschen = $(loeschen);
 	turnCCW = $(turnCCW);
 	turnACW = $(turnACW);

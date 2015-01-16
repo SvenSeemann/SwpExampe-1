@@ -38,6 +38,11 @@ public class FestivalTest extends AbstractIntegrationTests {
 		festivalRepository.save(testFestival2);
 		
 		// Check if festivals got saved to the repository
-		assertThat(festivalRepository.findAll(), is(iterableWithSize(2)));
+		assertThat(festivalRepository.findByFestivalName("testFestival1"), is(iterableWithSize(1)));
+		assertThat(festivalRepository.findByFestivalName("testFestival2"), is(iterableWithSize(1)));
+	
+		// Validate the ticket price
+		assertThat(testFestival1.getPreisTag().abs(), is(Money.of(EUR, 40).abs()));
+		assertThat(testFestival2.getPreisTag().abs(), is(Money.of(EUR, 260).abs()));
 	}
 }

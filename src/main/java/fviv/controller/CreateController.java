@@ -292,6 +292,8 @@ public class CreateController {
 						locationId).getMaxVisitors(), Money.of(EUR,
 						Long.parseLong(preisTag)));
 
+		
+		
 		long festivalId = festivalRepository.save(festival).getId();
 		float factor = (835/locationRepository.findById(locationId).getWidth());
 		
@@ -299,6 +301,13 @@ public class CreateController {
 				.findById(locationId).getWidth(), locationRepository.findById(
 				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));
+		
+		Period dateHelper;
+		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
+		int days = dateHelper.getDays() + 1;
+		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);
+		Finance locationCost = new Finance(festivalId, Reference.EXPENSE, costTot, FinanceType.RENT);
+		financeRepository.save(locationCost);
 		
 		// --- Initialize Menus for new festival --- \\
 		
@@ -344,7 +353,13 @@ public class CreateController {
 			InventoryItem inventoryItem = new InventoryItem(menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
-
+		
+		
 		return "redirect:/festival";
+	}
+	
+	// Setter for jUnit testing
+	public void setSelected(Festival festival){
+		this.selected = festival;
 	}
 }

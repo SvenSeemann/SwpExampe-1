@@ -31,7 +31,7 @@ public class PlanningItemDataInitializer implements DataInitializer {
 		itemsRepository.save(new PlanningItem("WC", 2, 2, Money.of(EUR, 50.01)));
 		itemsRepository.save(new PlanningItem("Beh WC", 5, 5, Money.of(EUR, 50.01)));
 		itemsRepository.save(new PlanningItem("Bad", 12, 3, Money.of(EUR, 150.30)));
-		itemsRepository.save(new PlanningItem("Bierwagen", 5, 4, Money.of(EUR, 230.00)));
+		itemsRepository.save(new PlanningItem("Cateringstand", 5, 4, Money.of(EUR, 230.00)));
 		itemsRepository.save(new PlanningItem("Essplatz", 2, 2, Money.of(EUR, 20.64)));
 		itemsRepository.save(new PlanningItem("Muell", 1, 2, Money.of(EUR, 12.50)));
 	}

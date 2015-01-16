@@ -43,7 +43,7 @@ import java.util.Optional;
  */
 
 @Controller
-@PreAuthorize("hasRole('ROLE_CATERER')")
+@PreAuthorize("hasAnyRole('ROLE_CATERER','ROLE_BOSS')")
 @SessionAttributes("cart")
 public class CateringController {
 

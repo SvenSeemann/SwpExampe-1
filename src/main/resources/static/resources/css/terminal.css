@@ -66,3 +66,14 @@
 	border:#09F medium solid;
 	position:absolute;
 }
+
+a{
+	display:inline-block;
+	text-decoration:none;
+}
+
+ul{
+	list-style:none;
+	margin:0;
+	margin-left:-40px;
+}
