@@ -3,26 +3,60 @@
 ## Inhaltsverzeichnis
 
 @@TOC@@
-
+## Unterstützrte Brwoser
+Diese Software ist auf allen gängigen Browsern ausser Firefox und IE funktionsfähig. Bitte achten Sie auf eine aktuelle Version Ihres Browsers. 
 ##Oberfläche
 Die Software ist in 3 Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine orangene Farbgebung, die Breiche der Planung sind grün und die Terminalbereiche sind blau. 
 
 Die Seite ist immer in 3 Bereiche gegliedert. 
 
-Im Kopf der Seite finden Sie verschiedene Informationen. Links steht der Titel der Seite. In der Mitte steht der Name des aktuell angewählten Festivals. Rechts sehen Sie als welche Person Sie gerade eingeloggt sind. 
+Im Kopf der Seite finden Sie verschiedene Informationen. Links steht der Titel der Seite. In der Mitte steht der Name des aktuell angewählten Festivals. Rechts sehen Sie als welche Person Sie gerade eingeloggt sind.
 
-am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie "Logout" und "Show Chat" finden Sie überall. Weitere Menupunkte sind Bereichsspezifisch. 
+Am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie "Logout" und "Show Chat" finden Sie überall. Weitere Menupunkte sind Bereichsspezifisch. 
 
 Der dritte große Bereich ist der Bereichsspezifisch gefüllte Inhalt der Seite. 
 
-## Festivalerstellung
-In der Festivalerstellung können sie neue Festivals anlegen und Informationen und Rahmenbedingungen für diese festsetzen und speichern.
-## Die Manager Rolle
-Der Manager ist die wichtigste und zentralste Rolle der gesamten Nutzerstruktur.
+##Manager
+###Mitarbeiter
+Dieses Menü bietet eine Übersicht über alle registrierten Mitarbeiter. Weiterhin können durch Ausfüllen des Formularfeldes neue Mitarbeiter registriert werden. Um Mitarbeiter zu löschen geben Sie bitte die ID des entsprechenden Mitarbeiters in das entsprechende Formularfeld und klicken Sie auf "löschen".
+###Finanzen
+Hier erhalten Sie eine Übersicht über alle Finanzen. 
+###Accounts
+Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
+Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
 
-Der Manager kann die Finanzen einsehen und verwalten.
+Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
+###Besucherzahlen
+Wählen Sie in dem Drop-Down-Menü das Festival aus, deren Besucheranzahl Sie sehen möchten und klicken Sie auf "Festival laden". Anschließend suchen Sie das Datum aus, an dem Sie die Besucherzahl benötigen. Klicken Sie auf "Besucher abfragen". 
 
-Der Manager hat Zugriffsberechtigungen für alle Komponenten des Systems.
+##Festivalleiter
+###Terminal
+Unter diesem Punkt wählen Sie ein Festival aus, deren Finanzen Sie einsehen wollen und Lager verwalten wollen.
+
+### Finanzen
+Hier haben Sie eine Überischt über die Einnahmen und Ausgaben des Caterings auf dem Festival. 
+### Stock
+Dies ist die Lagerverwaltung des Catering. Hier können Sie den aktuellen Lagerbestand, Einkaufs- und Verkaufspreis einsehen. Außerdem können Sie Artikel nachordern. 
+
+##TicketVerkauf
+###Tickets erstellen
+Wählen Sie ein Festival aus dem Drop-Down-Menü aus und klicken Sie auf "Festival laden". Unterscheiden Sie nun zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket. Geben Sie nun den gewünschten Festivaltag und Anzahl an. Klicken Sie nun auf "Tickets erstellen".
+
+###Tickets drucken
+Geben Sie in das Auswahlfeld die TicketId des zu drucken Tickets an und drucken Sie das Ticket mittels Klick auf den entsprechenden Button. 
+
+###Tickets prüfen
+Suchen Sie aus der Liste das gewünschte Festival aus. Geben Sie die zu prüfende TicketId ein und prüfen Sie das Ticket. 
+
+##Festival Terminal  *(Scheiss name- geht das nicht besser?)*
+### Übersicht der Festivals
+Hier finden Sie eine Übersicht der bestehenden Festivals. Weiterhin können Sie hier auch neue Festivals anlegen. Dies geschieht durch Aussuchen einer Location und Ausfüllen des Formular. Klicken Sie anschließend auf "Festival erstellen". 
+### Festivals bearbeiten
+Hier haben Sie die Möglichkeit bestehende Festivals zu bearbeiten. Sie können den Geländeplan erstellen und bearbeiten (mehr dazu im Punkt Geländeplanung). Weiterhin können Sie die Anzahl der Angestellten einstellen und deren Lohn. (Achten Sie auf eventuelle Gesetze in Ihrem Land, kann sein, dass das Finanzamt sonst vor der Türe steht ;)  ).
+
+### Mitarbeiter 
+ Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. Bei der Finanzkalkulation wird von einem 8 Stunden Arbeitstag pro Mitarbeiter ausgegangen.
+
 ## Catering
 Die Catering Oberfläche bietet Ihnen Auswahl- und Bestellfunktionen für Speisen und Getränke.
 
@@ -50,14 +84,7 @@ Wenn Sie ein Objekt auf dem Gelände bewegen möchten, können Sie dies ganz ein
 Wenn Sie auf ein Objekt mit der rechten Maustaste klicken, erscheint das Kontextmenu. Hier können Sie Informationen über die Höhe, Breite, und Name des Objektes erfahren. 
 
 Weiterhin haben Sie die Mögichkeit per Klick auf die jeweiligen Buttons das Objekt zu drehen und zu löschen.
-##Finanzen
-###Mitarbeiter
- Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. bei der Finanzkalkulation wird von einem 8 Stunden arbeitstag pro Mitarbeiter ausgegangen
-## Nutzerverwaltung
-Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
-Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
 
-Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
 ## Kommunikation
 Für die Kommunikation stehen Ihnen ein Chatsystem zur Verfügung. Personen mit den entsprechenden Berechtigungen sind in der Lage anderen Nutzern via des Chats Nachrichten zu schreiben.
 
