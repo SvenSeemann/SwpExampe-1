@@ -418,9 +418,9 @@ $(function () {
 			<form action="/logout" method="post">
 				<input type="submit" class="slimButton" value="Logout"></input>
 			</form>
-			<form>
-				<div th:include="messaging :: messaging"></div>
-			</form>
+
+			<div th:include="messaging :: messaging"></div>
+
 			<form method="post" action="/management/terminal">
 				<input type="submit" class="boldButton" value="Terminal"></input>
 			</form>
