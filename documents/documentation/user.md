@@ -41,7 +41,7 @@ Dies ist die Lagerverwaltung des Catering. Hier können Sie den aktuellen Lagerb
 
 ##TicketVerkauf
 ###Tickets erstellen
-Wählen Sie ein Festival aus dem Drop-Down-Menü aus und klicken Sie auf "Festival laden". Unterscheiden Sie nun zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket. Geben Sie nun den gewünschten Festivaltag und Anzahl an. Klicken Sie nun auf "Tickets erstellen".
+Wählen Sie ein Festival aus dem Drop-Down-Menü aus und klicken Sie auf "Festival laden". Unterscheiden Sie nun zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket. Auf ein 3-Tages-Ticket gibt es einen Preisnachlass! Geben Sie nun den gewünschten Festivaltag und Anzahl an. Klicken Sie nun auf "Tickets erstellen".
 
 ###Tickets drucken
 Geben Sie in das Auswahlfeld die TicketId des zu drucken Tickets an und drucken Sie das Ticket mittels Klick auf den entsprechenden Button. 
