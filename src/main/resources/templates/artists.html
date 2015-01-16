@@ -1,67 +1,89 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
-    <meta charset="UTF-8" />
-    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="styles/standard.css"/>
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-    <title></title>
+<meta charset="UTF-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/artists.css" />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<title></title>
+
 </head>
 <body>
 
-<div id="header">
-    <div id="loggedAs">angemeldet als:</div>
-    <div id="title">title</div>
-    <div id="loginName">UserName</div>
-</div>
+	<div id="header">
+		<div id="loggedAs">angemeldet als:</div>
+		<div id="title">title</div>
+		<div id="loginName">UserName</div>
+	</div>
 
-<div th:fragment="artists" id="artists">
-    <div style="display: block; clear: both"></div>
-    <table id="artists-table" style="float: left;">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Genre</th>
-                <th>Preis</th>
-                <th>Techniker</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="single-artist">
-                <td class="artist-name"></td>
-                <td class="artist-genre"></td>
-                <td class="artist-price"></td>
-                <td class="artist-technician"></td>
-            </tr>
-        </tbody>
-    </table>
-    <table id="artists-genre-table" style="float: left;">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Preis</th>
-                <th>Techniker</th>
-            </tr>
-        </thead>
-        <tbody>
+	<div th:fragment="artists" id="artists">
+		<div id="frame-for-artists-table">
+			<table id="artists-table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Genre</th>
+						<th>Preis</th>
+						<th>Techniker</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="single-artist" style="cursor:pointer">
+						<td class="artist-name"></td>
+						<td class="artist-genre"></td>
+						<td class="artist-price"></td>
+						<td class="artist-technician"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<table id="artists-genre-table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Preis</th>
+					<th>Techniker</th>
+				</tr>
+			</thead>
+			<tbody>
 
-        </tbody>
-    </table>
-    <table id="artist-showcase" style="float: left;">
-        <tbody class="single-artist">
-            <tr><td>Name</td><td>:</td><td class="artist-name"></td></tr>
-            <tr><td>Genre</td><td>:</td><td class="artist-genre"></td></tr>
-            <tr><td>Preis</td><td>:</td><td class="artist-price"></td></tr>
-            <tr><td>Techniker</td><td>:</td><td class="artist-technician"></td></tr>
-            <tr><td><button class="slimButton book">Buchen</button> </td></tr>
-        </tbody>
-    </table>
-    <ul id="booked-artists">
-        <li class="single-artist"></li>
-    </ul>
-    <button id="reload-booked">Reload Booked</button>
-    <script type="text/javascript" src="/resources/js/artists.js"></script>
-</div>
+			</tbody>
+		</table>
+		<table id="artist-showcase">
+			<tbody class="single-artist">
+				<tr>
+					<td>Name</td>
+					<td>:</td>
+					<td class="artist-name"></td>
+				</tr>
+				<tr>
+					<td>Genre</td>
+					<td>:</td>
+					<td class="artist-genre"></td>
+				</tr>
+				<tr>
+					<td>Preis</td>
+					<td>:</td>
+					<td class="artist-price"></td>
+				</tr>
+				<tr>
+					<td>Techniker</td>
+					<td>:</td>
+					<td class="artist-technician"></td>
+				</tr>
+				<tr>
+					<td><button class="slimButton book">Buchen</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<ul id="booked-artists">
+			<li class="single-artist"></li>
+		</ul>
+		<button id="reload-booked">Reload Booked</button>
+		<script type="text/javascript" src="/resources/js/artists.js"></script>
+	</div>
 </body>
 </html>

@@ -19,6 +19,11 @@
 .boldButton:active {
 	border: #0c3 medium solid  !important;
 }
+
+.button {
+	border: #0C3 medium solid !important;
+}
+
 #content {
 	border-top: #0c3 thick dashed !important;
 }

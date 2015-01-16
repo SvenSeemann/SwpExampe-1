@@ -75,7 +75,6 @@ $(function () {
 					<div id="title">TERMINAL</div>
 					<div id="selectedFestival" th:text="${selectedFestival}"></div>
 				</div>
-				<p th:text="${selectedFestival}" />
 			</div>
 			<div id="loginName" th:text="${#authentication?.name}"></div>
 		</div>
@@ -94,30 +93,16 @@ $(function () {
 
 							<table class="cateringTable">
 								<tr>
-									<th>Catering Ausgaben Betrag:</th>
-								</tr>
-								<tr th:each=" item : ${cateringExpense}">
-									<td th:text="${item.amount}"></td>
-								</tr>
-								<tr>
-									<th>Total:
-										<p th:text="${catExpTot}" />
-									</th>
+									<th>Catering Ausgaben Betrag:
+									<p style="color: #EE3B3B" th:text="${catExpTot}" /></th>
 								</tr>
 							</table>
 
 							<table class="cateringTable">
 								<tr>
-									<th>Catering Einnahmen Betrag:</th>
-								</tr>
-								<tr th:each=" catering : ${cateringDeposit}">
-									<td th:text="${catering.amount}"></td>
-								</tr>
-								<tr>
-									<th>Total:
-										<p th:text="${catDepTot}" />
-									</th>
-								</tr>
+									<th>Catering Einnahmen Betrag:
+									<p th:text="${catDepTot}" /></th>
+								</tr>		
 							</table>
 
 

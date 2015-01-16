@@ -27,11 +27,11 @@
 						<form th:action="@{/loadfestivalTicket}" method="post">
 							<fieldset>
 								<label class="label" for="festivalId"> Festival
-									ausw&auml;hlen: </label><select name="festivalId" size="1">
+									ausw&auml;hlen: </label><select class="button" name="festivalId" size="1">
 									<option th:each=" festival : ${festivallist}"
 										th:text="${festival.id} + ${festival.festivalName}"
 										th:value="${festival.id}"></option>
-								</select><br /> <input type="submit" value="Festival laden" />
+								</select><br /> <input class="button" type="submit" value="Festival laden" />
 							</fieldset>
 						</form>
 						<form th:action="@{/newTicket}" method="post">
@@ -40,7 +40,7 @@
 									ausw&auml;hlen:</label> <br /> <input type="radio" name="ticketart"
 									value="false" checked="checked" />3-Tagesticket <br /> <input
 									type="radio" name="ticketart" value="true" />Tagesticket <br />
-								<label class="label"> Festivaltag ausw&auml;hlen</label> <select
+								<label class="label"> Festivaltag ausw&auml;hlen</label> <select class="button"
 									name="hilfsDate" size="1">
 									<option th:each=" hilfsDate : ${ticketdates}"
 										th:text="${hilfsDate}" th:value="${hilfsDate}"></option>
@@ -48,7 +48,7 @@
 
 								</select><br /> <label class="label" for="numbers"> <input
 									type="number" min="1" name="numbers" size="40" placeholder="Anzahl" /></label> <input
-									type="submit" onclick="alert('Ticket/s wird/werden erstellt')"
+									type="submit" class="button" onclick="alert('Ticket/s wird/werden erstellt')"
 									value="Ticket erstellen" />
 									 <label
 									class="label" for="eroor" th:text="${eroor}"></label>
@@ -59,7 +59,7 @@
 						<fieldset>
 							<label class="label" for="ticketnummer">Ticket Drucken</label>
 							<input type="text" name="ticketnummer" placeholder="Ticket ID drucken" />
-							<input type="submit" value="Ticket drucken" />
+							<input type="submit" class="button" value="Ticket drucken" />
 							</fieldset>
 						</form>
 					</div>
@@ -103,7 +103,7 @@
 							<fieldset>
 								<label class="label" for="numbers"> <input type="text"
 									name="numbers" size="40" placeholder="TicketID" /></label> <input
-									type="submit" value="Ticket einchecken" /><br /> <label
+									type="submit" class="button"  value="Ticket einchecken" /><br /> <label
 									class="label" for="checken" th:text="${forhtml}"></label>
 
 							</fieldset>

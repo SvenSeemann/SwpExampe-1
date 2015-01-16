@@ -86,9 +86,9 @@ public class FvivDataInitializer implements DataInitializer {
 
 
 		Festival festival1 = new Festival(date1, date2, "Wonderland", 1,
-				"Avicii, Linkin Park", 500000, Money.of(EUR, 55));
+				"Avicii, Linkin Park", 20000, Money.of(EUR, 55));
 		Festival festival2 = new Festival(date3, date4, "Rock am Ring", 2,
-				"Netflix", 69999, Money.of(EUR, 55));
+				"Netflix", 50000, Money.of(EUR, 55));
 
 		festivalRepository.save(festival1);
 		festivalRepository.save(festival2);
@@ -96,15 +96,15 @@ public class FvivDataInitializer implements DataInitializer {
 	}
 
 	private void initializeLocations() {
-		Location location1 = new Location("Wunderland", 400, 300, 20000,
-				"aasdf", Money.of(EUR, 300.00));
+		Location location1 = new Location("Tomorrowland", 400, 300, 20000,
+				"Belgien, Flandern, Ort Boom", Money.of(EUR, 300.00));
 		Location location2 = new Location("Rock am Ring", 200, 500, 50000,
-				"aasdf", Money.of(EUR, 450.00));
-		Location location3 = new Location("Festival ist toll", 2000, 3000,
-				10000, "aasdf", Money.of(EUR, 400.00));
-		Location location4 = new Location("Namen sind unwichtig", 1000, 1400,
-				9000, "aasdf", Money.of(EUR, 350.00));
-		Location location5 = new Location("Boom", 5000, 3000, 5, "aasdf", Money.of(EUR, 500.00));
+				"Am Ring in ihrer Nähe", Money.of(EUR, 450.00));
+		Location location3 = new Location("Woodstock", 2000, 3000,
+				10000, "Woodstock, America", Money.of(EUR, 400.00));
+		Location location4 = new Location("Brickleberry", 1000, 1400,
+				9000, "Freizeitpark Brickleberry", Money.of(EUR, 350.00));
+		Location location5 = new Location("Klassik Open Air", 5000, 3000, 5, "Wiener Straße, Wien, Österreich", Money.of(EUR, 500.00));
 
 		locationRepository.save(location1);
 		locationRepository.save(location2);
