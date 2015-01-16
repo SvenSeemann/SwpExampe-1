@@ -28,7 +28,4 @@ public class AreaController {
 		model.addAttribute("festivalId", fid);
 		return "planning";
 	}
-	
-	
-
 }

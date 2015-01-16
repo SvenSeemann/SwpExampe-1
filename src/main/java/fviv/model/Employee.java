@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Entity
 public class Employee{
 	public static enum Departement {
-		MANAGEMENT, CATERING, SECURITY, CLEANING, NULL;
+		MANAGEMENT, CATERING, SECURITY, CLEANING, LEADERSHIP, NULL;
 	}
 	
 	private String phone;

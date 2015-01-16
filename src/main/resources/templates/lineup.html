@@ -4,10 +4,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/indexcss.css" />
-    <link rel="stylesheet" type="text/css" href="../resources/css/terminal.css" />
-    <link href='http://fonts.googleapis.com/css?family=Oxygen'
-          rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="/resources/css/standard.css" />
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <title th:text="#{home.title}">FVIV Festivalmanager</title>
     <style type="text/css">
@@ -19,7 +17,13 @@
 
 <body>
 
+<div id="webseite">
 
+    <div id="header">
+        <div id="loggedAs">angemeldet als:</div>
+        <div id="title">title</div>
+        <div id="loginName">UserName</div>
+    </div>
 <div id="content">
     <div>
         <table>
@@ -94,6 +98,6 @@
 </div>
 <div th:include="messaging :: messaging"></div>
 <div th:include="artists :: artists"></div>
-
+</div>
 </body>
 </html>
