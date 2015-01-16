@@ -30,7 +30,7 @@
 - [Kommunikation](#kommunikation)
 - [Besucherterminal](#besucherterminal)
 
-## Unterstützte Brwoser
+## Unterstützte Browser
 Diese Software ist auf allen gängigen Browsern außer Firefox und IE funktionsfähig. Bitte achten Sie auf eine aktuelle Version Ihres Browsers.
 ## Oberfläche
 Die Software ist in drei Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine <span class="orange">orangene</span> Farbgebung, die Bereiche der Planung sind <span class="green">grün</span> und die Terminalbereiche sind <span class="blue">blau</span>.

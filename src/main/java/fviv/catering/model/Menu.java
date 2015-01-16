@@ -22,7 +22,7 @@ public class Menu extends Product {
 	private MenuType type;
 	private Money purchasePrice;
 	private Money sellingPrice;
-	
+
 	public Menu(long festivalId, String name, Money purchasePrice, Money sellingPrice, MenuType type) {
 		super(name, sellingPrice, Units.METRIC);
 		this.festivalId = festivalId;
