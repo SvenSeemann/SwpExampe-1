@@ -183,15 +183,21 @@ public class TicketController {
 	@RequestMapping(value = "/newTicket", method = RequestMethod.POST)
 	public String newTicket(ModelMap modelMap,
 			@RequestParam("ticketart") boolean ticketart,
-			@RequestParam("numbers") int numbers,
+			@RequestParam("numbers") String numbers,
 			@RequestParam("hilfsDate") String tagesdate) throws IOException,
 			BarcodeException {
 		long id = ticketid;
 		int anzahl;
-		if (numbers < 1) {
+		if (numbers == "") {
+		anzahl = 1;
+		numbers = 1 +"" ;
+		}
+		int number = Integer.parseInt(numbers);
+
+		if ( number < 1) {
 			anzahl = 1;
 		} else {
-			anzahl = numbers;
+			anzahl = number;
 		}
 		Long longId = id;
 		for (int i = 1; i <= anzahl; i++) {
