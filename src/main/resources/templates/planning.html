@@ -52,8 +52,7 @@
 					th:text="#{catering.logout}" value="logout">Facepalm</button>
 			</form>
 			<div th:include="messaging :: messaging"></div>
-			<button class="slimButton" onClick="saveIt();">Speichern</button>
-			<button class="boldButton" onClick="newArea();">New Area</button>
+			<button type="submit" class="slimButton" onClick="saveIt();">Speichern</button>
 			<button class="boldButton" onClick="openSubMenu('stage');">Stages</button>
 
 			<div class="objectMenu" id="stages">
@@ -67,13 +66,13 @@
 			</div>
 			<button class="boldButton" onClick="openSubMenu('toilet');">Toiletten</button>
 			<div class="objectMenu" id="toilets">
-				<div class="chooseObject" onClick="buildObject(this,3, 'TOILET');">ToiToi</div>
+				<div class="chooseObject" onClick="buildObject(this,3, 'TOILET');">WC</div>
 				<div class="chooseObject" onClick="buildObject(this,4, 'TOILET');">Behindertengerecht</div>
-				<div class="chooseObject" onClick="buildObject(this,5, 'CATERING');">BadContainer</div>
+				<div class="chooseObject" onClick="buildObject(this,5, 'TOILET');">BadContainer</div>
 			</div>
 			<button class="boldButton" onClick="openSubMenu('catering');">Catering</button>
 			<div class="objectMenu" id="catering">
-				<div class="chooseObject" onClick="buildObject(this,6, 'CATERING');">Bierwagen</div>
+				<div class="chooseObject" onClick="buildObject(this,6, 'CATERING');">Cateringstand</div>
 				<div class="chooseObject" onClick="buildObject(this,7, 'CATERING');">Essplätze</div>
 				<div class="chooseObject" onClick="buildObject(this,8, 'CATERING');">Mülleimer</div>
 			</div>
