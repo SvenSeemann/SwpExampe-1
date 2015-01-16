@@ -20,7 +20,7 @@ public class Finance {
 	}
 	
 	public static enum FinanceType {
-		SALARY, RENT, CATERING, TICKET, ARTIST;
+		SALARY, RENT, LOCATION, CATERING, TICKET, ARTIST;
 	}
 
 	private long festivalId;

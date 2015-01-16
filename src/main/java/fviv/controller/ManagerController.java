@@ -205,6 +205,8 @@ public class ManagerController {
 		 * locationRepository.findById(
 		 * locationId).getCostPerDay().multipliedBy(days);
 		 */
+		Iterable<Finance> old = financeRepository.findByFinanceType(FinanceType.RENT);
+		financeRepository.delete(old);
 		for (AreaItem areaItem : areaItemsRepository.findAll()) {
 			PlanningItem x = this.planningItemsRepository.findByName(areaItem
 					.getName());
@@ -296,6 +298,10 @@ public class ManagerController {
 
 		for (Finance rentExp : rentExpense) {
 			rentExpTot = rentExpTot.plus(rentExp.getAmount());
+		}
+		
+		for (Finance locExp : financeRepository.findByFinanceType(FinanceType.LOCATION)){
+			rentExpTot = rentExpTot.plus(locExp.getAmount());
 		}
 
 		for (Finance ticketDep : ticketDeposit) {
