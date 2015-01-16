@@ -3,12 +3,10 @@ package fviv.controller;
 import fviv.areaPlanner.AreaItemsRepository;
 import fviv.festival.Festival;
 import fviv.festival.FestivalRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +19,15 @@ public class TerminalController {
 	private Festival selected;
 	private String mode;
 	private long selectedId;
+	private ScheduleController scheduleController;
 
 	@Autowired
 	public TerminalController(AreaItemsRepository areaItems,
-			FestivalRepository festivalRepository) {
+			FestivalRepository festivalRepository,
+			ScheduleController scheduleController) {
 		this.areaItems = areaItems;
 		this.festivalRepository = festivalRepository;
+		this.scheduleController = scheduleController;
 	}
 
 	@ModelAttribute("selectedFestival")
@@ -68,8 +69,9 @@ public class TerminalController {
 	}
 
 	@RequestMapping(value = "/terminal/show/schedule", method = RequestMethod.POST)
-	public String showPlan() {
+	public String showPlan(Model model) {
 		mode = "schedule";
+		model.addAttribute("stages", scheduleController.getEvents(selected));
 		return "redirect:/terminal";
 	}
 
