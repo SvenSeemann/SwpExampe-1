@@ -7,9 +7,10 @@
 ## Unterstützte Brwoser
 Diese Software ist auf allen gängigen Browsern außer Firefox und IE funktionsfähig. Bitte achten Sie auf eine aktuelle Version Ihres Browsers.
 ## Oberfläche
-Die Software ist in 3 Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine orangene Farbgebung, die Bereiche der Planung sind <span class="green">grün</span> und die Terminalbereiche sind <span class="blue">blau</span>.
+Die Software ist in drei Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine <span class="orange">orangene</span> Farbgebung, die Bereiche der Planung sind <span class="green">grün</span> und die Terminalbereiche sind <span class="blue">blau</span>.
 
-Die Seite ist immer in 3 Bereiche gegliedert.
+
+Die Seite ist immer in drei Bereiche gegliedert.
 
 Im Kopf der Seite finden Sie verschiedene Informationen. Links steht der Titel der Seite. In der Mitte steht der Name des aktuell angewählten Festivals. Rechts sehen Sie als welche Person Sie gerade eingeloggt sind.
 
@@ -52,7 +53,7 @@ Suchen Sie aus der Liste das gewünschte Festival aus. Geben Sie die zu prüfend
 
 ##Festival Terminal
 ### Übersicht der Festivals
-Hier finden Sie eine Übersicht der bestehenden Festivals. Weiterhin können Sie hier auch neue Festivals anlegen. Dies geschieht durch Aussuchen einer Location und Ausfüllen des Formular. Klicken Sie anschließend auf <button>Festival erstellen</button>.
+Hier finden Sie eine Übersicht der bestehenden Festivals. Weiterhin können Sie hier auch neue Festivals anlegen. Dies geschieht durch Aussuchen einer Location und Ausfüllen des Formulars. Einem Festival wird automatisch die Länge von drei Tagen zugewiesen. Klicken Sie anschließend auf <button>Festival erstellen</button>.
 ### Festivals bearbeiten
 Hier haben Sie die Möglichkeit bestehende Festivals zu bearbeiten. Sie können den Geländeplan erstellen und bearbeiten (mehr dazu im Punkt [Geländeplanung](#gelndeplanung)). Weiterhin können Sie die Anzahl der Angestellten einstellen und deren Lohn.
 
