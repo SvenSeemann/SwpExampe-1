@@ -15,13 +15,34 @@ am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie "Logout" un
 
 Der dritte große Bereich ist der Bereichsspezifisch gefüllte Inhalt der Seite. 
 
-## Festivalerstellung
-In der Festivalerstellung können sie neue Festivals anlegen und Informationen und Rahmenbedingungen für diese festsetzen und speichern.
 ## Die Manager Rolle
 Der Manager ist die wichtigste und zentralste Rolle der gesamten Nutzerstruktur.
-Der Manager kann die Finanzen einsehen und verwalten. Mittels der Funktion der Mitarbeiterverwaltung 
+Der Manager kann die Finanzen einsehen und verwalten.
+###Mitarbeiter
+Zum Anlegen neuer Mitarbeiter füllen Sie das Formular zum Hinzufügen eines neuen Mitarbeiter aus. Wählen Sie im Drop-Down-Menü anschließend die Art des Useraccounts aus. Klicken Sie nun auf den Speichern-Button.  
 
-Der Manager hat Zugriffsberechtigungen für alle Komponenten des Systems.
+Um einen Mitarbeiter zu löschen geben Sie die gewünschte Mitarbeiter-ID ein und klicken Sie auf" löschen". 
+
+###Finanzen
+Diese Oberfläche bietet Ihnen eine komplette Übersicht der Finanzen. 
+
+###Accounts
+Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
+Diesen können Sie bearbeiten, indem Sie in das Feld dne Namen des Account eingeben und auf "Account bearbeiten" klicken. 
+Sie können Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
+Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
+###Besucherzahlen
+Wählen Sie das Festival aus, deren Besucherzahlen Sie abfragen möchten, und klicken Sie auf "Festival laden". Wählen Sie anschließend das gewünschte Datum und fragen Sie die Anzahl der Besucher ab. 
+
+##Festival Terminal (scheiss name)
+Hier legen Sie neue Festivals an und bearbeiten bestehende Festivals. 
+
+### Neues Festival anlegen
+Wählen Sie zuerst eine Location aus. Tragen Sie Start- und Enddatum, den Names des Festivals, die Künstler und Kartenpreis ein und erstellen ein neues Festival durch KLick auf den Button. 
+
+###Festival bearbeiten
+In diesem Nenü können Sie den Geländeplan erstellen und bearbeiten (mehr dazu im Punkt Geländeplanung). Zudem können Sie Angestellte hinzufügen und deren Gehälter bestimmen- bitte auf Mindestlohn achten, sonst kommt das Finanzamt :P.
+
 ## Catering
 Die Catering Oberfläche bietet Ihnen Auswahl- und Bestellfunktionen für Speisen und Getränke.
 
@@ -53,10 +74,7 @@ Weiterhin haben Sie die Mögichkeit per Klick auf die jeweiligen Buttons das Obj
 ###Mitarbeiter
  Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. bei der Finanzkalkulation wird von einem 8 Stunden arbeitstag pro Mitarbeiter ausgegangen
 ## Nutzerverwaltung
-Mit der Nutzerverwaltung können sie Ihre Mitarbeiter registrieren, mit Zugriffsrechten für das System ausstatten und diese auch wieder entfernen.
-Wenn vom Manager Mitarbeiter hinzugefügt werden, dann werden automatisch Accounts mit Vorname.Nachname angelegt.
 
-Die Standardaccounts "Manager", "Boss", "Caterer", "Leader" und "Employee" haben als Standardpasswort: 123 .
 ## Kommunikation
 Für die Kommunikation stehen Ihnen ein Chatsystem zur Verfügung. Personen mit den entsprechenden Berechtigungen sind in der Lage anderen Nutzern via des Chats Nachrichten zu schreiben.
 
