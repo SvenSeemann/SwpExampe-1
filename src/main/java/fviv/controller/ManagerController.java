@@ -397,7 +397,7 @@ public class ManagerController {
 		}
 
 		// Create useraccount
-		Role employeeRole;
+		Role employeeRole = new Role("ROLE_EMPLOYEE");
 		if (departement == Departement.MANAGEMENT) {
 			employeeRole = new Role("ROLE_MANAGER");
 		}
@@ -406,10 +406,16 @@ public class ManagerController {
 		}
 		if (departement == Departement.LEADERSHIP) {
 			employeeRole = new Role("ROLE_LEADER");
-		} else {
+		}
+		if (departement == Departement.SECURITY) {
+			employeeRole = new Role("ROLE_EMPLOYEE");
+		}
+		if (departement == Departement.CLEANING) {
 			employeeRole = new Role("ROLE_EMPLOYEE");
 		}
 
+		System.out.println(departement);
+		
 		UserAccount employeeAccount = userAccountManager.create(
 				registration.getFirstname() + "." + registration.getLastname(),
 				registration.getPassword(), employeeRole);

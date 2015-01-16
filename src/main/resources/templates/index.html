@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" href="../resources/css/index.css" />
+<link rel="stylesheet" type="text/css"
+	href="../resources/css/standard.css" />
 <link href='http://fonts.googleapis.com/css?family=Oxygen'
 	rel='stylesheet' type='text/css' />
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -13,33 +15,39 @@
 
 <!--  Festival Plan -->
 
-<body>		
-			
-	<div id="content">
-			<!-- delete when finish -->
-	<form method="post" action="/logout">
-				<button class="slimButton" type="submit"
-					th:text="#{catering.logout}" value="logout">Logout</button>
-			</form>
-<!-- delete when finish -->
-			<form action="/catering" method="post">
-				<input type="submit" value="Catering Terminal" class="slimButton"></input>
-			</form>
-			<form action="/management" method="post">
-				<input type="submit" value="Manager Terminal" class="slimButton"></input>
-			</form>
-			<form action="/leadership" method="post">
-				<input type="submit" value="Festivalleiter" class="slimButton"></input>
-			</form>
-			<form action="/ticket" method="post">
-				<input type="submit" value="Ticket Terminal" class="slimButton"></input>
-			</form>
-			<form action="/festival" method="post">
-				<input type="submit" value="Festival Terminal" class="slimButton"></input>
-			</form>
-			<div th:include="messaging :: messaging"></div>
-	</div>
-	<div th:include="artists :: artists"></div>
+<body>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs" th:text="#{fviv.whoami}"></div>
+			<div id="indexTitle" th:text="#{fviv.title}"></div>
+			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
+			</div>
+			<div id="content">
+				<!-- delete when finish -->
+				<form method="post" action="/logout">
+					<button class="slimButton" type="submit"
+						th:text="#{catering.logout}" value="logout">Logout</button>
+				</form>
+				<!-- delete when finish -->
+				<form action="/festival" method="post">
+					<input type="submit" value="Festival Setup" class="boldButton"></input>
+				</form>
+				<form action="/management" method="post">
+					<input type="submit" value="Manager Terminal" class="boldButton"></input>
+				</form>
+				<form action="/leadership" method="post">
+					<input type="submit" value="Festivalleiter" class="boldButton"></input>
+				</form>
+				<form action="/ticket" method="post">
+					<input type="submit" value="Ticket Verkauf" class="boldButton"></input>
+				</form>
+				<form action="/catering" method="post">
+					<input type="submit" value="Catering Kasse" class="boldButton"></input>
+				</form>
 
+				<!-- <div th:include="messaging :: messaging"></div> -->
+			</div>
+			<!-- <div th:include="artists :: artists"></div> -->
+</div>
 </body>
 </html>

@@ -3,7 +3,8 @@
 ## Inhaltsverzeichnis
 
 @@TOC@@
-## Unterstützrte Brwoser
+
+## Unterstützte Brwoser
 Diese Software ist auf allen gängigen Browsern ausser Firefox und IE funktionsfähig. Bitte achten Sie auf eine aktuelle Version Ihres Browsers. 
 ##Oberfläche
 Die Software ist in 3 Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine orangene Farbgebung, die Breiche der Planung sind grün und die Terminalbereiche sind blau. 
@@ -40,7 +41,7 @@ Dies ist die Lagerverwaltung des Catering. Hier können Sie den aktuellen Lagerb
 
 ##TicketVerkauf
 ###Tickets erstellen
-Wählen Sie ein Festival aus dem Drop-Down-Menü aus und klicken Sie auf "Festival laden". Unterscheiden Sie nun zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket. Geben Sie nun den gewünschten Festivaltag und Anzahl an. Klicken Sie nun auf "Tickets erstellen".
+Wählen Sie ein Festival aus dem Drop-Down-Menü aus und klicken Sie auf "Festival laden". Unterscheiden Sie nun zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket. Auf ein 3-Tages-Ticket gibt es einen Preisnachlass! Geben Sie nun den gewünschten Festivaltag und Anzahl an. Klicken Sie nun auf "Tickets erstellen".
 
 ###Tickets drucken
 Geben Sie in das Auswahlfeld die TicketId des zu drucken Tickets an und drucken Sie das Ticket mittels Klick auf den entsprechenden Button. 
@@ -106,12 +107,3 @@ Sollten Sie den falschen Empfänger ausgewählt haben, können Sie diesen mit ei
 Das Besucherterminal bietet eine sichere Umgebung die die Besucher Ihres Festivals benutzen können um sich zu orientieren.
 
 Dazu gehören ein Spiel- und Geländeplan.
-## Tickets
-Die Ticketverwaltung ermöglicht es Ihnen Tickets anzufordern, auszustellen und zu drucken.
-
-###Tickets erstellen
-Wählen Sie sich zuerst das gewünschte Festival aus. Klicken sie anschließend den "Laden" Button. 
-Anschließend können Sie zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket wählen. Suchen Sie über das Drop-Down-Menü nun den gewünschten Festivaltag aus. Geben Sie nun die gewünschte Anzahl der zu erstellenden Tickets an. Mit Klick auf "Ticket erstellen" werden nun Ihre Tickets erstellt. 
-
-### Tickets drucken
-Sie können Tickets drucken, indem Sie die gewünschte TicketId in das Feld eingeben und anschließend auf "Ticket drucken" klicken.  

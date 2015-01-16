@@ -37,3 +37,9 @@ body {
 	font-size: 16px;
 	cursor: pointer;
 }
+#indexTitle {
+	font-size: 50px;
+	height: 60px;
+	float: left;
+	margin-right:50px;
+}
