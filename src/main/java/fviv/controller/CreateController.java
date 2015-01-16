@@ -4,7 +4,10 @@ import static org.joda.money.CurrencyUnit.EUR;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import org.joda.money.Money;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.expression.Lists;
 
 import fviv.areaPlanner.AreaItem;
 import fviv.areaPlanner.AreaItem.Type;
@@ -261,6 +265,23 @@ public class CreateController {
 		return mode;
 	}
 
+	public Collection<LocalDate> doppelPruefungen(long locationId) {
+		Iterable<Festival> festivals = festivalRepository.findAll();
+		Collection<LocalDate> isBooked = new ArrayList<LocalDate>();
+		for (Festival item : festivals) {
+			if (item.getLocationId() == locationId) {
+				LocalDate dateStart = item.getStartDatum();
+				LocalDate dateMitte = item.getStartDatum().plusDays(1);
+				LocalDate dateEnde = item.getStartDatum().plusDays(2);
+				isBooked.add(dateStart);
+				isBooked.add(dateMitte);
+				isBooked.add(dateEnde);
+
+			}
+		}
+		return isBooked;
+	}
+
 	/**
 	 * Creating Festival from the inputs of the site
 	 * 
@@ -280,86 +301,89 @@ public class CreateController {
 			@RequestParam("actors") String actors,
 			@RequestParam("preisTag") String preisTag,
 			@RequestParam("locationId") long locationId) throws ParseException {
-		
-
+		Collection<LocalDate> isBooked = doppelPruefungen(locationId);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LL-dd");
 
 		LocalDate dateStart = LocalDate.parse(startDate, formatter);
 		LocalDate dateEnd = dateStart.plusDays(2);
+		LocalDate dateMitte = dateStart.plusDays(1);
+		Collection<LocalDate> helperCollection = new ArrayList<LocalDate>(
+				Arrays.asList(dateStart, dateEnd, dateMitte));
 
+		isBooked.retainAll(helperCollection);
+		if (isBooked.isEmpty()){
 		Festival festival = new Festival(dateStart, dateEnd, festivalName,
 				locationId, actors, (int) locationRepository.findById(
 						locationId).getMaxVisitors(), Money.of(EUR,
 						Long.parseLong(preisTag)));
 
-		
-		
 		long festivalId = festivalRepository.save(festival).getId();
-		float factor = (835/locationRepository.findById(locationId).getWidth());
-		
+		float factor = (835 / locationRepository.findById(locationId)
+				.getWidth());
+
 		areaItems.save(new AreaItem(Type.AREA, "Areal", locationRepository
 				.findById(locationId).getWidth(), locationRepository.findById(
 				locationId).getHeight(), 0, 0, factor, festivalRepository
 				.findById(festivalId)));
-		
+
 		Period dateHelper;
 		dateHelper = festival.getStartDatum().until(festival.getEndDatum());
 		int days = dateHelper.getDays() + 1;
-		Money costTot = locationRepository.findById(locationId).getCostPerDay().multipliedBy(days);
-		Finance locationCost = new Finance(festivalId, Reference.EXPENSE, costTot, FinanceType.LOCATION);
+		Money costTot = locationRepository.findById(locationId).getCostPerDay()
+				.multipliedBy(days);
+		Finance locationCost = new Finance(festivalId, Reference.EXPENSE,
+				costTot, FinanceType.LOCATION);
 		financeRepository.save(locationCost);
-		
+
 		// --- Initialize Menus for new festival --- \\
-		
-			// --- Meals --- \\
 
-				Menu Meal1 = new Menu(festivalId, "Pommes Frites", Money.of(EUR, 0.50),
-						Money.of(EUR, 2.50), MenuType.MEAL);
-				Menu Meal2 = new Menu(festivalId, "Pommes Spezial", Money.of(EUR, 0.70),
-						Money.of(EUR, 3.50), MenuType.MEAL);
-				Menu Meal3 = new Menu(festivalId, "Bratwurst", Money.of(EUR, 0.20), Money.of(
-						EUR, 2.00), MenuType.MEAL);
-				Menu Meal4 = new Menu(festivalId, "Currywurst", Money.of(EUR, 0.50), Money.of(
-						EUR, 3.00), MenuType.MEAL);
-				Menu Meal5 = new Menu(festivalId, "Currywurst mit Pommes", Money.of(EUR, 1.00),
-						Money.of(EUR, 4.50), MenuType.MEAL);
-				Menu Meal6 = new Menu(festivalId, "Stück Pizza", Money.of(EUR, 0.40), Money.of(
-						EUR, 2.50), MenuType.MEAL);
-				Menu Meal7 = new Menu(festivalId, "Vanilleeis", Money.of(EUR, 0.20), Money.of(
-						EUR, 1.00), MenuType.MEAL);
-				Menu Meal8 = new Menu(festivalId, "Schokoeis", Money.of(EUR, 0.20), Money.of(
-						EUR, 1.00), MenuType.MEAL);
+		// --- Meals --- \\
 
-				// --- Drinks --- \\
+		Menu Meal1 = new Menu(festivalId, "Pommes Frites", Money.of(EUR, 0.50),
+				Money.of(EUR, 2.50), MenuType.MEAL);
+		Menu Meal2 = new Menu(festivalId, "Pommes Spezial",
+				Money.of(EUR, 0.70), Money.of(EUR, 3.50), MenuType.MEAL);
+		Menu Meal3 = new Menu(festivalId, "Bratwurst", Money.of(EUR, 0.20),
+				Money.of(EUR, 2.00), MenuType.MEAL);
+		Menu Meal4 = new Menu(festivalId, "Currywurst", Money.of(EUR, 0.50),
+				Money.of(EUR, 3.00), MenuType.MEAL);
+		Menu Meal5 = new Menu(festivalId, "Currywurst mit Pommes", Money.of(
+				EUR, 1.00), Money.of(EUR, 4.50), MenuType.MEAL);
+		Menu Meal6 = new Menu(festivalId, "Stück Pizza", Money.of(EUR, 0.40),
+				Money.of(EUR, 2.50), MenuType.MEAL);
+		Menu Meal7 = new Menu(festivalId, "Vanilleeis", Money.of(EUR, 0.20),
+				Money.of(EUR, 1.00), MenuType.MEAL);
+		Menu Meal8 = new Menu(festivalId, "Schokoeis", Money.of(EUR, 0.20),
+				Money.of(EUR, 1.00), MenuType.MEAL);
 
-				Menu Drink1 = new Menu(festivalId, "Pils", Money.of(EUR, 0.50), Money.of(EUR,
-						2.50), MenuType.DRINK);
-				Menu Drink2 = new Menu(festivalId, "Alt", Money.of(EUR, 0.60), Money.of(EUR,
-						3.00), MenuType.DRINK);
-				Menu Drink3 = new Menu(festivalId, "Alkoholfrei", Money.of(EUR, 0.50), Money.of(
-						EUR, 3.00), MenuType.DRINK);
-				Menu Drink4 = new Menu(festivalId, "Softdrink", Money.of(EUR, 0.50), Money.of(
-						EUR, 2.20), MenuType.DRINK);
-				Menu Drink5 = new Menu(festivalId, "Wein", Money.of(EUR, 0.70), Money.of(EUR,
-						4.00), MenuType.DRINK);
-				
-				menusRepository
-				.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5, Meal6,
-						Meal7, Meal8, Drink1, Drink2, Drink3, Drink4,
-						Drink5));
+		// --- Drinks --- \\
+
+		Menu Drink1 = new Menu(festivalId, "Pils", Money.of(EUR, 0.50),
+				Money.of(EUR, 2.50), MenuType.DRINK);
+		Menu Drink2 = new Menu(festivalId, "Alt", Money.of(EUR, 0.60),
+				Money.of(EUR, 3.00), MenuType.DRINK);
+		Menu Drink3 = new Menu(festivalId, "Alkoholfrei", Money.of(EUR, 0.50),
+				Money.of(EUR, 3.00), MenuType.DRINK);
+		Menu Drink4 = new Menu(festivalId, "Softdrink", Money.of(EUR, 0.50),
+				Money.of(EUR, 2.20), MenuType.DRINK);
+		Menu Drink5 = new Menu(festivalId, "Wein", Money.of(EUR, 0.70),
+				Money.of(EUR, 4.00), MenuType.DRINK);
+
+		menusRepository.save(Arrays.asList(Meal1, Meal2, Meal3, Meal4, Meal5,
+				Meal6, Meal7, Meal8, Drink1, Drink2, Drink3, Drink4, Drink5));
 
 		for (Menu menu : menusRepository.findAll()) {
 			menu.setOrderable(true);
 			InventoryItem inventoryItem = new InventoryItem(menu, Units.of(50));
 			inventory.save(inventoryItem);
 		}
-		
+		}
 
 		return "redirect:/festival";
 	}
-	
+
 	// Setter for jUnit testing
-	public void setSelected(Festival festival){
+	public void setSelected(Festival festival) {
 		this.selected = festival;
 	}
 }
