@@ -2,6 +2,7 @@
 
 ## Inhaltsverzeichnis
 
+- [Inhaltsverzeichnis](#inhaltsverzeichnis)
 - [Unterstützte Brwoser](#untersttzte-brwoser)
 - [Oberfläche](#oberflche)
 - [Manager](#manager)
@@ -32,13 +33,14 @@
 ## Unterstützte Brwoser
 Diese Software ist auf allen gängigen Browsern außer Firefox und IE funktionsfähig. Bitte achten Sie auf eine aktuelle Version Ihres Browsers.
 ## Oberfläche
-Die Software ist in 3 Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine orangene Farbgebung, die Bereiche der Planung sind grün und die Terminalbereiche sind blau.
+Die Software ist in drei Bereiche gegliedert: Mitarbeiter, Planung und Terminal. Die Mitarbeiterbereiche haben eine <span class="orange">orangene</span> Farbgebung, die Bereiche der Planung sind <span class="green">grün</span> und die Terminalbereiche sind <span class="blue">blau</span>.
 
-Die Seite ist immer in 3 Bereiche gegliedert.
+
+Die Seite ist immer in drei Bereiche gegliedert.
 
 Im Kopf der Seite finden Sie verschiedene Informationen. Links steht der Titel der Seite. In der Mitte steht der Name des aktuell angewählten Festivals. Rechts sehen Sie als welche Person Sie gerade eingeloggt sind.
 
-Am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie "Logout" und "Show Chat" finden Sie überall. Weitere Menupunkte sind Bereichsspezifisch.
+Am rechten Rand finden Sie das Menu der Seite. Einige Menupunkte wie <a>Logout</a> und <a>Show Chat</a> finden Sie überall. Weitere Menupunkte sind Bereichsspezifisch.
 
 Der dritte große Bereich ist der Bereichsspezifisch gefüllte Inhalt der Seite.
 
@@ -77,12 +79,12 @@ Suchen Sie aus der Liste das gewünschte Festival aus. Geben Sie die zu prüfend
 
 ##Festival Terminal
 ### Übersicht der Festivals
-Hier finden Sie eine Übersicht der bestehenden Festivals. Weiterhin können Sie hier auch neue Festivals anlegen. Dies geschieht durch Aussuchen einer Location und Ausfüllen des Formular. Klicken Sie anschließend auf <button>Festival erstellen</button>.
+Hier finden Sie eine Übersicht der bestehenden Festivals. Weiterhin können Sie hier auch neue Festivals anlegen. Dies geschieht durch Aussuchen einer Location und Ausfüllen des Formulars. Einem Festival wird automatisch die Länge von drei Tagen zugewiesen. Klicken Sie anschließend auf <button>Festival erstellen</button>.
 ### Festivals bearbeiten
-Hier haben Sie die Möglichkeit bestehende Festivals zu bearbeiten. Sie können den Geländeplan erstellen und bearbeiten (mehr dazu im Punkt Geländeplanung). Weiterhin können Sie die Anzahl der Angestellten einstellen und deren Lohn.
+Hier haben Sie die Möglichkeit bestehende Festivals zu bearbeiten. Sie können den Geländeplan erstellen und bearbeiten (mehr dazu im Punkt [Geländeplanung](#gelndeplanung)). Weiterhin können Sie die Anzahl der Angestellten einstellen und deren Lohn.
 
 ### Mitarbeiter
- Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. Bei der Finanzkalkulation wird von einem 8 Stunden Arbeitstag pro Mitarbeiter ausgegangen.
+Für Mitarbeiter werden bei der Festivalerstellung Löhne pro Stunde festgelegt. Bei der Finanzkalkulation wird von einem 8 Stunden Arbeitstag pro Mitarbeiter ausgegangen.
 
 ## Catering
 Die Catering Oberfläche bietet Ihnen Auswahl- und Bestellfunktionen für Speisen und Getränke.
@@ -120,7 +122,7 @@ Dazu öffnen Sie zunächst ihr Chatfenster, indem Sie auf <button>Chat Öffnen</
 In der Liste der möglichen Empfänger können Sie nun durch klicken Ihren gewünschten Empfänger auswählen.
 
 Daraufhin erscheint ein Eingabefeld
-<div style="border-color:yellow; width:300px; height:150px;" class="hello"><div>**Empfänger**</div><textarea class="hello" style="border-color:yellow;" rows=3 cols=34>Ihre persönliche Nachricht hier!</textarea><button style="display:block;margin:10px 0;">Absenden</button>
+<div style="border-color:yellow; width:300px; height:170px;" class="hello"><div>**Empfänger**</div><textarea class="hello" style="border-color:yellow;" rows=3 cols=34>Ihre persönliche Nachricht hier!</textarea><button style="display:block;margin:10px 0;">Absenden</button>
 </div>
 <div style="clear:both;"></div>
 In welchem Sie Ihre Nachricht eingeben können. Ein Klick auf den <button>Absenden</button> Button versendet Ihre Nachricht.
