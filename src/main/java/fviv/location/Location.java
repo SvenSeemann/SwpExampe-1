@@ -2,6 +2,9 @@ package fviv.location;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -107,4 +110,5 @@ public class Location {
 	public void setCostPerDay(Money costPerDay) {
 		this.costPerDay = costPerDay;
 	}
+	
 }
