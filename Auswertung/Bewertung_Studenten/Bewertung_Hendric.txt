@@ -1,0 +1,9 @@
+Die Aufgabenstellung war im Hinblick auf Schwierigkeit und Umfang für das Projekt angemessen.
+Bei den zur Verfügung gestellten Hilfsmitteln hat mir vor allem der Videoshop sehr gut gefallen, da man 
+ein anschauliches Beispiel für die Anwendung von Spring und Salespoint hatte.
+Die Dokumentationen zu den Frameworks waren ausreichend, das Salespoint-Framework selbst jedoch an einigen Stellen etwas unausgereift 
+(z.B. keine Löschfunktion von vorhandenen Accounts, ...).
+Unser Tutor stand uns für Fragen immer zur Verfügung, wenn man ihm eine gewisse Toleranzzeit im Beantworten von E-mails eingeräumt hat.
+Für nachfolgende Generationen würde ich den Ablauf des Projekts so beibehalten, da man einen guten Einblick in den Gesamtvorgang
+der Softwareentwicklung erhält. Man könnte eventuell darüber nachdenken es zeitlich in die Semesterferien zu verlegen wie es beim Robolab der Fall ist,
+da das Projekt wirklich viel Zeit in Anspruch nimmt und zumindest mir bei mir persönlich der Fokus auf die restlichen Module des Semesters verloren ging.
