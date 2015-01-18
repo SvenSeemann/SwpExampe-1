@@ -1,6 +1,0 @@
-Ich fande die Aufgabenstellung dem Unfang des Praktikums angemessen, man hätte dieser jedoch vielleicht etwas sortierter schreiben können
-um den Einstieg ins Praktikum zu Erleichtern. Das Salespoint Framework war für unsere Aufgabe eig. perfekt und nach einigem reinarbeiten 
-auch einfach zu benutzen. Die Info Verantstaltungen waren sehr gut und hilfreich ( Videoshop ).
-Unser Tutor war immer für Fragen offen und konnte stets eine Antwort finden, Problem abhängig wie schnell. Großes Lob.
-Nachfolgenden Generationen würde ich empfehlen schon früher mit der Implementierung anzufangen und die Entwurfsphase erstmal knapper zu gestalen, 
-und dann später das Nachzutragen, da wir und Recht wenig an das Entwurfsklassendiagramm(zum Beispiel) gehalten haben.
