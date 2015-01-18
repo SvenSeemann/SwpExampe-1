@@ -1,7 +1,0 @@
-Die Aufgabenstellung habe ich im Hinblick auf den Schwierigkeitsgrad angemessen gefunden.
-Zwischenpräsentation, Crosstesting, Kundenwunsch und die regelmäßigen Treffen mit unserem Tutor haben realistische Rahmenbedingungen für das Praktikum geschaffen.
-In dem Praktikum konnte ich bereits Erlerntes aus dem vergangenen Semester anwenden.
-Ich habe es teilweise als äußerst schwierig gefunden, einen Einstieg in die Benutzung des Salespoint-Frameworks zu finden. Einige Funktionen wie z.B. das Löschen eines UserAccounts haben mir gefehlt, andere Klassen und Schnittstellen waren nicht ausreichend dokumentiert, um deren Zweck und Vorteile schnell zu erkennen (CartItem, Order, OrderLine, ...).
-Im Lernraum konnte mir meistens (schnell) geholfen werden.
-Bei Fragen stand mir unser Tutor stets mit Kritik und Anregungen zur Seite.
-Zukünftigen Projektgruppen dieses Praktikums würde ich empfehlen, sich noch strenger an den Zeitplan zu halten.
