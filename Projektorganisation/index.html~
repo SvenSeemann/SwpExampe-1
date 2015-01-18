@@ -1,0 +1,339 @@
+﻿<!doctype html>
+<html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Raleway:400,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="style.css"/>
+<meta charset="utf-8">
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="scripts/highcharts.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
+<title>Gruppe 33</title>
+<style type="text/css">
+</style>
+</head>
+
+<body onScroll="scroller();">
+<!--
+author: Maximilian Schwarze, Okt. 2014
+-->
+<div id="wrapper">
+  <div id="nav">
+    <div id="nav_background"></div>
+    <div id="menu_background"></div>
+    <a href="#news" class="menu" onMouseOver="slide(1);" onMouseDown="moveto(1);">NEWS</a> <a href="#task" class="menu" onMouseOver="slide(2);" onMouseDown="moveto(2);">AUFGABE</a> <a href="#group" class="menu" onMouseOver="slide(3);" onMouseDown="moveto(3);">TEAM</a> <a href="#plan" class="menu" onMouseOver="slide(4);" onMouseDown="moveto(4);">ZEITPLAN</a> <a href="#protocoll" class="menu" onMouseOver="slide(5);" onMouseDown="moveto(5);">DOWNLOADS</a> </div>
+  <div id="start">
+    <p>GRUPPE 33</p>
+  </div>
+  <div id="news" onMouseOver="slide(1)">
+    <h3>NEWS</h3>
+<div class="eintrag">
+      <h2>02.DEZ 14 | IMPLEMENTIERUNG</h2>
+      <p>Beginn mit der Implementierung</p>
+    </div>
+
+	<div class="eintrag">
+      <h2>15.NOV 14 | PROTOTYPEN </h2>
+      <p>Entwicklung der Prototypen beginnt </p>
+    </div>
+	<div class="eintrag">
+      <h2>20.OKT 14 | BEGINN PHASE 1 </h2>
+      <p>Beginn der Analysephase. </p>
+    </div>
+	<div class="eintrag">
+      <h2>15.OKT 14 | WEBSEITE GEHT ONLINE</h2>
+      <p>Die Webseite der Gruppe geht online.</p>
+    </div>
+    <div class="eintrag">
+      <h2>14.OKT 14 | GRUPPENFINDUNG</h2>
+      <p>Erste Zusammenkunft mit dem Tutor. Wichtige Absprachen wurden getroffen.</p>
+    </div>
+  </div>
+  <div id="task" onMouseOver="slide(2);">
+    <h3>AUFGABENSTELLUNG</h3>
+    <p>Der Festivalveranstalter, die „FVIV GmbH“, sieht sich mit ihrem derzeitigen System den wachsenden
+      Aufgaben einer Festival-Organisation und –Durchführung nicht mehr gewachsen und benötigt daher
+      zeitnah ein neues IT-System, das interne Verwaltungsaufgaben, als auch den Kundenkontakt
+      übernimmt. Daher werden sie damit beauftragt, dieses System zu entwerfen und auch umzusetzen.<br>
+      <br>
+      Das System soll unter anderem in der Planungsabteilung eingesetzt werden, in der Festivals angelegt
+      werden. Dazu muss ein Termin festgelegt werden und die passende Location zu diesem Zeitpunkt
+      gebucht werden. Doppelbuchungen dieser Locations sind unter allen Umständen zu vermeiden. Jede
+      Location bietet Platz für eine maximale Anzahl von Besuchern und Bühnen. Außerdem ist jede
+      Location in verschiedene, eindeutig gekennzeichnete Bereiche unterteilt, die wiederum einen Teil
+      der maximalen Besucherzahl fassen können und sich außerdem in Camping-, Park-, Catering- und
+      Stage-Bereiche einordnen. Um dem Planungsteam einen guten Überblick zu verschaffen, ist es
+      zwingend notwendig, dass das Gelände und die Bereiche visualisiert werden können. Sobald die
+      Location gebucht ist, können für dieses Festival Anpassungen durchgeführt werden, wie die
+      Bühnenpositionierung, Toilettenbestückung und Cateringstände, und es muss möglich sein,
+      bestimmte Bereiche zu sperren. Die genannten Gegenstände (Bühnen, usw.) werden von externen
+      Anbietern gemietet.<br>
+      <br>
+      In der nächsten Stufe muss das „Line-Up“ zusammengestellt werden. Dazu müssen Angebote bei
+      verschiedenen Künstlern eingeholt werden. Anschließend werden aus diesen Angeboten Künstler
+      ausgewählt und es muss ein Spielplan für jede Bühne erstellt werden. Neben den genannten
+      Künstlern ist weiteres Personal erforderlich, wie Sicherheitspersonal (mindestens einer pro 100
+      Besuchern), Bedienungen an den Cateringständen, Bühnentechniker (Anzahl wird durch die Band
+      bestimmt), sowie ein Veranstaltungsleiter. Jede Arbeitskraft wird dabei auf Stundenbasis bezahlt.<br>
+      <br>
+      Zu jedem Zeitpunkt während der Planung muss der Planungsabteilung als auch dem Management
+      eine automatische Kostenaufstellung zur Verfügung gestellt werden können, in der Kosten für
+      Mieten, Gagen, Personal und Sonstigem aufgelistet und aggregiert werden.<br>
+      <br>
+      Schon während der Planungsphase kann ein Event freigegeben werden, und es kann ein Kartenpreis
+      festgelegt werden. Es gibt dabei Camping-Tickets, die das ganze Festival über gültig sind und
+      Tageskarten. Diese Tickets werden bis 3 Tage vor Veranstaltungsbeginn in den Filialen der „FVIV
+      GmbH“ verkauft und danach nur noch an der Abendkasse. Es muss den Verkaufsmitarbeitern möglich
+      sein, bei noch vorhandenen Tickets diese zu verkaufen und auszudrucken. Auf jedes Ticket wird ein
+      Barcode bzw. eine eindeutige Nummer aufgedruckt, mit dem es dem Personal am Festivaleingang
+      möglich ist, das Ticket auf Gültigkeit hin zu überprüfen und zu vermeiden, dass verschiedene
+      Personen das Gelände mit derselben Karte betreten. <br>
+      <br>
+      Eine weitere Nutzergruppe ist das Cateringpersonal, das sich an entsprechenden Terminals am
+      Verkaufsstand mit gültigem Login anmeldet. Dort können Getränke und vorgefertigte Speisen
+      ausgewählt und abgerechnet werden. Dabei wird das Gekaufte vom verfügbaren Lagerbestand
+      abgezogen. Sollte ein gewisser Mindestbestand unterschritten werden erfolgt eine Mittteilung an die
+      Festivalleitung. Der Festivalleiter besitzt ebenfalls ein persönliches Terminal, an dem es ihm möglich ist, das Lager
+      einzusehen und Nachbestellungen zu tätigen. Weiterhin sieht er dort aktuelle Besucherzahlen,
+      Nachrichten von anderen Mitarbeitern, sowie Verkaufszahlen des Caterings und die aktuelle
+      Bühnenbelegung.<br>
+      <br>
+      Überall auf dem Festivalgelände verteilt befinden sich Terminals, die für jeden frei nutzbar sind. Dort
+      sieht man neben einem Plan vom Festivalgelände auch den Spielplan für alle Festivaltage.<br>
+      <br>
+      Der Manager der „FVIV GmbH“ sorgt für die Verteilung der Logins an die Mitarbeiter und kann sehen,
+      welcher Mitarbeiter momentan am System angemeldet ist. Weiterhin soll es ihm möglich sein,
+      betriebswirtschaftliche Daten, wie Umsatz, Ausgaben,... , abzurufen und grafisch zu visualiseren.</p>
+  </div>
+  <div id="group" onMouseOver="slide(3);">
+    <h3>DAS TEAM</h3>
+    <div id="niklas">
+      <p class="names">Nikas Fallik<br>
+        Chefprogrammierer</p>
+    </div>
+    <div id="justus">
+      <p class="names">Justus Adam<br>
+        Assistent</p>
+    </div>
+    <div id="nikolai">
+      <p class="names">Nikolai Kostka<br>
+        Sekretär</p>
+    </div>
+    <div id="hendric">
+      <p class="names">Hendric Eckelt<br>
+        Testverantwortlicher</p>
+    </div>
+    <div id="max">
+      <p class="names">Maximilian Schwarze<br>
+        Administrator</p>
+    </div>
+  </div>
+  <div id="aufwand" onMouseOver="slide(3);">
+    <h3>ZEITAUFWAND</h3>
+    <table id="tabelle" width="944" border="1" bordercolor="#fff" cellspacing="0">
+      <tr>
+        <th scope="col">Zeiteinheit: h</th>
+        <th scope="col">W 1</th>
+        <th scope="col">W 2</th>
+        <th scope="col">W 3</th>
+        <th scope="col">W 4</th>
+        <th scope="col">W 5</th>
+        <th scope="col">W 6</th>
+        <th scope="col">W 7</th>
+        <th scope="col">W 8</th>
+        <th scope="col">W 9</th>
+        <th scope="col">W 10</th>
+        <th scope="col">W 11</th>
+        <th scope="col">W 12</th>
+      </tr>
+      <tr>
+        <th scope="row">Niklas</th>
+        <td id="nik">2</td>
+        <td id="nik">3</td>
+        <td id="nik">2.5</td>
+        <td id="nik">4</td>
+        <td id="nik">12</td>
+        <td id="nik">14</td>
+        <td id="nik">8</td>
+        <td id="nik">3</td>
+        <td id="nik">6</td>
+        <td id="nik">10</td>
+        <td id="nik">12</td>
+        <td id="nik">16</td>
+      </tr>
+      <tr>
+        <th scope="row">Justus</th>
+        <td id="jus">0</td>
+        <td id="jus">2</td>
+        <td id="jus">5</td>
+        <td id="jus">2</td>
+        <td id="jus">1</td>
+        <td id="jus">5</td>
+        <td id="jus">9</td>
+        <td id="jus">7</td>
+        <td id="jus">12</td>
+        <td id="jus">5</td>
+        <td id="jus">10</td>
+        <td id="jus">15</td>
+      </tr>
+      <tr>
+        <th scope="row">Nikolai</th>
+        <td id="niko">0</td>
+        <td id="niko">1</td>
+        <td id="niko">5</td>
+        <td id="niko">3</td>
+        <td id="niko">6</td>
+        <td id="niko">6</td>
+        <td id="niko">8</td>
+        <td id="niko">6</td>
+        <td id="niko">10</td>
+        <td id="niko">2</td>
+        <td id="niko">4</td>
+        <td id="niko">15</td>
+      </tr>
+      <tr>
+        <th scope="row">Hendric</th>
+        <td id="hend">0</td>
+        <td id="hend">5</td>
+        <td id="hend">6</td>
+        <td id="hend">5</td>
+        <td id="hend">3</td>
+        <td id="hend">20.5</td>
+        <td id="hend">10</td>
+        <td id="hend">5.5</td>
+        <td id="hend">11</td>
+        <td id="hend">&nbsp;</td>
+        <td id="hend">&nbsp;</td>
+        <td id="hend">&nbsp;</td>
+      </tr>
+      <tr>
+        <th scope="row">Maximilian</th>
+        <td id="maxx">7</td>
+        <td id="maxx">2</td>
+        <td id="maxx">3</td>
+        <td id="maxx">3</td>
+        <td id="maxx">5</td>
+        <td id="maxx">8</td>
+        <td id="maxx">10</td>
+        <td id="maxx">12</td>
+        <td id="maxx">2</td>
+        <td id="maxx">8</td>
+        <td id="maxx">6</td>
+        <td id="maxx">10</td>
+      </tr>
+    </table>
+    <div id="diagramm"></div>
+    <script>
+    	$(function () {
+    $('#diagramm').highcharts({
+ chart: {
+            type: 'line'
+        },
+
+ title: {
+            text: '',
+                   },
+        subtitle: {
+            text: '',
+
+        },
+        xAxis: {
+            categories: ['Woche1', 'Woche2', 'Woche3', 'Woche4', 'Woche5', 'Woche6',
+                'Woche7', 'Woche8', 'Woche9', 'Woche10', 'Woche11', 'Woche12']
+        },
+        yAxis: {
+	    min: 0,
+            title: {
+                text: 'Zeitaufwand(h)'
+            },
+	    plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+
+        tooltip: {
+            valueSuffix: 'h'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Niklas',
+	    color: '#F00',
+            data: [2,3,2.5,4,12,14,8,3,6,10,12,16]
+        }, {
+            name: 'Justus',
+	    color: '#f90',
+            data:[0,2,5,2,1,0,0,0,0,0,0,0]
+	}, {
+            name: 'Nicolai',
+	    color: '#090',
+            data: [0,1,5,3,6,0,0,0,0,0,0,0]
+	}, {
+            name: 'Hendric',
+	    color:'#63c',
+            data: [0,5,6,5,3,20.5,10,5.5,11,0,0,0]
+	},{
+	    name:'Maximilian',
+	    color:'#09f',
+	    data: [7,2,3,3,5,8,10,12,2,8,6,10]	
+	}]
+    });
+});
+    </script>
+  </div>
+  <div id="plan" onMouseOver="slide(4);">
+    <h3>ZEITPLAN</h3>
+  </div>
+  <div id="protocoll" onMouseOver="slide(5);">
+    <h3>DOWNLOADS</h3>
+    <table>
+   <tr>
+   <td><a href="Protokoll Nummer Eins.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Eins.pdf">Protokoll 1</a></td>
+   </tr>
+    <tr>
+   <td><a href="Protokoll Nummer Zwei.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Zwei.pdf">Protokoll 2</a></td>
+   </tr>
+    <tr>
+   <td><a href="Protokoll Nummer Drei.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Drei.pdf">Protokoll 3</a></td>
+   </tr>
+    <tr>
+   <td><a href="Protokoll Nummer Vier.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Vier.pdf">Protokoll 4</a></td>
+   </tr>
+   <tr>
+   <td><a href="Protokoll Nummer Fünf.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Fünf.pdf">Protokoll 5</a></td>
+   </tr>
+   <tr>
+   <td><a href="Protokoll Nummer Sechs.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Sechs.pdf">Protokoll 6</a></td>
+   </tr>
+   <tr>
+   <td><a href="Protokoll Nummer Sieben.pdf"><img src="images/doc.png" width="50"></a></td>
+   <td><a href="Protokoll Nummer Sieben.pdf">Protokoll 7</a></td>
+   </tr>
+
+
+
+
+    </table>
+  </div>
+  <div id="contact">
+    <p>So erreichen Sie uns: irgendeine.mail@adresse.de<br>
+      Copyright © 2014 Maximilian Schwarze. Alle Rechte vorbehalten. </p>
+  </div>
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
