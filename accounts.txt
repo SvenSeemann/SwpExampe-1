@@ -1,4 +1,0 @@
-Username	Password	Role
-boss		123		ROLE_BOSS
-manager		123		ROLE_MANAGER
-caterer		123		ROLE_CATERER
