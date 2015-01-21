@@ -1,4 +1,6 @@
 language: java
-jdk: 
+jdk:
     - oraclejdk8
-install: mvn install -DskipTests=true
+install:
+    - cd Implementation_und_Tests
+    - mvn install -DskipTests=true

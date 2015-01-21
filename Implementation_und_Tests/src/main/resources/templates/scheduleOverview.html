@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="../resources/css/standard.css" />
+<link rel="stylesheet" href="../resources/css/terminal.css" />
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<title th:text="#{home.title}">FVIV Festivalmanager</title>
+</head>
+
+<!--  Festival Plan -->
+
+<body>
+	<div id="webseite">
+		<div id="header">
+			<div id="loggedAs">angemeldet als:</div>
+			<div id="title">Line Up</div>
+			<div id="loginName" th:text="${#authentication?.name}">UserName</div>
+		</div>
+		<div id="content"></div>
+		<div id="menu">
+			<a class="boldButton" href="/booking/artist">Lineup ändern</a>
+			<ul th:each="festival : ${festivals}">
+				<li><a class="slimButton"
+					th:href="'/schedule?festival=' + ${festival.id}"
+					th:text="${festival.festivalName}"></a></li>
+			</ul>
+			<button class="slimButton" onClick="history.back()">Zurück</button>
+
+		</div>
+	</div>
+</body>
+</html>

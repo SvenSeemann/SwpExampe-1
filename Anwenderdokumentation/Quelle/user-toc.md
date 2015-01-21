@@ -2,7 +2,33 @@
 
 ## Inhaltsverzeichnis
 
-@@TOC@@
+- [Inhaltsverzeichnis](#inhaltsverzeichnis)
+- [Unterstützte Browser](#untersttzte-browser)
+- [Oberfläche](#oberflche)
+- [Manager](#manager)
+    - [Mitarbeiter](#mitarbeiter)
+    - [Finanzen](#finanzen)
+    - [Accounts](#accounts)
+    - [Besucherzahlen](#besucherzahlen)
+- [Festivalleiter](#festivalleiter)
+    - [Terminal](#terminal)
+    - [Finanzen](#finanzen)
+    - [Stock](#stock)
+- [Ticketverkauf](#ticketverkauf)
+    - [Tickets erstellen](#tickets-erstellen)
+    - [Tickets drucken](#tickets-drucken)
+    - [Tickets prüfen](#tickets-prfen)
+- [Festival Terminal](#festival-terminal)
+    - [Übersicht der Festivals](#bersicht-der-festivals)
+    - [Festivals bearbeiten](#festivals-bearbeiten)
+    - [Mitarbeiter](#mitarbeiter)
+- [Catering](#catering)
+- [Geländeplanung](#gelndeplanung)
+    - [Erstellen eines Objektes](#erstellen-eines-objektes)
+    - [Bewegen eines Objektes auf dem Gelände](#bewegen-eines-objektes-auf-dem-gelnde)
+    - [Das Kontext-Menu](#das-kontext-menu)
+- [Kommunikation](#kommunikation)
+- [Besucherterminal](#besucherterminal)
 
 ## Unterstützte Browser
 Diese Software ist auf allen gängigen Browsern außer Firefox und IE funktionsfähig. Bitte achten Sie auf eine aktuelle Version Ihres Browsers.
@@ -45,12 +71,11 @@ Dies ist die Lagerverwaltung des Catering. Hier können Sie den aktuellen Lagerb
 ### Tickets erstellen
 Wählen Sie ein Festival aus dem Drop-Down-Menü aus und klicken Sie auf <button>Festival laden</button>. Unterscheiden Sie nun zwischen einem 1-Tages-Ticket und einem 3-Tages-Ticket. Auf ein 3-Tages-Ticket gibt es einen Preisnachlass! Geben Sie nun den gewünschten Festivaltag und Anzahl an. Klicken Sie nun auf <button>Tickets erstellen</button>.
 
-### Tickets drucken
+###Tickets drucken
 Geben Sie in das Auswahlfeld die TicketId des zu drucken Tickets an und drucken Sie das Ticket mittels Klick auf den entsprechenden Button.
 
-### Tickets prüfen
+###Tickets prüfen
 Suchen Sie aus der Liste das gewünschte Festival aus. Geben Sie die zu prüfende TicketId ein und prüfen Sie das Ticket.
-
 
 ##Festival Terminal
 ### Übersicht der Festivals
