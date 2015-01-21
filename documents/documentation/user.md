@@ -49,7 +49,7 @@ Geben Sie in das Auswahlfeld die TicketId des zu drucken Tickets an und drucken 
 ###Tickets prüfen
 Suchen Sie aus der Liste das gewünschte Festival aus. Geben Sie die zu prüfende TicketId ein und prüfen Sie das Ticket. 
 
-##Festival Terminal  *(Scheiss name- geht das nicht besser?)*
+##Festival Terminal 
 ### Übersicht der Festivals
 Hier finden Sie eine Übersicht der bestehenden Festivals. Weiterhin können Sie hier auch neue Festivals anlegen. Dies geschieht durch Aussuchen einer Location und Ausfüllen des Formular. Klicken Sie anschließend auf "Festival erstellen". 
 ### Festivals bearbeiten
